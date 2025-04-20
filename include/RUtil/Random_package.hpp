@@ -16,6 +16,7 @@ struct Random_package
     std::shared_ptr<Random> card_shuffle_rng;//Used for shuffling the cards.
     std::shared_ptr<Random> monster_hp_rng;//Used for randomizing the monster HP.
     std::shared_ptr<Random> monster_ai_rng;//Used for randomizing the monster AI.
+    std::shared_ptr<Random> monster_type_rng;//Used for randomizing the monster type.
     Random_package(){
         map_rng=nullptr;
         monster_rng=nullptr;

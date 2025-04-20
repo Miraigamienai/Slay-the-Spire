@@ -1,6 +1,15 @@
-#include "Game_object/card/Card_group_handler.hpp"
-#include "Util/Logger.hpp"
-#include "Cursor.hpp"
+#include "Game_object/card/Card_group_handler.hpp"//the hpp
+#include "Game_object/character/Monster/Monsters.hpp"//hovered monster
+#include "Game_object/character/Monster_group.hpp"//monsters hover check
+#include "Game_object/action/Action_group_handler.hpp"//for using card
+#include "RUtil/Random.hpp"//rng
+#include "RUtil/Game_Input.hpp"//cursor input and delta_time
+#include "RUtil/Some_Math.hpp"//Bezier method
+#include "Draw/Draw_2D.hpp"//for rendering
+#include "Cursor.hpp"//for hiding or displaying cursor
+
+#include "Util/Logger.hpp"//LOG_ERROR
+
 namespace Card{
     static constexpr float LOW_LOW_LINE=50.0F*Setting::SCALE;
     static constexpr float HOVER_CARD_Y_POSITION=210.0F*Setting::SCALE;
@@ -10,6 +19,8 @@ namespace Card{
 
     Card_group_handler::Card_group_handler(){
         single_target=pass_hesitation_line=is_dragging_card=false;
+        m_arrow_timer=0.0F;
+        arrow_scale=Setting::SCALE;
         //in_drop_zone:(x,y) in area that can use card.  //This is ok without init.
         //in_draggin_card: dragging card,include in single_target mode
         //single_target: targeting one enemy
@@ -18,7 +29,7 @@ namespace Card{
 
     void Card_group_handler::shuffle(bool shuffle_invisible){
         //remember to shuffle the order of m_discard before this function be called.
-        if(m_discard.empty()) LOG_ERROR("Try to discard card when the m_discard is empty.");
+        if(m_discard.empty()) LOG_ERROR("Try to shuffle card when the m_discard is empty.");
         else{
             auto card=m_discard.PopTop();
             card->Darken(true);
@@ -230,9 +241,10 @@ namespace Card{
         //...
     }
     
-    void Card_group_handler::update(Action::Action_group_handler &action_group_handler){
+    void Card_group_handler::update(Action::Action_group_handler &action_group_handler,const Monster::Monster_group &room_monsters){
         //single_target -> drop zone -> drag -> hover -> check drag start
         if(single_target){
+            hovered_monster=room_monsters.GetHoveredMonster();
             this->update_targeting();
             return;
         }
@@ -374,12 +386,22 @@ namespace Card{
         last_pt=now_pt;
         now_pt=end;
         //draw arrow
-        r2->draw(reticleArrow_img, arrowX-128.0F, arrowY-128.0F, 256.0F, 256.0F, RUtil::Math::GetDegress(now_pt-last_pt)-90.0F, 128.0F, 128.0F);
+        r2->draw(reticleArrow_img, arrowX-128.0F, arrowY-128.0F, 256.0F, 256.0F, RUtil::Math::GetDegress(now_pt-last_pt)-90.0F, 128.0F, 128.0F, arrow_scale, arrow_scale);
     }
     void Card_group_handler::update_targeting(){
-        hovered_monster=nullptr;
-        //monster check
-        //for(monst:monster_group)....
+        if(hovered_monster!=nullptr){
+            m_arrow_timer+=RUtil::Game_Input::delta_time();
+            if(m_arrow_timer>1.0F){
+                m_arrow_timer=1.0F;
+                arrow_scale=1.2F*Setting::SCALE;
+            }else{
+                arrow_scale=RUtil::Math::Apply(Setting::SCALE,1.2F*Setting::SCALE,RUtil::Math::interpolation_elastic_out(m_arrow_timer));
+            }
+        }else{
+            m_arrow_timer=0.0F;
+            arrow_scale=Setting::SCALE;
+        }
+
         if(just_r||(float)input_y<LOW_LOW_LINE||(float)input_y<hover_start_line - 400.0F*Setting::SCALE){//release if height is not in range.
             release_card();
             single_target=false;

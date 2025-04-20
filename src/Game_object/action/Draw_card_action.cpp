@@ -7,8 +7,8 @@ namespace Action
         first_time=true;
     }
     void Draw_card_action::update(Card::Card_group_handler &card_group_handler,Action_group_handler*const action_group_handler,const RUtil::Random_package &random_package){
-        const int draw_size=card_group_handler.draw_pile_size(),
-                  discard_size=card_group_handler.discard_pile_size();
+        const int draw_size=card_group_handler.size(Card::GroupType::draw_pile),
+                  discard_size=card_group_handler.size(Card::GroupType::m_discard);
         if(draw_size+discard_size==0){
             is_done=true;
             return;
@@ -17,8 +17,8 @@ namespace Action
             return;
         if(first_time){
             first_time=false;
-            if(amount+card_group_handler.hand_cards_size()>10){
-                amount=10-card_group_handler.hand_cards_size();
+            if(amount+card_group_handler.size(Card::GroupType::hand_cards)>10){
+                amount=10-card_group_handler.size(Card::GroupType::hand_cards);
             }
             if(amount>draw_size){
                 action_group_handler->AddActionTop(std::make_shared<Action::Draw_card_action>(amount-draw_size));

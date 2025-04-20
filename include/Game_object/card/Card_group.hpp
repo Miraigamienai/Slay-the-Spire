@@ -7,7 +7,7 @@ namespace Card{
 class Card_group:public Template::Group_template<std::vector<std::shared_ptr<Cards>>>
 {
 public:
-    Card_group();
+    Card_group()=default;
     Card_group(const Card_group&) = delete;
     Card_group(Card_group&&) = delete;
     Card_group& operator=(Card_group&&) = delete;

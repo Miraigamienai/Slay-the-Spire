@@ -2,6 +2,8 @@
 #include "Game_object/room/Rooms.hpp"
 #include "RUtil/Text_Vector_Reader.hpp"
 #include "RUtil/ColorValuesOnly.hpp"
+#include "RUtil/Image_book.hpp"
+#include "Draw/ReTexture.hpp"
 
 #include "Util/Logger.hpp"
 

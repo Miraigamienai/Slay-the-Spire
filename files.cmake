@@ -5,9 +5,6 @@ set(SRC_FILES
 	main.cpp
 	TheApp.cpp
 	button/End_turn_button.cpp
-	character/character.cpp
-	character/moster.cpp
-	character/Monsters/AcidSlimeL.cpp
 	Draw/Atlas_Region.cpp
 	Draw/Draw_2D.cpp
 	Draw/Image_Region.cpp
@@ -33,6 +30,8 @@ set(SRC_FILES
 	Game_object/card/red/Anger.cpp
 	Game_object/card/red/Strike_red.cpp
 	Game_object/character/Characters.cpp
+	Game_object/character/Monster_group.cpp
+	Game_object/character/Monster_group_creater.cpp
 	Game_object/character/Player.cpp
 	Game_object/character/Monster/AcidSlimeL.cpp
 	Game_object/character/Monster/AcidSlimeM.cpp
@@ -91,10 +90,6 @@ set(INCLUDE_FILES
 	InitScreen.hpp
 	TheApp.hpp
 	WindowSize.hpp
-	character/character.hpp
-	character/monster.hpp
-	character/Monsters/AcidSlimeL.hpp
-	character/Monsters/MonsterAction.hpp
 	Draw/Atlas_Region.hpp
 	Draw/Draw_2D.hpp
 	Draw/Image_Region.hpp
@@ -124,6 +119,8 @@ set(INCLUDE_FILES
 	Game_object/card/red/Anger.hpp
 	Game_object/card/red/Strike_red.hpp
 	Game_object/character/Characters.hpp
+	Game_object/character/Monster_group.hpp
+	Game_object/character/Monster_group_creater.hpp
 	Game_object/character/Player.hpp
 	Game_object/character/Monster/AcidSlimeL.hpp
 	Game_object/character/Monster/AcidSlimeM.hpp
@@ -183,6 +180,6 @@ set(INCLUDE_FILES
 	RUtil/Some_Math.hpp
 	RUtil/Text_Vector_Reader.hpp
 )
- 
+
 set(TEST_FILES
 )

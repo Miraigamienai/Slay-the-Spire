@@ -5,9 +5,6 @@
 #include "Util/Logger.hpp"
 
 namespace Card{
-    Card_group::Card_group(){
-
-    }
     void Card_group::render(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 PlayerColor_RGB)const{
         for(const auto &it:box){
             it->render(r2,PlayerColor_RGB);

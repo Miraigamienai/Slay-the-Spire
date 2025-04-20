@@ -4,6 +4,7 @@
 #include "Game_object/effect/Fade_wide.hpp"
 #include "Game_object/map/Map_node.hpp"
 #include "Game_object/map/Map_edge.hpp"
+#include "Game_object/character/Player.hpp"
 
 #include "Util/Logger.hpp"
 
@@ -145,7 +146,7 @@ namespace Dungeon{
         fade_in();
         m_dungeon_shared.effs.Clear();
         m_dungeon_shared.top_effs.Clear();
-        m_current_node->GetRoom()->init_room();
+        m_current_node->GetRoom()->init_room(m_random_package);
         m_random_package.ResetRoomRNGs(this->random_seed+m_current_node->y);
         m_dungeon_manager.hide_dungeon_screen_instantly();
         m_dungeon_shared.card_group_handler.prepare_for_battle(m_random_package.card_shuffle_rng);

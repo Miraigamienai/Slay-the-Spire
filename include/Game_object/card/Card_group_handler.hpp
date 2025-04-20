@@ -1,13 +1,36 @@
-#ifndef GAME_OBJECT_CARD_CARD_GROUP_HANDLER
-#define GAME_OBJECT_CARD_CARD_GROUP_HANDLER
+#pragma once
 
-#include <list>
+#include <list>//flying cards
+#include <memory>//shared_ptr
+#include <SDL_stdinc.h>//Uint32
 
-#include "Game_object/card/Card_group.hpp"
-#include "Game_object/character/Monster/Monsters.hpp"
-#include "RUtil/Image_book.hpp"
-#include "Game_object/action/Action_group_handler.hpp"
+#include "Game_object/card/Cards.hpp"//for card inline update or render
+#include "Game_object/card/Card_group.hpp"//member
+#include "Game_object/effect/Effect_group.hpp"//for inline add
+
+//fwd decl
+namespace Monster{
+    class Monsters;
+    class Monster_group;
+}
+namespace Action{
+    class Action_group_handler;
+}
+namespace RUtil{
+    class Random;
+}
+namespace Draw{
+    class Draw_2D;
+}
+
 namespace Card{
+enum class GroupType{
+    hand_cards,
+    m_discard,
+    draw_pile,
+    master_deck,
+    exhaust_pile
+};
 class Card_group_handler
 {
 public:
@@ -21,7 +44,7 @@ public:
     void discard_all();
     void discard(const std::shared_ptr<Cards> &card);
     void draw();
-    void update(Action::Action_group_handler &action_group_handler);
+    void update(Action::Action_group_handler &action_group_handler,const Monster::Monster_group &room_monsters);
     void refresh_hand_layout()const;
     void prepare_for_battle(const std::shared_ptr<RUtil::Random> &rng);
     void shuffle(bool shuffle_invisible);
@@ -39,16 +62,36 @@ public:
     }
     void update_hand_cards(Effect::Effect_group &effs, Uint32 PlayerTrailColor_RGB){hand_cards.update(effs,PlayerTrailColor_RGB);}
     void add_to_master_deck(std::shared_ptr<Cards> &&card){master_deck.AddTop(std::move(card));}
-    int discard_pile_size()const{return m_discard.size();}
-    int draw_pile_size()const{return draw_pile.size();}
-    int hand_cards_size()const{return hand_cards.size();}
+    
+    int size(GroupType type) const noexcept(
+        noexcept(draw_pile.size()) &&
+        noexcept(exhaust_pile.size()) &&
+        noexcept(hand_cards.size()) &&
+        noexcept(m_discard.size()) &&
+        noexcept(master_deck.size())
+    ){
+        switch (type) {
+            case GroupType::draw_pile:
+                return draw_pile.size();
+            case GroupType::exhaust_pile:
+                return exhaust_pile.size();
+            case GroupType::hand_cards:
+                return hand_cards.size();
+            case GroupType::m_discard:
+                return m_discard.size();
+            case GroupType::master_deck:
+                return master_deck.size();
+            default:
+                return 0;
+        }
+    }
     bool is_someone_flying()const noexcept{return !flying_cards.empty();}
     void discard_pile_shuffle_with_rng(const std::shared_ptr<RUtil::Random> &rng){m_discard.ShuffleWithRng(rng);}
 private:
     static const int &input_x,&input_y;
     static const bool &just_r,&just_l;
     bool single_target,in_drop_zone,pass_hesitation_line,is_dragging_card;
-    float arrowX,arrowY,hover_start_line;
+    float arrowX,arrowY,hover_start_line,m_arrow_timer,arrow_scale;
     std::shared_ptr<Card::Cards> hovered_card=nullptr;
     std::shared_ptr<Monster::Monsters> hovered_monster=nullptr;
     Card_group hand_cards,m_discard,draw_pile,master_deck,exhaust_pile;
@@ -68,4 +111,3 @@ private:
     static constexpr int ARROW_COLOR=RUtil::Math::GetColorUint32_RGB(1.0F,0.2F,0.3F);
 };
 }
-#endif

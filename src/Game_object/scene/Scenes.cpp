@@ -1,4 +1,9 @@
+#include <memory>
+
 #include "Game_object/scene/Scenes.hpp"
+#include "Draw/Atlas_Region.hpp"
+#include "Draw/Draw_2D.hpp"
+#include "WindowSize.hpp"
 namespace Scene
 {
     void Scenes::render_format(const std::shared_ptr<Draw::Draw_2D> &r2,const std::shared_ptr<Draw::Atlas_Region>&img){

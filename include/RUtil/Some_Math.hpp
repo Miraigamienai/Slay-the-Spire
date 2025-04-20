@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SDL_stdinc.h>//Uint
-#include <glm/vec2.hpp>//vec2
 #include <glm/glm.hpp>//glm::degress
+#include <glm/gtc/constants.hpp>//two pi
 #include <vector>
 #include <string>
 
@@ -33,6 +33,9 @@ public:
     static float interpolation_exp10in(float start,float target,float a);
     static float interpolation_fade(float start,float target,float a);
     static float interpolation_powout2(float start,float target,float a);
+    static constexpr float interpolation_elastic_out(float a){
+        return 1.0F-glm::pow(2.0F,-10.0F*a)*glm::sin(glm::two_pi<float>()*a*-10.0F);
+    }
     static int StrToInt(const std::string &str);
     static constexpr float GetRadian(const glm::vec2 &v){return atan2f(v.y,v.x);}
     static constexpr float GetDegress(const glm::vec2 &v){return glm::degrees(atan2f(v.y,v.x));}
@@ -50,6 +53,5 @@ public:
     static constexpr Uint32 GetColorUint32_RGB(float r,float g,float b)noexcept{return static_cast<Uint32>(r*255.0F)<<24|static_cast<Uint32>(g*255.0F)<<16|static_cast<Uint32>(b*255.0F)<<8;};
     //only work if value not bigger or smaller than 2*len
     static constexpr int SimpleRangeChange(const int value,const int len)noexcept{return len<=value?value-len:(value<0?value+len:value);}
-    static constexpr float SimpleRangeChange(const float value,const float len)noexcept{return len<=value?value-len:(value<0.0F?value+len:value);}
 };
 }

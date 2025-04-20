@@ -1,6 +1,11 @@
 #ifndef GAME_OBJECT_SCENE_SCENES
 #define GAME_OBJECT_SCENE_SCENES
 #include "Game_object/room/Rooms.hpp"
+//fwd decl
+namespace Draw{
+    class Atlas_Region;
+}
+
 namespace Scene
 {
 //The scene will only be drawn when the room exists.

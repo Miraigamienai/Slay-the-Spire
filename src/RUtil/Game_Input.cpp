@@ -22,7 +22,8 @@ namespace RUtil{
         MS.justMouseReleased_R=Util::Input::IsKeyUp(Util::Keycode::MOUSE_RB);
         MS.isScrollDown=Util::Input::IfScroll()&&Util::Input::GetScrollDistance().y<0;
         MS.isScrollUp=Util::Input::IfScroll()&&Util::Input::GetScrollDistance().y>0;
-        delta_time_s=Util::Time::GetDeltaTimeMs()/1000;
+        delta_time_s=Util::Time::GetDeltaTimeMs()/1000.0F;
+        // delta_time_s=1.0F/600.0F;//for test
     }
     int Game_Input::x=0,Game_Input::y=0;
     Game_Input::MouseState Game_Input::MS;

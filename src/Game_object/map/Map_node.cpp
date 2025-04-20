@@ -1,10 +1,16 @@
-#include "Game_object/map/Map_node.hpp"
-#include "Game_object/map/Map_edge.hpp"
-#include "Game_object/room/Rooms.hpp"
-#include "Game_object/effect/Map_circle_effect.hpp"
-#include "Game_object/effect/Effect_group.hpp"
-#include "RUtil/ColorValuesOnly.hpp"
-#include "RUtil/Image_book.hpp"
+#include <glm/gtc/constants.hpp>//two pi
+
+#include "Game_object/map/Map_node.hpp"//the hpp
+#include "Game_object/map/Map_edge.hpp"//edges
+#include "Game_object/room/Rooms.hpp"//m_room
+#include "Game_object/effect/Map_circle_effect.hpp"//circle effect
+#include "Game_object/effect/Effect_group.hpp"//for adding circle effect
+#include "RUtil/ColorValuesOnly.hpp"//legend hovered color
+#include "RUtil/Game_Input.hpp"//delta time
+#include "RUtil/Image_book.hpp"//for loading ReTexture
+#include "RUtil/Random.hpp"//offset random
+#include "Draw/ReTexture.hpp"//IMG
+#include "Draw/Draw_2D.hpp"//for rendering
 
 #include "Util/Logger.hpp"
 
@@ -17,7 +23,7 @@ Map_node::Map_node(int x,int y):x(x),y(y),hb(64.0F*Setting::SCALE,64.0F*Setting:
     m_scale=0.5F;
     color_a=1.0F;
     m_angle=RUtil::Random::GetRandomFloat(0.0F,360.0F);
-    oscillate_timer=RUtil::Random::GetRandomFloat(0.0F,2.0F*glm::pi<float>());
+    oscillate_timer=RUtil::Random::GetRandomFloat(0.0F,glm::two_pi<float>());
     taken=right=left=middle=to_boss=is_ready_to_connect=highlight=making_circle=made_circle=false;
     anim_wait_timer=0.0F;
 }

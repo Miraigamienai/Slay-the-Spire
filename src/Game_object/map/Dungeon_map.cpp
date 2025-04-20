@@ -1,6 +1,10 @@
-#include"Game_object/map/Dungeon_map.hpp"
-#include"Game_object/map/Map_node.hpp"
-#include"RUtil/ColorValuesOnly.hpp"
+#include "Game_object/map/Dungeon_map.hpp"
+#include "Game_object/map/Map_node.hpp"
+#include "RUtil/ColorValuesOnly.hpp"
+#include "RUtil/Game_Input.hpp"
+#include "RUtil/Image_book.hpp"
+#include "Draw/ReTexture.hpp"
+#include "Draw/Draw_2D.hpp"
 
 namespace Map{
     Dungeon_map::Dungeon_map(const float &screen_offsetY,const bool &on_top):boss_hitbox(400.0F*Setting::SCALE,360.0F*Setting::SCALE),screen_offsetY(screen_offsetY),on_top(on_top){

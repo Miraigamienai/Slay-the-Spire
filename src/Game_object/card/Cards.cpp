@@ -43,11 +43,13 @@ namespace Card{
         //hover time update
         if(m_hover_timer!=0.0F)
             m_hover_timer=m_hover_timer<DT?0.0F:m_hover_timer-DT;
-
-        this->update_flying(effs,PlayerTrailColor_RGB);
+        //if not flying
         if(!this->is_flying){
+            //update position
             current_x=RUtil::Math::varlerp(current_x,target_x,6.0F,CARD_SNAP_THRESHOLD);
             current_y=RUtil::Math::varlerp(current_y,target_y,6.0F,CARD_SNAP_THRESHOLD);
+            //update somthing else
+            //...
         }
         //angle
         if(this->m_angle!=this->target_angle){
@@ -67,7 +69,7 @@ namespace Card{
         if(m_dark_timer!=0.0F){
             m_dark_timer-=DT;
             if(m_dark_timer<0.0F)m_dark_timer=0.0F;
-            m_tint_a=darken?(1-m_dark_timer/0.3F):m_dark_timer/0.3F;
+            m_tint_a=darken?(1.0F-m_dark_timer/0.3F):m_dark_timer/0.3F;
         }
         //glow
         if(is_glowing){
@@ -78,14 +80,17 @@ namespace Card{
             }
         }
         glowgroup.update();
+
+        this->update_flying(effs,PlayerTrailColor_RGB);
     }
 
     void Cards::render(const std::shared_ptr<Draw::Draw_2D> &r2,const Uint32 PlayerColor_RGB)const{
         if(is_shuffling&&shuffle_invisible) return;
-        if(is_shuffling){
-            r2->SetColor(PlayerColor_RGB,1.0F);
-            format_render(r2,m_card_bg_silhouette,this->current_x,this->current_y,1.0F+this->m_tint_a/5.0F);
-        }
+        //remember to adjust the alpha when flying.
+        // if(is_shuffling){
+        //     r2->SetColor(PlayerColor_RGB,1.0F);
+        //     format_render(r2,m_card_bg_silhouette,this->current_x,this->current_y,1.0F+this->m_tint_a/5.0F);
+        // }
         //flash
         if(!m_card_flash.IsDone()){
             m_card_flash.render(r2);

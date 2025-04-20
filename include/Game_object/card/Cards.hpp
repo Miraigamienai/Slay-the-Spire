@@ -89,7 +89,7 @@ public:
     void Flash(Uint32 _c);
     bool IsHoveredInHand(const float scale)const;
     
-    bool CanUse()const noexcept{return true;}
+    bool CanUse()const noexcept{return true;}//for test
     int GetCost()const noexcept{return cost;}
     float GetX()const noexcept{return current_x;}
     float GetY()const noexcept{return current_y;}

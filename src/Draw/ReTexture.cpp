@@ -12,9 +12,10 @@ namespace Draw {
             temp_surface = GetMissingTextureSDLSurface();
             LOG_ERROR("Failed to load image: '{}'", filepath);
             LOG_ERROR("{}", IMG_GetError());
-        }else if((temp_surface->w-1)&temp_surface->w||(temp_surface->h-1)&temp_surface->h){
-            LOG_WARN("Image dimensions are not powers of 2");
         }
+        // else if((temp_surface->w-1)&temp_surface->w||(temp_surface->h-1)&temp_surface->h){
+        //     LOG_WARN("Image dimensions are not powers of 2");
+        // }
         
         this->w=temp_surface->w;
         this->h=temp_surface->h;

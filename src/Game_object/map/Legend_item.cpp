@@ -1,5 +1,9 @@
 #include "Game_object/map/Legend_item.hpp"
 #include "Game_object/map/Map_node.hpp"
+#include "Draw/ReTexture.hpp"
+#include "Draw/Text_layout.hpp"
+#include "Draw/Draw_2D.hpp"
+
 namespace Map
 {
     Legend_item::Legend_item(const std::shared_ptr<Draw::ReTexture> &img,const std::shared_ptr<Draw::Text_layout> &label,const std::shared_ptr<Draw::Text_layout> &title,const std::shared_ptr<Draw::Text_layout> &body,int idx):

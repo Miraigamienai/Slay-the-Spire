@@ -1,5 +1,7 @@
 #ifndef GAME_OBJECT_SCENE_BOTTOM_SCENE
 #define GAME_OBJECT_SCENE_BOTTOM_SCENE
+#include <glm/vec3.hpp>
+
 #include "Game_object/scene/Scenes.hpp"
 namespace Scene{
 //remember to add the effect.

@@ -1,13 +1,23 @@
-#ifndef GAME_OBJECT_ROOM_ROOMS
-#define GAME_OBJECT_ROOM_ROOMS
-#include "Draw/ReTexture.hpp"
-#include "Game_object/action/Action_group.hpp"
-#include "Game_object/card/Card_group_handler.hpp"
-#include "Game_object/character/Player.hpp"
+#pragma once
+
+#include <memory>
 
 //fwd decl
+namespace Draw{
+    class ReTexture;
+    class Draw_2D;
+}
+namespace Action{
+    class Action_group_handler;
+}
+namespace Card{
+    class Card_group_handler;
+}
 namespace Dungeon{
     class Overlay;
+}
+namespace RUtil{
+    class Random_package;
 }
 
 namespace Room{
@@ -31,11 +41,10 @@ public:
     virtual const std::shared_ptr<Draw::ReTexture> &GetOutlineTexture()const=0;
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2)const=0;
     virtual void update(Action::Action_group_handler &action_group_handler,Card::Card_group_handler &card_group_handler,Dungeon::Overlay &overlay,const RUtil::Random_package &random_package)=0;
-    virtual void init_room()=0;
+    virtual void init_room(RUtil::Random_package &random_package)=0;
     const Room_type room_type;
-    auto get_phase()const{return room_phase;}
+    auto get_phase()const noexcept{return room_phase;}
 protected:
     Room_phase room_phase=Room_phase::incomplete;
 };
 }
-#endif

@@ -54,12 +54,16 @@ namespace RUtil{
     }
     //t is[0,1)
     glm::vec2 Math::CatmullRomSpline(const std::vector<glm::vec2> &controls,const float t,const int len,const int vec_start_pos){
-        float u=t*(len-3);
-        int i=(t>=1.0F?(len-4):(int)u);//because the Catmull-Rom curve is defined by four points, so -3.
+        float u=t*(len-3);//because the Catmull-Rom curve is defined by four points, so -3.
+        int i=(t>=1.0F?(len-4):(int)u);
         u-=i;
         i+=vec_start_pos;
         const float u2=u*u,u3=u2*u;
-        return controls[SimpleRangeChange(i,len)]*(-0.5F*u3+u2-0.5F*u)+controls[SimpleRangeChange(i+1,len)]*(1.5F*u3-2.5F*u2+1.0F)+controls[SimpleRangeChange(i+2,len)]*(-1.5F*u3+2.0F*u2+0.5F*u)+controls[SimpleRangeChange(i+3,len)]*(0.5F*u3-0.5F*u2);
+        const int vec_len=static_cast<int>(controls.size());
+        return controls[SimpleRangeChange(i,vec_len)]*(-0.5F*u3+u2-0.5F*u)
+              +controls[SimpleRangeChange(i+1,vec_len)]*(1.5F*u3-2.5F*u2+1.0F)
+              +controls[SimpleRangeChange(i+2,vec_len)]*(-1.5F*u3+2.0F*u2+0.5F*u)
+              +controls[SimpleRangeChange(i+3,vec_len)]*(0.5F*u3-0.5F*u2);
     }
     glm::vec2 Math::BezierQuadratic(const glm::vec2 p0,const glm::vec2 p1,const glm::vec2 p2,const float t){
         const float tt=1.0F-t;

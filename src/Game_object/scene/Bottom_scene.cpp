@@ -1,5 +1,14 @@
+#include <GL/glew.h>//blend func
+
 #include "Game_object/scene/Bottom_scene.hpp"
-#include "RUtil/ColorValuesOnly.hpp"
+#include "RUtil/Random.hpp"//next_room random
+#include "RUtil/ColorValuesOnly.hpp"//colors
+#include "RUtil/All_Image.hpp"//for loading region
+#include "RUtil/Image_book.hpp"//for loading ReTexture
+#include "Draw/ReTexture.hpp"//img
+#include "Draw/Atlas_Region.hpp"//region
+#include "Draw/Draw_2D.hpp"//for rendering
+#include "WindowSize.hpp"
 
 namespace Scene
 {

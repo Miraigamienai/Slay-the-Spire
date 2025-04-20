@@ -93,6 +93,7 @@ void Map_generator::AssignRoom(const std::vector<std::vector<std::shared_ptr<Map
     int monster_room=remain_room;
     //shuffle
     //...
+    //First three rows should be week monsters.
     for(const auto &it1:map) for(const auto &it2:it1)if(it2!=nullptr) it2->SetRoom(std::make_shared<Room::Monster_room>());
 }
 void Map_generator::SetChance(float value,Room::Room_type type){

@@ -48,6 +48,7 @@ public:
     void SetColor(Uint32 color,float a);
     void SetColor(Uint32 color);
     void SetColor_RGBA(Uint32 color);
+    void SwitchProgram(const std::shared_ptr<Core::Program> &program);
     void SetProjection(const glm::mat4&projection);
     void SetTransform(const glm::mat4&transform);
     void DisableBlending();

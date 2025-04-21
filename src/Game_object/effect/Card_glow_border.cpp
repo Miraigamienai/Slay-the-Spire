@@ -8,8 +8,8 @@
 
 namespace Effect
 {
-    Card_glow_border::Card_glow_border(const std::shared_ptr<Draw::Atlas_Region>&silhouette,const float &card_x,const float &card_y,const float &card_angle,const float &card_scale):card_x(card_x),card_y(card_y),card_angle(card_angle),card_scale(card_scale),img(silhouette){
-        color=DFAULT_COLOR;
+    Card_glow_border::Card_glow_border(const std::shared_ptr<Draw::Atlas_Region>&silhouette,const float &card_x,const float &card_y,const float &card_angle,const float &card_scale,Uint32 color):card_x(card_x),card_y(card_y),card_angle(card_angle),card_scale(card_scale),img(silhouette){
+        this->color=color;
         this->duration=1.2F;
     }
     void Card_glow_border::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{

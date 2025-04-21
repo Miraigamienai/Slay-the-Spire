@@ -22,7 +22,7 @@ namespace Card{
         m_arrow_timer=0.0F;
         arrow_scale=Setting::SCALE;
         //in_drop_zone:(x,y) in area that can use card.  //This is ok without init.
-        //in_draggin_card: dragging card,include in single_target mode
+        //is_dragging_card: dragging card,include in single_target mode
         //single_target: targeting one enemy
         //pass_hesitation_line: dragging card to in_drop_zone
     }

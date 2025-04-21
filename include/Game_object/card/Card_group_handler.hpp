@@ -63,6 +63,14 @@ public:
     void update_hand_cards(Effect::Effect_group &effs, Uint32 PlayerTrailColor_RGB){hand_cards.update(effs,PlayerTrailColor_RGB);}
     void add_to_master_deck(std::shared_ptr<Cards> &&card){master_deck.AddTop(std::move(card));}
     
+    void super_flash()const{
+        for(const auto&it:hand_cards) if(it->CanUse()) it->SuperFlash();
+    }
+    bool is_someone_canuse()const{
+        for(const auto&it:hand_cards) if(it->CanUse()) return true;
+        return false;
+    }
+    bool is_dragging() const noexcept{return is_dragging_card;}
     int size(GroupType type) const noexcept(
         noexcept(draw_pile.size()) &&
         noexcept(exhaust_pile.size()) &&

@@ -3,6 +3,8 @@
 #include <memory>
 
 #include "Game_object/panel/Energy_panel.hpp"
+#include "Game_object/button/End_turn_button.hpp"
+
 //fwd decl
 namespace Character{
     class Player;
@@ -15,12 +17,15 @@ public:
     Overlay()=default;
     ~Overlay()=default;
 
-    void update();
+    void update(const Card::Card_group_handler &card_group_handler);
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void hide_combat_panel();
     void show_combat_panel();
     void set_player_to_energy_panel(const std::shared_ptr<Character::Player>&player){energy_panel.set_player(player);}
+    void enable_end_turn_button()noexcept(noexcept(end_turn_button.enable())){end_turn_button.enable();}
+    void disable_end_turn_button()noexcept(noexcept(end_turn_button.disable())){end_turn_button.disable();}
 private:
     Panel::Energy_panel energy_panel;
+    Button::End_turn_button end_turn_button;
 };
 }

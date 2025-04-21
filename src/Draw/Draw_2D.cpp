@@ -110,6 +110,17 @@ namespace Draw {
         this->m_Transform=transform;
         SetCombine();
     }
+    void Draw_2D::SwitchProgram(const std::shared_ptr<Core::Program> &program){
+        if(NowProgram->GetId()==program->GetId()||program==nullptr)return;
+        if(this->drawing){
+            this->flush();
+            NowProgram->Unbind();
+        }
+        NowProgram=program;
+        if(this->drawing){
+            this->SetCombine();
+        }
+    }
     void Draw_2D::DisableBlending(){
         if(!this->blending_diabled){
             flush();

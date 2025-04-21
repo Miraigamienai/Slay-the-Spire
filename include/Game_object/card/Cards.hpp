@@ -86,9 +86,10 @@ public:
     void start_glow();
     void stop_glow();
     void draw();
-    void Flash(Uint32 _c);
     bool IsHoveredInHand(const float scale)const;
     
+    void Flash(Uint32 _c)noexcept{m_card_flash.change_color(_c);}
+    void SuperFlash()noexcept{m_card_flash.change_color(GLOWCOLOR,true);}
     bool CanUse()const noexcept{return true;}//for test
     int GetCost()const noexcept{return cost;}
     float GetX()const noexcept{return current_x;}
@@ -106,7 +107,7 @@ public:
 private:
     static const float &DT;
     int m_text_pos,cost;
-    bool darken,is_glowing;
+    bool darken,is_glowing;//is_glowing==CanUse
     float m_color_a,m_draw_scale,m_angle,m_type_width,m_type_offset,m_tint_a,m_target_draw_scale,m_dark_timer,m_glow_timer,m_hover_timer;
     const std::shared_ptr<Draw::Atlas_Region> &m_card_bg_silhouette,&m_card_bg,&m_card_frame,&m_card_left_frame,&m_card_mid_frame,&m_card_right_frame,&m_card_banner,&m_card_portrait;
     Effect::Effect_group glowgroup;
@@ -124,12 +125,12 @@ private:
     static const std::vector<std::shared_ptr<Draw::Text_layout>> &s_ui_vec;
     static float s_type_offset_attack,s_type_offset_skill,s_type_offset_power,s_type_offset_status,s_type_offset_curse,s_type_width_attack,s_type_width_skill,s_type_width_power,s_type_width_status,s_type_width_curse;
     static constexpr int CARD_FONT_SIZE=17;
+    static constexpr Uint32 GLOWCOLOR=RUtil::Math::GetColorUint32_RGB(0.2F,0.9F,1.0F);
 public:
     static constexpr float  IMG_WIDTH = 300.0F * Setting::SCALE,
                             IMG_HEIGHT = 420.0F * Setting::SCALE,
                             IMG_WIDTH_S = 300.0F * Setting::SCALE * 0.7F,
                             IMG_HEIGHT_S = 420.0F * Setting::SCALE * 0.7F;
-
 };
 inline bool operator<(Rarity lhs, Rarity rhs) {
     return static_cast<int>(lhs) < static_cast<int>(rhs);

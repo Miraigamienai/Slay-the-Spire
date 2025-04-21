@@ -3,6 +3,7 @@ set(SRC_FILES
 	draw_test.cpp
 	InitScreen.cpp
 	main.cpp
+	Programs.cpp
 	TheApp.cpp
 	button/End_turn_button.cpp
 	Draw/Atlas_Region.cpp
@@ -88,6 +89,7 @@ set(INCLUDE_FILES
 	Cursor.hpp
 	draw_test.hpp
 	InitScreen.hpp
+	Programs.hpp
 	TheApp.hpp
 	WindowSize.hpp
 	Draw/Atlas_Region.hpp

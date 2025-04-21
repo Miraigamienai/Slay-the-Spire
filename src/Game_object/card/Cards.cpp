@@ -75,7 +75,7 @@ namespace Card{
         if(is_glowing){
             m_glow_timer-=DT;
             if(m_glow_timer<0.0F){
-                glowgroup.AddTop(std::make_shared<Effect::Card_glow_border>(m_card_bg_silhouette,this->current_x,this->current_y,this->m_angle,this->m_draw_scale));
+                glowgroup.AddTop(std::make_shared<Effect::Card_glow_border>(this->m_card_bg_silhouette,this->current_x,this->current_y,this->m_angle,this->m_draw_scale,GLOWCOLOR));
                 m_glow_timer=0.3F;
             }
         }
@@ -164,9 +164,6 @@ namespace Card{
     void Cards::stop_glow(){
         is_glowing=false;
         for(const auto&it:glowgroup)it->QuickDisappear(5.0F);
-    }
-    void Cards::Flash(Uint32 _c){
-        m_card_flash.change_color(_c);
     }
     void Cards::SetTargetDrawScale(const float value){m_target_draw_scale=value;}
     void Cards::SetDrawScale(const float value){m_draw_scale=value;}

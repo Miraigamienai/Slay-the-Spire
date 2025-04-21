@@ -26,8 +26,7 @@ void Hitbox::update(){
     //click check
     if(hovered&&just_clicked){
         this->click_stared=true;
-    }
-    else if(clicked){
+    }else if(clicked){
         clicked=false;
     }else if(click_stared&&just_released){
         click_stared=false;

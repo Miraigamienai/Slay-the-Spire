@@ -6,10 +6,10 @@ public:
     Hitbox(float x,float y,float width,float height,bool isCenter=false);
     Hitbox(float width,float height);
     ~Hitbox()=default;
-    const bool&JustHovered()const {return just_hovered;}
-    const bool&Hovered()const {return hovered;}
-    const bool&ClickStarted()const{return click_stared;}
-    const bool&Clicked()const{return clicked;}
+    const bool&JustHovered()const noexcept{return just_hovered;}
+    const bool&Hovered()const noexcept{return hovered;}
+    const bool&ClickStarted()const noexcept{return click_stared;}//クリック中も含まれる
+    const bool&Clicked()const noexcept{return clicked;}
     void update();
     void resize(float w,float h){
         this->width=w;

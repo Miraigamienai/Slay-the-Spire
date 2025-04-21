@@ -51,7 +51,8 @@ void Monster_room::update(Action::Action_group_handler &action_group_handler,Car
             }
             //energy
             action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));//temporary 5
-            //end turn button
+            overlay.enable_end_turn_button();
+            
             //panel?
         }
     }

@@ -11,7 +11,7 @@ int main(int, char**) {
     auto context = Core::Context::GetInstance();
     context->SetWindowIcon(RESOURCE_DIR"/Image/assets/icon.png");
     SDL_ShowCursor(SDL_DISABLE);
-    std::shared_ptr<Draw::Draw_2D> Draw2D =std::make_shared<Draw::Draw_2D>();
+    std::shared_ptr<Draw::Draw_2D> Draw2D =std::make_shared<Draw::Draw_2D>(4095);
     TheApp app;
     while (!context->GetExit()) {
         Effect::Auto_release_pool_manager::update();

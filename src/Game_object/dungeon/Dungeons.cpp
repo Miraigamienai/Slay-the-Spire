@@ -27,7 +27,7 @@ namespace Dungeon{
         if(m_current_node!=nullptr) m_current_node->GetRoom()->update(m_dungeon_shared.action_group_handler,m_dungeon_shared.card_group_handler,m_overlay,m_random_package);
         m_dungeon_shared.card_group_handler.update_hand_cards(m_dungeon_shared.effs,player->GetCardTrailColor());
         m_dungeon_shared.card_group_handler.update_flying_cards(m_dungeon_shared.effs,player->GetCardTrailColor());//for test
-        m_overlay.update();
+        m_overlay.update(m_dungeon_shared.card_group_handler);
         m_dungeon_manager.update(m_dungeon_shared);
         if(!is_fade_in&&!is_fade_out){
             if(!next_node_is_making_circle){

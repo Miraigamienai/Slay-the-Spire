@@ -2,11 +2,10 @@
 #include "Game_object/action/Empty_shuffle_action.hpp"
 namespace Action
 {
-    Draw_card_action::Draw_card_action(int amount):amount(amount){
+    Draw_card_action::Draw_card_action(int amount)noexcept:first_time(true),amount(amount){
         this->duration=ACTION_DUR_FASTER;
-        first_time=true;
     }
-    void Draw_card_action::update(Card::Card_group_handler &card_group_handler,Action_group_handler*const action_group_handler,const RUtil::Random_package &random_package){
+    void Draw_card_action::update(Card::Card_group_handler &card_group_handler,Action_group_handler &action_group_handler,const RUtil::Random_package &/* random_package */){
         const int draw_size=card_group_handler.size(Card::GroupType::draw_pile),
                   discard_size=card_group_handler.size(Card::GroupType::m_discard);
         if(draw_size+discard_size==0){
@@ -21,10 +20,10 @@ namespace Action
                 amount=10-card_group_handler.size(Card::GroupType::hand_cards);
             }
             if(amount>draw_size){
-                action_group_handler->AddActionTop(std::make_shared<Action::Draw_card_action>(amount-draw_size));
-                action_group_handler->AddActionTop(std::make_shared<Action::Empty_shuffle_action>(discard_size));
+                action_group_handler.AddActionTop(std::make_shared<Action::Draw_card_action>(amount-draw_size));
+                action_group_handler.AddActionTop(std::make_shared<Action::Empty_shuffle_action>(discard_size));
                 if(draw_size!=0)
-                    action_group_handler->AddActionTop(std::make_shared<Action::Draw_card_action>(draw_size));
+                    action_group_handler.AddActionTop(std::make_shared<Action::Draw_card_action>(draw_size));
                 is_done=true;
                 return;
             }

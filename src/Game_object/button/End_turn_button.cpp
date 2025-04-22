@@ -13,7 +13,7 @@
 
 namespace Button
 {
-    End_turn_button::End_turn_button():Buttons(0.0F,0.0F,230.0F*Setting::SCALE,110.0F*Setting::SCALE){
+    End_turn_button::End_turn_button():hb(0.0F,0.0F,230.0F*Setting::SCALE,110.0F*Setting::SCALE){
         this->current_x=HIDE_X;
         this->target_x=HIDE_X;
         this->current_y=SHOW_Y;

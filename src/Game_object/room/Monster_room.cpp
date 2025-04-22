@@ -2,6 +2,8 @@
 #include "Game_object/action/Action_group_handler.hpp"//for update
 #include "Game_object/card/Card_group_handler.hpp"//for update
 #include "Game_object/action/Draw_card_action.hpp"//draw card
+#include "Game_object/action/Discard_all_action.hpp"//end turn discard
+#include "Game_object/action/Enable_end_button_action.hpp"//controls the time for enabling the end button 
 #include "Game_object/dungeon/Overlay.hpp"//combat panel
 #include "Game_object/character/Monster_group_creater.hpp"//create monsters & group_name
 #include "RUtil/Image_book.hpp"//for Retexture loading
@@ -35,8 +37,11 @@ void Monster_room::update(Action::Action_group_handler &action_group_handler,Car
         if(Util::Input::IsKeyDown(Util::Keycode::A)){//for test
             action_group_handler.AddActionTop(std::make_shared<Action::Draw_card_action>(5));
         }
-        if(Util::Input::IsKeyDown(Util::Keycode::S)){//for test
-            card_group_handler.discard_all();
+        if(overlay.end_turn_button_clicked()){
+            //ending turn
+            action_group_handler.AddActionBot(std::make_shared<Action::Discard_all_action>());
+            action_group_handler.ending_turn(m_monsters);
+            this->m_wait_timer=0.25F;
         }
     }else{
         if(action_group_handler.is_nothing_to_do()){
@@ -49,11 +54,9 @@ void Monster_room::update(Action::Action_group_handler &action_group_handler,Car
                 //battle start effect
                 overlay.show_combat_panel();
             }
-            //energy
             action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));//temporary 5
-            overlay.enable_end_turn_button();
+            action_group_handler.AddActionBot(std::make_shared<Action::Enable_end_button_action>(overlay));//Ensure that enable action will be triggered after the card are drawn.
             
-            //panel?
         }
     }
 }

@@ -8,10 +8,14 @@ class Actions
 {
 public:
     virtual ~Actions()=default;
-    virtual void update(Card::Card_group_handler &card_group_handler,Action_group_handler*const action_group_handler,const RUtil::Random_package &random_package)=0;
+    virtual void update(Card::Card_group_handler &card_group_handler,Action_group_handler &action_group_handler,const RUtil::Random_package &random_package)=0;
     bool IsDone()const{return is_done;}
 protected:
-    void TimeGo();
+    void TimeGo(){
+        duration-=DT;
+        if(duration<0.0F)
+            is_done=true;
+    }
     bool is_done=false;
     float duration=0.0F;
     static const float &DT;

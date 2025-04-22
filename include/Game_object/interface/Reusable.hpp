@@ -1,6 +1,6 @@
 #pragma once
 
-#include <utility>
+#include <utility>//std::forward
 
 namespace Interface{
 //Reusable effect interface.
@@ -9,7 +9,7 @@ namespace Interface{
 template<typename T>
 class Reusable{
 public:
-    //CRTP
+    //CRTP //Don't need virtual destructor //Don't use Base* to point to Derived
     template<typename...Args>
     void CallInitial(Args&&...args){
         static_cast<T*>(this)->Initial(std::forward<Args>(args)...);

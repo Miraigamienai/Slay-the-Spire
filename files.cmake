@@ -5,7 +5,6 @@ set(SRC_FILES
 	main.cpp
 	Programs.cpp
 	TheApp.cpp
-	button/End_turn_button.cpp
 	Draw/Atlas_Region.cpp
 	Draw/Draw_2D.cpp
 	Draw/Image_Region.cpp
@@ -20,10 +19,9 @@ set(SRC_FILES
 	Game_object/action/Card_use_action.cpp
 	Game_object/action/Damage_action.cpp
 	Game_object/action/Discard_action.cpp
-	Game_object/action/Discard_all_action.cpp
 	Game_object/action/Draw_card_action.cpp
 	Game_object/action/Empty_shuffle_action.cpp
-	Game_object/action/Wait_action.cpp
+	Game_object/button/End_turn_button.cpp
 	Game_object/card/Cards.cpp
 	Game_object/card/Card_group.cpp
 	Game_object/card/Card_group_handler.cpp
@@ -110,8 +108,8 @@ set(INCLUDE_FILES
 	Game_object/action/Discard_all_action.hpp
 	Game_object/action/Draw_card_action.hpp
 	Game_object/action/Empty_shuffle_action.hpp
+	Game_object/action/Enable_end_button_action.hpp
 	Game_object/action/Wait_action.hpp
-	Game_object/button/Buttons.hpp
 	Game_object/button/End_turn_button.hpp
 	Game_object/card/Cards.hpp
 	Game_object/card/Card_group.hpp

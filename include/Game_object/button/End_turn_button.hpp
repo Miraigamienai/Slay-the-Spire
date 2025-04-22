@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "Game_object/button/Buttons.hpp"
 #include "Game_object/effect/Effect_group.hpp"//glow_list
 #include "RUtil/Some_Math.hpp"//RGB
+#include "RUtil/Hitbox.hpp"//hb member
 #include "WindowSize.hpp"//Setting::SCALE
 
 //fwd decl
@@ -13,16 +13,20 @@ namespace Card{
 }
 namespace Draw{
     class ReTexture;
+    class Draw_2D;
 }
 
 namespace Button{
-class End_turn_button final:public Buttons
+class End_turn_button
 {
 public:
     End_turn_button();
-    ~End_turn_button()override=default;
+    ~End_turn_button()=default;
     void update(const Card::Card_group_handler &card_group_handler);
-    void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
+    void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
+    bool is_logically_clicked()const noexcept{
+        return is_enabled&&!is_disabled&&hb.Clicked();
+    }
     void enable()noexcept{this->is_enabled=true;}//start turn
     void disable()noexcept{this->is_enabled=false;}//end turn
     void show()noexcept{
@@ -41,6 +45,7 @@ public:
 private:
     float current_x,current_y,target_x;//only move x
     bool is_hidden,is_glowing;
+    RUtil::Hitbox hb;
     //is_enabled: Controlled externally.
     //is_disabled: Controlled internally.
     bool is_enabled,is_disabled;

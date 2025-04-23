@@ -38,6 +38,6 @@ class Monster_group_creater
 public:
     Monster_group_creater()=delete;~Monster_group_creater()=delete;Monster_group_creater(const Monster_group_creater &) = delete;Monster_group_creater(Monster_group_creater &&) = delete;Monster_group_creater &operator=(const Monster_group_creater &) = delete;Monster_group_creater &operator=(Monster_group_creater &&) = delete;
     
-    static void CreateGroup(Monster_group &group,GroupName group_name,const std::shared_ptr<RUtil::Random> &rng);
+    static void CreateGroup(Monster_group &group,GroupName group_name,RUtil::Random &rng);
 };
 }

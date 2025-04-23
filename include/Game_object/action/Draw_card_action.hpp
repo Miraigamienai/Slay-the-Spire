@@ -6,9 +6,11 @@ namespace Action{
 class Draw_card_action final:public Actions
 {
 public:
-    Draw_card_action(int amount)noexcept;
+    Draw_card_action(int amount)noexcept:first_time(true),amount(amount){
+        this->duration=ACTION_DUR_FASTER;
+    }
     ~Draw_card_action()override=default;
-    void update(Card::Card_group_handler &card_group_handler,Action_group_handler &action_group_handler,const RUtil::Random_package &random_package)override;
+    void update(Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
     bool first_time;
     int amount;

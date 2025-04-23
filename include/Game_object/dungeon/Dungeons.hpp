@@ -11,17 +11,16 @@ namespace Dungeon{
 class Dungeons
 {
 public:
-    Dungeons(Dungeon_shared &dungeon_shared,RUtil::Random_package &random_package,unsigned long long int random_seed);
+    Dungeons(Dungeon_shared &dungeon_shared,unsigned long long int random_seed);
     virtual ~Dungeons()=default;
     void update();
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
 protected:
     Uint32 fade_color=0x1e0f0aff;
 private:
-    Dungeon_shared &m_dungeon_shared;
-    RUtil::Random_package &m_random_package;
+    Dungeon_shared &dungeon_shared;
+
     Dungeon_manager m_dungeon_manager;
-    Overlay m_overlay;
     std::shared_ptr<Scene::Scenes> scene;
     std::vector<std::vector<std::shared_ptr<Map::Map_node>>> m_map;
     std::shared_ptr<Map::Map_node> m_current_node,m_next_node=nullptr;

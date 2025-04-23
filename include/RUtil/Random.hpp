@@ -5,6 +5,7 @@
 namespace RUtil{
 class Random{
 public:
+    Random();
     Random(unsigned long long int seed,int counter=0);
     ~Random()=default;
 

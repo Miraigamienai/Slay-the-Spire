@@ -5,6 +5,7 @@
 #include "Game_object/action/Discard_all_action.hpp"//end turn discard
 #include "Game_object/action/Enable_end_button_action.hpp"//controls the time for enabling the end button 
 #include "Game_object/dungeon/Overlay.hpp"//combat panel
+#include "Game_object/dungeon/Dungeon_shared.hpp"//for update function
 #include "Game_object/character/Monster_group_creater.hpp"//create monsters & group_name
 #include "RUtil/Image_book.hpp"//for Retexture loading
 #include "RUtil/Random_package.hpp"//for passing rng to create monsters
@@ -27,35 +28,36 @@ void Monster_room::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
     m_monsters.render(r2);
     //player render
 }
-void Monster_room::update(Action::Action_group_handler &action_group_handler,Card::Card_group_handler &card_group_handler,Dungeon::Overlay &overlay,const RUtil::Random_package &random_package){
+void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
     m_monsters.update();
     
     if(m_wait_timer<=0.0F){//Loop until end turn. //Idle also loop here.
-        action_group_handler.update(card_group_handler,random_package);
-        card_group_handler.update(action_group_handler,m_monsters);
+        dungeon_shared.action_group_handler.update(dungeon_shared);
+        dungeon_shared.card_group_handler.update(dungeon_shared.action_group_handler,m_monsters);
         
         if(Util::Input::IsKeyDown(Util::Keycode::A)){//for test
-            action_group_handler.AddActionTop(std::make_shared<Action::Draw_card_action>(5));
+            dungeon_shared.action_group_handler.AddActionTop(std::make_shared<Action::Draw_card_action>(5));
         }
-        if(overlay.end_turn_button_clicked()){
+        if(dungeon_shared.overlay.end_turn_button_clicked()){
             //ending turn
-            action_group_handler.AddActionBot(std::make_shared<Action::Discard_all_action>());
-            action_group_handler.ending_turn(m_monsters);
+            dungeon_shared.overlay.disable_end_turn_button();
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Discard_all_action>());
+            dungeon_shared.action_group_handler.ending_turn(m_monsters);
             this->m_wait_timer=0.25F;
         }
     }else{
-        if(action_group_handler.is_nothing_to_do()){
+        if(dungeon_shared.action_group_handler.is_nothing_to_do()){
             m_wait_timer-=RUtil::Game_Input::delta_time();
         }else{
-            action_group_handler.update(card_group_handler,random_package);
+            dungeon_shared.action_group_handler.update(dungeon_shared);
         }
         if(m_wait_timer<=0.0F){//ready to start turn
             if(/*first*/true){
                 //battle start effect
-                overlay.show_combat_panel();
+                dungeon_shared.overlay.show_combat_panel();
             }
-            action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));//temporary 5
-            action_group_handler.AddActionBot(std::make_shared<Action::Enable_end_button_action>(overlay));//Ensure that enable action will be triggered after the card are drawn.
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));//temporary 5
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Enable_end_button_action>());//Ensure that enable action will be triggered after the card are drawn.
             
         }
     }

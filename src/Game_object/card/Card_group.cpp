@@ -1,5 +1,3 @@
-#include <algorithm>
-
 #include "Game_object/card/Card_group.hpp"
 
 #include "Util/Logger.hpp"
@@ -55,8 +53,5 @@ namespace Card{
         box.clear();
         for(const auto&it:other) box.emplace_back(std::make_shared<Card::Cards>(*it));
         return *this;
-    }
-    void Card_group::ShuffleWithRng(const std::shared_ptr<RUtil::Random> &rng){
-        std::shuffle(box.begin(),box.end(),*rng);
     }
 }

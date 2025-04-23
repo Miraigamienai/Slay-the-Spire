@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Game_object/action/Actions.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/dungeon/Overlay.hpp"
 
 namespace Action{
@@ -9,15 +10,13 @@ namespace Action{
 class Enable_end_button_action final:public Actions
 {
 public:
-    Enable_end_button_action(Dungeon::Overlay &overlay):overlay(overlay){};
+    Enable_end_button_action()=default;
     ~Enable_end_button_action()override=default;
-    void update(Card::Card_group_handler &/*card_group_handler*/,Action_group_handler &/*action_group_handler*/,const RUtil::Random_package &/*random_package*/)
-        noexcept(noexcept(overlay.enable_end_turn_button())) override
+    void update(Dungeon::Dungeon_shared &dungeon_shared)
+        noexcept(noexcept(dungeon_shared.overlay.enable_end_turn_button())) override
     {
         is_done=true;
-        overlay.enable_end_turn_button();
+        dungeon_shared.overlay.enable_end_turn_button();
     }
-private:
-    Dungeon::Overlay &overlay;
 };
 }

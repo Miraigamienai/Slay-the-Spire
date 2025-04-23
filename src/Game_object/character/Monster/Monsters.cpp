@@ -1,4 +1,5 @@
 #include "Game_object/character/Monster/Monsters.hpp"
+#include "RUtil/Random.hpp"
 namespace Monster
 {
     Monsters::Monsters(float x, float y, float width, float height) : Characters(x, y, width, height) {

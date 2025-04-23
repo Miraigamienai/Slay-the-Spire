@@ -28,7 +28,7 @@ public:
         return is_enabled&&!is_disabled&&hb.Clicked();
     }
     void enable()noexcept{this->is_enabled=true;}//start turn
-    void disable()noexcept{this->is_enabled=false;}//end turn
+    void disable()noexcept{this->is_enabled=false;this->is_disabled=true;}//end turn
     void show()noexcept{
         if(is_hidden){
             is_hidden=false;

@@ -24,7 +24,7 @@ namespace Button
         this->glow_timer=0.0F;
     }
     void End_turn_button::update(const Card::Card_group_handler &card_group_handler){
-        this->is_glowing=!card_group_handler.is_someone_canuse();
+        this->is_glowing=!card_group_handler.is_someone_canuse()&&is_enabled&&!is_disabled;
         //glow update
         if(is_glowing&&!is_hidden){
             glow_timer-=RUtil::Game_Input::delta_time();
@@ -39,11 +39,11 @@ namespace Button
         if(this->current_x!=this->target_x)
             this->current_x=RUtil::Math::varlerp(this->current_x,this->target_x,9.0F,Setting::SCALE);
         
+        this->hb.move(current_x,current_y);
+        this->hb.update();
         if(this->is_enabled){//is_enabled takes priority over is_disabled
             this->is_disabled=this->is_hidden||card_group_handler.is_dragging();
             if(!this->is_disabled){
-                this->hb.move(current_x,current_y);
-                this->hb.update();
                 if(this->hb.JustHovered())
                     card_group_handler.super_flash();
             }
@@ -83,8 +83,8 @@ namespace Button
         else
             r2->SetColor(RUtil::Colors::WHITE);
         
-        const float adj_y = (!is_hidden && hb.ClickStarted() ? -2.0F * Setting::SCALE
-                           : !is_hidden && hb.Hovered()      ?  2.0F * Setting::SCALE
+        const float adj_y = (!is_disabled && hb.ClickStarted() ? -2.0F * Setting::SCALE
+                           : !is_disabled && hb.Hovered()      ?  2.0F * Setting::SCALE
                            : 0.0F)+current_y;
         const auto&img=is_glowing&&!hb.ClickStarted()?GLOW_BUTTON:NORMAL_BUTTON;
         if(hb.Hovered()&&!is_disabled)

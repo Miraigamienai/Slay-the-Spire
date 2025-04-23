@@ -1,23 +1,24 @@
-#include "Game_object/action/Action_group_handler.hpp"
-#include "Game_object/action/Card_use_action.hpp"
-#include "Game_object/action/Wait_action.hpp"
+#include "Game_object/action/Action_group_handler.hpp"//the hpp
+#include "Game_object/action/Card_use_action.hpp"//use card
+#include "Game_object/action/Wait_action.hpp"//for wait
 #include "Game_object/character/Monster/Monsters.hpp"//monster take turn
+#include "Game_object/dungeon/Dungeon_shared.hpp"//for update function
 
 #include "Util/Logger.hpp"
 
 namespace Action
 {
-    void Action_group_handler::update(Card::Card_group_handler &card_group_handler,const RUtil::Random_package &random_package){
+    void Action_group_handler::update(Dungeon::Dungeon_shared &dungeon_shared){
         if(is_wating_player){
             get_next_action();
         }else{
             if(current_action!=nullptr){
-                current_action->update(card_group_handler,*this,random_package);
+                current_action->update(dungeon_shared);
                 if(current_action->IsDone()) current_action=nullptr;
             }else{
                 get_next_action();
                 if(current_action==nullptr){
-                    card_group_handler.refresh_hand_layout();
+                    dungeon_shared.card_group_handler.refresh_hand_layout();
                     is_wating_player=true;
                 }
             }
@@ -32,7 +33,7 @@ namespace Action
             is_wating_player=false;
         }else if(!card_queue.empty()){//Using Bot(front) card
             //remember check if card can't use
-            action_box.AddBot(std::make_shared<Card_use_action>(card_queue.front()));
+            // action_box.AddBot(std::make_shared<Card_use_action>(card_queue.front()));
             card_queue.front().card->SetX((float)Setting::WINDOW_WIDTH/2.0F);
             card_queue.front().card->SetY((float)Setting::WINDOW_HEIGHT/2.0F);
             //reduce energy
@@ -40,6 +41,10 @@ namespace Action
         }else if(!monster_queue.empty()){
 
             monster_queue.pop_back();
+        }else if(is_endding_turn){
+            is_endding_turn=false;
+            action_box.AddBot(std::make_shared<Wait_action>(1.5F));//wait after monster turn end.
+
         }
     }
 

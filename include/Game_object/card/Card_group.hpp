@@ -1,5 +1,7 @@
 #ifndef GAME_OBJECT_CARD_CARD_GROUP
 #define GAME_OBJECT_CARD_CARD_GROUP
+#include <algorithm>
+
 #include "Game_object/card/Cards.hpp"
 #include "RUtil/Random.hpp"
 #include "Game_object/Group_template.hpp"
@@ -8,6 +10,7 @@ class Card_group:public Template::Group_template<std::vector<std::shared_ptr<Car
 {
 public:
     Card_group()=default;
+    ~Card_group()override=default;
     Card_group(const Card_group&) = delete;
     Card_group(Card_group&&) = delete;
     Card_group& operator=(Card_group&&) = delete;
@@ -20,8 +23,10 @@ public:
     void RemoveCard(const std::shared_ptr<Cards>&card);
     std::shared_ptr<Cards> GetHoveredCard()const;
     int GetCardPos(const std::shared_ptr<Cards> &card)const;
-    void ShuffleWithRng(const std::shared_ptr<RUtil::Random> &rng);
-    ~Card_group()override=default;
+    void ShuffleWithRng(RUtil::Random &rng){
+        std::shuffle(box.begin(),box.end(),rng);
+    }
+
     const std::shared_ptr<Cards>&operator[](size_t idx)const{return box[idx];}
     Card_group& operator=(const Card_group&other);
 };

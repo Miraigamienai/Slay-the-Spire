@@ -7,7 +7,7 @@
 #include "Util/Logger.hpp"
 
 namespace Monster{
-    void Monster_group_creater::CreateGroup(Monster_group &group,GroupName group_name,const std::shared_ptr<RUtil::Random> &rng){
+    void Monster_group_creater::CreateGroup(Monster_group &group,GroupName group_name,RUtil::Random &rng){
         // switch(group_name){
         //     case GroupName::Blue_Slaver:
                 

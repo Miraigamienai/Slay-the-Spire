@@ -7,21 +7,21 @@
 #include "Util/Logger.hpp"
 
 namespace Map{
-std::vector<std::vector<std::shared_ptr<Map_node>>> Map_generator::Get_Map(int height,int width,int density,const std::shared_ptr<RUtil::Random> &rng){
+std::vector<std::vector<std::shared_ptr<Map_node>>> Map_generator::Get_Map(int height,int width,int density, RUtil::Random &rng){
     std::vector<std::vector<std::shared_ptr<Map_node>>> map(height,std::vector<std::shared_ptr<Map_node>>(width,nullptr));
     
     int first_node=-1;
     for(int i=0;i<density;i++){//try create density times
-        int start_node=rng->NextInt(width);
+        int start_node=rng.NextInt(width);
         if(i==0)first_node=start_node;//set first node
-        while(start_node==first_node&&i==1) start_node=rng->NextInt(width);//make sure path at least two
+        while(start_node==first_node&&i==1) start_node=rng.NextInt(width);//make sure path at least two
         
         //start creat path from start node
         int now_node_y=0,now_node_x=start_node,
             next_node_y,next_node_x;
         map[now_node_y][now_node_x]=std::make_shared<Map::Map_node>(now_node_x,now_node_y);
         while(now_node_y+1<height){
-            next_node_x=now_node_x+rng->NextInt(now_node_x==0?0:-1,now_node_x==width-1?0:1);
+            next_node_x=now_node_x+rng.NextInt(now_node_x==0?0:-1,now_node_x==width-1?0:1);
             next_node_y=now_node_y+1;
 
             //check parent same // write later

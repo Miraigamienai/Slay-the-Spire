@@ -19,7 +19,7 @@ public:
     Monster_room();
     const std::shared_ptr<Draw::ReTexture> &GetTexture()const override{return IMG;}
     const std::shared_ptr<Draw::ReTexture> &GetOutlineTexture()const override{return IMG_O;}
-    void update(Action::Action_group_handler &action_group_handler,Card::Card_group_handler &card_group_handler,Dungeon::Overlay &overlay,const RUtil::Random_package &random_package)override;
+    void update(Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void init_room(RUtil::Random_package &random_package)override;
     void set_monster_group_name(Monster::GroupName group_name)noexcept{m_group_name=group_name;}

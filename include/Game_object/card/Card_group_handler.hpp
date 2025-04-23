@@ -46,7 +46,7 @@ public:
     void draw();
     void update(Action::Action_group_handler &action_group_handler,const Monster::Monster_group &room_monsters);
     void refresh_hand_layout()const;
-    void prepare_for_battle(const std::shared_ptr<RUtil::Random> &rng);
+    void prepare_for_battle(RUtil::Random &rng);
     void shuffle(bool shuffle_invisible);
     void hand_hide();
     void render_hand(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 PlayerColor_RGB)const;
@@ -94,7 +94,7 @@ public:
         }
     }
     bool is_someone_flying()const noexcept{return !flying_cards.empty();}
-    void discard_pile_shuffle_with_rng(const std::shared_ptr<RUtil::Random> &rng){m_discard.ShuffleWithRng(rng);}
+    void discard_pile_shuffle_with_rng(RUtil::Random &rng){m_discard.ShuffleWithRng(rng);}
 private:
     static const int &input_x,&input_y;
     static const bool &just_r,&just_l;

@@ -18,7 +18,6 @@ set(SRC_FILES
 	Game_object/action/Action_group_handler.cpp
 	Game_object/action/Card_use_action.cpp
 	Game_object/action/Damage_action.cpp
-	Game_object/action/Discard_action.cpp
 	Game_object/action/Draw_card_action.cpp
 	Game_object/action/Empty_shuffle_action.cpp
 	Game_object/button/End_turn_button.cpp
@@ -98,13 +97,13 @@ set(INCLUDE_FILES
 	Draw/ReTexture.hpp
 	Draw/Text_box.hpp
 	Draw/Text_layout.hpp
+	Game_object/Damage_info.hpp
 	Game_object/Group_template.hpp
 	Game_object/action/Actions.hpp
 	Game_object/action/Action_group.hpp
 	Game_object/action/Action_group_handler.hpp
 	Game_object/action/Card_use_action.hpp
 	Game_object/action/Damage_action.hpp
-	Game_object/action/Discard_action.hpp
 	Game_object/action/Discard_all_action.hpp
 	Game_object/action/Draw_card_action.hpp
 	Game_object/action/Empty_shuffle_action.hpp

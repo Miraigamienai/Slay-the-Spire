@@ -1,13 +1,20 @@
 #pragma once
 
 #include "Game_object/action/Actions.hpp"
+
 namespace Action{
 class Empty_shuffle_action final:public Actions
 {
 public:
-    Empty_shuffle_action(const int discard_pile_size) noexcept;
+    Empty_shuffle_action(const int discard_pile_size) noexcept:
+    amount(discard_pile_size),
+    cnt(0),
+    first_time(true)
+    {
+      this->duration=0.0F;
+    }
     ~Empty_shuffle_action()override=default;
-    void update(Card::Card_group_handler &card_group_handler,Action_group_handler &action_group_handler,const RUtil::Random_package &random_package)override;
+    void update(Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
     const int amount;
     int cnt;

@@ -337,7 +337,7 @@ namespace Card{
         hovered_card->SetY(input_y);
     }
     
-    void Card_group_handler::prepare_for_battle(const std::shared_ptr<RUtil::Random> &rng){
+    void Card_group_handler::prepare_for_battle(RUtil::Random &rng){
         this->m_discard.Clear();
         this->hand_cards.Clear();
         this->exhaust_pile.Clear();

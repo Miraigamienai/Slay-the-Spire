@@ -14,7 +14,6 @@ private:
     std::shared_ptr<InitScreen> m_InitScreen;
     Dungeon::Dungeon_shared m_dungeon_shared;
     std::shared_ptr<Dungeon::Dungeons> m_dungeon;
-    RUtil::Random_package random_package;
     unsigned long long int seed;
     AppStatus::State m_CurrentState=AppStatus::State::INIT;
 };

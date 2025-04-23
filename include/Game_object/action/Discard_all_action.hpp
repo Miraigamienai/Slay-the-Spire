@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Game_object/action/Actions.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
 
 namespace Action{
 class Discard_all_action final:public Actions
@@ -10,9 +11,9 @@ public:
         duration=ACTION_DUR_XFAST;
     }
     ~Discard_all_action()override=default;
-    void update(Card::Card_group_handler &card_group_handler,Action_group_handler &/* action_group_handler */,const RUtil::Random_package &/* random_package */)override{
+    void update(Dungeon::Dungeon_shared &dungeon_shared)override{
         if(duration==ACTION_DUR_XFAST)
-            card_group_handler.discard_all();
+            dungeon_shared.card_group_handler.discard_all();
         TimeGo();   
     }
 };

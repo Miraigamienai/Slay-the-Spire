@@ -1,6 +1,9 @@
 #include "RUtil/Random.hpp"
 
 namespace RUtil{
+    Random::Random():
+        m_gen(std::random_device()()),counter(0){}
+
     Random::Random(unsigned long long int seed,int counter):m_gen(seed),counter(counter){
        m_gen.discard(counter);
     }
@@ -12,5 +15,6 @@ namespace RUtil{
     float Random::GetRandomFloat(const float min,const float max){
         return min + static_cast<float>((static_cast<double>(s_gen()) - static_cast<double>(Random::min())) / (static_cast<double>(Random::max()) - static_cast<double>(Random::min()))) * (max - min);
     }
+
     std::mt19937 Random::s_gen{std::random_device()()};
 }

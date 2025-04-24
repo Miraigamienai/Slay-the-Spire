@@ -86,6 +86,9 @@ namespace Character{
         hb_cX=vec.x+WIDTH*0.5F;
         hb_cY=vec.y; 
     }
+    void Characters::setPosition(glm::vec2 vec){
+        pos=vec;
+    }
     void Characters::setHPBarWidth(float width){
         hb_width=width;
         update();

@@ -11,7 +11,23 @@ namespace Character{
         setPosition(glm::vec2(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET),WIDTH);
         setHPBarWidth(WIDTH*0.5F);
     }
-    
+    void Player::damage(int num){
+        if(current_Block>num){
+            current_Block-=num;
+            return;
+        }
+        else if (current_Block)
+        {
+            num-=current_Block;
+            current_Block=0;
+            current_HP-=num;
+        }
+        else
+        {
+            current_HP-=num;
+        }
+        
+    }
     void Player::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {
         r2->SetColor(-1);

@@ -19,11 +19,17 @@ public:
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2) const =0;
     void update();
     void setPosition(glm::vec2 vec,int WIDTH);
+    void setPosition(glm::vec2 vec);
     void setHPBarWidth(float width);
     bool hovered()const{return boss_hitbox.Hovered();}
     float GetX()const{return pos.x;}
     float GetY()const{return pos.y;}
-    bool IsDie()const{return false;}
+    bool IsDie()const{return false;}//for test
+    void AddBlock(int num){current_Block+=num;};
+    void setBlock(int num){current_Block=num;};
+    void AddHP(int num){current_HP+=num;};
+    void setHP(int num){current_HP=num;};
+    
 protected:
     int max_HP,current_HP,current_Block;
     void render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const;

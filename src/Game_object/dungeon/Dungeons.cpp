@@ -15,7 +15,6 @@
 namespace Dungeon{
     Dungeons::Dungeons(Dungeon_shared &dungeon_shared,unsigned long long int random_seed):dungeon_shared(dungeon_shared),random_seed(random_seed){
         scene=std::make_shared<Scene::Bottom_scene>();
-        dungeon_shared.overlay.set_player_to_energy_panel(dungeon_shared.player);
         scene->next_room();
         m_map=Map::Map_generator::Get_Map(15,7,6,dungeon_shared.random_package.map_rng);
         m_dungeon_manager.set_display_map(m_map);

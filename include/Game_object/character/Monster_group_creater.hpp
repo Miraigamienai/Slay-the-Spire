@@ -24,7 +24,7 @@ enum class GroupName:int{
     Looter,
     Large_Slime,
     Lots_of_Slimes,
-    Exordium_Thugs,
+    Exordium_Thugs, 
     Exordium_Wildlife,
     Red_Slaver,
     _3_Louse,

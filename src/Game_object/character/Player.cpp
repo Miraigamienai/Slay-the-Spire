@@ -13,7 +13,7 @@ namespace Character{
         setPosition(glm::vec2(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET),WIDTH);
         setHPBarWidth(WIDTH*0.5F);
     }
-    
+
     void Player::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {
         r2->SetColor(-1);
@@ -22,7 +22,19 @@ namespace Character{
     }
 
     void Player::damage(const Damage_info& damage_info){
-        this->current_HP-=damage_info.dmg;
+        if(current_Block>damage_info.dmg){
+            current_Block-=damage_info.dmg;
+            return;
+        }
+        else if (current_Block)
+        {
+            current_Block=0;
+            current_HP-=damage_info.dmg-current_Block;
+        }
+        else
+        {
+            current_HP-=damage_info.dmg;
+        }
     }
 
     const std::shared_ptr<Draw::ReTexture> &Player::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/character/Ironclad.png");

@@ -17,13 +17,23 @@ namespace Card{
     static const std::shared_ptr<Draw::Atlas_Region> &CardRightFrame(Rarity rarity);
     static const std::shared_ptr<Draw::Atlas_Region> &CardBanner(Rarity rarity);
     
-    Cards::Cards(RUtil::AtlasRegionID card_name,Rarity rarity,Type type,Color color,Target target,int cost):
-                        card_name(card_name),rarity(rarity),type(type),color(color),target(target),cost(cost),
-                        m_card_bg_silhouette(BgSilhouette(type)),m_card_bg(CardBg(type,color)),m_card_frame(CardFrame(type,rarity)),
-                        m_card_left_frame(CardLeftFrame(rarity)),m_card_mid_frame(CardMidFrame(rarity)),m_card_right_frame(CardRightFrame(rarity)),
-                        m_card_banner(CardBanner(rarity)),m_card_portrait(RUtil::All_Image::GetAtlasRegion(card_name)),
-                        m_card_flash(m_card_bg_silhouette,this->current_x,this->current_y,this->m_angle,this->m_draw_scale,true),
-                        hb(IMG_WIDTH_S,IMG_HEIGHT_S)
+    Cards::Cards(
+        RUtil::AtlasRegionID card_name, Rarity rarity, Type type, 
+        Color color, Target target, const int base_cost,
+        const int base_damage, const int base_defense, const int base_magic_num
+    ) : 
+        card_name(card_name), rarity(rarity),
+        type(type), color(color), target(target),
+        base_damage(base_damage), damage(base_damage),
+        base_defense(base_defense), defense(base_defense), 
+        base_magic_num(base_magic_num), magic_num(base_magic_num), 
+        base_cost(base_cost), cost(base_cost),
+        m_card_bg_silhouette(BgSilhouette(type)), m_card_bg(CardBg(type, color)), 
+        m_card_frame(CardFrame(type, rarity)), m_card_left_frame(CardLeftFrame(rarity)),
+        m_card_mid_frame(CardMidFrame(rarity)), m_card_right_frame(CardRightFrame(rarity)),
+        m_card_banner(CardBanner(rarity)), m_card_portrait(RUtil::All_Image::GetAtlasRegion(card_name)),
+        m_card_flash(m_card_bg_silhouette, this->current_x, this->current_y, this->m_angle, this->m_draw_scale, true),
+        hb(IMG_WIDTH_S, IMG_HEIGHT_S)
     {
         static bool once=false;
         if(!once){
@@ -38,6 +48,27 @@ namespace Card{
         m_color_a=1.0F;
         
         //x,y,angle not set
+    }
+
+    Cards::Cards(const Cards& other)://ensure internal references are properly set when coping. //(m_card_flash)
+        card_name(other.card_name), rarity(other.rarity),
+        type(other.type), color(other.color), target(other.target),
+        base_damage(other.base_damage), damage(other.base_damage),
+        base_defense(other.base_defense), defense(other.base_defense), 
+        base_magic_num(other.base_magic_num), magic_num(other.base_magic_num), 
+        base_cost(other.base_cost), cost(other.base_cost),
+        m_card_bg_silhouette(other.m_card_bg_silhouette), m_card_bg(other.m_card_bg),
+        m_card_frame(other.m_card_frame), m_card_left_frame(other.m_card_left_frame),
+        m_card_mid_frame(other.m_card_mid_frame), m_card_right_frame(other.m_card_right_frame),
+        m_card_banner(other.m_card_banner), m_card_portrait(other.m_card_portrait),
+        m_card_flash(other.m_card_bg_silhouette,this->current_x,this->current_y,this->m_angle,this->m_draw_scale,true),
+        hb(other.hb), m_type_width(other.m_type_width), m_type_offset(other.m_type_offset), m_text_pos(other.m_text_pos)
+    {
+        is_glowing=darken=false;
+        m_dark_timer=m_glow_timer=m_hover_timer=0.0F;
+        m_draw_scale=m_target_draw_scale=0.7F;
+        m_tint_a=0.0F;
+        m_color_a=1.0F;
     }
     
     void Cards::update(Effect::Effect_group &effs,const Uint32 PlayerTrailColor_RGB){

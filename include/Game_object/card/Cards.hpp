@@ -22,7 +22,8 @@ namespace Dungeon{
     struct Dungeon_shared;
 }
 namespace Monster{
-    class Monsters;
+    class Monsters;//hovered_moster
+    class Monster_group;//monsters
 }
 
 namespace Card{
@@ -61,23 +62,11 @@ enum class Target{
 //and normal move
 class Cards:public Card_soul{
 public:
-    Cards(RUtil::AtlasRegionID card_name,Rarity rarity,Type type,Color color,Target target,int cost);
+    Cards(RUtil::AtlasRegionID card_name,Rarity rarity,Type type,Color color,Target target,
+        const int base_cost,const int base_damage=0,const int base_defense=0,const int base_magic_num=0);
     virtual ~Cards() = default;
-    Cards(const Cards& other)://ensure internal references are properly set when coping. //(m_card_flash)
-        card_name(other.card_name),rarity(other.rarity),type(other.type),color(other.color),target(other.target),cost(other.cost),
-        m_card_bg_silhouette(other.m_card_bg_silhouette),m_card_bg(other.m_card_bg),m_card_frame(other.m_card_frame),
-        m_card_left_frame(other.m_card_left_frame),m_card_mid_frame(other.m_card_mid_frame),m_card_right_frame(other.m_card_right_frame),
-        m_card_banner(other.m_card_banner),m_card_portrait(other.m_card_portrait),
-        m_card_flash(other.m_card_bg_silhouette,this->current_x,this->current_y,this->m_angle,this->m_draw_scale,true),
-        hb(IMG_WIDTH_S,IMG_HEIGHT_S)
-    {
-        this->SetFontTypeOffset();
-        is_glowing=darken=false;
-        m_dark_timer=m_glow_timer=m_hover_timer=0.0F;
-        m_draw_scale=m_target_draw_scale=0.7F;
-        m_tint_a=0.0F;
-        m_color_a=1.0F;
-    }
+    Cards(const Cards& other);//ensure internal references are properly set when coping. //(m_card_flash)
+    
     Cards(Cards &&) = delete;
     Cards &operator=(const Cards &) = delete;
     Cards &operator=(Cards &&) = delete;
@@ -102,7 +91,7 @@ public:
     void draw();
     bool IsHoveredInHand(const float scale)const;
     //virtual function
-    virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monsters &room_monsters)=0;
+    virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &room_monsters,const std::shared_ptr<Monster::Monsters> &hovered_monster)=0;
     virtual std::shared_ptr<Cards> Clone()const=0;
     //inline const function
     void Flash(Uint32 _c)noexcept{m_card_flash.change_color(_c);}
@@ -121,15 +110,26 @@ public:
     const Type type;
     const Color color;
     const Target target;
+    //for child classes 
+    void ResetAttributes(){
+        damage=base_damage;
+        defense=base_defense;
+        magic_num=base_magic_num;
+        cost=base_cost;
+    }
+protected:
+    const int base_damage, base_defense, base_magic_num, base_cost;
+    int       damage,      defense,      magic_num,      cost;
 private:
     static const float &DT;
-    int m_text_pos,cost;
-    bool darken,is_glowing;//is_glowing==CanUse
-    float m_color_a,m_draw_scale,m_angle,m_type_width,m_type_offset,m_tint_a,m_target_draw_scale,m_dark_timer,m_glow_timer,m_hover_timer;
     const std::shared_ptr<Draw::Atlas_Region> &m_card_bg_silhouette,&m_card_bg,&m_card_frame,&m_card_left_frame,&m_card_mid_frame,&m_card_right_frame,&m_card_banner,&m_card_portrait;
-    Effect::Effect_group glowgroup;
     Effect::Card_flash m_card_flash;
     RUtil::Hitbox hb;
+    bool darken,is_glowing;//is_glowing==CanUse
+    float m_color_a,m_draw_scale,m_angle,m_tint_a,m_target_draw_scale,m_dark_timer,m_glow_timer,m_hover_timer;
+    float m_type_width,m_type_offset;
+    int m_text_pos;
+    Effect::Effect_group glowgroup;
 
     void format_render(const std::shared_ptr<Draw::Draw_2D> &r2,const std::shared_ptr<Draw::Atlas_Region> &img,const float x,const float y,const float scale=1.0F)const;
     void frame_format_render(const std::shared_ptr<Draw::Draw_2D> &r2,const std::shared_ptr<Draw::Atlas_Region> &img,const float x_offset,const float x_scale)const;

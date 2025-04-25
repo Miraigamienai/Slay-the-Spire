@@ -21,9 +21,10 @@ public:
     }
     void UnHovered(){hovered=false;}
 private:
-    static const int &nx,&ny;
-    static const bool &just_clicked,&just_released;
     float x,y,width,height;
     bool just_hovered,hovered,click_stared,clicked;
+    
+    static const int &nx,&ny;
+    static const bool &just_clicked,&just_released;
 };
 }

@@ -117,6 +117,7 @@ set(INCLUDE_FILES
 	Game_object/card/Card_soul.hpp
 	Game_object/card/red/Anger.hpp
 	Game_object/card/red/Strike_red.hpp
+	Game_object/character/AllMonster.hpp
 	Game_object/character/Characters.hpp
 	Game_object/character/Monster_group.hpp
 	Game_object/character/Monster_group_creater.hpp
@@ -179,6 +180,6 @@ set(INCLUDE_FILES
 	RUtil/Some_Math.hpp
 	RUtil/Text_Vector_Reader.hpp
 )
-
+ 
 set(TEST_FILES
 )

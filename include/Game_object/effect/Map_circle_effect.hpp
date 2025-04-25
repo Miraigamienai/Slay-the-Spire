@@ -12,7 +12,7 @@ namespace Effect{
 class Map_circle_effect final:public Effects
 {
 public:
-    Map_circle_effect(const float x,const float y,const float angle);
+    Map_circle_effect(const float x,const float y,const float angle)noexcept;
     ~Map_circle_effect()override=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void update() override;

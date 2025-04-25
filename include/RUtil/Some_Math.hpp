@@ -5,6 +5,7 @@
 #include <glm/gtc/constants.hpp>//two pi
 #include <vector>
 #include <string>
+#include <algorithm>//std::clamp
 
 //if template not good for using,
 //it will change to float.
@@ -31,7 +32,10 @@ public:
     static Uint32 color_lerp_rgb(Uint32 start,Uint32 target,float t);
     static float interpolation_exp10(float start,float target,float a);
     static float interpolation_exp10in(float start,float target,float a);
-    static float interpolation_fade(float start,float target,float a);
+    static constexpr float interpolation_fade(float start,float target,float a){
+        //from gdx
+        return Apply(start,target,std::clamp(a * a * a * (a * (a * 6.0F - 15.0F) + 10.0F),0.0F,1.0F));
+    }
     static float interpolation_powout2(float start,float target,float a);
     static constexpr float interpolation_elastic_out(float a){
         return 1.0F-glm::pow(2.0F,-10.0F*a)*glm::sin(glm::two_pi<float>()*a*-10.0F);
@@ -42,7 +46,7 @@ public:
     static float BounceOut(float t);
     static float BounceIn(float t);
     template <typename T>
-    static constexpr T Apply(const T start,const T target,const float t){return start+(target-start)*t;}
+    static constexpr T Apply(const T start,const T target,const float t)noexcept(noexcept(start+(target-start)*t)){return start+(target-start)*t;}
     static glm::vec2 BezierQuadratic(const glm::vec2 p0,const glm::vec2 p1,const glm::vec2 p2,const float t);
     static glm::vec2 CatmullRomSpline(const std::vector<glm::vec2> &controls,float t,const int len,const int vec_start_pos=0);
     static constexpr int GetIntLength(const int x)noexcept{

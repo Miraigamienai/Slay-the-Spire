@@ -15,12 +15,12 @@ namespace Effect{
 class Card_trail_effect final:public Effects,public Interface::Reusable<Card_trail_effect>
 {
 public:
-    Card_trail_effect(glm::vec2 pos,Uint32 RGB_color){Initial(pos,RGB_color);}
+    Card_trail_effect(glm::vec2 pos,Uint32 RGB_color)noexcept(noexcept(this->Initial(pos,RGB_color))){this->Initial(pos,RGB_color);}
     ~Card_trail_effect() override=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void update() override;
     //reusable interface function
-    void Initial(glm::vec2 pos,Uint32 RGB_color){
+    void Initial(glm::vec2 pos,Uint32 RGB_color)noexcept{
         this->pos=pos-6.0F;
         this->color=RGB_color;
         this->duration=0.5F;

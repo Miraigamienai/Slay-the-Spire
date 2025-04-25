@@ -2,6 +2,7 @@
 #include <iostream>
 #include "RUtil/Some_Math.hpp"
 #include "RUtil/Game_Input.hpp"
+
 namespace Character{
     Characters::Characters(float x, float y, float width, float height) : boss_hitbox(x, y, width, height, false){
         hb_height=HEALTH_BAR_HEIGHT;

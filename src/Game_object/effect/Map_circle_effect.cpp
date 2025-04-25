@@ -9,7 +9,7 @@
 
 namespace Effect
 {
-    Map_circle_effect::Map_circle_effect(const float x,const float y,const float angle):x(x),y(y),angle(angle){
+    Map_circle_effect::Map_circle_effect(const float x,const float y,const float angle)noexcept:x(x),y(y),angle(angle){
         this->duration=1.2F;
         this->scale=3.0F*Setting::SCALE;
     }

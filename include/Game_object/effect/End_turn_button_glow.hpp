@@ -13,7 +13,7 @@ namespace Effect{
 class End_turn_button_glow final:public Effects,public Interface::Reusable<End_turn_button_glow>
 {
 public:
-    End_turn_button_glow(const float &button_x,const float &button_y)noexcept{
+    End_turn_button_glow(const float &button_x,const float &button_y)noexcept(noexcept(Initial(button_x,button_y))){
         Initial(button_x,button_y);
     }
     ~End_turn_button_glow()override=default;

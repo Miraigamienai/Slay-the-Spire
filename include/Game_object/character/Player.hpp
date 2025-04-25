@@ -14,7 +14,7 @@ class Player final :public Characters
 public:
     Player();
     virtual ~Player()=default;
-    void damage(int num)override;
+    void damage(const Damage_info& damage_info)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     const PlayerType player_type;
     const int &GetCurrEnergy()const{return current_energy;}

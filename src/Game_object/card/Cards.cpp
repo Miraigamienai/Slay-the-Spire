@@ -1,7 +1,10 @@
-#include "Game_object/card/Cards.hpp"
-#include "RUtil/Game_Input.hpp"
-#include "RUtil/All_Image.hpp"
-#include "Game_object/effect/Card_glow_border.hpp"
+#include "Game_object/card/Cards.hpp"//the hpp
+#include "Game_object/effect/Card_glow_border.hpp"//eff
+#include "RUtil/Game_Input.hpp"//delat time & cursor pos
+#include "RUtil/All_Image.hpp"//loading img
+#include "Draw/Atlas_Region.hpp"//img
+#include "RUtil/Text_Vector_Reader.hpp"//ui text
+#include "Draw/Draw_2D.hpp"//for rendering
 
 #include "Util/Logger.hpp"
 

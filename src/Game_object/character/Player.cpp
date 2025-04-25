@@ -1,5 +1,7 @@
 #include "Game_object/character/Player.hpp"
 #include "RUtil/Random.hpp"
+#include "Game_object/Damage_info.hpp"
+
 namespace Character{
     Player::Player():Characters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F, WIDTH, HIGHT),player_type(PlayerType::Ironclad) 
     {
@@ -11,29 +13,30 @@ namespace Character{
         setPosition(glm::vec2(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET),WIDTH);
         setHPBarWidth(WIDTH*0.5F);
     }
-    void Player::damage(int num){
-        if(current_Block>num){
-            current_Block-=num;
-            return;
-        }
-        else if (current_Block)
-        {
-            num-=current_Block;
-            current_Block=0;
-            current_HP-=num;
-        }
-        else
-        {
-            current_HP-=num;
-        }
-        
-    }
+
     void Player::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {
         r2->SetColor(-1);
         r2->draw(img,getPosition().x,getPosition().y,WIDTH,HIGHT); 
         render_HP(r2);
     }
+
+    void Player::damage(const Damage_info& damage_info){
+        if(current_Block>damage_info.dmg){
+            current_Block-=damage_info.dmg;
+            return;
+        }
+        else if (current_Block)
+        {
+            current_Block=0;
+            current_HP-=damage_info.dmg-current_Block;
+        }
+        else
+        {
+            current_HP-=damage_info.dmg;
+        }
+    }
+
     const std::shared_ptr<Draw::ReTexture> &Player::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/character/Ironclad.png");
 
 }

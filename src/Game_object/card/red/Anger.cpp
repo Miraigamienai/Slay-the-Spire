@@ -1,6 +1,10 @@
 #include "Game_object/card/red/Anger.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
+
 namespace Card{
 namespace Red{
-    Anger::Anger():Cards(RUtil::AtlasRegionID::_red_attack_anger,Rarity::common,Type::attack,Color::red,Target::enemy,0){}
+    void Anger::Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monsters &room_monsters){
+           
+    }
 }
 }    

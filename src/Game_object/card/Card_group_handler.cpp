@@ -5,6 +5,8 @@
 #include "RUtil/Random.hpp"//rng
 #include "RUtil/Game_Input.hpp"//cursor input and delta_time
 #include "RUtil/Some_Math.hpp"//Bezier method
+#include "RUtil/Image_book.hpp"//loading img
+#include "Draw/ReTexture.hpp"
 #include "Draw/Draw_2D.hpp"//for rendering
 #include "Cursor.hpp"//for hiding or displaying cursor
 

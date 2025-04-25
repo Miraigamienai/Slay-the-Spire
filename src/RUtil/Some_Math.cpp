@@ -1,5 +1,3 @@
-#include <algorithm>
-
 #include "RUtil/Some_Math.hpp"
 #include "RUtil/Game_Input.hpp"
 #include "WindowSize.hpp"
@@ -47,10 +45,6 @@ namespace RUtil{
     }
     float Math::interpolation_powout2(float start,float target,float a){
         return start+(target-start)*interpolation_powout(2,a);
-    }
-    float Math::interpolation_fade(float start,float target,float a){
-        //from gdx
-        return start+(target-start)*std::clamp(a * a * a * (a * (a * 6.0F - 15.0F) + 10.0F),0.0F,1.0F);
     }
     //t is[0,1)
     glm::vec2 Math::CatmullRomSpline(const std::vector<glm::vec2> &controls,const float t,const int len,const int vec_start_pos){

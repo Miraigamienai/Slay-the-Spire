@@ -56,6 +56,7 @@ set(SRC_FILES
 	Game_object/effect/Effect_group.cpp
 	Game_object/effect/End_turn_button_glow.cpp
 	Game_object/effect/Fade_wide.cpp
+	Game_object/effect/Flash_attack_effect.cpp
 	Game_object/effect/Map_circle_effect.cpp
 	Game_object/effect/Refresh_energy_effect.cpp
 	Game_object/energy_orb/Red_orb.cpp
@@ -149,10 +150,12 @@ set(INCLUDE_FILES
 	Game_object/effect/Effect_pool.inl
 	Game_object/effect/End_turn_button_glow.hpp
 	Game_object/effect/Fade_wide.hpp
+	Game_object/effect/Flash_attack_effect.hpp
 	Game_object/effect/Map_circle_effect.hpp
 	Game_object/effect/Refresh_energy_effect.hpp
 	Game_object/energy_orb/Energy_orb.hpp
 	Game_object/energy_orb/Red_orb.hpp
+	Game_object/interface/CardPrototype.hpp
 	Game_object/interface/Is_screen.hpp
 	Game_object/interface/Reusable.hpp
 	Game_object/map/Dungeon_map.hpp

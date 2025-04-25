@@ -21,6 +21,7 @@ namespace RUtil{
 }
 namespace Draw{
     class Draw_2D;
+    class ReTexture;
 }
 
 namespace Card{

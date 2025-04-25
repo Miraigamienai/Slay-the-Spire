@@ -5,14 +5,17 @@
 #include "Game_object/map/Map_node.hpp"
 #include "Game_object/map/Map_edge.hpp"
 #include "Game_object/character/Player.hpp"
+#include "Game_object/effect/Effect_group.hpp"
+#include "Game_object/map/Map_generator.hpp"//generate map
+#include "RUtil/Random.hpp"//rng
+#include "Game_object/scene/Scenes.hpp"
 
 #include "Util/Logger.hpp"
 
 namespace Dungeon{
     Dungeons::Dungeons(Dungeon_shared &dungeon_shared,unsigned long long int random_seed):dungeon_shared(dungeon_shared),random_seed(random_seed){
         scene=std::make_shared<Scene::Bottom_scene>();
-        player=std::make_shared<Character::Player>();
-        dungeon_shared.overlay.set_player_to_energy_panel(player);
+        dungeon_shared.overlay.set_player_to_energy_panel(dungeon_shared.player);
         scene->next_room();
         m_map=Map::Map_generator::Get_Map(15,7,6,dungeon_shared.random_package.map_rng);
         m_dungeon_manager.set_display_map(m_map);
@@ -28,8 +31,8 @@ namespace Dungeon{
         //room update
         if(m_current_node!=nullptr) m_current_node->GetRoom()->update(dungeon_shared);
         //card update
-        dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.effs,player->GetCardTrailColor());
-        dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.effs,player->GetCardTrailColor());//for test
+        dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.effs,dungeon_shared.player->GetCardTrailColor());
+        dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.effs,dungeon_shared.player->GetCardTrailColor());//for test
         //overlay update
         dungeon_shared.overlay.update(dungeon_shared.card_group_handler);
         //manager update
@@ -63,7 +66,7 @@ namespace Dungeon{
         scene->render(r2);
         if(m_current_node!=nullptr) m_current_node->GetRoom()->render(r2);
         dungeon_shared.overlay.render(r2);
-        dungeon_shared.card_group_handler.render_hand(r2,player->GetCardRenderColor());
+        dungeon_shared.card_group_handler.render_hand(r2,dungeon_shared.player->GetCardRenderColor());
         dungeon_shared.effs.render(r2);
         m_dungeon_manager.render(r2);
         dungeon_shared.top_effs.render(r2);

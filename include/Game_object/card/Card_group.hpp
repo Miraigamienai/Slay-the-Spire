@@ -1,10 +1,23 @@
-#ifndef GAME_OBJECT_CARD_CARD_GROUP
-#define GAME_OBJECT_CARD_CARD_GROUP
-#include <algorithm>
+#pragma once
 
-#include "Game_object/card/Cards.hpp"
-#include "RUtil/Random.hpp"
-#include "Game_object/Group_template.hpp"
+#include <algorithm>//shuffle
+#include <SDL_stdinc.h>//uint32
+#include <memory>
+
+#include "Game_object/Group_template.hpp"//father
+#include "RUtil/Random.hpp"//rng
+
+//fwd decl
+namespace Card{
+    class Cards;
+}
+namespace Draw{
+    class Draw_2D;
+}
+namespace Effect{
+    class Effect_group;
+}
+
 namespace Card{
 class Card_group:public Template::Group_template<std::vector<std::shared_ptr<Cards>>>
 {
@@ -31,4 +44,3 @@ public:
     Card_group& operator=(const Card_group&other);
 };
 }
-#endif

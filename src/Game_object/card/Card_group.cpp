@@ -1,4 +1,7 @@
-#include "Game_object/card/Card_group.hpp"
+#include "Game_object/card/Card_group.hpp"//the hpp
+#include "Game_object/card/Cards.hpp"//cards
+#include "Game_object/effect/Effect_group.hpp"//effs
+#include "Draw/Draw_2D.hpp"//for rendering
 
 #include "Util/Logger.hpp"
 
@@ -51,7 +54,7 @@ namespace Card{
     }
     Card_group& Card_group::operator=(const Card_group&other){
         box.clear();
-        for(const auto&it:other) box.emplace_back(std::make_shared<Card::Cards>(*it));
+        for(const auto&it:other) box.emplace_back(it->Clone());
         return *this;
     }
 }

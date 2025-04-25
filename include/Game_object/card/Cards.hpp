@@ -1,15 +1,29 @@
-#ifndef GAME_OBJECT_CARD_CARDS
-#define GAME_OBJECT_CARD_CARDS
-#include "RUtil/Atlas_Reader.hpp"
-#include "RUtil/All_Image.hpp"
-#include "Draw/Draw_2D.hpp"
-#include "RUtil/Text_Vector_Reader.hpp"
+#pragma once
 
-#include "RUtil/Some_Math.hpp"
-#include "Game_object/card/Card_soul.hpp"
-#include "Game_object/effect/Card_flash.hpp"
-#include "RUtil/Hitbox.hpp"
-#include "Game_object/effect/Effect_group.hpp"
+#include <vector>
+#include <memory>
+
+#include "Game_object/card/Card_soul.hpp"//father
+#include "Game_object/effect/Card_flash.hpp"//member
+#include "Game_object/effect/Effect_group.hpp"//member (glowgroup)
+#include "RUtil/Some_Math.hpp"//get rgb color
+#include "RUtil/Hitbox.hpp"//member
+
+//fwd decl
+namespace Draw{
+    class Draw_2D;
+    class Atlas_Region;
+    class Text_layout;
+}
+namespace RUtil{
+    enum class AtlasRegionID:int;
+}
+namespace Dungeon{
+    struct Dungeon_shared;
+}
+namespace Monster{
+    class Monsters;
+}
 
 namespace Card{
 enum class Rarity{
@@ -87,7 +101,10 @@ public:
     void stop_glow();
     void draw();
     bool IsHoveredInHand(const float scale)const;
-    
+    //virtual function
+    virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monsters &room_monsters)=0;
+    virtual std::shared_ptr<Cards> Clone()const=0;
+    //inline const function
     void Flash(Uint32 _c)noexcept{m_card_flash.change_color(_c);}
     void SuperFlash()noexcept{m_card_flash.change_color(GLOWCOLOR,true);}
     bool CanUse()const noexcept{return true;}//for test
@@ -98,7 +115,7 @@ public:
     void SetX(const float value,const bool immediate=false)noexcept{target_x=value;if(immediate)current_x=value;}
     void SetAngle(const float value,const bool immediate=false)noexcept{target_angle=value;if(immediate)m_angle=value;}
     bool IsSingleTarget()const noexcept{return target==Target::enemy||target==Target::self_and_enemy;}
-
+    //member
     const RUtil::AtlasRegionID card_name;
     const Rarity rarity;
     const Type type;
@@ -139,4 +156,3 @@ inline bool operator<(Type lhs, Type rhs) {
     return static_cast<int>(lhs) < static_cast<int>(rhs);
 }
 }
-#endif

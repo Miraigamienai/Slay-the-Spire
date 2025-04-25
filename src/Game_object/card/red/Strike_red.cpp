@@ -1,6 +1,10 @@
 #include "Game_object/card/red/Strike_red.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
+
 namespace Card{
 namespace Red{
-    Strike_red::Strike_red():Cards(RUtil::AtlasRegionID::_red_attack_strike,Rarity::basic,Type::attack,Color::red,Target::enemy,1){}
+    void Strike_red::Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monsters &room_monsters){
+           
+    }
 }
 }

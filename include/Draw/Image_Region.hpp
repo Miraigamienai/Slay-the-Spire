@@ -32,12 +32,12 @@ public:
         const int width = -1, const int height = -1);
     void SetRegion(const int x=0,const int y=0,const int width=-1,const int height=-1);
     std::shared_ptr<ReTexture> GetTexture()const{return texture;}
-    int GetRegionWidth()const{return region_w;}
-    int GetRegionHeight()const{return region_h;}
-    float GetU()const{return u;}
-    float GetU2()const{return u2;}
-    float GetV()const{return v;}
-    float GetV2()const{return v2;}
+    int GetRegionWidth()const noexcept{return region_w;}
+    int GetRegionHeight()const noexcept{return region_h;}
+    float GetU()const noexcept{return u;}
+    float GetU2()const noexcept{return u2;}
+    float GetV()const noexcept{return v;}
+    float GetV2()const noexcept{return v2;}
     virtual ~Image_Region() = default;
 private:
     void SetRegion(const float u,const float v,const float u2,const float v2);

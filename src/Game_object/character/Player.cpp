@@ -1,5 +1,7 @@
 #include "Game_object/character/Player.hpp"
 #include "RUtil/Random.hpp"
+#include "Game_object/Damage_info.hpp"
+
 namespace Character{
     Player::Player():Characters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F, WIDTH, HIGHT),player_type(PlayerType::Ironclad) 
     {
@@ -18,6 +20,11 @@ namespace Character{
         r2->draw(img,getPosition().x,getPosition().y,WIDTH,HIGHT); 
         render_HP(r2);
     }
+
+    void Player::damage(const Damage_info& damage_info){
+        this->current_HP-=damage_info.dmg;
+    }
+
     const std::shared_ptr<Draw::ReTexture> &Player::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/character/Ironclad.png");
 
 }

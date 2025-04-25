@@ -5,18 +5,25 @@
 #include "RUtil/Image_book.hpp"
 #include "WindowSize.hpp"
 #include "RUtil/Some_Math.hpp"
+
+//fwd decl
+struct Damage_info;
+
 namespace Character{
 class Characters
 {
 public:
     Characters(float x, float y, float width, float height);
     virtual ~Characters()=default;
-    virtual void damage(int num)=0;
+    virtual void damage(const Damage_info& damage_info)=0;
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2) const =0;
     void update();
     void setPosition(glm::vec2 vec,int WIDTH);
     void setHPBarWidth(float width);
     bool hovered()const{return boss_hitbox.Hovered();}
+    float GetX()const{return pos.x;}
+    float GetY()const{return pos.y;}
+    bool IsDie()const{return false;}
 protected:
     int max_HP,current_HP,current_Block;
     void render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const;

@@ -1,10 +1,17 @@
 #pragma once
 
+#include <memory>
+
 #include "Game_object/effect/Effect_group.hpp"
 #include "Game_object/action/Action_group_handler.hpp"
 #include "Game_object/card/Card_group_handler.hpp"
 #include "Game_object/dungeon/Overlay.hpp"
 #include "RUtil/Random_package.hpp"
+
+//fwd decl
+namespace Character{
+    class Player;
+}
 
 namespace Dungeon{
 struct Dungeon_shared
@@ -15,5 +22,6 @@ struct Dungeon_shared
     Card::Card_group_handler card_group_handler;
     RUtil::Random_package random_package;
     Overlay overlay;
+    std::shared_ptr<Character::Player> player=nullptr;
 };
 }

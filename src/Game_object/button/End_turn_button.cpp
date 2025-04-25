@@ -24,17 +24,6 @@ namespace Button
         this->glow_timer=0.0F;
     }
     void End_turn_button::update(const Card::Card_group_handler &card_group_handler){
-        this->is_glowing=!card_group_handler.is_someone_canuse()&&is_enabled&&!is_disabled;
-        //glow update
-        if(is_glowing&&!is_hidden){
-            glow_timer-=RUtil::Game_Input::delta_time();
-            if(glow_timer<0.0F){
-                glow_timer=1.2F;
-                glow_list.AddTop(Effect::Effect_pool<Effect::End_turn_button_glow>::GetEffect(this->current_x,this->current_y));
-            }
-        }
-        glow_list.update();
-        
         //lerp
         if(this->current_x!=this->target_x)
             this->current_x=RUtil::Math::varlerp(this->current_x,this->target_x,9.0F,Setting::SCALE);
@@ -48,6 +37,17 @@ namespace Button
                     card_group_handler.super_flash();
             }
         }
+
+        this->is_glowing=!card_group_handler.is_someone_canuse()&&is_enabled&&!is_disabled;
+        //glow update
+        if(is_glowing&&!is_hidden){
+            glow_timer-=RUtil::Game_Input::delta_time();
+            if(glow_timer<0.0F){
+                glow_timer=1.2F;
+                glow_list.AddTop(Effect::Effect_pool<Effect::End_turn_button_glow>::GetEffect(this->current_x,this->current_y));
+            }
+        }
+        glow_list.update();
     }
     void End_turn_button::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         //here is font color

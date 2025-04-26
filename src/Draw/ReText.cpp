@@ -5,10 +5,9 @@
 #include "Core/Context.hpp"
 
 namespace Draw {
-    ReText::ReText(const std::string &font, int fontSize, const std::string &text){
+    ReText::ReText(const std::shared_ptr<TTF_Font> &font, const std::string &text){
         Core::Context::GetInstance();//check context is exist.
-        auto m_Font = TTF_OpenFont(font.c_str(), fontSize);
-        SDL_Surface* surface = TTF_RenderUTF8_Blended_Wrapped(m_Font, text.c_str(),
+        SDL_Surface* surface = TTF_RenderUTF8_Blended_Wrapped(font.get(), text.c_str(),
                             SDL_Color{255,255,255,255}, 0);
         glGenTextures(1, &this->m_TextureId);
         glBindTexture(GL_TEXTURE_2D,this->m_TextureId);
@@ -30,6 +29,5 @@ namespace Draw {
             LOG_ERROR("OpenGL Error: {}", error);
         }
         SDL_FreeSurface(surface);
-        TTF_CloseFont(m_Font);
     }
 }

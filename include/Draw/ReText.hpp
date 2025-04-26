@@ -13,7 +13,7 @@ public:
      * If you want chage color or font size,
      * please use draw function in "Draw_2D"
      */
-    ReText(const std::string &font, int size, const std::string &text);
+    ReText(const std::shared_ptr<TTF_Font> &font, const std::string &text);
     ReText(const ReText &) = delete;
     ReText(ReText &&) = delete;
 

@@ -31,7 +31,7 @@ public:
         const int x = 0, const int y = 0,
         const int width = -1, const int height = -1);
     void SetRegion(const int x=0,const int y=0,const int width=-1,const int height=-1);
-    std::shared_ptr<ReTexture> GetTexture()const{return texture;}
+    const std::shared_ptr<ReTexture> &GetTexture()const{return texture;}
     int GetRegionWidth()const noexcept{return region_w;}
     int GetRegionHeight()const noexcept{return region_h;}
     float GetU()const noexcept{return u;}

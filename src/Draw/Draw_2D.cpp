@@ -1,4 +1,5 @@
 #include <glm/gtc/type_ptr.hpp>
+#include <algorithm>//std::swap
 
 #include "Draw/Draw_2D.hpp"
 #include "Draw/ReTexture.hpp"
@@ -199,7 +200,7 @@ namespace Draw {
         if(!drawing){
             LOG_ERROR("Please call begin() before draw()");
         }else{
-            auto texture=RegionTexture->GetTexture();
+            auto &texture=RegionTexture->GetTexture();
             if(texture!=LastTexture)
                 SwitchTexture(texture);
             else if(idx==max_len) 
@@ -215,7 +216,7 @@ namespace Draw {
         if(!drawing){
             LOG_ERROR("Please call begin() before draw()");
         }else{
-            auto texture=RegionTexture->GetTexture();
+            auto &texture=RegionTexture->GetTexture();
             if(texture!=LastTexture)
                 SwitchTexture(texture);
             else if(idx==max_len) 
@@ -246,6 +247,72 @@ namespace Draw {
                 //2 3   23+21=24 -> (3-2)+(1-2)=(4-2) -> 4=3+1-2
                 //1 4
                 const float u=RegionTexture->GetU(),u2=RegionTexture->GetU2(),v=RegionTexture->GetV(),v2=RegionTexture->GetV2();
+                vertices[idx]=x1+w_x;
+                vertices[idx+1]=y1+w_y;
+                vertices[idx+2]=color;
+                vertices[idx+3]=u;
+                vertices[idx+4]=v2;
+                vertices[idx+5]=x2+w_x;
+                vertices[idx+6]=y2+w_y;
+                vertices[idx+7]=color;
+                vertices[idx+8]=u;
+                vertices[idx+9]=v;
+                vertices[idx+10]=x3+w_x;
+                vertices[idx+11]=y3+w_y;
+                vertices[idx+12]=color;
+                vertices[idx+13]=u2;
+                vertices[idx+14]=v;
+                vertices[idx+15]=x4+w_x;
+                vertices[idx+16]=y4+w_y;
+                vertices[idx+17]=color;
+                vertices[idx+18]=u2;
+                vertices[idx+19]=v2;
+                idx+=20;
+            }
+        }       
+    }
+    void Draw_2D::draw(const std::shared_ptr<Image_Region> &RegionTexture, 
+                const float x,const float y,
+                const float w,const float h,
+                const float rotate,const float origin_x,const float origin_y,
+                const float scale_x,const float scale_y,
+                const bool flip_x,const bool flip_y){
+       if(!drawing){
+            LOG_ERROR("Please call begin() before draw()");
+        }else{
+            auto &texture=RegionTexture->GetTexture();
+            if(texture!=LastTexture)
+                SwitchTexture(texture);
+            else if(idx==max_len) 
+                flush();
+            float w_x=x+origin_x, w_y=y+origin_y,
+                  v_x=-origin_x,  v_y=-origin_y,
+                  v_x2=w-origin_x, v_y2=h-origin_y;
+            if (scale_x != 1.0F || scale_y != 1.0F) {
+                v_x *= scale_x;
+                v_y *= scale_y;
+                v_x2 *= scale_x;
+                v_y2 *= scale_y;
+            }
+            float u=RegionTexture->GetU(),u2=RegionTexture->GetU2(),v=RegionTexture->GetV(),v2=RegionTexture->GetV2();
+            if(flip_x) std::swap(u,u2);
+            if(flip_y) std::swap(v,v2);
+            if(rotate==0.0F)SetVert(v_x+w_x, v_y+w_y, v_x2+w_x, v_y2+w_y, u, v, u2, v2);
+            else{
+                float red=glm::radians(rotate),
+                     a=glm::cos(red),b=glm::sin(red);
+                //cos -sin
+                //sin cos
+                float x1=a*v_x-b*v_y,
+                    y1=b*v_x+a*v_y,
+                    x2=a*v_x-b*v_y2,
+                    y2=b*v_x+a*v_y2,
+                    x3=a*v_x2-b*v_y2,
+                    y3=b*v_x2+a*v_y2,
+                    x4=x3+x1-x2,
+                    y4=y3+y1-y2;
+                //2 3   23+21=24 -> (3-2)+(1-2)=(4-2) -> 4=3+1-2
+                //1 4
                 vertices[idx]=x1+w_x;
                 vertices[idx+1]=y1+w_y;
                 vertices[idx+2]=color;

@@ -5,6 +5,11 @@
 namespace RUtil{
 //RGBA
 constexpr Uint32 GOLD_COLOR=-272084481;
+constexpr Uint32 RED_TEXT_COLOR = -10132481;
+constexpr Uint32 GREEN_TEXT_COLOR = 2147418367;
+constexpr Uint32 BLUE_TEXT_COLOR = -2016482305;
+constexpr Uint32 PURPLE_COLOR = -293409025;
+constexpr Uint32 WHITE=-1;
 
 enum class Colors : Uint32 {
     ALICE_BLUE = 0xF0F8FF,

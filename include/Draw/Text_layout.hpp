@@ -11,16 +11,6 @@ namespace Draw{
 class Text_layout
 {
 public:
-    enum class language{
-        eng,
-        zht,
-        jpn
-    };
-    enum class font_weight{
-        regular,
-        bold,
-        medium
-    };
     //#y:yellow #g:green #r:red #b:blue #p:purple #n:new line
     //!D!:damage !B!:block !M!:vars
     //[R]:orb_red [G]:orb_green [B]:orb_blue [W]:orb_purple [C]:orb_card 

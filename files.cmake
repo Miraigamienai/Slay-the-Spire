@@ -7,6 +7,7 @@ set(SRC_FILES
 	TheApp.cpp
 	Draw/Atlas_Region.cpp
 	Draw/Draw_2D.cpp
+	Draw/Fonts.cpp
 	Draw/Image_Region.cpp
 	Draw/NumberDrawer.cpp
 	Draw/ReText.cpp
@@ -51,6 +52,7 @@ set(SRC_FILES
 	Game_object/effect/Auto_release_pool_manager.cpp
 	Game_object/effect/Card_flash.cpp
 	Game_object/effect/Card_glow_border.cpp
+	Game_object/effect/Card_proof_particle.cpp
 	Game_object/effect/Card_trail_effect.cpp
 	Game_object/effect/Effects.cpp
 	Game_object/effect/Effect_group.cpp
@@ -92,6 +94,7 @@ set(INCLUDE_FILES
 	WindowSize.hpp
 	Draw/Atlas_Region.hpp
 	Draw/Draw_2D.hpp
+	Draw/Fonts.hpp
 	Draw/Image_Region.hpp
 	Draw/NumberDrawer.hpp
 	Draw/ReText.hpp
@@ -144,6 +147,7 @@ set(INCLUDE_FILES
 	Game_object/effect/Auto_release_pool_manager.hpp
 	Game_object/effect/Card_flash.hpp
 	Game_object/effect/Card_glow_border.hpp
+	Game_object/effect/Card_proof_particle.hpp
 	Game_object/effect/Card_trail_effect.hpp
 	Game_object/effect/Effects.hpp
 	Game_object/effect/Effect_group.hpp
@@ -183,6 +187,6 @@ set(INCLUDE_FILES
 	RUtil/Some_Math.hpp
 	RUtil/Text_Vector_Reader.hpp
 )
- 
+
 set(TEST_FILES
 )

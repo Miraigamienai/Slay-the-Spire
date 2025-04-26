@@ -37,6 +37,7 @@ namespace Card{
     {
         static bool once=false;
         if(!once){
+            once=true;
             init_static_menber();
         }
         this->SetFontTypeOffset();
@@ -70,7 +71,7 @@ namespace Card{
         m_tint_a=0.0F;
         m_color_a=1.0F;
     }
-    
+
     void Cards::update(Effect::Effect_group &effs,const Uint32 PlayerTrailColor_RGB){
         //flash update
         if(!m_card_flash.IsDone()) m_card_flash.update();

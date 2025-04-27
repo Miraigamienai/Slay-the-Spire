@@ -7,6 +7,7 @@
 #include "RUtil/Some_Math.hpp"
 #include "RUtil/Random.hpp"
 
+
 namespace Card
 {
 Card_soul::Card_soul(){
@@ -15,6 +16,7 @@ Card_soul::Card_soul(){
     vfx_timer=0.015F;
     is_flying=false;
     is_shuffling=false;
+
 }
 void Card_soul::discard(){
     //here just do discard move, but not really add the card to card_group.
@@ -48,10 +50,10 @@ void Card_soul::prepare_to_fly(){
     this->is_done=false;
     this->ctl_len=0;
     this->stop_rotate=false;
+    this->start_wait_timer=0.0F;
 }
 void Card_soul::update_flying(Effect::Effect_group &effs,const Uint32 PlayerTrailColor_RGB){
     if(!is_flying) return;
-
     if(0.0F<start_wait_timer){
         start_wait_timer-=DT;
         return;

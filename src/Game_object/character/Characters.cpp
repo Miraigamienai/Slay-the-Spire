@@ -2,6 +2,7 @@
 #include <iostream>
 #include "RUtil/Some_Math.hpp"
 #include "RUtil/Game_Input.hpp"
+#include "RUtil/Some_Math.hpp"
 
 namespace Character{
     Characters::Characters(float x, float y, float width, float height) : boss_hitbox(x, y, width, height, false){
@@ -11,19 +12,19 @@ namespace Character{
         bg_a = 1.0F;
         outline_a =  1.0F;
         block_offset = 0.0F;
-        DecreaseWaitTimer=1.2F;
+        HPDecreaseWaitTimer=1.2F;
         health_width=hb_width;
         health_target_width=hb_width;
+        animX=0.0F;
+        shakeToggle=true;
 
     }
-
-    void Characters::update(){
-        // current_HP=10;
+    void Characters::updateHealthBar(){
         health_target_width=hb_width*(current_HP/(float)max_HP);
         if(health_width-health_target_width!=0 && !HPDecrease){
-            DecreaseWaitTimer-=RUtil::Game_Input::delta_time();
-            if(DecreaseWaitTimer<=0){
-                DecreaseWaitTimer=1.2F;
+            HPDecreaseWaitTimer-=RUtil::Game_Input::delta_time();
+            if(HPDecreaseWaitTimer<=0){
+                HPDecreaseWaitTimer=1.2F;
                 HPDecrease=true;
             }
         }
@@ -34,7 +35,11 @@ namespace Character{
         if(health_width==health_target_width){
             HPDecrease=false;
         }
+    }
+    void Characters::update(){
+        updateHealthBar();
         boss_hitbox.update();
+        updateAnimation();
         
     }
     void Characters::render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const{
@@ -95,12 +100,183 @@ namespace Character{
         update();
     };
     
+    void Characters::useFastAttackAnimation(){
+        animX=0.0F;
+        animY=0.0F;
+        animationTimer=0.4F;
+        animation=Animation::ATTACK_FAST;
+    }
+    void Characters::useSlowAttackAnimation(){
+        animX=0.0F;
+        animY=0.0F;
+        animationTimer=1.F;
+        animation=Animation::ATTACK_SLOW;
+    }
+    void Characters::useHopAnimation(){
+        animX=0.0F;
+        animY=0.0F;
+        vY=300.0F*Setting::SCALE;
+        animationTimer=0.7F;
+        animation=Animation::HOP;
+    }
+    void Characters::useJumpAnimation(){
+        animX=0.0F;
+        animY=0.0F;
+        vY=500.0F*Setting::SCALE;
+        animationTimer=0.7F;
+        animation=Animation::JUMP;
+    }
+    void Characters::useStaggerAnimation(){
+        if(animY==0.0F){
+            animX=0.0F;
+            animationTimer=0.3F;
+            animation=Animation::STAGGER;
+        }
+    }
+    void Characters::useFastShakeAnimation(float duration){
+        if(animY==0.0F){
+            animX=0.0F;
+            animationTimer=duration;
+            animation=Animation::STAGGER;
+        }
+    }
+    void Characters::useShakeAnimation(float duration){
+        if(animY==0.0F){
+            animX=0.0F;
+            animationTimer=duration;
+            animation=Animation::SHAKE;
+        }
+    }
+    void Characters::updateAnimation(){
+        switch (animation) {
+            case Animation::ATTACK_FAST:
+                updateFastAttackAnimation();
+                break;
+            case Animation::ATTACK_SLOW:
+                updateSlowAttackAnimation();
+                break;
+            case Animation::HOP:
+                updateHopAnimation();
+                break;
+            case Animation::JUMP:
+                updateJumpAnimation();
+                break;
+            case Animation::STAGGER:
+                updateStaggerAnimation();
+                break;
+            case Animation::FAST_SHAKE:
+                updateFastShakeAnimation();
+                break;
+            case Animation::SHAKE:
+                updateShakeAnimation();
+                break;
+        }
+    }
+    void Characters::updateFastAttackAnimation(){
+        animationTimer-=RUtil::Game_Input::delta_time();
+        float targetPos=90.0F*Setting::SCALE;
+        if(!isPlayer()){
+            targetPos=-targetPos;
+        }
+        if(animationTimer>0.5F){
+            animX= targetPos*RUtil::Math::interpolation_expin(2.0F, 5.0F,(1.0F - animationTimer / 1.0F) * 2.0F);
+        }
+        else if (animationTimer<0.0F){
+            animationTimer=0.0F;
+            animX=0.0F;
+        }
+        else{
+            animX=RUtil::Math::interpolation_fade(0.0F, targetPos, animationTimer / 1.0F * 2.0F);
+        }
+
+    }
+    void Characters::updateSlowAttackAnimation(){
+        animationTimer-=RUtil::Game_Input::delta_time();
+        float targetPos=90.0F*Setting::SCALE;
+        if(!isPlayer()){
+            targetPos=-targetPos;
+        }
+        if(animationTimer>0.5F){
+            animX=targetPos*RUtil::Math::interpolation_expin(2.0F, 10.0F,(1.0F - animationTimer / 1.0F) * 2.0F);
+        }
+        else if (animationTimer<0.0F){
+            animationTimer=0.0F;
+            animX=0.0F;
+        }
+        else{
+            animX=RUtil::Math::interpolation_fade(0.0F, targetPos, animationTimer / 1.0F * 2.0F);
+        }
+    }
+    void Characters::updateHopAnimation(){
+        vY -= 17.0F * Setting::SCALE;
+        animY += vY *RUtil::Game_Input::delta_time();
+        if (animY < 0.0F) {
+           animationTimer = 0.0F;
+           animY = 0.0F;
+        }
+    }
+    void Characters::updateJumpAnimation(){
+        vY -= 17.0F * Setting::SCALE;
+        animY += vY *RUtil::Game_Input::delta_time();
+        if (animY < 0.0F) {
+           animationTimer = 0.0F;
+           animY = 0.0F;
+        }
+    }
+    void Characters::updateStaggerAnimation(){
+        if (animationTimer != 0.0F) {
+            animationTimer -= RUtil::Game_Input::delta_time();
+            if (!isPlayer()) {
+               animX = RUtil::Math::interpolation_powout2(STAGGER_MOVE_SPEED, 0.0f, this->animationTimer / 0.3f);
+            } else {
+               animX = RUtil::Math::interpolation_powout2(-STAGGER_MOVE_SPEED, 0.0f, this->animationTimer / 0.3f);
+            }
+   
+            if (animationTimer < 0.0F) {
+               animationTimer = 0.0F;
+               animX = 0.0F;
+               vX = STAGGER_MOVE_SPEED;
+            }
+         }
+    }
+    void Characters::updateFastShakeAnimation(){
+        animationTimer -= RUtil::Game_Input::delta_time();
+        if (animationTimer < 0.0F) {
+           animationTimer = 0.0F;
+           animX = 0.0F;
+        } else if (shakeToggle) {
+           animX += SHAKE_SPEED * RUtil::Game_Input::delta_time();
+           if (animX > SHAKE_THRESHOLD / 2.0F) {
+              shakeToggle = !shakeToggle;
+           }
+        } else {
+           animX -= SHAKE_SPEED * RUtil::Game_Input::delta_time();
+           if (animX < -SHAKE_THRESHOLD / 2.0F) {
+              shakeToggle = !shakeToggle;
+           }
+        }
+    }
+    void Characters::updateShakeAnimation(){
+        animationTimer -= RUtil::Game_Input::delta_time();
+        if (animationTimer < 0.0F) {
+           animationTimer = 0.0F;
+           animX = 0.0F;
+        } else if (shakeToggle) {
+           animX += SHAKE_SPEED * RUtil::Game_Input::delta_time();
+           if (animX > SHAKE_THRESHOLD) {
+              shakeToggle = !shakeToggle;
+           }
+        } else {
+           animX -= SHAKE_SPEED * RUtil::Game_Input::delta_time();
+           if (animX < -SHAKE_THRESHOLD) {
+              shakeToggle = !shakeToggle;
+           }
+        }
+    }
+
     const std::shared_ptr<Draw::ReTexture>  &Characters::_SHADOW_L=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/leftBg.png"),&Characters::_SHADOW_R=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/rightBg.png"),&Characters::_SHADOW_B=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/bodyBg.png"),
                                             &Characters::HEALTH_BAR_B=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/body7.png"),&Characters::HEALTH_BAR_L=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/left7.png"),&Characters::HEALTH_BAR_R=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/right7.png"),
                                             &Characters::BLOCK_BAR_B=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/blockBody3.png"),&Characters::BLOCK_BAR_R=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/blockRight3.png"),&Characters::BLOCK_BAR_L=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/blockLeft3.png"),
                                             &Characters::BLOCK_ICON=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/block.png");
-
-                                            
-
 
 }

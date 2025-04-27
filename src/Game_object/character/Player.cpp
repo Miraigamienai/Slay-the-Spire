@@ -12,6 +12,7 @@ namespace Character{
         current_Block=0;
         setPosition(glm::vec2(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET),WIDTH);
         setHPBarWidth(WIDTH*0.5F);
+        KindOfCharacter=KindOfCharacter::PLAYER;
     }
 
     void Player::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 

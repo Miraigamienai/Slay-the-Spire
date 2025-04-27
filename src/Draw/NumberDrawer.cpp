@@ -1,61 +1,76 @@
 #include <vector>
-#include <memory>
-#include <SDL_ttf.h>
 
 #include "Draw/NumberDrawer.hpp"
 #include "Draw/ReText.hpp"
 #include "Draw/Image_Region.hpp"
 #include "Draw/Draw_2D.hpp"
-#include "WindowSize.hpp"
 
 #include "Util/Logger.hpp"
 
 
 namespace Draw{
-    NumberDrawer::NumberDrawer(int fontsize):fontsize(fontsize){
-        TTF_Font* m_Font=TTF_OpenFont(Setting::LANGUAGE_POS,fontsize);
-        TTF_SizeUTF8(m_Font,"0",&unit_w,&unit_h);
-        TTF_CloseFont(m_Font);
-    }
-    void NumberDrawer::render(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float scale)const{
-        auto& nums=GetNums();
-        const int len=static_cast<int>(num_str.size());
-        float adjust_w=unit_w*Setting::SCALE;
-        float now_x=float(-len*adjust_w)/2.0F;
-        for(const auto&it:num_str){
-            if('0'<=it&&it<='9'){
-                r2->draw(nums[it^48], center_x+now_x, center_y-(float)unit_h/2.0F, (float)unit_w, (float)unit_h, 0.0F, now_x+adjust_w/2.0F, (float)unit_h/2.0F, scale*Setting::SCALE, scale*Setting::SCALE);
-            }else if(it=='/'){
-                r2->draw(nums[10], center_x+now_x, center_y-(float)unit_h/2.0F, (float)unit_w, (float)unit_h, 0.0F, now_x+adjust_w/2.0F, (float)unit_h/2.0F, scale*Setting::SCALE, scale*Setting::SCALE);
+    static void NumsLoader(FontWeight fw,std::vector<std::shared_ptr<Image_Region>>& vec){
+        auto &font=Fonts::GetFont(fw);
+        constexpr auto data="01234\n56789/";
+        std::shared_ptr<ReText> nums_text=std::make_shared<ReText>(font,data);
+        int now_y=0,now_x=0;
+        int img_w=0,img_h=0;
+        for(int i=0;i<12;i++){
+            if(data[i]=='\n'){
+                now_x=0;
+                now_y+=img_h;
             }else{
-                LOG_ERROR("NumberDrawer can't draw '{}'",it);
+                const char str[2]={data[i],'\0'};
+                TTF_SizeUTF8(font.get(),str,&img_w,&img_h);
+                vec.emplace_back(std::make_shared<Draw::Image_Region>(nums_text, now_x, now_y, img_w, img_h));
+                now_x+=img_w;
             }
-            now_x+=adjust_w;
         }
     }
-    const std::vector<std::shared_ptr<Image_Region>> &NumberDrawer::GetNums(){
+
+    template <FontWeight fw>
+    static const std::vector<std::shared_ptr<Image_Region>> &GetNums(){
         static const std::vector<std::shared_ptr<Image_Region>> nums=[](){
             std::vector<std::shared_ptr<Image_Region>> re;
-            constexpr auto data="01234\n56789/";
-            std::shared_ptr<ReText> nums_text=std::make_shared<ReText>(Setting::LANGUAGE_POS,Setting::BIGGIST_SIZE,data);
-            TTF_Font* m_Font=TTF_OpenFont(Setting::LANGUAGE_POS,Setting::BIGGIST_SIZE);
-            int n_w,n_h,t_w=0;
-            for(int i=0;i<5;i++){
-                const char str[2]={data[i],'\0'};
-                TTF_SizeUTF8(m_Font,str,&n_w,&n_h);
-                re.emplace_back(std::make_shared<Draw::Image_Region>(nums_text,t_w,0,n_w,n_h));
-                t_w+=n_w;
-            }
-            t_w=0;
-            for(int i=6;i<12;i++){
-                const char str[2]={data[i],'\0'};
-                TTF_SizeUTF8(m_Font,str,&n_w,&n_h);
-                re.emplace_back(std::make_shared<Draw::Image_Region>(nums_text,t_w,n_h,n_w,n_h));
-                t_w+=n_w;
-            }
-            TTF_CloseFont(m_Font);
+            NumsLoader(fw,re);
             return re;
         }();
         return nums;
+    }
+
+    static const std::vector<std::shared_ptr<Image_Region>> &GetNums(FontWeight fw){
+        switch(fw){
+            case FontWeight::medium:return GetNums<FontWeight::medium>();
+            case FontWeight::bold:return GetNums<FontWeight::bold>();
+            default:return GetNums<FontWeight::regular>();
+        }
+    }
+
+    const std::shared_ptr<Image_Region>&NumberDrawer::GetNumIMG(char c)const{
+        if('0'<=c&&c<='9')
+            return GetNums(this->fw)[c^48];
+        if(c=='/')
+            return GetNums(this->fw)[10];
+        LOG_ERROR("NumberDrawer can't draw '{}'",c);
+        return GetNums(this->fw)[0];
+    }
+
+    int NumberDrawer::PureWidth(const std::string &num_str)const{
+        int total=0;
+        for(const auto&it:num_str) total+=GetNumIMG(it)->GetRegionWidth();
+        return total;
+    }
+
+    void NumberDrawer::render_center(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float scale)const{
+        const int width=PureWidth(num_str);
+        const int height=GetNums(this->fw)[0]->GetRegionHeight();
+        int now_x=0;
+        const float offset_y=-(float)height/2.0F;
+        for(const auto&it:num_str){
+            const float offset_x=((float)now_x-(float)width/2.0F);
+            auto& img=GetNumIMG(it);
+            r2->draw(img, center_x+offset_x, center_y+offset_y, (float)img->GetRegionWidth(), (float)img->GetRegionHeight(), 0.0F, -offset_x, -offset_y, font_scale*scale, font_scale*scale);
+            now_x+=img->GetRegionWidth();
+        }
     }
 }

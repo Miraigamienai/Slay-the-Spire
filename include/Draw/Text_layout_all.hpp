@@ -1,0 +1,21 @@
+#pragma once
+
+#include "Draw/Text_layout.hpp"
+
+namespace Draw{
+class Text_layout_all final:public Text_layout
+{
+public:
+    //$n:newline
+    //#y:yellow #g:green #r:red #b:blue #p:purple
+    //!D!:damage !B!:block !M!:magic_num
+    //[R]:orb_red [G]:orb_green [B]:orb_blue [W]:orb_purple 
+    //[C]:orb_card [P]:orb_potion [T]:orb_relic [S]:orb_special
+    Text_layout_all(const std::string &text):Text_layout(text){};
+    ~Text_layout_all()override=default;
+
+    void ChangeFontWeight(FontWeight fw)override{}
+    void render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const override{}
+    void render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const override{}
+};
+}

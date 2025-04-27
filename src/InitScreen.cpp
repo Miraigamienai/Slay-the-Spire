@@ -10,6 +10,8 @@
 #include "Rutil/Some_Math.hpp"
 #include "RUtil/Game_Input.hpp"
 #include "Game_object/effect/Fade_wide.hpp"
+#include "Draw/Fonts.hpp"
+
 InitScreen::InitScreen() {
     Create();
     fadeTimer=fadeTime;
@@ -47,7 +49,7 @@ void InitScreen::CreateWhiteCloud(int i,float posX){
     WhiteCloudCount.push_back(i);
 }
 void InitScreen::CreateText(int i){
-    std::shared_ptr<Draw::ReText> Text=std::make_shared<Draw::ReText>(RESOURCE_DIR"/font/zht/NotoSansCJKtc-Bold.otf", m_Size, m_Text[i]);
+    std::shared_ptr<Draw::ReText> Text=std::make_shared<Draw::ReText>(Draw::Fonts::GetBoldFont(), m_Text[i]);
     TextObj.push_back(Text);
 }
 

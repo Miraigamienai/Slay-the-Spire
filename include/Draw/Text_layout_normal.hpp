@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Draw/Text_layout2.hpp"
+#include <vector>
+
+#include "Draw/Text_layout.hpp"
 #include "Draw/Fonts.hpp"//inline 
 
 //fwd decl
@@ -9,11 +11,11 @@ namespace Draw{
 }
 
 namespace Draw{
-class Text_layout_normal final:public Text_layout2
+class Text_layout_normal final:public Text_layout
 {
 public:
     //$n:newline
-    Text_layout_normal(const std::string &text):Text_layout2(text){
+    Text_layout_normal(const std::string &text):Text_layout(text){
         replace(this->text,"$n","\n");
         text_img_set();
     }
@@ -22,12 +24,17 @@ public:
         if(fw!=this->fw){
             this->fw=fw;
             text_img_set();
+            if(fontsize!=Setting::BIGGIST_SIZE) font_scale=Fonts::CalFontScale(fontsize,fw);
         }
     }
-    void render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float origin_x,const float origin_y,const float scale)const override;
-    void render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y)const override;
+    void render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const override;
+    void render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const override;
 private:
-    std::shared_ptr<Image_Region> text_img;
+    struct text_img{
+        int y;
+        std::shared_ptr<Image_Region> img;
+    };
+    std::vector<text_img> text_imgs;
     void text_img_set();
 };
 }

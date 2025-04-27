@@ -1,13 +1,18 @@
 #include "Draw/Text_box.hpp"
 #include "Draw/Text_layout.hpp"
-#include "RUtil/ColorValuesOnly.hpp"
-#include "RUtil/Image_book.hpp"
+#include "RUtil/ColorValuesOnly.hpp"//gold color
+#include "RUtil/Image_book.hpp"//for loading img
+#include "Draw/ReTexture.hpp"//img
+#include "Draw/Draw_2D.hpp"//for rendering
 
 namespace Draw
 {
     Text_box::Text_box(const std::shared_ptr<Text_layout> &title,const std::shared_ptr<Text_layout> &body,const float x,const float y):title(title),body(body),x(x),y(y){
-        title->set_fontsize(TITLE_FONT_SIZE);
-        body->set_fontsize(BODY_FONT_SIZE);
+        title->SetFontSize(TITLE_FONT_SIZE);
+        title->SetFontColor(RUtil::GOLD_COLOR);
+        // title->ChangeFontWeight(FontWeight::bold);
+        body->SetFontSize(BODY_FONT_SIZE);
+        body->SetFontColor(BASE_COLOR);
     }
 
     void Text_box::render(const std::shared_ptr<Draw_2D> &r2)const{
@@ -25,10 +30,8 @@ namespace Draw
         r2->draw(s_tip_mid, this->x, this->y - h - BOX_EDGE_H, BOX_W, h + BOX_EDGE_H);
         r2->draw(s_tip_bot, this->x, this->y - h - BOX_BODY_H, BOX_W, BOX_EDGE_H);
         //text
-        r2->SetColor_RGBA(RUtil::GOLD_COLOR);
-        title->render_without_format_word_top_left(r2, x + TEXT_OFFSET_X, y + HEADER_OFFSET_Y);
-        r2->SetColor(BASE_COLOR,1.0F);
-        body->render_without_format_word_top_left(r2, x + TEXT_OFFSET_X, y + BODY_OFFSET_Y);
+        title->render_top_left(r2, x + TEXT_OFFSET_X, y + HEADER_OFFSET_Y, Setting::SCALE);
+        body->render_top_left(r2, x + TEXT_OFFSET_X, y + BODY_OFFSET_Y, Setting::SCALE);
     }
     
     const std::shared_ptr<ReTexture> &Text_box::s_tip_top=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/tip/tipTop.png"),&Text_box::s_tip_mid=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/tip/tipMid.png"),&Text_box::s_tip_bot=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/tip/tipBot.png");

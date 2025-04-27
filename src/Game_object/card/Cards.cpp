@@ -2,8 +2,9 @@
 #include "Game_object/effect/Card_glow_border.hpp"//eff
 #include "RUtil/Game_Input.hpp"//delat time & cursor pos
 #include "RUtil/All_Image.hpp"//loading img
+#include "RUtil/Text_Vector_Reader.hpp"//ui text reader
 #include "Draw/Atlas_Region.hpp"//img
-#include "RUtil/Text_Vector_Reader.hpp"//ui text
+#include "Draw/Text_layout.hpp"//ui text
 #include "Draw/Draw_2D.hpp"//for rendering
 
 #include "Util/Logger.hpp"
@@ -157,8 +158,7 @@ namespace Card{
 
         //type
         r2->SetColor(TYPE_COLOR,this->m_color_a);
-        s_ui_vec[this->m_text_pos]->render_without_format_word(r2,this->current_x,this->current_y-22.0F*this->m_draw_scale*Setting::SCALE,this->m_angle,this->m_draw_scale,0.0F,22.0F*this->m_draw_scale*Setting::SCALE);
-    
+        s_ui_vec[this->m_text_pos]->render_center(r2, this->current_x, this->current_y-22.0F*this->m_draw_scale*Setting::SCALE, this->m_angle, 0.0F, 22.0F*this->m_draw_scale*Setting::SCALE,this->m_draw_scale);
         //tint
         r2->SetColor(TINT_COLOR,this->m_tint_a);
         this->format_render(r2, m_card_bg_silhouette, this->current_x, this->current_y);
@@ -227,25 +227,25 @@ namespace Card{
         this->format_render(r2,RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::_512_card_super_shadow),this->current_x,this->current_y,1.15F);
     }
     void Cards::init_static_menber(){
-        s_ui_vec[0]->set_fontsize(CARD_FONT_SIZE);
+        s_ui_vec[0]->SetFontSize(CARD_FONT_SIZE);
         constexpr float padding=10.0F*Setting::SCALE;
         float jitai_width=s_ui_vec[0]->GetWidth()+padding;
         constexpr float mid_frame_width=48.0F*Setting::SCALE;
         s_type_offset_attack=(jitai_width-mid_frame_width)/2.0F;
         s_type_width_attack=(jitai_width/mid_frame_width-1.0F)*2.0F+1.0F;//let the space have twice as large
-        s_ui_vec[1]->set_fontsize(CARD_FONT_SIZE);
+        s_ui_vec[1]->SetFontSize(CARD_FONT_SIZE);
         jitai_width=s_ui_vec[1]->GetWidth()+padding;
         s_type_offset_skill=(jitai_width-mid_frame_width)/2.0F;
         s_type_width_skill=(jitai_width/mid_frame_width-1.0F)*2.0F+1.0F;
-        s_ui_vec[2]->set_fontsize(CARD_FONT_SIZE);
+        s_ui_vec[2]->SetFontSize(CARD_FONT_SIZE);
         jitai_width=s_ui_vec[2]->GetWidth()+padding;
         s_type_offset_power=(jitai_width-mid_frame_width)/2.0F;
         s_type_width_power=(jitai_width/mid_frame_width-1.0F)*2.0F+1.0F;
-        s_ui_vec[3]->set_fontsize(CARD_FONT_SIZE);
+        s_ui_vec[3]->SetFontSize(CARD_FONT_SIZE);
         jitai_width=s_ui_vec[3]->GetWidth()+padding;
         s_type_offset_curse=(jitai_width-mid_frame_width)/2.0F;
         s_type_width_curse=(jitai_width/mid_frame_width-1.0F)*2.0F+1.0F;
-        s_ui_vec[7]->set_fontsize(CARD_FONT_SIZE);
+        s_ui_vec[7]->SetFontSize(CARD_FONT_SIZE);
         jitai_width=s_ui_vec[7]->GetWidth()+padding;
         s_type_offset_status=(jitai_width-mid_frame_width)/2.0F;
         s_type_width_status=(jitai_width/mid_frame_width-1.0F)*2.0F+1.0F;

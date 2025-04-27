@@ -17,11 +17,11 @@ namespace Map
         r2->SetColor(Map_node::AVAILABLE_COLOR,color_a);
         if(hb.Hovered()){
             r2->draw(img, ICON_X-64.0F, this->y-64.0F, 128.0F, 128.0F, 0.0F, 64.0F, 64.0F, Setting::SCALE/1.2F, Setting::SCALE/1.2F);
-            label->render_without_format_word_top_left(r2, TEXT_X-50.0F*Setting::SCALE, this->y+13.0F*Setting::SCALE);
+            label->render_top_left(r2, TEXT_X-50.0F*Setting::SCALE, this->y+13.0F*Setting::SCALE, Setting::SCALE);
             m_text_box.render(r2);
         }else{
             r2->draw(img, ICON_X-64.0F, this->y-64.0F, 128.0F, 128.0F, 0.0F, 64.0F, 64.0F, Setting::SCALE/1.65F, Setting::SCALE/1.65F);
-            label->render_without_format_word_top_left(r2, TEXT_X-50.0F*Setting::SCALE, this->y+13.0F*Setting::SCALE);
+            label->render_top_left(r2, TEXT_X-50.0F*Setting::SCALE, this->y+13.0F*Setting::SCALE, Setting::SCALE);
         }
     }
 } // namespace Map

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <memory>
+#include <SDL_ttf.h>//TTF_Font
+
 #include "Draw/ReTexture.hpp"
 
 namespace Draw {

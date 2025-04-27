@@ -9,7 +9,7 @@ namespace RUtil{
     const std::shared_ptr<Draw::Atlas_Region> &All_Image::GetAtlasRegion(AtlasRegionID ID){
         static const std::vector<std::shared_ptr<Draw::Atlas_Region>> AtlasRegionBox=[](){
             std::vector<std::shared_ptr<Draw::Atlas_Region>> temp;
-            temp.reserve(93 + 113 + 375 + 17);
+            temp.reserve(static_cast<std::size_t>(AtlasRegionID::SIZE));
             //cardui.atlas 93
             RUtil::Atlas_Reader OH_HI(RESOURCE_DIR"/Image/cardui/cardui.atlas");
             constexpr const char* Cardui[] ={"1024/banner_common","1024/banner_rare","1024/bg_attack_colorless","1024/bg_attack_red","1024/bg_power_colorless","1024/bg_skill_black","1024/bg_skill_colorless","1024/card_blue_orb","1024/card_colorless_orb","1024/card_green_orb","1024/card_purple_orb","1024/card_red_orb","1024/common_center","1024/common_left","1024/common_right","1024/frame_power_common","1024/frame_power_rare","1024/rare_center","1024/rare_left","1024/rare_right","1024/uncommon_center","1024/uncommon_left","1024/uncommon_right","512/banner_common","512/banner_rare","512/bg_attack_blue","512/bg_attack_green","512/card_blue_orb","512/card_colorless_orb","512/card_green_orb","512/card_purple_orb","512/card_red_orb","512/common_center","512/common_left","512/common_right","512/frame_attack_uncommon","512/frame_power_common","512/frame_power_rare","512/frame_power_uncommon","512/frame_skill_common","512/rare_center","512/rare_left","512/rare_right","512/uncommon_center","512/uncommon_left","512/uncommon_right","1024/banner_uncommon","1024/bg_attack_green","1024/bg_attack_purple","1024/bg_power_blue","1024/bg_power_gray","512/bg_power_gray","1024/bg_power_green","1024/bg_skill_green","1024/frame_power_uncommon","1024/frame_skill_common","1024/frame_skill_uncommon","512/banner_uncommon","512/bg_power_blue","512/frame_attack_common","512/frame_attack_rare","512/frame_skill_rare","512/frame_skill_uncommon","1024/bg_attack_blue","1024/bg_power_purple","1024/bg_power_red","1024/bg_skill_blue","1024/bg_skill_red","1024/frame_attack_common","1024/frame_attack_rare","1024/frame_attack_uncommon","1024/frame_skill_rare","512/bg_attack_gray","512/bg_attack_silhouette","1024/bg_skill_purple","512/bg_attack_purple","512/bg_attack_red","512/bg_power_green","512/bg_power_purple","512/bg_power_red","512/bg_power_silhouette","512/bg_skill_black","512/bg_skill_blue","512/bg_skill_gray","512/bg_skill_green","512/bg_skill_purple","512/bg_skill_red","512/bg_skill_silhouette","512/card_back","512/card_bg","512/card_flash_vfx","512/card_shadow","512/card_super_shadow"};
@@ -26,6 +26,10 @@ namespace RUtil{
             OH_HI.ChangeAtlas(RESOURCE_DIR"/Image/bottomScene/scene.atlas");
             constexpr const char*BottomScene[]={"bg","campfire","event","mod/campfireKindling","mod/ceiling","mod/fg","mod/mg","mod/campfireGlow","mod/ceilingMod1","mod/ceilingMod2","mod/ceilingMod3","mod/ceilingMod4","mod/ceilingMod5","mod/ceilingMod6","mod/midWall","mod/mod1","mod/mod2"};
             for(const auto &it:BottomScene)  temp.emplace_back(OH_HI.Find_Atlas_Region(it));
+            //orb.atlas 8
+            OH_HI.ChangeAtlas(RESOURCE_DIR"/Image/orbs/orb.atlas");
+            constexpr const char*Orbs[]={"blue","card","green","potion","purple","red","relic","special"};
+            for(const auto &it:Orbs)  temp.emplace_back(OH_HI.Find_Atlas_Region(it));
             return temp;
         }();
         return AtlasRegionBox[static_cast<int>(ID)];

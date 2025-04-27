@@ -1,7 +1,9 @@
 #pragma once
 
 #include <memory>
-#include <vector>
+
+#include "Draw/Fonts.hpp"//calculate scale inline
+#include "WindowSize.hpp"//for getting default font size
 
 //fwd decl
 namespace Draw{
@@ -10,18 +12,31 @@ namespace Draw{
 }
 
 namespace Draw{
-//Assume that all digits have the same width and height
+//A class for drawing number.
+//Color needs to be set manually.
 class NumberDrawer
 {
 public:
-    NumberDrawer(int fontsize);
+    NumberDrawer(int fontsize){SetFontSize(fontsize);}
     ~NumberDrawer()=default;
-    void SetFontHeight(const float h){unit_w*=h/unit_h;unit_h=h;}
-    void render(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float scale=1.0F)const;
+    void SetFontSize(int fontsize){
+        if(this->fontsize==fontsize) return;
+        this->fontsize=fontsize;
+        font_scale=Fonts::CalFontScale(fontsize,this->fw);
+    }
+    void ChangeFontWeight(FontWeight fw){
+        if(fw==this->fw) return;
+        this->fw=fw;
+        if(fontsize!=Setting::BIGGIST_SIZE) font_scale=Fonts::CalFontScale(fontsize,fw);
+    }
+    int PureWidth(const std::string &num_str)const;
+    
+    void render_center(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float scale)const;
 private:
-    int unit_w,unit_h;
-    int fontsize;
-public://need to delete.
-    static const std::vector<std::shared_ptr<Image_Region>> &GetNums();
+    int fontsize=Setting::BIGGIST_SIZE;
+    float font_scale=1.0F;
+    FontWeight fw=FontWeight::regular;
+
+    const std::shared_ptr<Image_Region>&GetNumIMG(char c)const;
 };
 }

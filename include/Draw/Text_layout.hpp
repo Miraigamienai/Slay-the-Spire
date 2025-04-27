@@ -1,69 +1,49 @@
-#ifndef DRAW_TEXT_LAYOUT_HPP
-#define DRAW_TEXT_LAYOUT_HPP
+#pragma once
 
-#include "Draw/Atlas_Region.hpp"
-#include "Draw/ReText.hpp"
-#include "Draw/Draw_2D.hpp"
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "WindowSize.hpp"
+#include "Draw/Fonts.hpp"//inline
+#include "RUtil/ColorValuesOnly.hpp"//WHITE
+
+//fwd decl
+namespace Draw{
+    class Draw_2D;
+}
+enum class FontWeight:int;
 
 namespace Draw{
-//need fix check.
 class Text_layout
 {
 public:
-    //#y:yellow #g:green #r:red #b:blue #p:purple #n:new line
-    //!D!:damage !B!:block !M!:vars
-    //[R]:orb_red [G]:orb_green [B]:orb_blue [W]:orb_purple [C]:orb_card 
-    //[P]:orb_potion [T]:orb_relic [S]:orb_special
-    //This class is affected by Setting::SCALE
-    Text_layout(const std::string &text_string);
-    ~Text_layout()=default;
-    static void SetNextLanguage(language lan);
-    static void SetNextFontWeight(font_weight fw);
-    void set_middle();
-    void set_left();
-    //フォントサイズかえること書いてるだけと、32以上とぼやけるかも。
-    void set_fontsize(int fontsize);
-    void set_damage(int value);
-    void set_block(int value);
-    void set_vars(int value,int pos);
-    void render(const std::shared_ptr<Draw::Draw_2D> &r2,const float center_x,const float center_y,const float a=1.0F)const;
-    void render_without_format_word(const std::shared_ptr<Draw::Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float scale,const float origin_x,const float origin_y)const;
-    void render_without_format_word_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y)const;
-    float GetWidth()const{return width;}
-    float GetHeight()const{return height;}
-    static void split_text(std::vector<std::string> &strs,const std::string &text_string);
-private:
-    struct regs_info{
-        bool is_var=false;
-        float x,y,w,h;
-        Uint32 c=-1;
-    };
-    static void next_pos_update();
-    static void init_orbs();
-    void set_texture_pos(const std::shared_ptr<Draw::ReText> &t_retext,const std::vector<std::string> &strs);
-    void adjust_pos(int info_pos,float dis);
-    void set_things(int info_pos,int value,int old_value);
-    void fix_width();
-    void scale_all_pos(const float scale);
-    static language s_language;
-    static font_weight s_font_weight;
-    static std::string s_next_lan_pos;
-    static std::shared_ptr<Draw::Atlas_Region>orb_red,orb_green,orb_blue,orb_purple,orb_card,orb_potion,orb_relic,orb_special;
-    static constexpr auto s_lan_pos=Setting::LANGUAGE_POS;
-    static constexpr Uint32 RED_TEXT_COLOR = -10132481,
-                            GREEN_TEXT_COLOR = 2147418367,
-                            BLUE_TEXT_COLOR = -2016482305,
-                            PURPLE_COLOR = -293409025,
-                            WHITE=-1;
-    std::vector<std::shared_ptr<Draw::Image_Region>> regs;
-    std::vector<regs_info> m_regs_info;
-    int damage_pos=-1,block_pos=-1,damage=0,block=0;
-    std::vector<std::pair<int,int>> pos_and_vars;
+    Text_layout(const std::string &text):text(text){};
+    virtual ~Text_layout()=default;
+    
+    virtual void render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const=0;
+    virtual void render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const=0;
+    virtual void ChangeFontWeight(FontWeight fw)=0;
 
-    int m_fontsize;
-    float width,height;
-    bool middle_mode;
+    void SetFontSize(int fontsize){
+        if(this->fontsize==fontsize) return;
+        this->fontsize=fontsize;
+        font_scale=Fonts::CalFontScale(fontsize,this->fw);
+    }
+    void SetFontAlpha(float a)noexcept{this->font_color_alpha=a;}
+    void SetFontColor(Uint32 color)noexcept{this->font_color=color;}
+    float GetWidth()const noexcept{return static_cast<float>(width)*font_scale;}
+    float GetHeight()const noexcept{return static_cast<float>(height)*font_scale;}
+protected:
+    int width,height;
+    std::string text;
+    Uint32 font_color=RUtil::WHITE;
+    float font_color_alpha=1.0F;
+    float font_scale=1.0F;
+    int fontsize=Setting::BIGGIST_SIZE;
+    FontWeight fw=FontWeight::regular;
+
+    static void replace(std::string &text, const char* from, const char* to);
+    static std::vector<std::string> color_string_split(const std::string &text);
 };
 }
-#endif

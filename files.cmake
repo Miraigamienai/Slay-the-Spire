@@ -14,6 +14,9 @@ set(SRC_FILES
 	Draw/ReTexture.cpp
 	Draw/Text_box.cpp
 	Draw/Text_layout.cpp
+	Draw/Text_layout_all.cpp
+	Draw/Text_layout_color.cpp
+	Draw/Text_layout_normal.cpp
 	Game_object/action/Actions.cpp
 	Game_object/action/Action_group.cpp
 	Game_object/action/Action_group_handler.cpp
@@ -101,6 +104,9 @@ set(INCLUDE_FILES
 	Draw/ReTexture.hpp
 	Draw/Text_box.hpp
 	Draw/Text_layout.hpp
+	Draw/Text_layout_all.hpp
+	Draw/Text_layout_color.hpp
+	Draw/Text_layout_normal.hpp
 	Game_object/Damage_info.hpp
 	Game_object/Group_template.hpp
 	Game_object/action/Actions.hpp

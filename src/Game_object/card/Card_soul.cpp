@@ -7,9 +7,13 @@
 #include "RUtil/Some_Math.hpp"
 #include "RUtil/Random.hpp"
 
-
 namespace Card
 {
+
+static inline auto DT()noexcept(noexcept(RUtil::Game_Input::delta_time())){
+    return RUtil::Game_Input::delta_time();
+}
+
 Card_soul::Card_soul(){
     ctl_idx=ctl_len=0;
     ctl_pts.resize(10);
@@ -55,7 +59,7 @@ void Card_soul::prepare_to_fly(){
 void Card_soul::update_flying(Effect::Effect_group &effs,const Uint32 PlayerTrailColor_RGB){
     if(!is_flying) return;
     if(0.0F<start_wait_timer){
-        start_wait_timer-=DT;
+        start_wait_timer-=DT();
         return;
     }
 
@@ -68,7 +72,7 @@ void Card_soul::update_flying(Effect::Effect_group &effs,const Uint32 PlayerTrai
     
     
     //update end_timer
-    end_timer-=DT;
+    end_timer-=DT();
     if(end_timer<0.0F) is_done=true;
 
     //done
@@ -82,7 +86,7 @@ void Card_soul::update_flying(Effect::Effect_group &effs,const Uint32 PlayerTrai
 
 void Card_soul::vfx_update(Effect::Effect_group &effs,const Uint32 PlayerTrailColor_RGB){
     //create effect trail
-    vfx_timer-=DT;
+    vfx_timer-=DT();
     if(vfx_timer<0.0F){
         vfx_timer=0.015F;
         
@@ -112,13 +116,13 @@ void Card_soul::movement_update(){
     //let current pos closer to end_pos
     const float target_rad=glm::radians(target_angle+90.0F);//+90.0F to align movement with the the card's visual facing direction.
     glm::vec2 unit_dir_vec={glm::cos(target_rad), glm::sin(target_rad)};
-    unit_dir_vec*=DT*this->current_speed;//to translation_vec
+    unit_dir_vec*=DT()*this->current_speed;//to translation_vec
     current_x+=unit_dir_vec.x;
     current_y+=unit_dir_vec.y;
     if(stop_rotate&&end_timer<MAX_FLYING_TIME)//end_timer<MAX_FLYING_TIME prevents the card from getting boosted immediately after launch.
-        this->current_speed+=DT*VELOCITY_RAMP_RATE*3.0F;
+        this->current_speed+=DT()*VELOCITY_RAMP_RATE*3.0F;
     else
-        this->current_speed+=DT*VELOCITY_RAMP_RATE*1.5F;
+        this->current_speed+=DT()*VELOCITY_RAMP_RATE*1.5F;
 
     if(current_speed>MAX_VELOCITY) current_speed=MAX_VELOCITY;
 
@@ -131,18 +135,18 @@ void Card_soul::movement_update(){
 
 void Card_soul::rotate_update(){
     //let target angle closer to end_angle. //The card's angle 0.0F is corresponds to facing upward.
-    rotate_rate+=DT*800.0F;
+    rotate_rate+=DT()*800.0F;
     if(is_clockwise){
-        target_angle+=DT*rotate_rate;
+        target_angle+=DT()*rotate_rate;
         if(target_angle>=360.0F) target_angle-=360.0F;
     }else{
-        target_angle-=DT*rotate_rate;
+        target_angle-=DT()*rotate_rate;
         if(target_angle<0.0F) target_angle+=360.0F;
     }
 
     const glm::vec2 dir_vec{end_x-current_x,end_y-current_y};
     const float end_angle=RUtil::Math::GetDegress(dir_vec)+270.0F;//+270.0F to match card's facing direction.
-    if(glm::length(dir_vec)<HOME_IN_THRESHOLD || std::abs(target_angle-end_angle)<DT*rotate_rate){
+    if(glm::length(dir_vec)<HOME_IN_THRESHOLD || std::abs(target_angle-end_angle)<DT()*rotate_rate){
         target_angle=end_angle;
         stop_rotate=true;
     }

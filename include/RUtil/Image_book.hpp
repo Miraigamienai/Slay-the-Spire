@@ -1,6 +1,7 @@
 #pragma once
 
-#include <functional>
+#include <functional>//std::function
+#include <memory>
 #include <map>
 #include <string>
 

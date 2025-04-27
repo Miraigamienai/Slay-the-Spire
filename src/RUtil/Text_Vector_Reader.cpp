@@ -4,10 +4,22 @@
 #include "Draw/Text_layout_all.hpp"
 #include "Draw/Text_layout_color.hpp"
 #include "Draw/Text_layout_normal.hpp"
+#include "WindowSize.hpp"//get language
+#include "RUtil/String_magic.hpp"
 
 #include "Util/Logger.hpp"
 
 namespace RUtil{
+    enum class FileName{
+        ui
+    };
+
+    static inline auto GetJsonFilePos(FileName file_name){
+        switch(Setting::language){
+            case Language::eng
+        }
+    }
+
     static inline bool HasOrbCode(const std::string &text)noexcept{
         for(size_t i=0;i+2<text.size();i++)
             if(text[i] == '[' && text[i + 2] == ']')
@@ -62,7 +74,7 @@ namespace RUtil{
         static std::vector<std::vector<std::shared_ptr<Draw::Text_layout>>> BOX{STR_BOX.size()};
         if(BOX[static_cast<int>(id)].empty()){
             for(const auto &it:STR_BOX[static_cast<int>(id)])
-                BOX[static_cast<int>(id)].emplace_back(GetLayout(it));
+                BOX[static_cast<int>(id)].emplace_back(it.empty()?nullptr:GetLayout(it));
         }
         return BOX[static_cast<int>(id)];
     }

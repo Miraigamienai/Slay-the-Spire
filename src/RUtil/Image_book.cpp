@@ -1,6 +1,3 @@
-#include <memory>
-#include <string>
-
 #include "RUtil/Image_book.hpp"
 #include "Draw/ReTexture.hpp"
 

@@ -157,7 +157,8 @@ namespace Card{
         this->format_render(r2,m_card_banner,this->current_x,this->current_y);
 
         //type
-        r2->SetColor(TYPE_COLOR,this->m_color_a);
+        s_ui_vec[this->m_text_pos]->SetFontColor(TYPE_COLOR);
+        s_ui_vec[this->m_text_pos]->SetFontAlpha(m_color_a);
         s_ui_vec[this->m_text_pos]->render_center(r2, this->current_x, this->current_y-22.0F*this->m_draw_scale*Setting::SCALE, this->m_angle, 0.0F, 22.0F*this->m_draw_scale*Setting::SCALE,this->m_draw_scale);
         //tint
         r2->SetColor(TINT_COLOR,this->m_tint_a);

@@ -29,7 +29,6 @@ protected:
     Card_soul();
     float current_x,current_y,target_x,target_y,target_angle,start_wait_timer,end_timer;
 private:
-    const float & DT=RUtil::Game_Input::delta_time();
     bool stop_rotate,is_clockwise,is_done;
     float rotate_rate,end_x,end_y,current_speed,vfx_timer;
     

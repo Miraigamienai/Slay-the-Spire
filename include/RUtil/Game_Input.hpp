@@ -22,7 +22,7 @@ public:
     static const bool &just_clicked_R(){return MS.justMouseClicked_R;}
     static const bool &just_released(){return MS.justMouseReleased;}
     static const bool &just_released_R(){return MS.justMouseReleased_R;}
-    static const float &delta_time(){return delta_time_s;}
+    static const float &delta_time()noexcept{return delta_time_s;}
 private:
     struct MouseState {
         bool isMouseDown = false;

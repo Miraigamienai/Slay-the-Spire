@@ -44,7 +44,7 @@ namespace Draw
         }
 
         auto &font=Fonts::GetFont(this->fw);
-        std::shared_ptr<ReText> ori_text_img=std::make_shared<ReText>(font,this->text);
+        std::shared_ptr<ReText> ori_text_img=std::make_shared<ReText>(font,total_text);
         int now_y=0,now_x=0;
         int img_w=0,img_h=0;
         text_rows.emplace_back(text_row{now_y,0,{}});

@@ -5,7 +5,6 @@
 #include "Draw/Text_layout_color.hpp"
 #include "Draw/Text_layout_normal.hpp"
 #include "WindowSize.hpp"//get language
-#include "RUtil/String_magic.hpp"
 
 #include "Util/Logger.hpp"
 
@@ -14,10 +13,22 @@ namespace RUtil{
         ui
     };
 
-    static inline auto GetJsonFilePos(FileName file_name){
-        switch(Setting::language){
-            case Language::eng
+    static inline constexpr auto GetJsonFilePos(FileName file_name,Language lang){
+        switch (lang){
+            case Language::eng:
+                switch(file_name){
+                    default:return RESOURCE_DIR"/language/" "eng/" "ui.json";
+                }
+            case Language::jpn:
+                switch(file_name){
+                    default:return RESOURCE_DIR"/language/" "jpn/" "ui.json";
+                }
+            default:
+                switch(file_name){
+                    default:return RESOURCE_DIR"/language/" "zht/" "ui.json";
+                }
         }
+        
     }
 
     static inline bool HasOrbCode(const std::string &text)noexcept{
@@ -68,7 +79,7 @@ namespace RUtil{
         static const std::vector<std::vector<std::string>> STR_BOX=[](){
             std::vector<std::vector<std::string>> temp;
             //load ui
-            GetJsonFileText(RESOURCE_DIR"/language/eng/ui.json",temp);
+            GetJsonFileText(GetJsonFilePos(FileName::ui, Setting::language),temp);
             return temp;
         }();
         static std::vector<std::vector<std::shared_ptr<Draw::Text_layout>>> BOX{STR_BOX.size()};

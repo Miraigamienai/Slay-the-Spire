@@ -38,10 +38,10 @@ public:
     }
     static float interpolation_powout2(float start,float target,float a);
     static constexpr float interpolation_elastic_out(float a){
-        return 1.0F-glm::pow(2.0F,-10.0F*a)*glm::sin(glm::two_pi<float>()*a*-10.0F);
+        return 1.0F-std::pow(2.0F,-10.0F*a)*std::sin(glm::two_pi<float>()*a*-10.0F);
     }
     static int StrToInt(const std::string &str);
-    static constexpr float GetRadian(const glm::vec2 &v){return atan2f(v.y,v.x);}
+    static float GetRadian(const glm::vec2 &v){return atan2f(v.y,v.x);}
     static constexpr float GetDegress(const glm::vec2 &v){return glm::degrees(atan2f(v.y,v.x));}
     static float BounceOut(float t);
     static float BounceIn(float t);

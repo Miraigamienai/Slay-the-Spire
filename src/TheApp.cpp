@@ -9,7 +9,7 @@ TheApp::TheApp(){
     m_dungeon_shared.player=std::make_shared<Character::Player>();
     m_dungeon_shared.overlay.set_player_to_energy_panel(m_dungeon_shared.player); 
     for(int i=0;i<6;i++)//for test
-        m_dungeon_shared.card_group_handler.add_to_master_deck(std::make_shared<Card::Red::Strike_red>());
+        m_dungeon_shared.card_group_handler.AddTop(Card::GroupType::master_deck,std::make_shared<Card::Red::Strike_red>());
 }
 void TheApp::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
     switch (m_CurrentState) {

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <deque>
+
 #include "Game_object/card/Card_item.hpp"//Card queue
 #include "Game_object/action/Action_group.hpp"//member
 #include "Game_object/character/Monster_group.hpp"//for add monsters to queue
@@ -43,7 +45,7 @@ public:
 private:
     void get_next_action();
     Action_group action_box,pre_action_box;
-    std::list<Card::Card_item> card_queue;//maybe this just need vector not list
+    std::deque<Card::Card_item> card_queue;
     std::vector<std::shared_ptr<Monster::Monsters>> monster_queue;
     bool is_wating_player=false;
     bool is_endding_turn=false;

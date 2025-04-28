@@ -73,7 +73,7 @@ namespace Card{
         m_color_a=1.0F;
     }
 
-    void Cards::update(Effect::Effect_group &effs,const Uint32 PlayerTrailColor_RGB){
+    void Cards::update(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB){
         //flash update
         if(!m_card_flash.IsDone()) m_card_flash.update();
         //hover time update
@@ -117,7 +117,7 @@ namespace Card{
         }
         glowgroup.update();
 
-        this->update_flying(effs,PlayerTrailColor_RGB);
+        this->update_flying(top_effs,PlayerTrailColor_RGB);
     }
 
     void Cards::render(const std::shared_ptr<Draw::Draw_2D> &r2,const Uint32 PlayerColor_RGB)const{
@@ -170,10 +170,6 @@ namespace Card{
     void Cards::frame_format_render(const std::shared_ptr<Draw::Draw_2D> &r2,const std::shared_ptr<Draw::Atlas_Region> &img,const float x_offset,const float x_scale)const{
         r2->draw(img, this->current_x + img->offsetX - (float)img->original_width / 2.0F + x_offset * this->m_draw_scale, this->current_y + img->offsetY - (float)img->original_height / 2.0F, (float)img->GetRegionWidth(), (float)img->GetRegionHeight(), this->m_angle, (float)img->original_width / 2.0F - img->offsetX - x_offset * this->m_draw_scale, (float)img->original_height / 2.0F - img->offsetY,  this->m_draw_scale * Setting::SCALE * x_scale, this->m_draw_scale * Setting::SCALE);
     }
-    void Cards::Shrink(bool immediate){
-        m_target_draw_scale=0.12F;
-        if(immediate) m_draw_scale=0.12F;
-    }
     void Cards::Darken(bool immediate){
         darken=true;
         if(immediate){
@@ -201,8 +197,7 @@ namespace Card{
         is_glowing=false;
         for(const auto&it:glowgroup)it->QuickDisappear(5.0F);
     }
-    void Cards::SetTargetDrawScale(const float value){m_target_draw_scale=value;}
-    void Cards::SetDrawScale(const float value){m_draw_scale=value;}
+    
     void Cards::SetHoverTimer(const float value){m_hover_timer=value;}
     void Cards::MoveTargetY(const float value){target_y+=value;}
     void Cards::MoveTargetX(const float value){target_x+=value;}

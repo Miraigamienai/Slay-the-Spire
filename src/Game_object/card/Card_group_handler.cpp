@@ -65,12 +65,13 @@ namespace Card{
         hand_cards.MoveAllCardTo(m_discard);
     }
 
-    void Card_group_handler::discard(const std::shared_ptr<Cards> &card){
+    void Card_group_handler::discard(const std::shared_ptr<Cards> &card, bool visual_only){
         card->Shrink(false);
         card->Darken(false);
         card->discard();
         flying_cards.emplace_back(card);
-        m_discard.AddTop(card);
+        if(!visual_only)
+            m_discard.AddTop(card);
     }
 
     void Card_group_handler::release_card(){
@@ -191,7 +192,7 @@ namespace Card{
             hand_cards[7]->SetX(half_width+Cards::IMG_WIDTH_S*2.5F);
             hand_cards[1]->MoveTargetY(10.0F*Setting::SCALE);
             hand_cards[6]->MoveTargetY(10.0F*Setting::SCALE);
-            for(const auto&it:hand_cards) it->SetTargetDrawScale(0.7125F);
+            for(const auto&it:hand_cards) it->SetDrawScale(0.7125F);
             break;
         case 9:
             hand_cards[0]->SetX(half_width-Cards::IMG_WIDTH_S*2.8F);
@@ -209,7 +210,7 @@ namespace Card{
             hand_cards[5]->MoveTargetY(12.0F*Setting::SCALE);
             hand_cards[6]->MoveTargetY(18.0F*Setting::SCALE);
             hand_cards[7]->MoveTargetY(22.0F*Setting::SCALE);
-            for(const auto&it:hand_cards) it->SetTargetDrawScale(0.67499995F);
+            for(const auto&it:hand_cards) it->SetDrawScale(0.67499995F);
             break;
         case 10:
             hand_cards[0]->SetX(half_width-Cards::IMG_WIDTH_S*2.9F);
@@ -230,7 +231,7 @@ namespace Card{
             hand_cards[6]->MoveTargetY(12.0F*Setting::SCALE);
             hand_cards[7]->MoveTargetY(17.0F*Setting::SCALE);
             hand_cards[8]->MoveTargetY(20.0F*Setting::SCALE);
-            for(const auto&it:hand_cards) it->SetTargetDrawScale(0.63750005F);
+            for(const auto&it:hand_cards) it->SetDrawScale(0.63750005F);
             break;
         default:
             LOG_ERROR("There are too many cards in hand.");
@@ -238,7 +239,7 @@ namespace Card{
         }
         //adjust scale
         if(len<8){
-            for(const auto&it:hand_cards) it->SetTargetDrawScale(0.75F);
+            for(const auto&it:hand_cards) it->SetDrawScale(0.75F);
         }
         //...
     }
@@ -273,7 +274,7 @@ namespace Card{
             this->hover_start_line=(float)input_y+START_LINE_OFFSET;
             this->is_dragging_card=true;
             this->pass_hesitation_line=false;
-            this->hovered_card->SetTargetDrawScale(0.7F);
+            this->hovered_card->SetDrawScale(0.7F);
         }
     }
 

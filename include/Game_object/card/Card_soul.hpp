@@ -25,7 +25,7 @@ public:
 protected:
     bool is_flying,is_shuffling;
     bool shuffle_invisible;// If true, this card will not be rendered during shuffling.
-    void update_flying(Effect::Effect_group &effs,const Uint32 PlayerTrailColor_RGB);
+    void update_flying(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB);
     Card_soul();
     float current_x,current_y,target_x,target_y,target_angle,start_wait_timer,end_timer;
 private:
@@ -38,7 +38,7 @@ private:
     void prepare_to_fly();
     void rotate_update();
     void movement_update();
-    void vfx_update(Effect::Effect_group &effs,const Uint32 PlayerTrailColor_RGB);
+    void vfx_update(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB);
 
     static constexpr float HOME_IN_THRESHOLD = 72.0F * Setting::SCALE,
                            VELOCITY_RAMP_RATE = 3000.0F * Setting::SCALE,

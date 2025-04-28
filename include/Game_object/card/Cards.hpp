@@ -73,15 +73,13 @@ public:
 
     void render(const std::shared_ptr<Draw::Draw_2D> &r2,const Uint32 PlayerColor_RGB)const;
     void render_hovered_shadow(const std::shared_ptr<Draw::Draw_2D> &r2)const;
-    void update(Effect::Effect_group &effs,const Uint32 PlayerTrailColor_RGB);
-    void update_hover_logic();
-    void SetTargetDrawScale(const float value);
-    void SetDrawScale(const float value);
+    void update(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB);
+    // void update_hover_logic();
     void SetHoverTimer(const float value);//hover timer will be set when releasing card.
     void MoveTargetY(const float value);
     void MoveTargetX(const float value);
     void MoveTargetAngle(const float value);
-    void Shrink(bool immediate);
+    
     void Darken(bool immediate);
     void Lighten();
     void Hover();
@@ -90,19 +88,31 @@ public:
     void stop_glow();
     void draw();
     bool IsHoveredInHand(const float scale)const;
+
     //virtual function
+
     virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &room_monsters,const std::shared_ptr<Monster::Monsters> &hovered_monster)=0;
     virtual std::shared_ptr<Cards> Clone()const=0;
-    //inline const function
+
+    //inline function
+
+    //0.12F scale
+    void Shrink(bool immediate)noexcept{
+        m_target_draw_scale=0.12F;
+        if(immediate) m_draw_scale=0.12F;
+    }
     void Flash(Uint32 _c)noexcept{m_card_flash.change_color(_c);}
     void SuperFlash()noexcept{m_card_flash.change_color(GLOWCOLOR,true);}
     bool CanUse()const noexcept{return true;}//for test
     int GetCost()const noexcept{return cost;}
     float GetX()const noexcept{return current_x;}
     float GetY()const noexcept{return current_y;}
+    float GetTargetX()const noexcept{return target_x;}
+    float GetTargetY()const noexcept{return target_y;}
     void SetY(const float value,const bool immediate=false)noexcept{target_y=value;if(immediate)current_y=value;}
     void SetX(const float value,const bool immediate=false)noexcept{target_x=value;if(immediate)current_x=value;}
     void SetAngle(const float value,const bool immediate=false)noexcept{target_angle=value;if(immediate)m_angle=value;}
+    void SetDrawScale(const float value,const bool immediate=false)noexcept{m_target_draw_scale=value;if(immediate)m_draw_scale=value;}
     bool IsSingleTarget()const noexcept{return target==Target::enemy||target==Target::self_and_enemy;}
     //member
     const RUtil::AtlasRegionID card_name;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 #include "Draw/Fonts.hpp"//calculate scale inline
 #include "WindowSize.hpp"//for getting default font size

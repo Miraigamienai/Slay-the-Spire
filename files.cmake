@@ -18,7 +18,6 @@ set(SRC_FILES
 	Draw/Text_layout_color.cpp
 	Draw/Text_layout_normal.cpp
 	Game_object/action/Actions.cpp
-	Game_object/action/Action_group.cpp
 	Game_object/action/Action_group_handler.cpp
 	Game_object/action/Card_use_action.cpp
 	Game_object/action/Damage_action.cpp
@@ -64,6 +63,8 @@ set(SRC_FILES
 	Game_object/effect/Flash_attack_effect.cpp
 	Game_object/effect/Map_circle_effect.cpp
 	Game_object/effect/Refresh_energy_effect.cpp
+	Game_object/effect_gen/Effect_gen_group.cpp
+	Game_object/effect_gen/Show_card_to_discard.cpp
 	Game_object/energy_orb/Red_orb.cpp
 	Game_object/map/Dungeon_map.cpp
 	Game_object/map/Legend.cpp
@@ -164,6 +165,10 @@ set(INCLUDE_FILES
 	Game_object/effect/Flash_attack_effect.hpp
 	Game_object/effect/Map_circle_effect.hpp
 	Game_object/effect/Refresh_energy_effect.hpp
+	Game_object/effect_gen/Card_paticle_gen.hpp
+	Game_object/effect_gen/Effect_gen.hpp
+	Game_object/effect_gen/Effect_gen_group.hpp
+	Game_object/effect_gen/Show_card_to_discard.hpp
 	Game_object/energy_orb/Energy_orb.hpp
 	Game_object/energy_orb/Red_orb.hpp
 	Game_object/interface/CardPrototype.hpp

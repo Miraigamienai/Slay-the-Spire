@@ -23,6 +23,8 @@ public:
     void SetNewSeed(unsigned long long int seed,int counter=0);
     static bool GetRandomBoolean(){return static_cast<bool>(s_gen()&1);}
     static float GetRandomFloat(const float min,const float max);
+    //[0, n)
+    static int GetRandomInt(const int n){return static_cast<int>(s_gen()&0x7fffffff)%n;}
 private:
     std::mt19937 m_gen;
     unsigned int counter;

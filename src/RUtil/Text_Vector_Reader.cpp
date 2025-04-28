@@ -1,4 +1,5 @@
-#include<fstream>
+#include <fstream>
+#include <array>
 
 #include "RUtil/Text_Vector_Reader.hpp"
 #include "Draw/Text_layout_all.hpp"
@@ -82,7 +83,7 @@ namespace RUtil{
             GetJsonFileText(GetJsonFilePos(FileName::ui, Setting::language),temp);
             return temp;
         }();
-        static std::vector<std::vector<std::shared_ptr<Draw::Text_layout>>> BOX{STR_BOX.size()};
+        static std::array<std::vector<std::shared_ptr<Draw::Text_layout>>, static_cast<size_t>(Text_ID::SIZE)> BOX{};
         if(BOX[static_cast<int>(id)].empty()){
             for(const auto &it:STR_BOX[static_cast<int>(id)])
                 BOX[static_cast<int>(id)].emplace_back(it.empty()?nullptr:GetLayout(it));

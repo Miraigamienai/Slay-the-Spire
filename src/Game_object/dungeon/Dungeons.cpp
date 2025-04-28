@@ -24,14 +24,16 @@ namespace Dungeon{
         fade_color_a=0.0F;
     }
     void Dungeons::update(){
+        //gen update
+        dungeon_shared.gen_group.update(dungeon_shared);
         //effs update
         dungeon_shared.effs.update();
         dungeon_shared.top_effs.update();
         //room update
         if(m_current_node!=nullptr) m_current_node->GetRoom()->update(dungeon_shared);
         //card update
-        dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.effs,dungeon_shared.player->GetCardTrailColor());
-        dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.effs,dungeon_shared.player->GetCardTrailColor());//for test
+        dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared.player->GetCardTrailColor());
+        dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.top_effs,dungeon_shared.player->GetCardTrailColor());//for test
         //overlay update
         dungeon_shared.overlay.update(dungeon_shared.card_group_handler);
         //manager update

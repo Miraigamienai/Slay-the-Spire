@@ -56,7 +56,7 @@ void Card_soul::prepare_to_fly(){
     this->stop_rotate=false;
     this->start_wait_timer=0.0F;
 }
-void Card_soul::update_flying(Effect::Effect_group &effs,const Uint32 PlayerTrailColor_RGB){
+void Card_soul::update_flying(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB){
     if(!is_flying) return;
     if(0.0F<start_wait_timer){
         start_wait_timer-=DT();
@@ -68,7 +68,7 @@ void Card_soul::update_flying(Effect::Effect_group &effs,const Uint32 PlayerTrai
 
     this->movement_update();
     
-    this->vfx_update(effs,PlayerTrailColor_RGB);
+    this->vfx_update(top_effs,PlayerTrailColor_RGB);
     
     
     //update end_timer
@@ -84,7 +84,7 @@ void Card_soul::update_flying(Effect::Effect_group &effs,const Uint32 PlayerTrai
     }
 }
 
-void Card_soul::vfx_update(Effect::Effect_group &effs,const Uint32 PlayerTrailColor_RGB){
+void Card_soul::vfx_update(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB){
     //create effect trail
     vfx_timer-=DT();
     if(vfx_timer<0.0F){
@@ -101,7 +101,7 @@ void Card_soul::vfx_update(Effect::Effect_group &effs,const Uint32 PlayerTrailCo
         const float step=1.0F/19.0F;
         if(ctl_len>3){
             for(int i=0;i<20;i++){
-                effs.AddTop(
+                top_effs.AddTop(
                     Effect::Effect_pool<Effect::Card_trail_effect>::GetEffect(
                         RUtil::Math::CatmullRomSpline(ctl_pts, (float)i*step, ctl_len, ctl_idx),
                         PlayerTrailColor_RGB

@@ -16,6 +16,8 @@ namespace Red{
                 Damage_info{this->damage, dungeon_shared.player, AttackType::blunt_heavy},
                 hovered_monster
             )
+            
+            
         );
 
         

@@ -43,7 +43,7 @@ public:
     Card_group_handler &operator=(Card_group_handler &&)=delete;
 
     void discard_all();
-    void discard(const std::shared_ptr<Cards> &card);
+    void discard(const std::shared_ptr<Cards> &card, bool visual_only=false);
     void draw();
     void update(Action::Action_group_handler &action_group_handler,const Monster::Monster_group &room_monsters);
     void refresh_hand_layout()const;
@@ -52,18 +52,58 @@ public:
     void hand_hide();
     void render_hand(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 PlayerColor_RGB)const;
     void render_flying_cards(const std::shared_ptr<Draw::Draw_2D> &r2, const Uint32 PlayerColor_RGB)const{for(const auto&it:flying_cards) it->render(r2,PlayerColor_RGB);}
-    void update_flying_cards(Effect::Effect_group &effs, Uint32 PlayerTrailColor_RGB){
+    void update_flying_cards(Effect::Effect_group &top_effs, Uint32 PlayerTrailColor_RGB){
         for (auto it = flying_cards.begin(); it != flying_cards.end();) {
-            (*it)->update(effs,PlayerTrailColor_RGB);
+            (*it)->update(top_effs,PlayerTrailColor_RGB);
             if (!(*it)->is_fly())
                 it = flying_cards.erase(it);
             else
                 ++it;
         }
     }
-    void update_hand_cards(Effect::Effect_group &effs, Uint32 PlayerTrailColor_RGB){hand_cards.update(effs,PlayerTrailColor_RGB);}
-    void add_to_master_deck(std::shared_ptr<Cards> &&card){master_deck.AddTop(std::move(card));}
-    
+    void update_hand_cards(Effect::Effect_group &top_effs, Uint32 PlayerTrailColor_RGB){hand_cards.update(top_effs,PlayerTrailColor_RGB);}
+    void AddTop(GroupType type, std::shared_ptr<Cards> &&card){
+        switch (type) {
+            case GroupType::draw_pile:
+                draw_pile.AddTop(std::move(card));
+                break;
+            case GroupType::exhaust_pile:
+                exhaust_pile.AddTop(std::move(card));
+                break;
+            case GroupType::hand_cards:
+                hand_cards.AddTop(std::move(card));
+                break;
+            case GroupType::m_discard:
+                m_discard.AddTop(std::move(card));
+                break;
+            case GroupType::master_deck:
+                master_deck.AddTop(std::move(card));
+                break;
+            default:
+                break;
+        }
+    }
+    void AddTop(GroupType type, const std::shared_ptr<Cards> &card){
+        switch (type) {
+            case GroupType::draw_pile:
+                draw_pile.AddTop(card);
+                break;
+            case GroupType::exhaust_pile:
+                exhaust_pile.AddTop(card);
+                break;
+            case GroupType::hand_cards:
+                hand_cards.AddTop(card);
+                break;
+            case GroupType::m_discard:
+                m_discard.AddTop(card);
+                break;
+            case GroupType::master_deck:
+                master_deck.AddTop(card);
+                break;
+            default:
+                break;
+        }
+    }
     void super_flash()const{
         for(const auto&it:hand_cards) if(it->CanUse()) it->SuperFlash();
     }

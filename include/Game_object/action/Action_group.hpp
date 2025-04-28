@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include<list>
+#include <deque>
 
 #include "Game_object/Group_template.hpp"
 
@@ -10,7 +10,7 @@ class Card_group_handler;
 }
 namespace Action{
 class Actions;
-class Action_group:public Template::Group_template<std::list<std::shared_ptr<Action::Actions>>>
+class Action_group:public Template::Group_template<std::deque<std::shared_ptr<Action::Actions>>>
 {
 public:
     Action_group()=default;

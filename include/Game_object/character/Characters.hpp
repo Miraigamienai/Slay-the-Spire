@@ -18,7 +18,8 @@ enum class Animation
     JUMP,
     STAGGER,
     FAST_SHAKE,
-    SHAKE
+    SHAKE,
+    NONE
 };
 enum class KindOfCharacter
 {
@@ -64,6 +65,10 @@ public:
     void updateShakeAnimation();
     void updateAnimation();
 
+    Animation getAnimation()const{return animation;}
+    float getAnimX()const{return animX;}
+    float getAnimY()const{return animY;}
+
     bool isPlayer()const{return KindOfCharacter==KindOfCharacter::PLAYER;}
 
 protected:
@@ -74,10 +79,10 @@ protected:
 private:
     RUtil::Hitbox boss_hitbox;
     glm::vec2 pos;
-    float hb_height,hb_width,hb_cX,hb_cY,hb_a,animX,animY,vX,vY;
+    float hb_height,hb_width,hb_cX,hb_cY,hb_a,animX,animY,vX,vY,orgX,orgY;
     float HPDecreaseWaitTimer,animationTimer;
     bool HPDecrease=false,shakeToggle;
-    Animation animation;
+    Animation animation=Animation::NONE;
     float shadow_a,bg_a,outline_a,health_width,health_target_width,block_offset;
     static const std::shared_ptr<Draw::ReTexture>  &_SHADOW_L,&_SHADOW_R,&_SHADOW_B,
                                                 &HEALTH_BAR_B,&HEALTH_BAR_L,&HEALTH_BAR_R,

@@ -20,8 +20,10 @@ std::vector<std::string> Text_layout::color_string_split(const std::string &text
     do{
         last_pos=pos;
         pos=text.find('#',pos+1);
+        
         if(text[last_pos]=='#'){
             auto temp=text.substr(last_pos, pos-last_pos);
+            
             size_t space_pos=temp.find(' ');
             if(space_pos!=std::string::npos&&space_pos!=temp.size()-1){
                 re.emplace_back(temp.substr(0, space_pos));

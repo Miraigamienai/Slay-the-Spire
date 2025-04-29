@@ -4,7 +4,6 @@
 #include "RUtil/Image_book.hpp"//for loading img
 #include "Draw/ReTexture.hpp"//img
 #include "Draw/Draw_2D.hpp"//for rendering
-
 namespace Draw
 {
     Text_box::Text_box(const std::shared_ptr<Text_layout> &title,const std::shared_ptr<Text_layout> &body,const float x,const float y):title(title),body(body),x(x),y(y){
@@ -23,12 +22,12 @@ namespace Draw
         //bottom-right shadow
         r2->SetColor(RUtil::Colors::BLACK,SHADOW_A);
         r2->draw(s_tip_top, this->x + SHADOW_DIST_X, this->y - SHADOW_DIST_Y, BOX_W, BOX_EDGE_H);
-        r2->draw(s_tip_mid, this->x + SHADOW_DIST_X, this->y - SHADOW_DIST_Y - h - BOX_EDGE_H, BOX_W, h + BOX_EDGE_H);
-        r2->draw(s_tip_bot, this->x + SHADOW_DIST_X, this->y - SHADOW_DIST_Y - h - BOX_BODY_H, BOX_W, BOX_EDGE_H);
+        r2->draw(s_tip_mid, this->x + SHADOW_DIST_X, this->y - SHADOW_DIST_Y - h , BOX_W, h);
+        r2->draw(s_tip_bot, this->x + SHADOW_DIST_X, this->y - SHADOW_DIST_Y - h , BOX_W, BOX_EDGE_H);
         r2->SetColor(-1);
         r2->draw(s_tip_top, this->x, this->y, BOX_W, BOX_EDGE_H);
-        r2->draw(s_tip_mid, this->x, this->y - h - BOX_EDGE_H, BOX_W, h + BOX_EDGE_H);
-        r2->draw(s_tip_bot, this->x, this->y - h - BOX_BODY_H, BOX_W, BOX_EDGE_H);
+        r2->draw(s_tip_mid, this->x, this->y - h, BOX_W, h);
+        r2->draw(s_tip_bot, this->x, this->y - h , BOX_W, BOX_EDGE_H);
         //text
         title->render_top_left(r2, x + TEXT_OFFSET_X, y + HEADER_OFFSET_Y, Setting::SCALE);
         body->render_top_left(r2, x + TEXT_OFFSET_X, y + BODY_OFFSET_Y, Setting::SCALE);

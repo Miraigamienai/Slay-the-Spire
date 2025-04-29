@@ -30,7 +30,6 @@ namespace Draw
     void Text_layout_color::text_rows_set(){
         text_rows.clear();//Ensure text_rows is empty.
         auto text_vec=color_string_split(text);
-
         //if "$n" appears inside a color tag text, that "$n" will be ignored.
         std::string total_text="";
         for(auto&it:text_vec){
@@ -42,6 +41,7 @@ namespace Draw
                 total_text+=it.substr(2);
             }
         }
+
 
         auto &font=Fonts::GetFont(this->fw);
         std::shared_ptr<ReText> ori_text_img=std::make_shared<ReText>(font,total_text);
@@ -72,7 +72,7 @@ namespace Draw
                         last_nl_pos=nl_pos+1;
                         nl_pos=it.find('\n', nl_pos+1);//find next
                     }while(nl_pos!=std::string::npos);
-                    TTF_SizeUTF8(font.get(), it.substr(last_nl_pos+1).c_str(), &img_w, &img_h);   
+                    TTF_SizeUTF8(font.get(), it.substr(last_nl_pos).c_str(), &img_w, &img_h);   
                     text_rows.back().row.emplace_back(text_img{now_x, RUtil::WHITE, std::make_shared<Image_Region>(ori_text_img, now_x, now_y, img_w, img_h)});
                     now_x+=img_w;
                 }
@@ -87,3 +87,5 @@ namespace Draw
             if(width<it.row_width) width=it.row_width;
     }
 } // namespace Draw
+
+// 全形 32 半形 18 半形空白 7

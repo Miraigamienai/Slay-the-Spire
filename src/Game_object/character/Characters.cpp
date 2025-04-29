@@ -40,6 +40,8 @@ namespace Character{
         updateHealthBar();
         boss_hitbox.update();
         updateAnimation();
+        pos.x=orgX+animX;
+        pos.y=orgY+animY;
         
     }
     void Characters::render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const{
@@ -91,6 +93,8 @@ namespace Character{
         pos=vec;
         hb_cX=vec.x+WIDTH*0.5F;
         hb_cY=vec.y; 
+        orgX=vec.x;
+        orgY=vec.y;
     }
     void Characters::setPosition(glm::vec2 vec){
         pos=vec;
@@ -170,6 +174,10 @@ namespace Character{
             case Animation::SHAKE:
                 updateShakeAnimation();
                 break;
+            case Animation::NONE:
+                break;
+            default:
+                break;
         }
     }
     void Characters::updateFastAttackAnimation(){
@@ -184,6 +192,7 @@ namespace Character{
         else if (animationTimer<0.0F){
             animationTimer=0.0F;
             animX=0.0F;
+            animation=Animation::NONE;
         }
         else{
             animX=RUtil::Math::interpolation_fade(0.0F, targetPos, animationTimer / 1.0F * 2.0F);
@@ -202,6 +211,7 @@ namespace Character{
         else if (animationTimer<0.0F){
             animationTimer=0.0F;
             animX=0.0F;
+            animation=Animation::NONE;
         }
         else{
             animX=RUtil::Math::interpolation_fade(0.0F, targetPos, animationTimer / 1.0F * 2.0F);
@@ -213,6 +223,7 @@ namespace Character{
         if (animY < 0.0F) {
            animationTimer = 0.0F;
            animY = 0.0F;
+           animation=Animation::NONE;
         }
     }
     void Characters::updateJumpAnimation(){
@@ -221,6 +232,7 @@ namespace Character{
         if (animY < 0.0F) {
            animationTimer = 0.0F;
            animY = 0.0F;
+           animation=Animation::NONE;
         }
     }
     void Characters::updateStaggerAnimation(){
@@ -236,6 +248,7 @@ namespace Character{
                animationTimer = 0.0F;
                animX = 0.0F;
                vX = STAGGER_MOVE_SPEED;
+               animation=Animation::NONE;
             }
          }
     }
@@ -244,6 +257,7 @@ namespace Character{
         if (animationTimer < 0.0F) {
            animationTimer = 0.0F;
            animX = 0.0F;
+           animation=Animation::NONE;
         } else if (shakeToggle) {
            animX += SHAKE_SPEED * RUtil::Game_Input::delta_time();
            if (animX > SHAKE_THRESHOLD / 2.0F) {
@@ -261,6 +275,7 @@ namespace Character{
         if (animationTimer < 0.0F) {
            animationTimer = 0.0F;
            animX = 0.0F;
+           animation=Animation::NONE;
         } else if (shakeToggle) {
            animX += SHAKE_SPEED * RUtil::Game_Input::delta_time();
            if (animX > SHAKE_THRESHOLD) {
@@ -273,7 +288,6 @@ namespace Character{
            }
         }
     }
-
     const std::shared_ptr<Draw::ReTexture>  &Characters::_SHADOW_L=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/leftBg.png"),&Characters::_SHADOW_R=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/rightBg.png"),&Characters::_SHADOW_B=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/bodyBg.png"),
                                             &Characters::HEALTH_BAR_B=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/body7.png"),&Characters::HEALTH_BAR_L=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/left7.png"),&Characters::HEALTH_BAR_R=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/right7.png"),
                                             &Characters::BLOCK_BAR_B=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/blockBody3.png"),&Characters::BLOCK_BAR_R=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/blockRight3.png"),&Characters::BLOCK_BAR_L=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/blockLeft3.png"),

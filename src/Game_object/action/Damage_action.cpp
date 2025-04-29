@@ -16,7 +16,7 @@ namespace Action{
         if(this->duration==ACTION_DUR_XFAST){
             if(target->IsDie()) this->is_done=true;
             else{
-                dungeon_shared.effs.AddTop(Effect::Effect_pool<Effect::Flash_attack_effect>::GetEffect(target->GetX(),target->GetY(),damage_info.attack_type));
+                dungeon_shared.effs.AddTop(Effect::Effect_pool<Effect::Flash_attack_effect>::GetEffect(target->GetcX(),target->GetcY(),damage_info.attack_type));
             }
         }
         TimeGo();

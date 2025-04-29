@@ -1,12 +1,12 @@
 #include "Game_object/character/Monster/SpikeSlimeL.hpp"
 #include "RUtil/Random.hpp"
 namespace Monster{
-    SpikeSlimeL::SpikeSlimeL():Monsters(Setting::WINDOW_WIDTH*0.5F, Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET, WIDTH, HIGHT)
+    SpikeSlimeL::SpikeSlimeL():Monsters(Setting::WINDOW_WIDTH*0.5F, Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET, WIDTH, HIGHT,HPBarWidth)
     {
         setHP(MIN_HP,MAX_HP);
         setBlock(0);
         m_damage=DAMAGE;
-        setPosition(glm::vec2(Setting::WINDOW_WIDTH*0.5F,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET),WIDTH);
+        setPosition(glm::vec2(Setting::WINDOW_WIDTH*0.5F,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET));
         setHPBarWidth(WIDTH*0.8F);
     }
     

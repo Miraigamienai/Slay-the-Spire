@@ -24,6 +24,7 @@ private:
     static constexpr int MAX_HP=14,
                          MIN_HP=10,
                          DAMAGE=5;
+    static constexpr int HPBarWidth=WIDTH*0.8F;
 };
 }
 #endif

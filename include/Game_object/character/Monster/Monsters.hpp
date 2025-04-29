@@ -25,7 +25,7 @@ enum class MonsterID{
 class Monsters:public Character::Characters
 {
 public:
-    Monsters(float x, float y, float width, float height);
+    Monsters(float x, float y, float width, float height,float HPBarWidth);
     virtual ~Monsters()=default;
     // virtual void apply(const std::shared_ptr<Action::Action_group> &action_group)const=0;
     void damage(const Damage_info& damage_info)override;

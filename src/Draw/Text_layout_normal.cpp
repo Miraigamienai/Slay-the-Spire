@@ -7,7 +7,6 @@
 namespace Draw
 {
     void Text_layout_normal::text_img_set(){
-        text_rows.clear();//Ensure text_rows is empty.
         auto &font=Fonts::GetFont(this->fw);
         std::shared_ptr<ReText> ori_text_img=std::make_shared<ReText>(font,this->text);
         TTF_SizeUTF8(font.get(),this->text.c_str(),&this->width,&this->height);
@@ -15,7 +14,6 @@ namespace Draw
         auto nl_pos=this->text.find('\n');
         if(nl_pos==std::string::npos){
             text_imgs.back().img=std::make_shared<Image_Region>(ori_text_img, 0, 0, this->width, this->height);
-            this->height*=2;
         }else{
             decltype(nl_pos) last_nl_pos=0;
             int now_y=0;
@@ -29,7 +27,7 @@ namespace Draw
                 last_nl_pos=nl_pos+1;
                 nl_pos=this->text.find('\n', nl_pos+1);//find next
             }while(nl_pos!=std::string::npos);
-            TTF_SizeUTF8(font.get(), this->text.substr(last_nl_pos).c_str(), &img_w, &img_h);  
+            TTF_SizeUTF8(font.get(), this->text.substr(last_nl_pos).c_str(), &img_w, &img_h); 
             text_imgs.back().img=std::make_shared<Image_Region>(ori_text_img, 0, now_y, img_w, img_h);
             this->height=now_y+img_h;
         }

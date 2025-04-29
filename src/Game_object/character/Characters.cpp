@@ -3,24 +3,25 @@
 #include "RUtil/Some_Math.hpp"
 #include "RUtil/Game_Input.hpp"
 #include "RUtil/Some_Math.hpp"
-
 namespace Character{
-    Characters::Characters(float x, float y, float width, float height) : boss_hitbox(x, y, width, height, false){
-        hb_height=HEALTH_BAR_HEIGHT;
-        hb_a=1.0F;
+    Characters::Characters(float x, float y, float width, float height,float HPBarWidth):boss_hitbox(x, y, width, height, false)
+    ,HPBar_hitbox(x,y,HPBarWidth,HEALTH_BAR_HEIGHT,false),Character_hb_width(width),Character_hb_height(height),HPBar_hb_width(HPBarWidth)
+    {
+        HPBar_hb_height=HEALTH_BAR_HEIGHT;
+        HPBar_hb_a=1.0F;
         shadow_a = 1.0F;
         bg_a = 1.0F;
         outline_a =  1.0F;
         block_offset = 0.0F;
         HPDecreaseWaitTimer=1.2F;
-        health_width=hb_width;
-        health_target_width=hb_width;
+        health_width=HPBar_hb_width;
+        health_target_width=HPBar_hb_width;
         animX=0.0F;
         shakeToggle=true;
 
     }
     void Characters::updateHealthBar(){
-        health_target_width=hb_width*(current_HP/(float)max_HP);
+        health_target_width=HPBar_hb_width*(current_HP/(float)max_HP);
         if(health_width-health_target_width!=0 && !HPDecrease){
             HPDecreaseWaitTimer-=RUtil::Game_Input::delta_time();
             if(HPDecreaseWaitTimer<=0){
@@ -39,68 +40,69 @@ namespace Character{
     void Characters::update(){
         updateHealthBar();
         boss_hitbox.update();
+        HPBar_hitbox.update();
         updateAnimation();
         pos.x=orgX+animX;
         pos.y=orgY+animY;
         
     }
     void Characters::render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        const float x=hb_cX-hb_width/2.0F,y=hb_cY-hb_height/2.0F;
+        const float x=HPBar_hb_cX-HPBar_hb_width/2.0F,y=HPBar_hb_cY-HPBar_hb_height/2.0F;
+
         //shadow
         r2->SetColor(0,shadow_a);
         r2->draw(_SHADOW_L, x-HEALTH_BAR_HEIGHT, y-HEALTH_BG_OFFSET, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
-        r2->draw(_SHADOW_B, x, y-HEALTH_BG_OFFSET, hb_width, HEALTH_BAR_HEIGHT);
-        r2->draw(_SHADOW_R, x+hb_width, y-HEALTH_BG_OFFSET, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
+        r2->draw(_SHADOW_B, x, y-HEALTH_BG_OFFSET, HPBar_hb_width, HEALTH_BAR_HEIGHT);
+        r2->draw(_SHADOW_R, x+HPBar_hb_width, y-HEALTH_BG_OFFSET, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
         if(current_HP!=max_HP){
             //background
             r2->SetColor(0,bg_a);
             r2->draw(HEALTH_BAR_L, x-HEALTH_BAR_HEIGHT, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
-            r2->draw(HEALTH_BAR_B, x, y+HEALTH_BAR_OFFSET_Y, hb_width, HEALTH_BAR_HEIGHT);
-            r2->draw(HEALTH_BAR_R, x+hb_width, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
+            r2->draw(HEALTH_BAR_B, x, y+HEALTH_BAR_OFFSET_Y, HPBar_hb_width, HEALTH_BAR_HEIGHT);
+            r2->draw(HEALTH_BAR_R, x+HPBar_hb_width, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
         }
         if(health_target_width!=0.0F){
             //hp just move //orange
             if(health_width-health_target_width!=0){
-                r2->SetColor(ORG_BAR_COLOR,hb_a);
+                r2->SetColor(ORG_BAR_COLOR,HPBar_hb_a);
                 r2->draw(HEALTH_BAR_B, x+health_target_width, y+HEALTH_BAR_OFFSET_Y, health_width-health_target_width, HEALTH_BAR_HEIGHT);
                 r2->draw(HEALTH_BAR_R, x+health_width, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
             }
             //hp //red //if have block,blue
-            r2->SetColor(current_Block>0?BLUE_BAR_COLOR:RED_BAR_COLOR,hb_a);
+            r2->SetColor(current_Block>0?BLUE_BAR_COLOR:RED_BAR_COLOR,HPBar_hb_a);
             r2->draw(HEALTH_BAR_L, x-HEALTH_BAR_HEIGHT, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
             r2->draw(HEALTH_BAR_B, x, y+HEALTH_BAR_OFFSET_Y, health_target_width, HEALTH_BAR_HEIGHT);
             r2->draw(HEALTH_BAR_R, x+health_target_width, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
 
         }
-        //check hb_a cuz outline_a != hb_a
-        if(current_Block!=0&&hb_a!=0.0F){
+        //check HPBar_hb_a cuz outline_a != HPBar_hb_a
+        if(current_Block!=0&&HPBar_hb_a!=0.0F){
             //reder block outline
             r2->SetColor(BLOCK_COLOR,outline_a);
             r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE);
             r2->draw(BLOCK_BAR_L, x-HEALTH_BAR_HEIGHT, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
-            r2->draw(BLOCK_BAR_B, x, y+HEALTH_BAR_OFFSET_Y, hb_width, HEALTH_BAR_HEIGHT);
-            r2->draw(BLOCK_BAR_R, x+hb_width, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
+            r2->draw(BLOCK_BAR_B, x, y+HEALTH_BAR_OFFSET_Y, HPBar_hb_width, HEALTH_BAR_HEIGHT);
+            r2->draw(BLOCK_BAR_R, x+HPBar_hb_width, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
             r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         }
 
-        if(current_Block!=0&&hb_a!=0.0F){
+        if(current_Block!=0&&HPBar_hb_a!=0.0F){
             //block icon
             r2->SetColor(BLOCK_COLOR);
             r2->draw(BLOCK_ICON, x+BLOCK_ICON_XY-32.0F, y+BLOCK_ICON_XY-32.0F+block_offset, 64.0F, 64.0F, 0.0F, 32.0F, 32.0F, Setting::SCALE, Setting::SCALE);
         }
     }
-    void Characters::setPosition(glm::vec2 vec,int WIDTH){
+    void Characters::setPosition(glm::vec2 vec){
         pos=vec;
-        hb_cX=vec.x+WIDTH*0.5F;
-        hb_cY=vec.y; 
+        Character_hb_cX=vec.x+Character_hb_width*0.5F;
+        Character_hb_cY=vec.y+Character_hb_height*0.5F;
+        HPBar_hb_cX=vec.x+Character_hb_width*0.5F;
+        HPBar_hb_cY=vec.y-HPBar_hb_height*0.5F;
         orgX=vec.x;
         orgY=vec.y;
     }
-    void Characters::setPosition(glm::vec2 vec){
-        pos=vec;
-    }
     void Characters::setHPBarWidth(float width){
-        hb_width=width;
+        HPBar_hb_width=width;
         update();
     };
     

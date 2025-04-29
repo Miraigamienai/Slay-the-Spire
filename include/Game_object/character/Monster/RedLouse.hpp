@@ -26,6 +26,7 @@ private:
                          MIN_HP=10,
                          MIN_DAMAGE=5,
                          MAX_DAMAGE=7;
+    static constexpr int HPBarWidth=WIDTH*0.8F;
 };
 }
 #endif

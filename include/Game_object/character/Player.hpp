@@ -31,6 +31,7 @@ private:
                         HEIGHT_OFFSET=-200.0F*Setting::SCALE;
     static constexpr int WIDTH=300.0F*Setting::SCALE,
                         HIGHT=200.0F*Setting::SCALE;
+    static constexpr int HPBarWidth=WIDTH*0.5F;
 };
 }
 #endif

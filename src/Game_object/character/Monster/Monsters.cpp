@@ -3,13 +3,14 @@
 #include "RUtil/Random.hpp"
 namespace Monster
 {
-    Monsters::Monsters(float x, float y, float width, float height) : Characters(x, y, width, height) {
+    Monsters::Monsters(float x, float y, float width, float height,float HPBarWidth) : Characters(x, y, width, height , HPBarWidth) {
         KindOfCharacter=Character::KindOfCharacter::MONSTER;
     }
 
     void Monsters::damage(const Damage_info& damage_info){
         if(current_Block>damage_info.dmg){
         current_Block-=damage_info.dmg;
+        useStaggerAnimation();
         return;
     }
     else if (current_Block){

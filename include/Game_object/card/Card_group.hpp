@@ -33,7 +33,6 @@ public:
     void SortByType(const bool ascending);
     void SortByCost(const bool ascending);
     void MoveAllCardTo(Card_group &group);
-    void RemoveCard(const std::shared_ptr<Cards>&card);
     std::shared_ptr<Cards> GetHoveredCard()const;
     int GetCardPos(const std::shared_ptr<Cards> &card)const;
     void ShuffleWithRng(RUtil::Random &rng){

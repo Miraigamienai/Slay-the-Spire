@@ -17,10 +17,13 @@ public:
     void damage(const Damage_info& damage_info)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     const PlayerType player_type;
-    const int &GetCurrEnergy()const{return current_energy;}
-    const int &GetMaxEnergy()const{return max_energy;}
-    Uint32 GetCardTrailColor()const{return RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F);}
-    Uint32 GetCardRenderColor()const{return 0xff341cff;}
+
+    void ReduceEnergy(int value)noexcept{this->current_energy-=value;}
+    void AddEnergy(int value)noexcept{this->current_energy+=value;}
+    const int &GetCurrEnergy()const noexcept{return current_energy;}
+    const int &GetMaxEnergy()const noexcept{return max_energy;}
+    constexpr Uint32 GetCardTrailColor()const noexcept(noexcept(RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F))){return RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F);}
+    constexpr Uint32 GetCardRenderColor()const noexcept{return 0xff341cff;}
 private:
     int max_energy,current_energy;
     static const std::shared_ptr<Draw::ReTexture> &img;

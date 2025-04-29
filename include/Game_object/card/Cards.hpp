@@ -22,8 +22,8 @@ namespace Dungeon{
     struct Dungeon_shared;
 }
 namespace Monster{
-    class Monsters;//hovered_moster
     class Monster_group;//monsters
+    class Monsters;
 }
 
 namespace Card{
@@ -84,18 +84,20 @@ public:
     void Lighten();
     void Hover();
     void Unhover();
-    void start_glow();
-    void stop_glow();
     void draw();
     bool IsHoveredInHand(const float scale)const;
-
+    void CanUseUpdate(const Dungeon::Dungeon_shared &dungeon_shared);
+    
     //virtual function
 
-    virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &room_monsters,const std::shared_ptr<Monster::Monsters> &hovered_monster)=0;
+    //Check if it is usable based on the current situation.
+    virtual bool CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const;
+    virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &room_monsters,const std::shared_ptr<Monster::Monsters> &target_monster)=0;
     virtual std::shared_ptr<Cards> Clone()const=0;
 
     //inline function
 
+    void SetCanHoverInHand(bool value)noexcept{this->can_hover_in_hand=value;}
     //0.12F scale
     void Shrink(bool immediate)noexcept{
         m_target_draw_scale=0.12F;
@@ -103,7 +105,8 @@ public:
     }
     void Flash(Uint32 _c)noexcept{m_card_flash.change_color(_c);}
     void SuperFlash()noexcept{m_card_flash.change_color(GLOWCOLOR,true);}
-    bool CanUse()const noexcept{return true;}//for test
+    //Simply return the current status, dosen't do any actual checking.
+    bool CanUse()const noexcept{return can_use;}
     int GetCost()const noexcept{return cost;}
     float GetX()const noexcept{return current_x;}
     float GetY()const noexcept{return current_y;}
@@ -135,7 +138,7 @@ private:
     const std::shared_ptr<Draw::Atlas_Region> &m_card_bg_silhouette,&m_card_bg,&m_card_frame,&m_card_left_frame,&m_card_mid_frame,&m_card_right_frame,&m_card_banner,&m_card_portrait;
     Effect::Card_flash m_card_flash;
     RUtil::Hitbox hb;
-    bool darken,is_glowing;//is_glowing==CanUse
+    bool darken,can_use,can_hover_in_hand;
     float m_color_a,m_draw_scale,m_angle,m_tint_a,m_target_draw_scale,m_dark_timer,m_glow_timer,m_hover_timer;
     float m_type_width,m_type_offset;
     int m_text_pos;

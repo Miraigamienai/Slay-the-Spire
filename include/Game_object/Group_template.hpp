@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algorithm>//std::find
+
 namespace Template{
 template<typename box_type>
 class Group_template
@@ -13,8 +15,12 @@ public:
     void AddTop(const T&item){box.emplace_back(item);}
     void AddBot(const T&item){box.emplace_front(item);}
     T PopTop(){auto temp=std::move(box.back());box.pop_back();return temp;}
-    void Clear(){box.clear();}
     
+    void erase(const T& item){
+        auto it=std::find(box.begin(),box.end(),item);
+        if(it!=box.end()) box.erase(it);
+    }
+    void clear()noexcept(noexcept(box.clear())){box.clear();}
     auto begin()const noexcept(noexcept(box.begin())){return box.begin();}
     auto end()const noexcept(noexcept(box.end())){return box.end();}
     bool empty()const noexcept(noexcept(box.empty())){return box.empty();}

@@ -14,4 +14,9 @@ namespace Monster
     void Monster_group::update(){
         for(const auto &it:box) it->update();
     }
+    bool Monster_group::IsAllDie()const{
+        for(const auto &it:box) 
+            if(!it->IsDie()) return false;
+        return true;
+    }
 } // namespace Monster

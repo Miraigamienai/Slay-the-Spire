@@ -2,6 +2,7 @@
 #include "Game_object/character/Monster/Monsters.hpp"//hovered monster
 #include "Game_object/character/Monster_group.hpp"//monsters hover check
 #include "Game_object/action/Action_group_handler.hpp"//for using card
+#include "Game_object/dungeon/Dungeon_shared.hpp"//get player inside this struct
 #include "RUtil/Random.hpp"//rng
 #include "RUtil/Game_Input.hpp"//cursor input and delta_time
 #include "RUtil/Some_Math.hpp"//Bezier method
@@ -90,8 +91,13 @@ namespace Card{
     }
 
     void Card_group_handler::play_card(Action::Action_group_handler &action_group_handler){
+        if(!hovered_card->CanUse()){
+            release_card();
+            return;
+        }
+        //this function will not remove the card from hand_cards.It only sends the card to action_group_handler.
+        hovered_card->SetCanHoverInHand(false);
         hovered_card->Unhover();
-        hand_cards.RemoveCard(hovered_card);
         if(hovered_card->IsSingleTarget())
             action_group_handler.AddCardQueue(Card_item{hovered_card,hovered_monster});
         else
@@ -248,7 +254,7 @@ namespace Card{
         //single_target -> drop zone -> drag -> hover -> check drag start
         if(single_target){
             hovered_monster=room_monsters.GetHoveredMonster();
-            this->update_targeting();
+            this->update_targeting(action_group_handler);
             return;
         }
 
@@ -330,8 +336,9 @@ namespace Card{
         }
 
         if(just_l&&in_drop_zone){//trigger the card
-            //remember to add if canuse
             this->play_card(action_group_handler);
+            is_dragging_card=false;
+            pass_hesitation_line=false;//just in case
             return;
         }
 
@@ -341,9 +348,9 @@ namespace Card{
     }
     
     void Card_group_handler::prepare_for_battle(RUtil::Random &rng){
-        this->m_discard.Clear();
-        this->hand_cards.Clear();
-        this->exhaust_pile.Clear();
+        this->m_discard.clear();
+        this->hand_cards.clear();
+        this->exhaust_pile.clear();
         this->draw_pile=this->master_deck;
         draw_pile.ShuffleWithRng(rng);
         hovered_card=nullptr;
@@ -361,10 +368,19 @@ namespace Card{
         }else{
             hand_cards.render(r2,PlayerColor_RGB);
         }
+
         this->render_flying_cards(r2,PlayerColor_RGB);//may need to check.
+        for(const auto&it:force_render_cards) it->render(r2,PlayerColor_RGB);//may need to be check.
+
         if(single_target)
             render_targeting(r2);
     }
+
+    void Card_group_handler::update_hand_cards(Effect::Effect_group &top_effs, const Dungeon::Dungeon_shared &dungeon_shared){
+        hand_cards.update(top_effs,dungeon_shared.player->GetCardTrailColor());
+        for(const auto&it:hand_cards)it->CanUseUpdate(dungeon_shared);
+    }
+
     void Card_group_handler::render_targeting(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         if(hovered_monster==nullptr){
             r2->SetColor(-1);
@@ -391,7 +407,7 @@ namespace Card{
         //draw arrow
         r2->draw(reticleArrow_img, arrowX-128.0F, arrowY-128.0F, 256.0F, 256.0F, RUtil::Math::GetDegress(now_pt-last_pt)-90.0F, 128.0F, 128.0F, arrow_scale, arrow_scale);
     }
-    void Card_group_handler::update_targeting(){
+    void Card_group_handler::update_targeting(Action::Action_group_handler &action_group_handler){
         if(hovered_monster!=nullptr){
             m_arrow_timer+=RUtil::Game_Input::delta_time();
             if(m_arrow_timer>1.0F){
@@ -417,7 +433,7 @@ namespace Card{
             if(hovered_monster!=nullptr){
                 single_target=false;
                 Cursor::SetVisible(true);
-                hovered_monster=nullptr;
+                play_card(action_group_handler);
             }
             return;
         }

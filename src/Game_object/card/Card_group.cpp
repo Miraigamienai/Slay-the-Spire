@@ -20,13 +20,7 @@ namespace Card{
         group.box.insert(group.box.end(), std::make_move_iterator(this->box.rbegin()), std::make_move_iterator(this->box.rend()));
         this->box.clear();
     }
-    void Card_group::RemoveCard(const std::shared_ptr<Cards>&card){
-        const int pos=GetCardPos(card);
-        if(pos!=-1)
-            box.erase(box.begin()+pos);
-        else 
-            LOG_ERROR("Try to remove card that not exist in this group.");
-    }
+    
     void Card_group::SortByRarity(const bool ascending){
         if(ascending)std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return aa->rarity<bb->rarity;});
         else std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return bb->rarity<aa->rarity;});

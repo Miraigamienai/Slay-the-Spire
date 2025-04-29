@@ -22,5 +22,6 @@ public:
     std::shared_ptr<Monsters> GetHoveredMonster()const;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update();
+    bool IsAllDie()const;
 };
 }

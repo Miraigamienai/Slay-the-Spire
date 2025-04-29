@@ -1,5 +1,8 @@
 #include "Game_object/card/Cards.hpp"//the hpp
 #include "Game_object/effect/Card_glow_border.hpp"//eff
+#include "Game_object/dungeon/Dungeon_shared.hpp"//get current situation for cheking if it is usable.
+#include "Game_object/character/Player.hpp"//for energy check
+#include "Game_object/character/Monster/Monsters.hpp"//for dead check
 #include "RUtil/Game_Input.hpp"//delat time & cursor pos
 #include "RUtil/All_Image.hpp"//loading img
 #include "RUtil/Text_Vector_Reader.hpp"//ui text reader
@@ -25,10 +28,10 @@ namespace Card{
     ) : 
         card_name(card_name), rarity(rarity),
         type(type), color(color), target(target),
-        base_damage(base_damage), damage(base_damage),
-        base_defense(base_defense), defense(base_defense), 
-        base_magic_num(base_magic_num), magic_num(base_magic_num), 
-        base_cost(base_cost), cost(base_cost),
+        base_damage(base_damage), base_defense(base_defense),
+        base_magic_num(base_magic_num), base_cost(base_cost), 
+        damage(base_damage), defense(base_defense),
+        magic_num(base_magic_num), cost(base_cost),
         m_card_bg_silhouette(BgSilhouette(type)), m_card_bg(CardBg(type, color)), 
         m_card_frame(CardFrame(type, rarity)), m_card_left_frame(CardLeftFrame(rarity)),
         m_card_mid_frame(CardMidFrame(rarity)), m_card_right_frame(CardRightFrame(rarity)),
@@ -43,7 +46,9 @@ namespace Card{
         }
         this->SetFontTypeOffset();
         
-        is_glowing=darken=false;
+        can_hover_in_hand=true;
+        can_use=false;
+        darken=false;
         m_dark_timer=m_glow_timer=m_hover_timer=0.0F;
         m_draw_scale=m_target_draw_scale=0.7F;
         m_tint_a=0.0F;
@@ -55,10 +60,10 @@ namespace Card{
     Cards::Cards(const Cards& other)://ensure internal references are properly set when coping. //(m_card_flash)
         card_name(other.card_name), rarity(other.rarity),
         type(other.type), color(other.color), target(other.target),
-        base_damage(other.base_damage), damage(other.base_damage),
-        base_defense(other.base_defense), defense(other.base_defense), 
-        base_magic_num(other.base_magic_num), magic_num(other.base_magic_num), 
-        base_cost(other.base_cost), cost(other.base_cost),
+        base_damage(other.base_damage), base_defense(other.base_defense),
+        base_magic_num(other.base_magic_num), base_cost(other.base_cost), 
+        damage(other.base_damage), defense(other.base_defense),
+        magic_num(other.base_magic_num), cost(other.base_cost),
         m_card_bg_silhouette(other.m_card_bg_silhouette), m_card_bg(other.m_card_bg),
         m_card_frame(other.m_card_frame), m_card_left_frame(other.m_card_left_frame),
         m_card_mid_frame(other.m_card_mid_frame), m_card_right_frame(other.m_card_right_frame),
@@ -66,7 +71,9 @@ namespace Card{
         m_card_flash(other.m_card_bg_silhouette,this->current_x,this->current_y,this->m_angle,this->m_draw_scale,true),
         hb(other.hb), m_type_width(other.m_type_width), m_type_offset(other.m_type_offset), m_text_pos(other.m_text_pos)
     {
-        is_glowing=darken=false;
+        can_hover_in_hand=true;
+        can_use=false;
+        darken=false;
         m_dark_timer=m_glow_timer=m_hover_timer=0.0F;
         m_draw_scale=m_target_draw_scale=0.7F;
         m_tint_a=0.0F;
@@ -108,7 +115,7 @@ namespace Card{
             m_tint_a=darken?(1.0F-m_dark_timer/0.3F):m_dark_timer/0.3F;
         }
         //glow
-        if(is_glowing){
+        if(can_use){
             m_glow_timer-=DT;
             if(m_glow_timer<0.0F){
                 glowgroup.AddTop(std::make_shared<Effect::Card_glow_border>(this->m_card_bg_silhouette,this->current_x,this->current_y,this->m_angle,this->m_draw_scale,GLOWCOLOR));
@@ -133,7 +140,7 @@ namespace Card{
             r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         }
         //glow
-        if(static_cast<int>(glowgroup.size())!=0)
+        if(!glowgroup.empty())
             glowgroup.render(r2);
         //image
         //shadow
@@ -190,14 +197,18 @@ namespace Card{
     void Cards::Unhover(){
         m_target_draw_scale=0.75F;
     }
-    void Cards::start_glow(){
-        is_glowing=true;
+
+    void Cards::CanUseUpdate(const Dungeon::Dungeon_shared &dungeon_shared){
+        int last=can_use;
+        can_use = this->CanUse(dungeon_shared);
+        if(last && !can_use)
+            for(const auto&it:glowgroup)it->QuickDisappear(5.0F);
     }
-    void Cards::stop_glow(){
-        is_glowing=false;
-        for(const auto&it:glowgroup)it->QuickDisappear(5.0F);
+
+    bool Cards::CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const{
+        return this->cost <= dungeon_shared.player->GetCurrEnergy();
     }
-    
+
     void Cards::SetHoverTimer(const float value){m_hover_timer=value;}
     void Cards::MoveTargetY(const float value){target_y+=value;}
     void Cards::MoveTargetX(const float value){target_x+=value;}
@@ -205,7 +216,7 @@ namespace Card{
     bool Cards::IsHoveredInHand(const float scale)const{
         //The hover detection area here will be larger than the card's hitbox if scale>m_draw_scale,
         //will be smaller if scale<m_draw_scale
-        if(m_hover_timer>0.0F) return false;
+        if(!can_hover_in_hand || m_hover_timer>0.0F) return false;
         const float x=(float)RUtil::Game_Input::getX(),y=(float)RUtil::Game_Input::getY(),
                     hw=IMG_WIDTH*scale/2.0F,hh=IMG_HEIGHT*scale/2.0F;
         return current_x-hw<x && x<current_x+hw && current_y-hh<y && y<current_y+hh;

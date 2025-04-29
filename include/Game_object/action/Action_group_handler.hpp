@@ -13,6 +13,9 @@ namespace Monster{
 namespace Dungeon{
     struct Dungeon_shared;
 }
+namespace Card{
+    class Card_group_handler;
+}
 
 namespace Action{
 class Action_group_handler
@@ -25,7 +28,7 @@ public:
     Action_group_handler &operator=(const Action_group_handler &) = delete;
     Action_group_handler &operator=(Action_group_handler &&)=delete;
     
-    void update(Dungeon::Dungeon_shared &dungeon_shared);
+    void update(Dungeon::Dungeon_shared &dungeon_shared, const Monster::Monster_group&room_monsters);
     bool is_nothing_to_do()const{return this->current_action==nullptr&&action_box.empty();}
     void prepare_for_battle();
     //need the monsters so they can take there turn.
@@ -43,7 +46,7 @@ public:
     void AddCardQueue(Card::Card_item &&card_item){card_queue.emplace_back(std::move(card_item));}
     void AddCardQueue(const Card::Card_item &card_item){card_queue.emplace_back(card_item);}
 private:
-    void get_next_action();
+    void get_next_action(const Monster::Monster_group&room_monsters, Card::Card_group_handler &card_group_handler);
     Action_group action_box,pre_action_box;
     std::deque<Card::Card_item> card_queue;
     std::vector<std::shared_ptr<Monster::Monsters>> monster_queue;

@@ -32,7 +32,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
     m_monsters.update();
     
     if(m_wait_timer<=0.0F){//Loop until end turn. //Idle also loop here.
-        dungeon_shared.action_group_handler.update(dungeon_shared);
+        dungeon_shared.action_group_handler.update(dungeon_shared,m_monsters);
         dungeon_shared.card_group_handler.update(dungeon_shared.action_group_handler,m_monsters);
         
         if(Util::Input::IsKeyDown(Util::Keycode::A)){//for test
@@ -49,7 +49,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         if(dungeon_shared.action_group_handler.is_nothing_to_do()){
             m_wait_timer-=RUtil::Game_Input::delta_time();
         }else{
-            dungeon_shared.action_group_handler.update(dungeon_shared);
+            dungeon_shared.action_group_handler.update(dungeon_shared,m_monsters);
         }
         if(m_wait_timer<=0.0F){//ready to start turn
             if(/*first*/true){

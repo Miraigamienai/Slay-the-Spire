@@ -1,15 +1,19 @@
-#ifndef GAME_OBJECT_CARD_ITEM
-#define GAME_OBJECT_CARD_ITEM
+#pragma once
+
 #include <memory>
+
+//fwd decl
 namespace Monster{
-class Monsters;
+    class Monsters;
 }
 namespace Card{
-class Cards;
+    class Cards;
+}
+
+namespace Card{
 struct Card_item
 { 
     std::shared_ptr<Cards> card;
     std::shared_ptr<Monster::Monsters> monster;
 };
 }
-#endif

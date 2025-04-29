@@ -32,7 +32,7 @@ namespace Dungeon{
         //room update
         if(m_current_node!=nullptr) m_current_node->GetRoom()->update(dungeon_shared);
         //card update
-        dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared.player->GetCardTrailColor());
+        dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared);
         dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.top_effs,dungeon_shared.player->GetCardTrailColor());//for test
         //overlay update
         dungeon_shared.overlay.update(dungeon_shared.card_group_handler);
@@ -65,7 +65,8 @@ namespace Dungeon{
     }
     void Dungeons::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         scene->render(r2);
-        if(m_current_node!=nullptr) m_current_node->GetRoom()->render(r2);
+        if(m_current_node!=nullptr)m_current_node->GetRoom()->render(r2);
+        dungeon_shared.player->render(r2);//temporary here
         dungeon_shared.overlay.render(r2);
         dungeon_shared.card_group_handler.render_hand(r2,dungeon_shared.player->GetCardRenderColor());
         dungeon_shared.effs.render(r2);
@@ -154,8 +155,8 @@ namespace Dungeon{
         change_current_node_to_next();
         set_next_node_oscillate_and_edge(true);
         fade_in();
-        dungeon_shared.effs.Clear();
-        dungeon_shared.top_effs.Clear();
+        dungeon_shared.effs.clear();
+        dungeon_shared.top_effs.clear();
         m_current_node->GetRoom()->init_room(dungeon_shared.random_package);
         dungeon_shared.random_package.ResetRoomRNGs(this->random_seed+m_current_node->y);
         m_dungeon_manager.hide_dungeon_screen_instantly();

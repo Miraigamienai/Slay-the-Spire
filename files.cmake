@@ -19,9 +19,11 @@ set(SRC_FILES
 	Draw/Text_layout_normal.cpp
 	Game_object/action/Actions.cpp
 	Game_object/action/Action_group_handler.cpp
-	Game_object/action/Card_use_action.cpp
+	Game_object/action/Card_use_end_action.cpp
+	Game_object/action/Card_use_start_action.cpp
 	Game_object/action/Damage_action.cpp
 	Game_object/action/Draw_card_action.cpp
+	Game_object/action/Effect_gen_capsule_action.cpp
 	Game_object/action/Empty_shuffle_action.cpp
 	Game_object/button/End_turn_button.cpp
 	Game_object/card/Cards.cpp
@@ -63,6 +65,7 @@ set(SRC_FILES
 	Game_object/effect/Flash_attack_effect.cpp
 	Game_object/effect/Map_circle_effect.cpp
 	Game_object/effect/Refresh_energy_effect.cpp
+	Game_object/effect/Vertical_aura.cpp
 	Game_object/effect_gen/Effect_gen_group.cpp
 	Game_object/effect_gen/Show_card_to_discard.cpp
 	Game_object/energy_orb/Red_orb.cpp
@@ -113,12 +116,15 @@ set(INCLUDE_FILES
 	Game_object/action/Actions.hpp
 	Game_object/action/Action_group.hpp
 	Game_object/action/Action_group_handler.hpp
-	Game_object/action/Card_use_action.hpp
+	Game_object/action/Card_use_end_action.hpp
+	Game_object/action/Card_use_start_action.hpp
 	Game_object/action/Damage_action.hpp
 	Game_object/action/Discard_all_action.hpp
 	Game_object/action/Draw_card_action.hpp
+	Game_object/action/Effect_gen_capsule_action.hpp
 	Game_object/action/Empty_shuffle_action.hpp
 	Game_object/action/Enable_end_button_action.hpp
+	Game_object/action/Show_card_to_discard_action.hpp
 	Game_object/action/Wait_action.hpp
 	Game_object/button/End_turn_button.hpp
 	Game_object/card/Cards.hpp
@@ -165,10 +171,12 @@ set(INCLUDE_FILES
 	Game_object/effect/Flash_attack_effect.hpp
 	Game_object/effect/Map_circle_effect.hpp
 	Game_object/effect/Refresh_energy_effect.hpp
+	Game_object/effect/Vertical_aura.hpp
 	Game_object/effect_gen/Card_paticle_gen.hpp
 	Game_object/effect_gen/Effect_gen.hpp
 	Game_object/effect_gen/Effect_gen_group.hpp
 	Game_object/effect_gen/Show_card_to_discard.hpp
+	Game_object/effect_gen/Vertical_aura_gen.hpp
 	Game_object/energy_orb/Energy_orb.hpp
 	Game_object/energy_orb/Red_orb.hpp
 	Game_object/interface/CardPrototype.hpp

@@ -4,16 +4,16 @@
 #include "Game_object/effect/Effect_pool.hpp"
 #include "Game_object/effect/Auto_release_pool_manager.hpp"
 
-template <typename U,typename = void>
-struct has_UseAutoRelease : std::false_type{};
-
-template <typename U>
-struct has_UseAutoRelease<U, std::void_t<decltype(U::UseAutoRelease())>> 
-: std::conjunction<
-    std::is_same<decltype(U::UseAutoRelease()),bool>,
-    std::bool_constant<U::UseAutoRelease()>>{};
-
 namespace Effect{
+    template <typename U,typename = void>
+    struct has_UseAutoRelease : std::false_type{};
+
+    template <typename U>
+    struct has_UseAutoRelease<U, std::void_t<decltype(U::UseAutoRelease())>> 
+    : std::conjunction<
+        std::is_same<decltype(U::UseAutoRelease()),bool>,
+        std::bool_constant<U::UseAutoRelease()>>{};
+
     template <typename T>
     template <typename...Args>
     T* Effect_pool<T>::GetEffect(Args&&...args){
@@ -47,7 +47,7 @@ namespace Effect{
     }
     
     template <typename _T>
-    static bool _check(const _T& _box){
+    static inline bool _check(const _T& _box){
         for(const auto &it:_box)
             if(!it->IsDone()) return false;
         return true;

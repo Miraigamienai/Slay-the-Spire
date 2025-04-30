@@ -29,6 +29,7 @@ namespace Dungeon{
         //effs update
         dungeon_shared.effs.update();
         dungeon_shared.top_effs.update();
+        dungeon_shared.back_effs.update();
         //room update
         if(m_current_node!=nullptr) m_current_node->GetRoom()->update(dungeon_shared);
         //card update
@@ -64,9 +65,11 @@ namespace Dungeon{
         
     }
     void Dungeons::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        scene->render(r2);
+        scene->render_bg(r2);
+        dungeon_shared.back_effs.render(r2);
         if(m_current_node!=nullptr)m_current_node->GetRoom()->render(r2);
         dungeon_shared.player->render(r2);//temporary here
+        scene->render_fg(r2);
         dungeon_shared.overlay.render(r2);
         dungeon_shared.card_group_handler.render_hand(r2,dungeon_shared.player->GetCardRenderColor());
         dungeon_shared.effs.render(r2);

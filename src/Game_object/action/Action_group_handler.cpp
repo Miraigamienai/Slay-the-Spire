@@ -1,5 +1,5 @@
 #include "Game_object/action/Action_group_handler.hpp"//the hpp
-#include "Game_object/action/Card_use_action.hpp"//use card
+#include "Game_object/action/Card_use_start_action.hpp"//use card
 #include "Game_object/action/Wait_action.hpp"//for wait
 #include "Game_object/character/Monster/Monsters.hpp"//monster take turn
 #include "Game_object/dungeon/Dungeon_shared.hpp"//for update function
@@ -40,10 +40,13 @@ namespace Action
                 
             }else{
                 //can play
-                //remove card from hand
-                card_group_handler.erase(Card::GroupType::hand_cards, card_queue.front().card);
+                //removes card from hand
+                card_group_handler.erase<Card::GroupType::hand_cards>(card_queue.front().card);
+                //adds the card to the force_render_cards and force_update_cards .It will be removed when Card_use_end_action finishes.
+                card_group_handler.AddTop<Card::GroupType::force_render_cards>(card_queue.front().card);
+                card_group_handler.AddTop<Card::GroupType::force_update_cards>(card_queue.front().card);
                 //use the card
-                action_box.AddBot(std::make_shared<Card_use_action>(card_queue.front(),room_monsters));
+                action_box.AddBot(std::make_shared<Card_use_start_action>(card_queue.front(),room_monsters));
                 card_queue.front().card->SetX((float)Setting::WINDOW_WIDTH/2.0F);
                 card_queue.front().card->SetY((float)Setting::WINDOW_HEIGHT/2.0F);
             }

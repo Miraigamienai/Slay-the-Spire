@@ -61,8 +61,8 @@ namespace Panel
         font_scale=2.0F;
         vfx_timer=2.0F;
     }
-    void Energy_panel::on_add_energy(const std::shared_ptr<Effect::Effect_group>&effs){
-        effs->AddTop(std::make_shared<Effect::Refresh_energy_effect>(this->current_x,this->current_y));
+    void Energy_panel::on_add_energy(Effect::Effect_group&effs){
+        effs.AddTop(std::make_shared<Effect::Refresh_energy_effect>(this->current_x,this->current_y));
         font_scale=2.0F;
         vfx_timer=2.0F;
     }

@@ -15,7 +15,8 @@ public:
     //Scenes(const std::shared_ptr<Room::Rooms> &current_room):current_room(current_room){}
     // virtual void update()=0;
     //If the room does not exist, the scenes should not be rendered.
-    virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2)const=0;
+    virtual void render_bg(const std::shared_ptr<Draw::Draw_2D> &r2)const=0;
+    virtual void render_fg(const std::shared_ptr<Draw::Draw_2D> &r2)const=0;
     virtual void next_room()=0;
     virtual ~Scenes()=default;
 protected:

@@ -21,8 +21,11 @@ public:
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void hide_combat_panel();
     void show_combat_panel();
+
     void set_player_to_energy_panel(const std::shared_ptr<Character::Player>&player){energy_panel.set_player(player);}
-    
+    void on_use_energy()noexcept(noexcept(energy_panel.on_use_energy())){energy_panel.on_use_energy();}
+    void on_add_energy(Effect::Effect_group&effs){energy_panel.on_add_energy(effs);}
+
     void disable_end_turn_button()noexcept(noexcept(end_turn_button.disable())){end_turn_button.disable();}
     void enable_end_turn_button()noexcept(noexcept(end_turn_button.enable())){end_turn_button.enable();}
     bool end_turn_button_clicked()const noexcept(noexcept(end_turn_button.is_logically_clicked())){return end_turn_button.is_logically_clicked();} 

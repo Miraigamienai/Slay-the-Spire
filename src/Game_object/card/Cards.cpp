@@ -54,7 +54,9 @@ namespace Card{
         m_tint_a=0.0F;
         m_color_a=1.0F;
         
-        //x,y,angle not set
+        this->current_x=this->current_y=0;
+        this->target_x=this->target_y=0;
+        this->m_angle=this->target_angle=0;
     }
 
     Cards::Cards(const Cards& other)://ensure internal references are properly set when coping. //(m_card_flash)
@@ -78,6 +80,10 @@ namespace Card{
         m_draw_scale=m_target_draw_scale=0.7F;
         m_tint_a=0.0F;
         m_color_a=1.0F;
+
+        this->current_x=this->current_y=0;
+        this->target_x=this->target_y=0;
+        this->m_angle=this->target_angle=0;
     }
 
     void Cards::update(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB){

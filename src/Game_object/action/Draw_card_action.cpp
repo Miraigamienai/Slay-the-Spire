@@ -5,8 +5,8 @@
 namespace Action
 {
     void Draw_card_action::update(Dungeon::Dungeon_shared &dungeon_shared){
-        const int draw_size=dungeon_shared.card_group_handler.size(Card::GroupType::draw_pile),
-                  discard_size=dungeon_shared.card_group_handler.size(Card::GroupType::m_discard);
+        const int draw_size=dungeon_shared.card_group_handler.size<Card::GroupType::draw_pile>(),
+                  discard_size=dungeon_shared.card_group_handler.size<Card::GroupType::m_discard>();
         if(draw_size+discard_size==0){
             is_done=true;
             return;
@@ -15,8 +15,8 @@ namespace Action
             return;
         if(first_time){
             first_time=false;
-            if(amount+dungeon_shared.card_group_handler.size(Card::GroupType::hand_cards)>10){
-                amount=10-dungeon_shared.card_group_handler.size(Card::GroupType::hand_cards);
+            if(amount+dungeon_shared.card_group_handler.size<Card::GroupType::hand_cards>()>10){
+                amount=10-dungeon_shared.card_group_handler.size<Card::GroupType::hand_cards>();
             }
             if(amount>draw_size){
                 dungeon_shared.action_group_handler.AddActionTop(std::make_shared<Action::Draw_card_action>(amount-draw_size));

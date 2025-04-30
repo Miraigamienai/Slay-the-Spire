@@ -30,7 +30,7 @@ void Monster_room::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
 }
 void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
     m_monsters.update();
-    
+    dungeon_shared.player->update();
     if(m_wait_timer<=0.0F){//Loop until end turn. //Idle also loop here.
         dungeon_shared.action_group_handler.update(dungeon_shared,m_monsters);
         dungeon_shared.card_group_handler.update(dungeon_shared.action_group_handler,m_monsters);

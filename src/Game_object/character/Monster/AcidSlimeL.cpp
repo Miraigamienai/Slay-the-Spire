@@ -2,12 +2,12 @@
 #include "RUtil/Random.hpp"
 #include "Game_object/character/Characters.hpp"
 namespace Monster{
-    AcidSlimeL::AcidSlimeL():Monsters(Setting::WINDOW_WIDTH*0.5F, Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET, WIDTH, HIGHT)
+    AcidSlimeL::AcidSlimeL():Monsters(Setting::WINDOW_WIDTH*0.5F, Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET, WIDTH, HIGHT,HPBarWidth)
     {
         setHP(65,69);
         setBlock(0);
         m_damage=16;
-        setPosition(glm::vec2(Setting::WINDOW_WIDTH*0.5F,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET),WIDTH);
+        setPosition(glm::vec2(Setting::WINDOW_WIDTH*0.5F,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET));
         setHPBarWidth(WIDTH*0.8F);
     }
     

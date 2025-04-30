@@ -35,12 +35,6 @@ private:
         int y;
         std::shared_ptr<Image_Region> img;
     };
-    struct text_row{
-        int y;
-        int row_width;
-        std::vector<text_img> row;
-    };
-    std::vector<text_row> text_rows;
     std::vector<text_img> text_imgs;
     void text_img_set();
 };

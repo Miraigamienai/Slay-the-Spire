@@ -29,17 +29,17 @@ enum class KindOfCharacter
 class Characters
 {
 public:
-    Characters(float x, float y, float width, float height);
+    Characters(float x, float y, float width, float height,float HPBarWidth);
     virtual ~Characters()=default;
     virtual void damage(const Damage_info& damage_info)=0;
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2) const =0;
     void update();
-    void setPosition(glm::vec2 vec,int WIDTH);
+    void setPosition(glm::vec2 vec,int WIDTH,int HIGHT);
     void setPosition(glm::vec2 vec);
     void setHPBarWidth(float width);
     bool hovered()const{return boss_hitbox.Hovered();}
-    float GetX()const{return pos.x;}
-    float GetY()const{return pos.y;}
+    float GetcX()const{return Character_hb_cX;}
+    float GetcY()const{return Character_hb_cY;}
     bool IsDie()const{return false;}//for test
     void AddBlock(int num){current_Block+=num;};
     void setBlock(int num){current_Block=num;};
@@ -78,8 +78,12 @@ protected:
     KindOfCharacter KindOfCharacter;
 private:
     RUtil::Hitbox boss_hitbox;
+    RUtil::Hitbox HPBar_hitbox;
     glm::vec2 pos;
-    float hb_height,hb_width,hb_cX,hb_cY,hb_a,animX,animY,vX,vY,orgX,orgY;
+    float HPBar_hb_width,HPBar_hb_height,HPBar_hb_a,HPBar_hb_cX,HPBar_hb_cY;
+    float Character_hb_cX,Character_hb_cY,
+          Character_hb_width,Character_hb_height;
+    float animX,animY,vX,vY,orgX,orgY;
     float HPDecreaseWaitTimer,animationTimer;
     bool HPDecrease=false,shakeToggle;
     Animation animation=Animation::NONE;

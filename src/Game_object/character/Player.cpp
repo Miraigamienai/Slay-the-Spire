@@ -4,15 +4,14 @@
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 
 namespace Character{
-    Player::Player():Characters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F, WIDTH, HIGHT),player_type(PlayerType::Ironclad) 
+    Player::Player():Characters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F, WIDTH, HIGHT,HPBarWidth),player_type(PlayerType::Ironclad) 
     {
         max_energy=3;
         current_energy=3;
         max_HP=80;
         current_HP=80;
         current_Block=0;
-        setPosition(glm::vec2(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET),WIDTH);
-        setHPBarWidth(WIDTH*0.5F);
+        setPosition(glm::vec2(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET));
         KindOfCharacter=KindOfCharacter::PLAYER;
     }
 

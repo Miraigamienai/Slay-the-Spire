@@ -3,7 +3,7 @@
 #include "RUtil/Random.hpp"
 namespace Monster
 {
-    Monsters::Monsters(float x, float y, float width, float height) : Characters(x, y, width, height) {
+    Monsters::Monsters(float x, float y, float width, float height,float HPBarWidth) : Characters(x, y, width, height ,HPBarWidth) {
         KindOfCharacter=Character::KindOfCharacter::MONSTER;
     }
 
@@ -19,6 +19,7 @@ namespace Monster
     else{
         current_HP-=damage_info.dmg;
     }
+    useStaggerAnimation();
 }
     void Monsters::setHP(int min,int max){
         this->max_HP=max-int(RUtil::Random::GetRandomFloat(0.0F,max-min+1));

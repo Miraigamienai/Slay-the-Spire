@@ -26,7 +26,7 @@ namespace Red{
         //particle to player
         dungeon_shared.action_group_handler.AddActionBot(
             std::make_shared<Action::Effect_gen_capsule_action>(
-                std::make_shared<EffectGen::Vertical_aura_gen>(static_cast<Uint32>(RUtil::Colors::FIREBRICK)<<8, dungeon_shared.player->GetX(), dungeon_shared.player->GetY()),
+                std::make_shared<EffectGen::Vertical_aura_gen>(static_cast<Uint32>(RUtil::Colors::FIREBRICK)<<8, dungeon_shared.player->GetcX(), dungeon_shared.player->GetcY()),
                 0.0F
             )
         );

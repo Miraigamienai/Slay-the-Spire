@@ -5,8 +5,10 @@
 #include "RUtil/Some_Math.hpp"
 namespace Character{
     Characters::Characters(float x, float y, float width, float height,float HPBarWidth):boss_hitbox(x, y, width, height, false)
-    ,HPBar_hitbox(x,y,HPBarWidth,HEALTH_BAR_HEIGHT,false),Character_hb_width(width),Character_hb_height(height),HPBar_hb_width(HPBarWidth)
+    ,HPBar_hitbox(x,y,HPBarWidth,HEALTH_BAR_HEIGHT,false)
     {
+        Character_hb_width=width;
+        HPBar_hb_width=HPBarWidth;
         HPBar_hb_height=HEALTH_BAR_HEIGHT;
         HPBar_hb_a=1.0F;
         shadow_a = 1.0F;
@@ -18,6 +20,8 @@ namespace Character{
         health_target_width=HPBar_hb_width;
         animX=0.0F;
         shakeToggle=true;
+        
+        
 
     }
     void Characters::updateHealthBar(){

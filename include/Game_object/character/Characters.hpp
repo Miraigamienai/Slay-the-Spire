@@ -80,9 +80,9 @@ private:
     RUtil::Hitbox boss_hitbox;
     RUtil::Hitbox HPBar_hitbox;
     glm::vec2 pos;
-    float HPBar_hb_height,HPBar_hb_width,HPBar_hb_a,HPBar_hb_cX,HPBar_hb_cY;
+    float HPBar_hb_width,HPBar_hb_height,HPBar_hb_a,HPBar_hb_cX,HPBar_hb_cY;
     float Character_hb_cX,Character_hb_cY,
-          Character_hb_width,Character_hb_height,Character_hb_a;
+          Character_hb_width,Character_hb_height;
     float animX,animY,vX,vY,orgX,orgY;
     float HPDecreaseWaitTimer,animationTimer;
     bool HPDecrease=false,shakeToggle;

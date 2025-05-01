@@ -1,8 +1,9 @@
 #include "Game_object/character/Characters.hpp"
-#include <iostream>
+
 #include "RUtil/Some_Math.hpp"
 #include "RUtil/Game_Input.hpp"
 #include "RUtil/Some_Math.hpp"
+
 namespace Character{
     Characters::Characters(float x, float y, float width, float height,float HPBarWidth):boss_hitbox(x, y, width, height, false)
     ,HPBar_hitbox(x,y,HPBarWidth,HEALTH_BAR_HEIGHT,false)
@@ -11,6 +12,7 @@ namespace Character{
         HPBar_hb_width=HPBarWidth;
         HPBar_hb_height=HEALTH_BAR_HEIGHT;
         HPBar_hb_a=1.0F;
+
         shadow_a = 1.0F;
         bg_a = 1.0F;
         outline_a =  1.0F;
@@ -18,10 +20,18 @@ namespace Character{
         HPDecreaseWaitTimer=1.2F;
         health_width=HPBar_hb_width;
         health_target_width=HPBar_hb_width;
+
         animX=0.0F;
         animY=0.0F;
         shakeToggle=true;
-        
+
+        pos={x,y};
+        Character_hb_cX=x+Character_hb_width*0.5F;
+        Character_hb_cY=y+Character_hb_height*0.5F;
+        HPBar_hb_cX=x+Character_hb_width*0.5F;
+        HPBar_hb_cY=y-HPBar_hb_height*0.5F;
+        orgX=x;
+        orgY=y;
         
 
     }

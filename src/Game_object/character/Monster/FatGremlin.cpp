@@ -2,13 +2,12 @@
 #include "RUtil/Random.hpp"
 #include <iostream>
 namespace Monster{
-    FatGremlin::FatGremlin():Monsters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET, WIDTH, HIGHT,HPBarWidth)
+    FatGremlin::FatGremlin(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth)
     {
-        setHP(40,44);
+        setHP(MIN_HP,MAX_HP);
         setBlock(0);
-        m_damage=12;
-        setPosition(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET);
-        setHPBarWidth(WIDTH*0.8F);
+        m_damage=DAMAGE;
+
     }
     
     void FatGremlin::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 

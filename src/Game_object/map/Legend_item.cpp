@@ -11,7 +11,9 @@ namespace Map
     img(img),
     m_text_box(title, body, 1500.0F*Setting::SCALE, 270.0F*Setting::SCALE),
     hb(TEXT_X, this->y, 230.0F*Setting::SCALE, SPACE-2.0,true),
-    label(label){}
+    label(label){
+        label->SetFontColor(0);
+    }
 
     void Legend_item::render(const std::shared_ptr<Draw::Draw_2D> &r2,const float color_a)const{
         r2->SetColor(Map_node::AVAILABLE_COLOR,color_a);

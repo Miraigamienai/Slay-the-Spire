@@ -1,13 +1,12 @@
 #include "Game_object/character/Monster/RedLouse.hpp"
 #include "RUtil/Random.hpp"
 namespace Monster{
-    RedLouse::RedLouse():Monsters(Setting::WINDOW_WIDTH*0.5F, Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET, WIDTH, HIGHT,HPBarWidth)
+    RedLouse::RedLouse(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth)
     {
-        setHP(8,12);
+        setHP(MIN_HP,MAX_HP);
         setBlock(0);
         m_damage=int(RUtil::Random::GetRandomFloat(MIN_DAMAGE,MAX_DAMAGE));
-        setPosition(Setting::WINDOW_WIDTH*0.5F,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET);
-        setHPBarWidth(WIDTH*0.8F);
+
     }
     
     void RedLouse::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 

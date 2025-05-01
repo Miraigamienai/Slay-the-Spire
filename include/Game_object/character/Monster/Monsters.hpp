@@ -33,7 +33,7 @@ public:
     void setBlock(int num);
 protected:
     int m_damage;
-    
+    static constexpr int FLOOR_Y=Setting::WINDOW_HEIGHT*0.5F-200.0F*Setting::SCALE;
 };
 }
 #endif

@@ -40,7 +40,7 @@ public:
     bool hovered()const{return boss_hitbox.Hovered();}
     float GetcX()const{return Character_hb_cX;}
     float GetcY()const{return Character_hb_cY;}
-    bool IsDie()const{return current_HP==0;}//for test
+    bool IsDie()const{return current_HP<=0;}//for test
     void AddBlock(int num){current_Block+=num;};
     void setBlock(int num){current_Block=num;};
     void AddHP(int num){current_HP+=num;};

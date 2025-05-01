@@ -13,7 +13,7 @@ enum class AcidSlimeLAction
 class AcidSlimeL final:public Monsters
 {
 public:
-    AcidSlimeL();
+    AcidSlimeL(float offsetX,float offsetY);
     ~AcidSlimeL()override=default;
     void Action(AcidSlimeLAction action_type);
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
@@ -21,9 +21,11 @@ public:
 private:
     
     static const std::shared_ptr<Draw::ReTexture> &img;
-    static constexpr int HEIGHT_OFFSET=-200.0F*Setting::SCALE;
     static constexpr int WIDTH=300.0F*Setting::SCALE,
                          HIGHT=180.0F*Setting::SCALE;
+    static constexpr int MAX_HP=69,
+                         MIN_HP=65,
+                         DAMAGE=16;
     static constexpr int HPBarWidth=WIDTH*0.8F;
 };
 }

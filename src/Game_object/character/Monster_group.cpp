@@ -15,7 +15,7 @@ namespace Monster
         } 
     }
     void Monster_group::update(){
-        // 使用移除-擦除習慣用法，移除已死亡的怪物
+        
         auto it = std::remove_if(box.begin(), box.end(), 
             [](const std::shared_ptr<Monsters>& monster) { 
                 monster->update();

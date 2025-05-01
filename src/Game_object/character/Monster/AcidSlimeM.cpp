@@ -1,13 +1,12 @@
 #include "Game_object/character/Monster/AcidSlimeM.hpp"
 #include "RUtil/Random.hpp"
 namespace Monster{
-    AcidSlimeM::AcidSlimeM():Monsters(Setting::WINDOW_WIDTH*0.5F, Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET, WIDTH, HIGHT,HPBarWidth)
+    AcidSlimeM::AcidSlimeM(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth)
     {
-        setHP(28,32);
+        setHP(MIN_HP,MAX_HP);
         setBlock(0);
-        m_damage=10;
-        setPosition(Setting::WINDOW_WIDTH*0.5F,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET);
-        setHPBarWidth(WIDTH*0.8F);
+        m_damage=DAMAGE;
+
     }
     
     void AcidSlimeM::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 

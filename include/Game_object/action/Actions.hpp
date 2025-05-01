@@ -12,7 +12,7 @@ public:
     virtual void update(Dungeon::Dungeon_shared &dungeon_shared)=0;
     bool IsDone()const{return is_done;}
 protected:
-    void TimeGo(){
+    void TimeGo()noexcept{
         duration-=DT;
         if(duration<0.0F)
             is_done=true;

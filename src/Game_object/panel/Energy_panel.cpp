@@ -6,6 +6,7 @@
 #include "Game_object/effect/Refresh_energy_effect.hpp"
 #include "RUtil/Image_book.hpp"
 #include "RUtil/Game_Input.hpp"
+#include "RUtil/ColorValuesOnly.hpp"
 #include "WindowSize.hpp"
 
 #include "Util/Logger.hpp"
@@ -13,6 +14,7 @@
 namespace Panel
 {
     Energy_panel::Energy_panel():Panels(198.0F*Setting::SCALE, 190.0F*Setting::SCALE, -480.0F*Setting::SCALE, 200.0F*Setting::SCALE, true),m_font(FONTSIZE){
+        m_font.ChangeFontWeight(FontWeight::bold);
         vfx_angle=0.0F;
         vfx_scale=Setting::SCALE;
         vfx_color_a=0.0F;
@@ -51,7 +53,7 @@ namespace Panel
     void Energy_panel::render_vfx(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         if(vfx_timer!=0.0F){
             r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE);
-            r2->SetColor(-1,vfx_color_a);
+            r2->SetColor(RUtil::WHITE, vfx_color_a);
             r2->draw(vfx_img, current_x-128.0F, current_y-128.0F, 256.0F, 256.0F, -vfx_angle+50.0F, 128.0F, 128.0F, vfx_scale, vfx_scale);
             r2->draw(vfx_img, current_x-128.0F, current_y-128.0F, 256.0F, 256.0F, vfx_angle, 128.0F, 128.0F, vfx_scale, vfx_scale);
             r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
@@ -59,10 +61,9 @@ namespace Panel
     }
     void Energy_panel::on_use_energy(){
         font_scale=2.0F;
-        vfx_timer=2.0F;
     }
-    void Energy_panel::on_add_energy(const std::shared_ptr<Effect::Effect_group>&effs){
-        effs->AddTop(std::make_shared<Effect::Refresh_energy_effect>(this->current_x,this->current_y));
+    void Energy_panel::on_add_energy(Effect::Effect_group&effs){
+        effs.AddTop(std::make_shared<Effect::Refresh_energy_effect>(this->current_x,this->current_y));
         font_scale=2.0F;
         vfx_timer=2.0F;
     }

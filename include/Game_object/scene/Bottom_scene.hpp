@@ -3,6 +3,7 @@
 #include <glm/vec3.hpp>
 
 #include "Game_object/scene/Scenes.hpp"
+
 namespace Scene{
 //remember to add the effect.
 class Bottom_scene final:public Scenes
@@ -12,7 +13,8 @@ public:
     Bottom_scene()=default;
     ~Bottom_scene()override=default;
     // void update()override;
-    void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
+    void render_bg(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
+    void render_fg(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void next_room()override;
 private:
     bool render_hollow_mid,render_solid_mid,render_left_wall;

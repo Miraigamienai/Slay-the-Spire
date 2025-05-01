@@ -2,6 +2,12 @@
 #define GAME_OBJECT_CHARACTER_PLAYER
 #include "Game_object/character/Characters.hpp"
 #include "RUtil/Some_Math.hpp"
+
+//fwd decl
+namespace Dungeon{
+    class Dungeon_shared;
+}
+
 namespace Character{
 enum class PlayerType{
     Ironclad,
@@ -18,8 +24,8 @@ public:
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     const PlayerType player_type;
 
-    void ReduceEnergy(int value)noexcept{this->current_energy-=value;}
-    void AddEnergy(int value)noexcept{this->current_energy+=value;}
+    void ReduceEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared);
+    void AddEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared);
     const int &GetCurrEnergy()const noexcept{return current_energy;}
     const int &GetMaxEnergy()const noexcept{return max_energy;}
     constexpr Uint32 GetCardTrailColor()const noexcept(noexcept(RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F))){return RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F);}

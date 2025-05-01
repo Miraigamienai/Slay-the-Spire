@@ -7,6 +7,9 @@
 #include "Game_object/action/Damage_action.hpp"//for applying damage to the target
 #include "Game_object/action/Show_card_to_discard_action.hpp"//show the copy card to discard.
 #include "Game_object/Damage_info.hpp"//passes damage parameters
+#include "Game_object/action/Effect_gen_capsule_action.hpp"//capsules the Vertical_aura_gen
+#include "Game_object/effect_gen/Vertical_aura_gen.hpp"//gen player aura
+#include "RUtil/ColorValuesOnly.hpp"//firebrick color
 
 namespace Card{
 namespace Red{
@@ -20,8 +23,13 @@ namespace Red{
             )
         );
 
-        //remember to add particle to player
-
+        //particle to player
+        dungeon_shared.action_group_handler.AddActionBot(
+            std::make_shared<Action::Effect_gen_capsule_action>(
+                std::make_shared<EffectGen::Vertical_aura_gen>(static_cast<Uint32>(RUtil::Colors::FIREBRICK)<<8, dungeon_shared.player->GetcX(), dungeon_shared.player->GetcY()),
+                0.0F
+            )
+        );
         //show the copy card to discard
         dungeon_shared.action_group_handler.AddActionBot(
             std::make_shared<Action::Show_card_to_discard_action>(

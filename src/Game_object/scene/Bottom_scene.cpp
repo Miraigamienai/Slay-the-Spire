@@ -15,9 +15,14 @@ namespace Scene
 // Bottom_scene::Bottom_scene(const std::shared_ptr<Room::Rooms> &current_room):Scenes(current_room){
 // }
 // void Bottom_scene::update(){}
-void Bottom_scene::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+void Bottom_scene::render_bg(const std::shared_ptr<Draw::Draw_2D> &r2)const{
     render_combat_room_bg(r2);
 }
+
+void Bottom_scene::render_fg(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+    render_format(r2,fg);
+}
+
 void Bottom_scene::next_room(){
     //reset scene
     if(RUtil::Random::GetRandomBoolean()){
@@ -43,11 +48,11 @@ void Bottom_scene::next_room(){
     color.g=RUtil::Random::GetRandomFloat(0.0F,0.2F);
     color.b=RUtil::Random::GetRandomFloat(0.0F,0.2F);
 }
+
 void Bottom_scene::render_combat_room_bg(const std::shared_ptr<Draw::Draw_2D> &r2)const{
     r2->SetColor(-1);
     render_format(r2,bg);
     render_format(r2,mg);
-    render_format(r2,fg);
     if(render_hollow_mid&&render_solid_mid)
         r2->SetColor(RUtil::Colors::GRAY);
     if(render_solid_mid) render_format(r2 ,solid_wall);

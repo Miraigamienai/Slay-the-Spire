@@ -11,11 +11,11 @@ namespace Monster{
 }
 
 namespace Action{
-class Card_use_action final:public Actions
+class Card_use_start_action final:public Actions
 {
 public:
-    Card_use_action(const Card::Card_item &card_item, const Monster::Monster_group&room_monsters);
-    ~Card_use_action() override=default;
+    Card_use_start_action(const Card::Card_item &card_item, const Monster::Monster_group&room_monsters);
+    ~Card_use_start_action() override=default;
     void update(Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
     const Card::Card_item card_itme;

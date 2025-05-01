@@ -1,6 +1,7 @@
 #include "Game_object/character/Player.hpp"
 #include "RUtil/Random.hpp"
 #include "Game_object/Damage_info.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
 
 namespace Character{
     Player::Player():Characters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F, WIDTH, HIGHT,HPBarWidth),player_type(PlayerType::Ironclad) 
@@ -35,6 +36,16 @@ namespace Character{
         {
             current_HP-=damage_info.dmg;
         }
+    }
+
+    void Player::ReduceEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared){
+        dungeon_shared.overlay.on_use_energy();
+        this->current_energy-=value;
+    }
+    
+    void Player::AddEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared){
+        dungeon_shared.overlay.on_add_energy(dungeon_shared.effs);
+        this->current_energy+=value;
     }
 
     const std::shared_ptr<Draw::ReTexture> &Player::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/character/Ironclad.png");

@@ -25,7 +25,7 @@ public:
     ~Energy_panel()override=default;
     void update()override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
-    void on_add_energy(const std::shared_ptr<Effect::Effect_group>&effs);
+    void on_add_energy(Effect::Effect_group &effs);
     void on_use_energy();
     void set_player(const std::shared_ptr<Character::Player> &player);
 private:

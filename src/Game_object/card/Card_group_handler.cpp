@@ -379,6 +379,8 @@ namespace Card{
     void Card_group_handler::update_hand_cards(Effect::Effect_group &top_effs, const Dungeon::Dungeon_shared &dungeon_shared){
         hand_cards.update(top_effs,dungeon_shared.player->GetCardTrailColor());
         for(const auto&it:hand_cards)it->CanUseUpdate(dungeon_shared);
+        //force_update_cards update here
+        for(const auto&it:force_update_cards) it->update(top_effs,dungeon_shared.player->GetCardTrailColor());
     }
 
     void Card_group_handler::render_targeting(const std::shared_ptr<Draw::Draw_2D> &r2)const{

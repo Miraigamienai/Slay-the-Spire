@@ -46,16 +46,16 @@ namespace EffectGen{
         if(this->duration==ACTION_DUR_XLONG){//first in
             dungeon_shared.gen_group.AddTop(std::make_shared<Card_paticle_gen>(card->GetTargetX(), card->GetTargetY()));
             //add to discard at first update
-            dungeon_shared.card_group_handler.AddTop(Card::GroupType::m_discard, this->card);
+            dungeon_shared.card_group_handler.AddBot<Card::GroupType::m_discard>(this->card);
             //force render
-            dungeon_shared.card_group_handler.AddTop(Card::GroupType::force_render_cards, card);
+            dungeon_shared.card_group_handler.AddBot<Card::GroupType::force_render_cards>(card);
         }
         TimeGo();
         this->card->update(dungeon_shared.top_effs, dungeon_shared.player->GetCardTrailColor());
         if(this->is_done){
             s_cnt--;
             dungeon_shared.card_group_handler.discard(card,true);//visual only
-            dungeon_shared.card_group_handler.erase(Card::GroupType::force_render_cards, card);
+            dungeon_shared.card_group_handler.erase<Card::GroupType::force_render_cards>(card);//remove from force render
         }
     }
 

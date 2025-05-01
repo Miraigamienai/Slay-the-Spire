@@ -21,7 +21,7 @@ namespace Action{
                 dungeon_shared.player->useFastAttackAnimation();
             
             //use card
-            // dungeon_shared.player->ReduceEnergy(card_itme.card->GetCost());
+            dungeon_shared.player->ReduceEnergy(card_itme.card->GetCost());
             card_itme.card->Use(dungeon_shared, room_monsters, card_itme.monster);
 
             //check where card go

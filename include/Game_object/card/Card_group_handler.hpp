@@ -35,7 +35,8 @@ enum class GroupType{
     draw_pile,
     master_deck,
     exhaust_pile,
-    force_render_cards
+    force_render_cards,
+    force_update_cards
 };
 class Card_group_handler
 {
@@ -68,71 +69,29 @@ public:
                 ++it;
         }
     }
-    void erase(GroupType type, const std::shared_ptr<Cards> &card){
-        switch (type) {
-            case GroupType::draw_pile:
-                draw_pile.erase(card);
-                break;
-            case GroupType::exhaust_pile:
-                exhaust_pile.erase(card);
-                break;
-            case GroupType::hand_cards:
-                hand_cards.erase(card);
-                break;
-            case GroupType::m_discard:
-                m_discard.erase(card);
-                break;
-            case GroupType::master_deck:
-                master_deck.erase(card);
-                break;
-            default:
-                force_render_cards.erase(card);
-                break;
-        }
+    template <GroupType GT>
+    void erase(const std::shared_ptr<Cards> &card){
+        this->GetCards<GT>().erase(card);
     }
-    void AddTop(GroupType type, std::shared_ptr<Cards> &&card){
-        switch (type) {
-            case GroupType::draw_pile:
-                draw_pile.AddTop(std::move(card));
-                break;
-            case GroupType::exhaust_pile:
-                exhaust_pile.AddTop(std::move(card));
-                break;
-            case GroupType::hand_cards:
-                hand_cards.AddTop(std::move(card));
-                break;
-            case GroupType::m_discard:
-                m_discard.AddTop(std::move(card));
-                break;
-            case GroupType::master_deck:
-                master_deck.AddTop(std::move(card));
-                break;
-            default:
-                force_render_cards.AddTop(std::move(card));
-                break;
-        }
+    template <GroupType GT>
+    void AddTop(std::shared_ptr<Cards> &&card){
+        this->GetCards<GT>().AddTop(std::move(card));
     }
-    void AddTop(GroupType type, const std::shared_ptr<Cards> &card){
-        switch (type) {
-            case GroupType::draw_pile:
-                draw_pile.AddTop(card);
-                break;
-            case GroupType::exhaust_pile:
-                exhaust_pile.AddTop(card);
-                break;
-            case GroupType::hand_cards:
-                hand_cards.AddTop(card);
-                break;
-            case GroupType::m_discard:
-                m_discard.AddTop(card);
-                break;
-            case GroupType::master_deck:
-                master_deck.AddTop(card);
-                break;
-            default:
-                force_render_cards.AddTop(card);
-                break;
-        }
+    template <GroupType GT>
+    void AddTop(const std::shared_ptr<Cards> &card){
+        this->GetCards<GT>().AddTop(card);
+    }
+    template <GroupType GT>
+    void AddBot(std::shared_ptr<Cards> &&card){
+        this->GetCards<GT>().AddBot(std::move(card));
+    }
+    template <GroupType GT>
+    void AddBot(const std::shared_ptr<Cards> &card){
+        this->GetCards<GT>().AddBot(card);
+    }
+    template <GroupType GT>
+    auto size() noexcept{
+        return this->GetCards<GT>().size();
     }
     void super_flash()const{
         for(const auto&it:hand_cards) if(it->CanUse()) it->SuperFlash();
@@ -142,30 +101,6 @@ public:
         return false;
     }
     bool is_dragging() const noexcept{return is_dragging_card;}
-    int size(GroupType type) const noexcept(
-        noexcept(draw_pile.size()) &&
-        noexcept(exhaust_pile.size()) &&
-        noexcept(hand_cards.size()) &&
-        noexcept(m_discard.size()) &&
-        noexcept(master_deck.size())
-    ){
-        switch (type) {
-            case GroupType::draw_pile:
-                return draw_pile.size();
-            case GroupType::exhaust_pile:
-                return exhaust_pile.size();
-            case GroupType::hand_cards:
-                return hand_cards.size();
-            case GroupType::m_discard:
-                return m_discard.size();
-            case GroupType::master_deck:
-                return master_deck.size();
-            case GroupType::force_render_cards:
-                return force_render_cards.size();
-            default:
-                return 0;
-        }
-    }
     bool is_someone_flying()const noexcept{return !flying_cards.empty();}
     void discard_pile_shuffle_with_rng(RUtil::Random &rng){m_discard.ShuffleWithRng(rng);}
 private:
@@ -176,7 +111,8 @@ private:
     std::shared_ptr<Card::Cards> hovered_card=nullptr;
     std::shared_ptr<Monster::Monsters> hovered_monster=nullptr;
     Card_group hand_cards,m_discard,draw_pile,master_deck,exhaust_pile;
-    Template::Group_template<std::list<std::shared_ptr<Card::Cards>>> force_render_cards;//rendered when cards render, may change.
+    Template::Group_template<std::list<std::shared_ptr<Card::Cards>>> force_render_cards;//it will be rendered when render hand_cards, may change.
+    Template::Group_template<std::list<std::shared_ptr<Card::Cards>>> force_update_cards;//it will be updated when hand_cards update.
     std::list<std::shared_ptr<Card::Cards>> flying_cards;//shared_ptr is needed here.
     void hand_card_push()const;
     void release_card();
@@ -188,6 +124,17 @@ private:
     void handle_dragging(Action::Action_group_handler &action_group_handler);
     void check_drag_start();
     
+    template <GroupType GT>
+    auto& GetCards()noexcept{
+        if constexpr(GT==GroupType::hand_cards) return hand_cards;
+        else if constexpr(GT==GroupType::m_discard) return m_discard;
+        else if constexpr(GT==GroupType::draw_pile) return draw_pile;
+        else if constexpr(GT==GroupType::master_deck) return master_deck;
+        else if constexpr(GT==GroupType::exhaust_pile) return exhaust_pile;
+        else if constexpr(GT==GroupType::force_render_cards) return force_render_cards;
+        else if constexpr(GT==GroupType::force_update_cards) return force_update_cards;
+    }
+
     static const std::shared_ptr<Draw::ReTexture>&reticleBlock_img,&reticleArrow_img;
     static constexpr float SINK_START=80.0F*Setting::SCALE,SINK_RANGE=300.0F*Setting::SCALE,INCREMENT_ANGLE=5.0F,UI_THRESHOLD=1.0F*Setting::SCALE;
     static constexpr int ARROW_COLOR=RUtil::Math::GetColorUint32_RGB(1.0F,0.2F,0.3F);

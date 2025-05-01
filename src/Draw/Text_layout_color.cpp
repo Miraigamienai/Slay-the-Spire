@@ -29,7 +29,7 @@ namespace Draw
 
     void Text_layout_color::text_rows_set(){
         text_rows.clear();//Ensure text_rows is empty.
-        auto text_vec=color_string_split(text);
+        auto text_vec=color_string_split(this->text);
         //if "$n" appears inside a color tag text, that "$n" will be ignored.
         std::string total_text="";
         for(auto&it:text_vec){
@@ -70,7 +70,7 @@ namespace Draw
                         now_x=0;
                         text_rows.emplace_back(text_row{now_y,0,{}});//new row
                         last_nl_pos=nl_pos+1;
-                        nl_pos=it.find('\n', nl_pos+1);//find next
+                        nl_pos=it.find('\n', last_nl_pos);//find next
                     }while(nl_pos!=std::string::npos);
                     TTF_SizeUTF8(font.get(), it.substr(last_nl_pos).c_str(), &img_w, &img_h);   
                     text_rows.back().row.emplace_back(text_img{now_x, RUtil::WHITE, std::make_shared<Image_Region>(ori_text_img, now_x, now_y, img_w, img_h)});

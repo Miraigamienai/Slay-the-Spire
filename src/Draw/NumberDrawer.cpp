@@ -38,7 +38,7 @@ namespace Draw{
         return nums;
     }
 
-    static const std::vector<std::shared_ptr<Image_Region>> &GetNums(FontWeight fw){
+    static inline const std::vector<std::shared_ptr<Image_Region>> &GetNums(FontWeight fw){
         switch(fw){
             case FontWeight::medium:return GetNums<FontWeight::medium>();
             case FontWeight::bold:return GetNums<FontWeight::bold>();
@@ -53,12 +53,6 @@ namespace Draw{
             return GetNums(this->fw)[10];
         LOG_ERROR("NumberDrawer can't draw '{}'",c);
         return GetNums(this->fw)[0];
-    }
-
-    int NumberDrawer::PureWidth(const std::string &num_str)const{
-        int total=0;
-        for(const auto&it:num_str) total+=GetNumIMG(it)->GetRegionWidth();
-        return total;
     }
 
     void NumberDrawer::render_center(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float scale)const{

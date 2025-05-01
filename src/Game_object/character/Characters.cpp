@@ -19,6 +19,7 @@ namespace Character{
         health_width=HPBar_hb_width;
         health_target_width=HPBar_hb_width;
         animX=0.0F;
+        animY=0.0F;
         shakeToggle=true;
         
         
@@ -96,14 +97,14 @@ namespace Character{
             r2->draw(BLOCK_ICON, x+BLOCK_ICON_XY-32.0F, y+BLOCK_ICON_XY-32.0F+block_offset, 64.0F, 64.0F, 0.0F, 32.0F, 32.0F, Setting::SCALE, Setting::SCALE);
         }
     }
-    void Characters::setPosition(glm::vec2 vec){
-        pos=vec;
-        Character_hb_cX=vec.x+Character_hb_width*0.5F;
-        Character_hb_cY=vec.y+Character_hb_height*0.5F;
-        HPBar_hb_cX=vec.x+Character_hb_width*0.5F;
-        HPBar_hb_cY=vec.y-HPBar_hb_height*0.5F;
-        orgX=vec.x;
-        orgY=vec.y;
+    void Characters::setPosition(float x,float y){
+        pos={x,y};
+        Character_hb_cX=x+Character_hb_width*0.5F;
+        Character_hb_cY=y+Character_hb_height*0.5F;
+        HPBar_hb_cX=x+Character_hb_width*0.5F;
+        HPBar_hb_cY=y-HPBar_hb_height*0.5F;
+        orgX=x;
+        orgY=y;
     }
     void Characters::setHPBarWidth(float width){
         HPBar_hb_width=width;

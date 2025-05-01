@@ -10,7 +10,7 @@ namespace Character{
         max_HP=80;
         current_HP=80;
         current_Block=0;
-        setPosition(glm::vec2(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET));
+        setPosition(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET);
         KindOfCharacter=KindOfCharacter::PLAYER;
     }
 

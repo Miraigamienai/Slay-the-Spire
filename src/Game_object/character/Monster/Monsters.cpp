@@ -9,18 +9,24 @@ namespace Monster
 
     void Monsters::damage(const Damage_info& damage_info){
         if(current_Block>damage_info.dmg){
-        current_Block-=damage_info.dmg;
-        return;
+            current_Block-=damage_info.dmg;
+            useStaggerAnimation();
+            return;
+        }
+        else if (current_Block){
+            current_Block=0;
+            current_HP-=damage_info.dmg-current_Block;
+        }
+        else if (current_HP){
+            if(current_HP>damage_info.dmg){
+                current_HP-=damage_info.dmg;
+            }
+            else if (current_HP<=damage_info.dmg){
+                current_HP=0;
+            }
+        }
+        useStaggerAnimation();
     }
-    else if (current_Block){
-        current_Block=0;
-        current_HP-=damage_info.dmg-current_Block;
-    }
-    else{
-        current_HP-=damage_info.dmg;
-    }
-    useStaggerAnimation();
-}
     void Monsters::setHP(int min,int max){
         this->max_HP=max-int(RUtil::Random::GetRandomFloat(0.0F,max-min+1));
         this->current_HP=max_HP;

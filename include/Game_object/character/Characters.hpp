@@ -35,12 +35,12 @@ public:
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2) const =0;
     void update();
     void setPosition(glm::vec2 vec,int WIDTH,int HIGHT);
-    void setPosition(glm::vec2 vec);
+    void setPosition(float x,float y);
     void setHPBarWidth(float width);
     bool hovered()const{return boss_hitbox.Hovered();}
     float GetcX()const{return Character_hb_cX;}
     float GetcY()const{return Character_hb_cY;}
-    bool IsDie()const{return false;}//for test
+    bool IsDie()const{return current_HP==0;}//for test
     void AddBlock(int num){current_Block+=num;};
     void setBlock(int num){current_Block=num;};
     void AddHP(int num){current_HP+=num;};
@@ -79,7 +79,7 @@ protected:
 private:
     RUtil::Hitbox boss_hitbox;
     RUtil::Hitbox HPBar_hitbox;
-    glm::vec2 pos;
+    glm::vec2 pos={0,0};
     float HPBar_hb_width,HPBar_hb_height,HPBar_hb_a,HPBar_hb_cX,HPBar_hb_cY;
     float Character_hb_cX,Character_hb_cY,
           Character_hb_width,Character_hb_height;

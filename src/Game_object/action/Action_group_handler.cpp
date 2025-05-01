@@ -18,7 +18,8 @@ namespace Action
             }else{
                 get_next_action(room_monsters, dungeon_shared.card_group_handler);
                 if(current_action==nullptr){
-                    dungeon_shared.card_group_handler.refresh_hand_layout();
+                    //TODO:This part still needs to be verified.
+                    // dungeon_shared.card_group_handler.refresh_hand_layout();
                     is_wating_player=true;
                 }
             }

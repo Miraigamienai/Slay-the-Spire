@@ -5,10 +5,10 @@
 
 #include "Draw/Fonts.hpp"//calculate scale inline
 #include "WindowSize.hpp"//for getting default font size
+#include "Image_Region.hpp"//for inline
 
 //fwd decl
 namespace Draw{
-    class Image_Region;
     class Draw_2D;
 }
 
@@ -18,7 +18,7 @@ namespace Draw{
 class NumberDrawer
 {
 public:
-    NumberDrawer(int fontsize){SetFontSize(fontsize);}
+    NumberDrawer(int fontsize=Setting::BIGGIST_SIZE){SetFontSize(fontsize);}
     ~NumberDrawer()=default;
     void SetFontSize(int fontsize){
         if(this->fontsize==fontsize) return;
@@ -30,8 +30,13 @@ public:
         this->fw=fw;
         if(fontsize!=Setting::BIGGIST_SIZE) font_scale=Fonts::CalFontScale(fontsize,fw);
     }
-    int PureWidth(const std::string &num_str)const;
-    
+    int PureWidth(const std::string &num_str)const{
+        int total=0;
+        for(const auto&it:num_str) total+=GetNumIMG(it)->GetRegionWidth();
+        return total;
+    }
+    int PureHeight()const{return GetNumIMG('0')->GetRegionHeight();}
+    float Width(const std::string &num_str)const{return static_cast<float>(PureWidth(num_str))*font_scale;}
     void render_center(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float scale)const;
 private:
     int fontsize=Setting::BIGGIST_SIZE;

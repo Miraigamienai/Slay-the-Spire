@@ -14,7 +14,7 @@ public:
     Vertical_aura_gen(Uint32 color,float x,float y)noexcept:
         color(color),x(x)
     {
-        this->duration=y;//NOTE:'duration' is used to store the y-position..
+        this->duration=y;//NOTE:'duration' is used to store the y-position.
     }
     ~Vertical_aura_gen()override=default;
     void update(Dungeon::Dungeon_shared &dungeon_shared)override{

@@ -30,7 +30,6 @@ public:
     void render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const override;
     void render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const override;
 private:
-    
     struct text_img{
         int y;
         std::shared_ptr<Image_Region> img;

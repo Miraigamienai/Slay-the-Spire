@@ -37,4 +37,27 @@ std::vector<std::string> Text_layout::color_string_split(const std::string &text
     }while(pos!=std::string::npos);
     return re;
 }
+
+std::vector<std::string> Text_layout::tag_string_split(char front_char,char back_char,const std::string &text){
+    std::vector<std::string> re;
+    if(text.empty()) return re;
+    
+    size_t last_pos=0;
+    for(size_t pos=0;pos+2<text.size();++pos){
+        if(text[pos]==front_char&&text[pos+2]==back_char){
+            //string before !X!
+            if(last_pos!=pos){
+                re.emplace_back(text.substr(last_pos, pos-last_pos));
+            }
+            //!X!
+            re.emplace_back(text.substr(pos,3));
+            last_pos=pos+3;
+            pos+=2;
+        }
+    }
+    if(last_pos!=text.size()){
+        re.emplace_back(text.substr(last_pos, text.size()-last_pos));
+    }
+    return re;
+}
 }

@@ -43,16 +43,5 @@ private:
     
     std::vector<text_row> text_rows;
     void text_rows_set();
-
-    static constexpr Uint32 GetColor(char c){
-        switch(c){
-            case 'y': return RUtil::GOLD_COLOR;
-            case 'g': return RUtil::GREEN_TEXT_COLOR;
-            case 'r': return RUtil::RED_TEXT_COLOR;
-            case 'b': return RUtil::BLUE_TEXT_COLOR;
-            case 'p': return RUtil::PURPLE_COLOR;
-            default: return RUtil::WHITE;
-        }
-    }
 };
 }

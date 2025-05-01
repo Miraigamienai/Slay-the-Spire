@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Draw/Text_layout.hpp"
+#include "Draw/NumberDrawer.hpp"
 
 namespace Draw{
 class Text_layout_all final:public Text_layout
@@ -15,7 +16,25 @@ public:
     ~Text_layout_all()override=default;
 
     void ChangeFontWeight(FontWeight fw)override{}
-    void render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const override{}
-    void render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const override{}
+    void render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const override;
+    void render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const override;
+    void render_center_with_nums(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale,const number_info &num_info)const override;
+private:
+    struct text_item{
+        bool is_num;
+        bool is_orb;
+        Uint32 c;//NOTE: when is_num is true,'c' represents the number type (e.g. damage, block, magic).
+        std::shared_ptr<Image_Region> img;
+    };
+
+    struct text_row{
+        int y;
+        int img_row_width;
+        std::vector<text_item> row;
+    };
+
+    NumberDrawer num_draw;
+    std::vector<text_row> text_rows;
+    void text_rows_set();
 };
 }

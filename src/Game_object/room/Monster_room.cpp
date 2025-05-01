@@ -40,6 +40,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         }
         if(dungeon_shared.overlay.end_turn_button_clicked()){
             //ending turn
+            //TODO:end logic need to be check.
             dungeon_shared.overlay.disable_end_turn_button();
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Discard_all_action>());
             dungeon_shared.action_group_handler.ending_turn(m_monsters);
@@ -56,8 +57,10 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
                 //battle start effect
                 dungeon_shared.overlay.show_combat_panel();
             }
-            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));//temporary 5
-            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Enable_end_button_action>());//Ensure that enable action will be triggered after the card are drawn.
+            //temporary 5
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));
+            //Ensure that enable action will be triggered after the card are drawn.
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Enable_end_button_action>());
             
         }
     }

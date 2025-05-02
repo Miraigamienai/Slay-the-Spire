@@ -28,20 +28,20 @@ namespace Monster{
                 return;
             case GroupName::Gremlin_Gang:{
                 int vector[5]={0,0,0,0,0};
-                float pos[4][2]={{-320.0F, 25.0F},{-160.0F, -12.0F},{ 25.0F, -35.0F},{205.0F, 40.0F}};
+                float pos[4][2]={{-320.0F, 25.0F},{-160.0F, -12.0F},{ 25.0F, -12.0F},{190.0F, 25.0F}};
                 while (vector[0]+vector[1]+vector[2]+vector[3]+vector[4]<4){
                     int num=vector[0]+vector[1]+vector[2]+vector[3]+vector[4];
                     switch (rng.NextInt(0,5))
                     {
                         case 0:
                             if(vector[0]<2){
-                                // group.AddTop(std::make_shared<MadGremlin>(pos[num][0],pos[num][1]));
+                                group.AddTop(std::make_shared<MadGremlin>(pos[num][0],pos[num][1]));
                                 vector[0]++;
                             }
                             break;
                         case 1:
                             if(vector[1]<2){
-                                // group.AddTop(std::make_shared<SneakyGremlin>(pos[num][0],pos[num][1]));
+                                group.AddTop(std::make_shared<SneakyGremlin>(pos[num][0],pos[num][1]));
                                 vector[1]++;
                             }
                             break;
@@ -53,13 +53,13 @@ namespace Monster{
                             break;
                         case 3:
                             if(!vector[3]){
-                                // group.AddTop(std::make_shared<GremlinWizard>(pos[num][0],pos[num][1]));
+                                group.AddTop(std::make_shared<WizardGremlin>(pos[num][0],pos[num][1]));
                                 vector[3]++;
                             }
                             break;
                         case 4:
                             if(!vector[4]){
-                                // group.AddTop(std::make_shared<ShieldGremlin>(pos[num][0],pos[num][1]));
+                                group.AddTop(std::make_shared<ShieldGremlin>(pos[num][0],pos[num][1]));
                                 vector[4]++;
                             }
                             break;
@@ -82,10 +82,10 @@ namespace Monster{
             }
 
             case GroupName::Red_Slaver:
-                // group.AddTop(std::make_shared<RedSlaver>(0.0F, 0.0F));
+                group.AddTop(std::make_shared<RedSlaver>(0.0F, 0.0F));
                 return;
             case GroupName::Blue_Slaver:
-                // group.AddTop(std::make_shared<BlueSlaver>(0.0F, 0.0F));
+                group.AddTop(std::make_shared<BlueSlaver>(0.0F, 0.0F));
                 return;
             case GroupName::_3_Louse:{
                 float pos[3][2]={{-350.0F, 25.0F},{-125.0F, 10.0F},{80.0F, 30.0F}};
@@ -97,8 +97,8 @@ namespace Monster{
 
             case GroupName::_2_Fungi_Beasts:{
                 float pos[2][2]={{-400.0F, 30.0F},{-40.0F, 20.0F}};
-                // for(size_t i=0;i<2;i++)
-                    // group.AddTop(std::make_shared<FungiBeast>(pos[i][0],pos[i][1]));
+                for(size_t i=0;i<2;i++)
+                    group.AddTop(std::make_shared<FungiBeast>(pos[i][0],pos[i][1]));
                 return;
             }
 
@@ -121,16 +121,16 @@ namespace Monster{
                 }
                 switch (rng.NextInt(0,4)){
                     case 0:
-                        // group.AddTop(std::make_shared<Looter>(130.0F+rng.NextInt(-20,21),20.0F+rng.NextInt(-20,21)));
+                        group.AddTop(std::make_shared<Looter>(130.0F+rng.NextInt(-20,21),20.0F+rng.NextInt(-20,21)));
                         break;
                     case 1:
                         group.AddTop(std::make_shared<Cultist>(130.0F+rng.NextInt(-20,21),20.0F+rng.NextInt(-20,21)));
                         break;
                     case 2:
-                        // group.AddTop(std::make_shared<BlueSlaver>(130.0F+rng.NextInt(-20,21),20.0F+rng.NextInt(-20,21)));
+                        group.AddTop(std::make_shared<BlueSlaver>(130.0F+rng.NextInt(-20,21),20.0F+rng.NextInt(-20,21)));
                         break;
                     case 3:
-                        // group.AddTop(std::make_shared<RedSlaver>(130.0F+rng.NextInt(-20,21),20.0F+rng.NextInt(-20,21)));
+                        group.AddTop(std::make_shared<RedSlaver>(130.0F+rng.NextInt(-20,21),20.0F+rng.NextInt(-20,21)));
                         break;
                     default:
                         break;
@@ -141,7 +141,7 @@ namespace Monster{
             case GroupName::Exordium_Wildlife:
                 switch (rng.NextInt(0,2)){
                     case 0:
-                        // group.AddTop(std::make_shared<FungiBeast>(-150.0F+rng.NextInt(-20,21),20.0F+rng.NextInt(-20,21)));
+                        group.AddTop(std::make_shared<FungiBeast>(-150.0F+rng.NextInt(-20,21),20.0F+rng.NextInt(-20,21)));
                         break;
                     case 1:
                         group.AddTop(std::make_shared<JawWorm>(-150.0F+rng.NextInt(-20,21),20.0F+rng.NextInt(-20,21)));
@@ -167,7 +167,7 @@ namespace Monster{
                 }
                 return;
             case GroupName::Looter:
-                // group.AddTop(std::make_shared<Looter>(0.0F, 0.0F));
+                group.AddTop(std::make_shared<Looter>(0.0F, 0.0F));
                 return;
             case GroupName::None:
                 group.AddTop(std::make_shared<FatGremlin>(0.0F, 0.0F));

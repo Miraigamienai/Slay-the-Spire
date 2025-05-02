@@ -12,7 +12,7 @@ class FatGremlin final:public Monsters
 public:
     FatGremlin(float offsetX,float offsetY);
     ~FatGremlin()override=default;
-    void Action(FatGremlin action_type);
+    void Action(FatGremlinAction action_type);
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     
     

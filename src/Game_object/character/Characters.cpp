@@ -10,7 +10,6 @@ namespace Character{
     {
         Character_hb_width=width;
         HPBar_hb_width=HPBarWidth;
-        HPBar_hb_height=HEALTH_BAR_HEIGHT;
         HPBar_hb_a=1.0F;
 
         shadow_a = 1.0F;
@@ -29,11 +28,13 @@ namespace Character{
         Character_hb_cX=x+Character_hb_width*0.5F;
         Character_hb_cY=y+Character_hb_height*0.5F;
         HPBar_hb_cX=x+Character_hb_width*0.5F;
-        HPBar_hb_cY=y-HPBar_hb_height*0.5F;
+        HPBar_hb_cY=y-HEALTH_BAR_HEIGHT*0.5F;
         orgX=x;
         orgY=y;
         
-
+        m_font.ChangeFontWeight(FontWeight::bold);
+        m_font.SetFontSize(FONTSIZE);
+        font_scale=1.0F;
     }
     void Characters::updateHealthBar(){
         health_target_width=HPBar_hb_width*(current_HP/(float)max_HP);
@@ -62,7 +63,7 @@ namespace Character{
         
     }
     void Characters::render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        const float x=HPBar_hb_cX-HPBar_hb_width/2.0F,y=HPBar_hb_cY-HPBar_hb_height/2.0F;
+        const float x=HPBar_hb_cX-HPBar_hb_width/2.0F,y=HPBar_hb_cY-HEALTH_BAR_HEIGHT/2.0F;
 
         //shadow
         r2->SetColor(0,shadow_a);
@@ -100,11 +101,14 @@ namespace Character{
             r2->draw(BLOCK_BAR_R, x+HPBar_hb_width, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
             r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         }
-
+        r2->SetColor(-1,1);
+        m_font.render_center(r2, std::to_string(current_HP)+"/"+std::to_string(max_HP), HPBar_hb_cX, HPBar_hb_cY+HEALTH_BAR_OFFSET_Y, font_scale*Setting::SCALE);
         if(current_Block!=0&&HPBar_hb_a!=0.0F){
             //block icon
-            r2->SetColor(BLOCK_COLOR);
+            r2->SetColor(BLOCK_COLOR,1);
             r2->draw(BLOCK_ICON, x+BLOCK_ICON_XY-32.0F, y+BLOCK_ICON_XY-32.0F+block_offset, 64.0F, 64.0F, 0.0F, 32.0F, 32.0F, Setting::SCALE, Setting::SCALE);
+            r2->SetColor(-1,1);
+            m_font.render_center(r2, std::to_string(current_Block), x+BLOCK_ICON_XY, y+BLOCK_ICON_XY+block_offset, font_scale*Setting::SCALE);
         }
     }
     void Characters::setPosition(float x,float y){
@@ -112,7 +116,7 @@ namespace Character{
         Character_hb_cX=x+Character_hb_width*0.5F;
         Character_hb_cY=y+Character_hb_height*0.5F;
         HPBar_hb_cX=x+Character_hb_width*0.5F;
-        HPBar_hb_cY=y-HPBar_hb_height*0.5F;
+        HPBar_hb_cY=y-HEALTH_BAR_HEIGHT*0.5F;
         orgX=x;
         orgY=y;
     }

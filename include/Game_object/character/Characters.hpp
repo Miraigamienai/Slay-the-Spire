@@ -5,6 +5,7 @@
 #include "RUtil/Image_book.hpp"
 #include "WindowSize.hpp"
 #include "RUtil/Some_Math.hpp"
+#include "Draw/NumberDrawer.hpp"
 
 //fwd decl
 struct Damage_info;
@@ -87,7 +88,8 @@ private:
     float HPDecreaseWaitTimer,animationTimer;
     bool HPDecrease=false,shakeToggle;
     Animation animation=Animation::NONE;
-    float shadow_a,bg_a,outline_a,health_width,health_target_width,block_offset;
+    Draw::NumberDrawer m_font;
+    float shadow_a,bg_a,outline_a,health_width,health_target_width,block_offset,font_scale;
     static const std::shared_ptr<Draw::ReTexture>  &_SHADOW_L,&_SHADOW_R,&_SHADOW_B,
                                                 &HEALTH_BAR_B,&HEALTH_BAR_L,&HEALTH_BAR_R,
                                                 &BLOCK_BAR_B,&BLOCK_BAR_R,&BLOCK_BAR_L,
@@ -97,6 +99,7 @@ private:
     static constexpr float SHAKE_THRESHOLD = Setting::SCALE * 8.0F;
     static constexpr float SHAKE_SPEED = 150.0F * Setting::SCALE;
     static constexpr float STAGGER_MOVE_SPEED = 20.0F * Setting::SCALE;
+    static constexpr int FONTSIZE=22;
 };
 }
 #endif

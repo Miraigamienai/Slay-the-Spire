@@ -1,7 +1,15 @@
 #ifndef GAME_OBJECT_CHARACTER_MONSTER_MONSTERS
 #define GAME_OBJECT_CHARACTER_MONSTER_MONSTERS
+#include <memory>
+
 #include "Game_object/action/Action_group_handler.hpp"
 #include "Game_object/character/Characters.hpp"
+
+// //fwd decl
+// namespace Dungeon{
+//     class Dungeon_shared;
+// }
+
 namespace Monster{
 enum class MonsterID{
     None,
@@ -22,11 +30,12 @@ enum class MonsterID{
     Looter,
     Mugger
 };
-class Monsters:public Character::Characters
+class Monsters:public Character::Characters, public std::enable_shared_from_this<Monsters>
 {
 public:
     Monsters(float x, float y, float width, float height,float HPBarWidth);
     virtual ~Monsters()=default;
+    virtual void Action(Dungeon::Dungeon_shared &dungeon_shared)/* =0; */{(void)dungeon_shared;}
     // virtual void apply(const std::shared_ptr<Action::Action_group> &action_group)const=0;
     void damage(const Damage_info& damage_info)override;
     void setHP(int min,int max);

@@ -19,18 +19,21 @@ set(SRC_FILES
 	Draw/Text_layout_normal.cpp
 	Game_object/action/Actions.cpp
 	Game_object/action/Action_group_handler.cpp
+	Game_object/action/Anim_set_action.cpp
 	Game_object/action/Card_use_end_action.cpp
 	Game_object/action/Card_use_start_action.cpp
 	Game_object/action/Damage_action.cpp
 	Game_object/action/Draw_card_action.cpp
 	Game_object/action/Effect_gen_capsule_action.cpp
 	Game_object/action/Empty_shuffle_action.cpp
+	Game_object/action/Gain_block_action.cpp
 	Game_object/button/End_turn_button.cpp
 	Game_object/card/Cards.cpp
 	Game_object/card/Card_group.cpp
 	Game_object/card/Card_group_handler.cpp
 	Game_object/card/Card_soul.cpp
 	Game_object/card/red/Anger.cpp
+	Game_object/card/red/Defend.cpp
 	Game_object/card/red/Strike_red.cpp
 	Game_object/character/Characters.cpp
 	Game_object/character/Monster_group.cpp
@@ -116,6 +119,7 @@ set(INCLUDE_FILES
 	Game_object/action/Actions.hpp
 	Game_object/action/Action_group.hpp
 	Game_object/action/Action_group_handler.hpp
+	Game_object/action/Anim_set_action.hpp
 	Game_object/action/Card_use_end_action.hpp
 	Game_object/action/Card_use_start_action.hpp
 	Game_object/action/Damage_action.hpp
@@ -124,6 +128,7 @@ set(INCLUDE_FILES
 	Game_object/action/Effect_gen_capsule_action.hpp
 	Game_object/action/Empty_shuffle_action.hpp
 	Game_object/action/Enable_end_button_action.hpp
+	Game_object/action/Gain_block_action.hpp
 	Game_object/action/Show_card_to_discard_action.hpp
 	Game_object/action/Wait_action.hpp
 	Game_object/button/End_turn_button.hpp
@@ -133,6 +138,7 @@ set(INCLUDE_FILES
 	Game_object/card/Card_item.hpp
 	Game_object/card/Card_soul.hpp
 	Game_object/card/red/Anger.hpp
+	Game_object/card/red/Defend.hpp
 	Game_object/card/red/Strike_red.hpp
 	Game_object/character/AllMonster.hpp
 	Game_object/character/Characters.hpp

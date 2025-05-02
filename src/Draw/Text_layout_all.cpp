@@ -4,6 +4,7 @@
 #include "Draw/ReText.hpp"
 #include "RUtil/All_Image.hpp"
 #include "RUtil/ColorValuesOnly.hpp"
+#include "RUtil/Some_Math.hpp"
 
 #include "Util/Logger.hpp"
 
@@ -92,16 +93,25 @@ namespace Draw
                 if(it2.is_num){
                     //draw number
                     r2->SetColor(GetNumColor(it2.c, num_info), this->font_color_alpha);
-                    // num_draw.render_center(r2, std::to_string(GetNum(it2.c, num_info)), )
+                    auto the_number_str=std::to_string(GetNum(it2.c, num_info));
+                    float num_offset_x=offset_x;
+                    for(const auto &num_digit:the_number_str){
+                        auto &img=num_draw.GetNumIMG(num_digit);
+                        r2->draw(img, center_x+num_offset_x, center_y+offset_y, (float)img->GetRegionWidth()*font_scale, (float)img->GetRegionHeight()*font_scale, angle, -num_offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
+                        now_x += (float)img->GetRegionWidth();
+                        num_offset_x = (now_x-row_width/2.0F)*font_scale;
+                    }
                 }else if(it2.is_orb){
                     //draw orb
                     r2->SetColor(RUtil::WHITE, this->font_color_alpha);
                     const float orb_scale=static_cast<float>(num_draw.PureHeight()) / static_cast<float>(it2.img->GetRegionHeight()) * static_cast<float>(it2.img->GetRegionWidth());
                     r2->draw(it2.img, center_x+offset_x, center_y+offset_y, (float)it2.img->GetRegionWidth()*orb_scale*font_scale, (float)num_draw.PureHeight()*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
+                    now_x+=(float)it2.img->GetRegionWidth()*orb_scale;
                 }else{
                     if(it2.c==RUtil::WHITE) r2->SetColor(this->font_color, this->font_color_alpha);
                     else r2->SetColor(it2.c, this->font_color_alpha);
                     r2->draw(it2.img, center_x+offset_x, center_y+offset_y, (float)it2.img->GetRegionWidth()*font_scale, (float)it2.img->GetRegionHeight()*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
+                    now_x+=(float)it2.img->GetRegionWidth();
                 }
             }
         }

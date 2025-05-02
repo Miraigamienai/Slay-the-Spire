@@ -38,11 +38,12 @@ public:
     int PureHeight()const{return GetNumIMG('0')->GetRegionHeight();}
     float Width(const std::string &num_str)const{return static_cast<float>(PureWidth(num_str))*font_scale;}
     void render_center(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float scale)const;
+    
+    const std::shared_ptr<Image_Region>&GetNumIMG(char c)const;
+    const std::shared_ptr<Image_Region>&GetNumIMG(int num)const;
 private:
     int fontsize=Setting::BIGGIST_SIZE;
     float font_scale=1.0F;
     FontWeight fw=FontWeight::regular;
-
-    const std::shared_ptr<Image_Region>&GetNumIMG(char c)const;
 };
 }

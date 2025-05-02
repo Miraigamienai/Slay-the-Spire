@@ -46,7 +46,7 @@ public:
     void AddCardQueue(Card::Card_item &&card_item){card_queue.emplace_back(std::move(card_item));}
     void AddCardQueue(const Card::Card_item &card_item){card_queue.emplace_back(card_item);}
 private:
-    void get_next_action(const Monster::Monster_group&room_monsters, Card::Card_group_handler &card_group_handler);
+    void get_next_action(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group&room_monsters);
     Action_group action_box,pre_action_box;
     std::deque<Card::Card_item> card_queue;
     std::vector<std::shared_ptr<Monster::Monsters>> monster_queue;

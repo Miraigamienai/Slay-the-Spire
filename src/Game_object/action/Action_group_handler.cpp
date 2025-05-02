@@ -10,22 +10,21 @@ namespace Action
 {
     void Action_group_handler::update(Dungeon::Dungeon_shared &dungeon_shared, const Monster::Monster_group&room_monsters){
         if(is_wating_player){
-            get_next_action(room_monsters, dungeon_shared.card_group_handler);
+            get_next_action(dungeon_shared, room_monsters);
         }else{
             if(current_action!=nullptr){
                 current_action->update(dungeon_shared);
                 if(current_action->IsDone()) current_action=nullptr;
             }else{
-                get_next_action(room_monsters, dungeon_shared.card_group_handler);
+                get_next_action(dungeon_shared, room_monsters);
                 if(current_action==nullptr){
-                    //TODO:This part still needs to be verified.
-                    // dungeon_shared.card_group_handler.refresh_hand_layout();
+                    dungeon_shared.card_group_handler.refresh_hand_layout();
                     is_wating_player=true;
                 }
             }
         }
     }
-    void Action_group_handler::get_next_action(const Monster::Monster_group&room_monsters, Card::Card_group_handler &card_group_handler){
+    void Action_group_handler::get_next_action(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group&room_monsters){
         if(!action_box.empty()){
             current_action=action_box.PopTop();
             is_wating_player=false;
@@ -42,10 +41,10 @@ namespace Action
             }else{
                 //can play
                 //removes card from hand
-                card_group_handler.erase<Card::GroupType::hand_cards>(card_queue.front().card);
+                dungeon_shared.card_group_handler.erase<Card::GroupType::hand_cards>(card_queue.front().card);
                 //adds the card to the force_render_cards and force_update_cards .It will be removed when Card_use_end_action finishes.
-                card_group_handler.AddTop<Card::GroupType::force_render_cards>(card_queue.front().card);
-                card_group_handler.AddTop<Card::GroupType::force_update_cards>(card_queue.front().card);
+                dungeon_shared.card_group_handler.AddTop<Card::GroupType::force_render_cards>(card_queue.front().card);
+                dungeon_shared.card_group_handler.AddTop<Card::GroupType::force_update_cards>(card_queue.front().card);
                 //use the card
                 action_box.AddBot(std::make_shared<Card_use_start_action>(card_queue.front(),room_monsters));
                 card_queue.front().card->SetX((float)Setting::WINDOW_WIDTH/2.0F);
@@ -53,7 +52,8 @@ namespace Action
             }
             card_queue.pop_front();
         }else if(!monster_queue.empty()){
-
+            monster_queue.back()->Action(dungeon_shared);
+            //TODO: intent update
             monster_queue.pop_back();
         }else if(is_endding_turn){
             is_endding_turn=false;

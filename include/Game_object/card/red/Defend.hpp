@@ -5,14 +5,14 @@
 
 namespace Card{
 namespace Red{
-class Anger final:public Interface::CardPrototype<Anger>
+class Defend final:public Interface::CardPrototype<Defend>
 {
 public:
-    Anger():CardPrototype<Anger>(RUtil::AtlasRegionID::_red_attack_anger,Rarity::common,Type::attack,Color::red,Target::enemy,0,6,0,0){}
-    ~Anger()override=default;
+    Defend():CardPrototype<Defend>(RUtil::AtlasRegionID::_red_skill_defend,Rarity::basic,Type::skill,Color::red,Target::self,1,5,0,0){}
+    ~Defend()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &room_monsters,const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade()override{
-        SetDamage(8);
+        SetDefense(8);
     }
 private:
 };   

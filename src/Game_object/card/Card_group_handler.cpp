@@ -247,7 +247,12 @@ namespace Card{
         if(len<8){
             for(const auto&it:hand_cards) it->SetDrawScale(0.75F);
         }
-        //...
+        //if hovered card
+        if(hovered_card!=nullptr){
+            hovered_card->SetAngle(0.0F, true);
+            hovered_card->SetX(hovered_card->GetX(), true);
+            hovered_card->SetY(hovered_card->GetY(), true);
+        }
     }
     
     void Card_group_handler::update(Action::Action_group_handler &action_group_handler,const Monster::Monster_group &room_monsters){

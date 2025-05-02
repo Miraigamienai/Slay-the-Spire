@@ -94,6 +94,7 @@ public:
     virtual bool CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const;
     virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &room_monsters,const std::shared_ptr<Monster::Monsters> &target_monster)=0;
     virtual std::shared_ptr<Cards> Clone()const=0;
+    virtual void Upgrade()=0;
 
     //inline function
 
@@ -117,13 +118,16 @@ public:
     void SetAngle(const float value,const bool immediate=false)noexcept{target_angle=value;if(immediate)m_angle=value;}
     void SetDrawScale(const float value,const bool immediate=false)noexcept{m_target_draw_scale=value;if(immediate)m_draw_scale=value;}
     bool IsSingleTarget()const noexcept{return target==Target::enemy||target==Target::self_and_enemy;}
+    
     //member
     const RUtil::AtlasRegionID card_name;
     const Rarity rarity;
     const Type type;
     const Color color;
     const Target target;
+
     //for child classes 
+
     void ResetAttributes(){
         damage=base_damage;
         defense=base_defense;
@@ -131,8 +135,18 @@ public:
         cost=base_cost;
     }
 protected:
-    const int base_damage, base_defense, base_magic_num, base_cost;
-    int       damage,      defense,      magic_num,      cost;
+    void SetDamage(int num){
+        this->base_damage=this->damage=num;
+    }
+    void SetDefense(int num){
+        this->base_defense=this->defense=num;
+    }
+    void SetMagicNum(int num){
+        this->base_magic_num=this->magic_num=num;
+    }
+    bool upgraded=false;
+    int base_damage, base_defense, base_magic_num, base_cost;
+    int damage,      defense,      magic_num,      cost;
 private:
     static const float &DT;
     const std::shared_ptr<Draw::Atlas_Region> &m_card_bg_silhouette,&m_card_bg,&m_card_frame,&m_card_left_frame,&m_card_mid_frame,&m_card_right_frame,&m_card_banner,&m_card_portrait;

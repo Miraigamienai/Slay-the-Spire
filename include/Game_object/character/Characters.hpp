@@ -10,7 +10,7 @@
 struct Damage_info;
 
 namespace Character{
-enum class Animation
+enum class Animation:int
 {
     ATTACK_FAST,
     ATTACK_SLOW,

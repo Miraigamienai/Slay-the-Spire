@@ -19,6 +19,7 @@ enum class AttackType:int{
     poison,
     NONE
 };
+
 struct Damage_info
 {
     int dmg;

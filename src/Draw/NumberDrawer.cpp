@@ -55,6 +55,13 @@ namespace Draw{
         return GetNums(this->fw)[0];
     }
 
+    const std::shared_ptr<Image_Region>&NumberDrawer::GetNumIMG(int num)const{
+        if(0<=num&&num<=9)
+            return GetNums(this->fw)[num];
+        LOG_ERROR("NumberDrawer can't draw '{}'",num);
+        return GetNums(this->fw)[0];
+    }
+
     void NumberDrawer::render_center(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float scale)const{
         const int width=PureWidth(num_str);
         const int height=GetNums(this->fw)[0]->GetRegionHeight();
@@ -67,4 +74,6 @@ namespace Draw{
             now_x+=img->GetRegionWidth();
         }
     }
+
+    
 }

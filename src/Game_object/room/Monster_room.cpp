@@ -13,7 +13,6 @@
 #include "Draw/Draw_2D.hpp"//for rendering
 
 #include "Util/Logger.hpp"//LOG_ERROR
-#include "Util/Input.hpp"//for test
 
 namespace Room{
 Monster_room::Monster_room():Rooms(Room_type::Monster),m_group_name(Monster::GroupName::None){
@@ -35,9 +34,6 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.action_group_handler.update(dungeon_shared,m_monsters);
         dungeon_shared.card_group_handler.update(dungeon_shared.action_group_handler,m_monsters);
         
-        if(Util::Input::IsKeyDown(Util::Keycode::A)){//for test
-            dungeon_shared.action_group_handler.AddActionTop(std::make_shared<Action::Draw_card_action>(5));
-        }
         if(dungeon_shared.overlay.end_turn_button_clicked()){
             //ending turn
             //TODO:end logic need to be check.

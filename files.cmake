@@ -62,11 +62,8 @@ set(SRC_FILES
 	Game_object/character/Monster/SpikeSlimeM.cpp
 	Game_object/character/Monster/SpikeSlimeS.cpp
 	Game_object/character/Monster/TempMonster.cpp
-<<<<<<< HEAD
-	Game_object/dungeon/Card_reward_screen.cpp
-=======
 	Game_object/character/Monster/WizardGremlin.cpp
->>>>>>> deacda1f41fd30b5053aa2add1c8b24e55400ffe
+	Game_object/dungeon/Card_reward_screen.cpp
 	Game_object/dungeon/Dungeons.cpp
 	Game_object/dungeon/Dungeon_manager.cpp
 	Game_object/dungeon/Dungeon_screen.cpp
@@ -185,11 +182,8 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/SpikeSlimeM.hpp
 	Game_object/character/Monster/SpikeSlimeS.hpp
 	Game_object/character/Monster/TempMonster.hpp
-<<<<<<< HEAD
-	Game_object/dungeon/Card_reward_screen.hpp
-=======
 	Game_object/character/Monster/WizardGremlin.hpp
->>>>>>> deacda1f41fd30b5053aa2add1c8b24e55400ffe
+	Game_object/dungeon/Card_reward_screen.hpp
 	Game_object/dungeon/Dungeons.hpp
 	Game_object/dungeon/Dungeon_manager.hpp
 	Game_object/dungeon/Dungeon_screen.hpp

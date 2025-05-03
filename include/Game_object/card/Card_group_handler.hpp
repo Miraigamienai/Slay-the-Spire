@@ -100,6 +100,16 @@ public:
         for(const auto&it:hand_cards) if(it->CanUse()) return true;
         return false;
     }
+    template <Card::Type CT>
+    bool Has_any_type_card()const{
+        for(const auto&it:hand_cards) if(it->type==CT) return true;
+        return false;
+    }
+    template <Card::Type CT>
+    bool Has_all_type_card()const{
+        for(const auto&it:hand_cards) if(it->type!=CT) return false;
+        return true;
+    }
     bool is_dragging() const noexcept{return is_dragging_card;}
     bool is_someone_flying()const noexcept{return !flying_cards.empty();}
     void discard_pile_shuffle_with_rng(RUtil::Random &rng){m_discard.ShuffleWithRng(rng);}

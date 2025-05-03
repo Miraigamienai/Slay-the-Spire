@@ -2,6 +2,7 @@
 #include "Game_object/card/red/Strike_red.hpp"//for test
 #include "Game_object/card/red/Anger.hpp"//for test
 #include "Game_object/card/red/Defend.hpp"//for test
+#include "Game_object/card/red/Clash.hpp"//for test
 #include "Core/Context.hpp"
 #include "Game_object/character/Player.hpp"
 
@@ -16,6 +17,8 @@ TheApp::TheApp(){
         m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Anger>());
     for(int i=0;i<1;i++)
         m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Defend>());
+    for(int i=0;i<1;i++)
+        m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Clash>());
 }
 void TheApp::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
     switch (m_CurrentState) {

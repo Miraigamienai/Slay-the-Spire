@@ -28,11 +28,13 @@ set(SRC_FILES
 	Game_object/action/Empty_shuffle_action.cpp
 	Game_object/action/Gain_block_action.cpp
 	Game_object/button/End_turn_button.cpp
+	Game_object/button/Skip_button.cpp
 	Game_object/card/Cards.cpp
 	Game_object/card/Card_group.cpp
 	Game_object/card/Card_group_handler.cpp
 	Game_object/card/Card_soul.cpp
 	Game_object/card/red/Anger.cpp
+	Game_object/card/red/Clash.cpp
 	Game_object/card/red/Defend.cpp
 	Game_object/card/red/Strike_red.cpp
 	Game_object/character/Characters.cpp
@@ -52,6 +54,7 @@ set(SRC_FILES
 	Game_object/character/Monster/SpikeSlimeM.cpp
 	Game_object/character/Monster/SpikeSlimeS.cpp
 	Game_object/character/Monster/TempMonster.cpp
+	Game_object/dungeon/Card_reward_screen.cpp
 	Game_object/dungeon/Dungeons.cpp
 	Game_object/dungeon/Dungeon_manager.cpp
 	Game_object/dungeon/Dungeon_screen.cpp
@@ -68,6 +71,8 @@ set(SRC_FILES
 	Game_object/effect/Flash_attack_effect.cpp
 	Game_object/effect/Map_circle_effect.cpp
 	Game_object/effect/Refresh_energy_effect.cpp
+	Game_object/effect/Shine_particle.cpp
+	Game_object/effect/Slash_eff.cpp
 	Game_object/effect/Vertical_aura.cpp
 	Game_object/effect_gen/Effect_gen_group.cpp
 	Game_object/effect_gen/Show_card_to_discard.cpp
@@ -132,12 +137,14 @@ set(INCLUDE_FILES
 	Game_object/action/Show_card_to_discard_action.hpp
 	Game_object/action/Wait_action.hpp
 	Game_object/button/End_turn_button.hpp
+	Game_object/button/Skip_button.hpp
 	Game_object/card/Cards.hpp
 	Game_object/card/Card_group.hpp
 	Game_object/card/Card_group_handler.hpp
 	Game_object/card/Card_item.hpp
 	Game_object/card/Card_soul.hpp
 	Game_object/card/red/Anger.hpp
+	Game_object/card/red/Clash.hpp
 	Game_object/card/red/Defend.hpp
 	Game_object/card/red/Strike_red.hpp
 	Game_object/character/AllMonster.hpp
@@ -158,6 +165,7 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/SpikeSlimeM.hpp
 	Game_object/character/Monster/SpikeSlimeS.hpp
 	Game_object/character/Monster/TempMonster.hpp
+	Game_object/dungeon/Card_reward_screen.hpp
 	Game_object/dungeon/Dungeons.hpp
 	Game_object/dungeon/Dungeon_manager.hpp
 	Game_object/dungeon/Dungeon_screen.hpp
@@ -177,8 +185,11 @@ set(INCLUDE_FILES
 	Game_object/effect/Flash_attack_effect.hpp
 	Game_object/effect/Map_circle_effect.hpp
 	Game_object/effect/Refresh_energy_effect.hpp
+	Game_object/effect/Shine_particle.hpp
+	Game_object/effect/Slash_eff.hpp
 	Game_object/effect/Vertical_aura.hpp
 	Game_object/effect_gen/Card_paticle_gen.hpp
+	Game_object/effect_gen/Clash_eff_gen.hpp
 	Game_object/effect_gen/Effect_gen.hpp
 	Game_object/effect_gen/Effect_gen_group.hpp
 	Game_object/effect_gen/Show_card_to_discard.hpp

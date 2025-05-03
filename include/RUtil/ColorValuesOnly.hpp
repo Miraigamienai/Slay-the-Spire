@@ -10,6 +10,7 @@ constexpr Uint32 GREEN_TEXT_COLOR = 2147418367;
 constexpr Uint32 BLUE_TEXT_COLOR = -2016482305;
 constexpr Uint32 PURPLE_COLOR = -293409025;
 constexpr Uint32 WHITE=-1;
+constexpr Uint32 SCARLET=0xff341cff;
 
 enum class Colors : Uint32 {
     ALICE_BLUE = 0xF0F8FF,
@@ -154,4 +155,8 @@ enum class Colors : Uint32 {
     YELLOW = 0xFFFF00,
     YELLOW_GREEN = 0x9ACD32
 };
+
+static inline auto constexpr ToRGBA(Colors c){
+    return static_cast<Uint32>(c)<<8;
+}
 }

@@ -8,6 +8,7 @@ struct Random_package
     Random map_rng;//Used for generating the map.
     Random monster_rng;//Used for designing mosters in rooms.
     Random card_reward_rng;//Used for generating card rewards.
+    Random misc_rng;//other
 
     //The following RNGs are refreshed when entering each room.
     
@@ -26,6 +27,7 @@ struct Random_package
         card_shuffle_rng.SetNewSeed(seed);
         monster_hp_rng.SetNewSeed(seed);
         monster_ai_rng.SetNewSeed(seed);
+        misc_rng.SetNewSeed(seed);
     }
     void ResetRoomRNGs(unsigned long long int seed){
         card_get_rng.SetNewSeed(seed);

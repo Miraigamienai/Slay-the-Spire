@@ -32,7 +32,8 @@ public:
     static Uint32 color_lerp_rgb(Uint32 start,Uint32 target,float t);
     static float interpolation_exp10(float start,float target,float a);
     static float interpolation_exp10in(float start,float target,float a);
-    static constexpr float interpolation_fade(float start,float target,float a){
+    template <typename T>
+    static constexpr T interpolation_fade(T start,T target,float a){
         //from gdx
         return Apply(start,target,std::clamp(a * a * a * (a * (a * 6.0F - 15.0F) + 10.0F),0.0F,1.0F));
     }

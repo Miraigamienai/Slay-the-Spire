@@ -13,6 +13,7 @@ public:
     void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &room_monsters,const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade()override{
         SetDefense(8);
+        upgraded=true;
     }
 private:
 };   

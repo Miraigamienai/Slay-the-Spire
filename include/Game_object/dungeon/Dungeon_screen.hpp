@@ -10,7 +10,7 @@ namespace Map{
 }
 
 namespace Dungeon{
-class Dungeon_screen:public Interface::Is_screen
+class Dungeon_screen final:public Interface::Is_screen
 {
 public:
     Dungeon_screen();

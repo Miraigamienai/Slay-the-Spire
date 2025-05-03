@@ -33,6 +33,12 @@ void Card_soul::discard(){
     prepare_to_fly();
     this->current_speed=START_VELOCITY*RUtil::Random::GetRandomFloat(1.0F,4.0F);
 }
+void Card_soul::obtain(){
+    this->end_x=MASTER_DECK_X;
+    this->end_y=MASTER_DECK_Y;
+    this->prepare_to_fly();
+    this->is_clockwise=RUtil::Random::GetRandomBoolean();
+}
 void Card_soul::shuffle(bool shuffle_invisible){
     this->is_shuffling=true;
     this->shuffle_invisible=shuffle_invisible;
@@ -69,7 +75,6 @@ void Card_soul::update_flying(Effect::Effect_group &top_effs,const Uint32 Player
     this->movement_update();
     
     this->vfx_update(top_effs,PlayerTrailColor_RGB);
-    
     
     //update end_timer
     end_timer-=DT();

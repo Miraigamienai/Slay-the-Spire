@@ -15,7 +15,7 @@ public:
         this->width=w;
         this->height=h;
     }
-    void move(float center_x,float center_y){
+    void move(float center_x,float center_y)noexcept{
         this->x=center_x-this->width/2.0F;
         this->y=center_y-this->height/2.0F;
     }

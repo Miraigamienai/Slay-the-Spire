@@ -27,7 +27,7 @@ private:
     glm::vec2 pos, start_pos, target_pos, m_scale;
     Uint32 color2;
     float angle;
-    static const std::shared_ptr<Draw::ReTexture> IMG;
+    static const std::shared_ptr<Draw::ReTexture> &IMG;
     static constexpr float DUR=0.4F;
 };
 }

@@ -7,7 +7,7 @@
 #include "WindowSize.hpp"
 
 namespace Effect{
-    const std::shared_ptr<Draw::ReTexture> Slash_eff::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/slash_1.png");
+    const std::shared_ptr<Draw::ReTexture> &Slash_eff::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/slash_1.png");
 
     void Slash_eff::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         using namespace RUtil;

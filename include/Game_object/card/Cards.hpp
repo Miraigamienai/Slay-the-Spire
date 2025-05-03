@@ -97,7 +97,9 @@ public:
     virtual void Upgrade()=0;
 
     //inline function
-
+    
+    bool HitboxHovered()const noexcept{return this->hb.Hovered();}
+    bool HitboxClicked()const noexcept{return this->hb.Clicked();}
     void SetCanHoverInHand(bool value)noexcept{this->can_hover_in_hand=value;}
     //0.12F scale
     void Shrink(bool immediate)noexcept{

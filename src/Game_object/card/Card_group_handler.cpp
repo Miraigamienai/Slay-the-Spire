@@ -72,7 +72,14 @@ namespace Card{
         card->discard();
         flying_cards.emplace_back(card);
         if(!visual_only)
-            m_discard.AddTop(card);
+            this->m_discard.AddTop(card);
+    }
+
+    void Card_group_handler::obtain(const std::shared_ptr<Cards> &card){
+        card->Shrink(false);
+        card->obtain();
+        flying_cards.emplace_back(card);
+        this->master_deck.AddTop(card);
     }
 
     void Card_group_handler::release_card(){

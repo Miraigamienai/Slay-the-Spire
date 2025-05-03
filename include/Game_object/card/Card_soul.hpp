@@ -20,6 +20,7 @@ class Card_soul
 public:
     virtual ~Card_soul()=default;
     void discard();
+    void obtain();
     void shuffle(bool shuffle_invisible);
     bool is_fly()const{return is_flying;}
 protected:
@@ -52,6 +53,8 @@ public:
     static constexpr float  DISCARD_X = (float)Setting::WINDOW_WIDTH * 0.96F,
                             DISCARD_Y = (float)Setting::WINDOW_HEIGHT * 0.06F,
                             DRAW_PILE_X = (float)Setting::WINDOW_WIDTH * 0.04F,
-                            DRAW_PILE_Y = (float)Setting::WINDOW_HEIGHT * 0.06F;
+                            DRAW_PILE_Y = (float)Setting::WINDOW_HEIGHT * 0.06F,
+                            MASTER_DECK_X=(float)Setting::WINDOW_WIDTH - 96.0F*Setting::SCALE,
+                            MASTER_DECK_Y=(float)Setting::WINDOW_HEIGHT - 32.0F*Setting::SCALE;
 };
 }

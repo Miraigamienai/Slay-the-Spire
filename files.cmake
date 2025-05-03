@@ -64,6 +64,7 @@ set(SRC_FILES
 	Game_object/character/Monster/TempMonster.cpp
 	Game_object/character/Monster/WizardGremlin.cpp
 	Game_object/dungeon/Card_reward_screen.cpp
+	Game_object/dungeon/Combat_reward_screen.cpp
 	Game_object/dungeon/Dungeons.cpp
 	Game_object/dungeon/Dungeon_manager.cpp
 	Game_object/dungeon/Dungeon_screen.cpp
@@ -184,6 +185,7 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/TempMonster.hpp
 	Game_object/character/Monster/WizardGremlin.hpp
 	Game_object/dungeon/Card_reward_screen.hpp
+	Game_object/dungeon/Combat_reward_screen.hpp
 	Game_object/dungeon/Dungeons.hpp
 	Game_object/dungeon/Dungeon_manager.hpp
 	Game_object/dungeon/Dungeon_screen.hpp

@@ -5,8 +5,10 @@
 #include "RUtil/Image_book.hpp"
 #include "Draw/ReTexture.hpp"
 #include "Draw/Draw_2D.hpp"
+#include "Draw/Text_layout.hpp"
 
 #include "Util/Logger.hpp"
+
 
 namespace Map
 {
@@ -18,6 +20,8 @@ namespace Map
         items.emplace_back(enemy,s_vec_text[12],s_vec_text[13],s_vec_text[14],4);
         items.emplace_back(elite,s_vec_text[15],s_vec_text[16],s_vec_text[17],5);
         legend_a=1.0F;
+        s_vec_text[18]->SetFontSize(40);
+        s_vec_text[18]->SetFontColor(0);
     }
     void Legend::update(const float map_a,bool on_top){
         if(map_a>=0.8F&&on_top){
@@ -32,6 +36,8 @@ namespace Map
         r2->SetColor(RUtil::WHITE, legend_a);
         r2->draw(legend_img, Legend_item::LEGEND_X - 256.0F, Legend_item::LEGEND_Y - 400.0F, 512.0F, 800.0F, 0.0F, 256.0F, 400.0F, Setting::SCALE, Setting::SCALE);
         for(const auto&it:items) it.render(r2,legend_a);
+        
+        s_vec_text[18]->render_center(r2,1670.0F * Setting::SCALE,770.0F *  Setting::SCALE,0,0,0,Setting::SCALE);
     }
     const bool &Legend::get_hovered_hb_ref(Room::Room_type room_type)const{
         switch (room_type)

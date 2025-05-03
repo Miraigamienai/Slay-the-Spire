@@ -5,6 +5,7 @@ namespace Monster
 {
     Monsters::Monsters(float x, float y, float width, float height,float HPBarWidth) : Characters(x, y, width, height ,HPBarWidth) {
         KindOfCharacter=Character::KindOfCharacter::MONSTER;
+        setHPBarWidth(width*0.8F);
     }
 
     void Monsters::damage(const Damage_info& damage_info){

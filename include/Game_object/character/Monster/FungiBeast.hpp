@@ -1,20 +1,19 @@
-#ifndef GAME_OBJECT_CHARACTER_MONSTER_JaWWORM
-#define GAME_OBJECT_CHARACTER_MONSTER_JAWWORM
+#ifndef GAME_OBJECT_CHARACTER_MONSTER_FUNGIBEAST
+#define GAME_OBJECT_CHARACTER_MONSTER_FUNGIBEAST
 #include "Game_object/character/Monster/Monsters.hpp"
 
 namespace Monster{
-enum class JawWormAction
+enum class FungiBeastAction
 {
-    Chomp,
-    Thrash,
-    Bellow
+    Bite,
+    Grow,
 };
-class JawWorm final:public Monsters
+class FungiBeast final:public Monsters
 {
 public:
-    JawWorm(float offsetX,float offsetY);
-    ~JawWorm()override=default;
-    void Action(JawWormAction action_type);
+    FungiBeast(float offsetX,float offsetY);
+    ~FungiBeast()override=default;
+    void Action(FungiBeastAction action_type);
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     
     // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;

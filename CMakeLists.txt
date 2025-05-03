@@ -19,9 +19,9 @@ FetchContent_Declare(
 
     SOURCE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/PTSD
 )
-
+ 
 FetchContent_MakeAvailable(ptsd)
-
+ 
 include(files.cmake)
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
@@ -31,7 +31,7 @@ list(TRANSFORM INCLUDE_FILES PREPEND ${INCLUDE_DIR}/)
 
 # file(GLOB_RECURSE SRC_FILES src/*)
 # file(GLOB_RECURSE HEADER_FILES include/*)
-
+ 
 add_executable(${PROJECT_NAME}
     ${SRC_DIR}
     ${SRC_FILES}
@@ -39,7 +39,7 @@ add_executable(${PROJECT_NAME}
     ${IMAGE_RESOURCE_DIR}/resource.rc
 )
 
-
+  
 
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4)

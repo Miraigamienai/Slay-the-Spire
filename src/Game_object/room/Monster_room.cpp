@@ -15,7 +15,7 @@
 #include "Util/Logger.hpp"//LOG_ERROR
 
 namespace Room{
-Monster_room::Monster_room():Rooms(Room_type::Monster),m_group_name(Monster::GroupName::None){
+Monster_room::Monster_room():Rooms(Room_type::Monster),m_group_name(Monster::GroupName::Gremlin_Gang){
     m_wait_timer=0.0F;
 }
 void Monster_room::init_room(RUtil::Random_package &random_package){

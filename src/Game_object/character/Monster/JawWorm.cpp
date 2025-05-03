@@ -1,13 +1,12 @@
 #include "Game_object/character/Monster/JawWorm.hpp"
 #include "RUtil/Random.hpp"
 namespace Monster{
-    JawWorm::JawWorm():Monsters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET, WIDTH, HIGHT,HPBarWidth)
+    JawWorm::JawWorm(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth)
     {
-        setHP(40,44);
+        setHP(MIN_HP,MAX_HP);
         setBlock(0);
-        m_damage=12;
-        setPosition(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET);
-        setHPBarWidth(WIDTH*0.8F);
+        m_damage=DAMAGE;
+
     }
     
     void JawWorm::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 

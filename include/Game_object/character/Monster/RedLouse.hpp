@@ -11,7 +11,7 @@ enum class RedLouseAction
 class RedLouse final:public Monsters
 {
 public:
-    RedLouse();
+    RedLouse(float offsetX,float offsetY);
     ~RedLouse()override=default;
     void Action(RedLouseAction action_type);
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
@@ -19,9 +19,8 @@ public:
 private:
     
     static const std::shared_ptr<Draw::ReTexture> &img;
-    static constexpr int HEIGHT_OFFSET=-200.0F*Setting::SCALE;
-    static constexpr int WIDTH=300.0F*Setting::SCALE,
-                         HIGHT=180.0F*Setting::SCALE;
+    static constexpr int WIDTH=180.0F*Setting::SCALE,
+                         HIGHT=140.0F*Setting::SCALE;
     static constexpr int MAX_HP=15,
                          MIN_HP=10,
                          MIN_DAMAGE=5,

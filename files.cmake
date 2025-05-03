@@ -44,17 +44,29 @@ set(SRC_FILES
 	Game_object/character/Monster/AcidSlimeL.cpp
 	Game_object/character/Monster/AcidSlimeM.cpp
 	Game_object/character/Monster/AcidSlimeS.cpp
+	Game_object/character/Monster/BlueSlaver.cpp
 	Game_object/character/Monster/Cultist.cpp
 	Game_object/character/Monster/FatGremlin.cpp
+	Game_object/character/Monster/FungiBeast.cpp
 	Game_object/character/Monster/GreenLouse.cpp
 	Game_object/character/Monster/JawWorm.cpp
+	Game_object/character/Monster/Looter.cpp
+	Game_object/character/Monster/MadGremlin.cpp
 	Game_object/character/Monster/Monsters.cpp
+	Game_object/character/Monster/Mugger.cpp
 	Game_object/character/Monster/RedLouse.cpp
+	Game_object/character/Monster/RedSlaver.cpp
+	Game_object/character/Monster/ShieldGremlin.cpp
+	Game_object/character/Monster/SneakyGremlin.cpp
 	Game_object/character/Monster/SpikeSlimeL.cpp
 	Game_object/character/Monster/SpikeSlimeM.cpp
 	Game_object/character/Monster/SpikeSlimeS.cpp
 	Game_object/character/Monster/TempMonster.cpp
+<<<<<<< HEAD
 	Game_object/dungeon/Card_reward_screen.cpp
+=======
+	Game_object/character/Monster/WizardGremlin.cpp
+>>>>>>> deacda1f41fd30b5053aa2add1c8b24e55400ffe
 	Game_object/dungeon/Dungeons.cpp
 	Game_object/dungeon/Dungeon_manager.cpp
 	Game_object/dungeon/Dungeon_screen.cpp
@@ -155,17 +167,29 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/AcidSlimeL.hpp
 	Game_object/character/Monster/AcidSlimeM.hpp
 	Game_object/character/Monster/AcidSlimeS.hpp
+	Game_object/character/Monster/BlueSlaver.hpp
 	Game_object/character/Monster/Cultist.hpp
 	Game_object/character/Monster/FatGremlin.hpp
+	Game_object/character/Monster/FungiBeast.hpp
 	Game_object/character/Monster/GreenLouse.hpp
 	Game_object/character/Monster/JawWorm.hpp
+	Game_object/character/Monster/Looter.hpp
+	Game_object/character/Monster/MadGremlin.hpp
 	Game_object/character/Monster/Monsters.hpp
+	Game_object/character/Monster/Mugger.hpp
 	Game_object/character/Monster/RedLouse.hpp
+	Game_object/character/Monster/RedSlaver.hpp
+	Game_object/character/Monster/ShieldGremlin.hpp
+	Game_object/character/Monster/SneakyGremlin.hpp
 	Game_object/character/Monster/SpikeSlimeL.hpp
 	Game_object/character/Monster/SpikeSlimeM.hpp
 	Game_object/character/Monster/SpikeSlimeS.hpp
 	Game_object/character/Monster/TempMonster.hpp
+<<<<<<< HEAD
 	Game_object/dungeon/Card_reward_screen.hpp
+=======
+	Game_object/character/Monster/WizardGremlin.hpp
+>>>>>>> deacda1f41fd30b5053aa2add1c8b24e55400ffe
 	Game_object/dungeon/Dungeons.hpp
 	Game_object/dungeon/Dungeon_manager.hpp
 	Game_object/dungeon/Dungeon_screen.hpp

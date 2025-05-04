@@ -19,7 +19,8 @@ public:
         this->x=center_x-this->width/2.0F;
         this->y=center_y-this->height/2.0F;
     }
-    void UnHovered(){hovered=false;}
+    void UnHovered()noexcept{hovered=false;}
+    void ResetAll(){just_hovered=hovered=click_stared=clicked=false;}
 private:
     float x,y,width,height;
     bool just_hovered,hovered,click_stared,clicked;

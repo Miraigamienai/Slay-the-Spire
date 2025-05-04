@@ -9,13 +9,14 @@
 #include "Game_object/character/Monster_group_creater.hpp"//create monsters & group_name
 #include "RUtil/Image_book.hpp"//for Retexture loading
 #include "RUtil/Random_package.hpp"//for passing rng to create monsters
+#include "RUtil/Game_Input.hpp"//delta time
 #include "Draw/ReTexture.hpp"//IMG Retexture
 #include "Draw/Draw_2D.hpp"//for rendering
 
 #include "Util/Logger.hpp"//LOG_ERROR
 
 namespace Room{
-Monster_room::Monster_room():Rooms(Room_type::Monster),m_group_name(Monster::GroupName::Gremlin_Gang){
+Monster_room::Monster_room():Rooms(Room_type::Monster),m_group_name(Monster::GroupName::Gremlin_Gang),ending_battle(false),ending_battle_timer(0.25F){
     m_wait_timer=0.0F;
 }
 void Monster_room::init_room(RUtil::Random_package &random_package){
@@ -28,8 +29,18 @@ void Monster_room::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
     //player render
 }
 void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
+    if(ending_battle){
+        if(ending_battle_timer>0.0F){
+            ending_battle_timer-=RUtil::Game_Input::delta_time();
+        }else{
+            this->room_phase=Room_phase::complete;
+        }
+        return;
+    }
+
     m_monsters.update();
     dungeon_shared.player->update();
+
     if(m_wait_timer<=0.0F){//Loop until end turn. //Idle also loop here.
         dungeon_shared.action_group_handler.update(dungeon_shared,m_monsters);
         dungeon_shared.card_group_handler.update(dungeon_shared.action_group_handler,m_monsters);
@@ -59,6 +70,14 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Enable_end_button_action>());
             
         }
+    }
+
+    //check does battle end
+    if(m_monsters.IsAllDie() && dungeon_shared.action_group_handler.is_nothing_to_do()){
+        ending_battle=true;
+        dungeon_shared.overlay.hide_combat_panel();
+        // card_group_handler.on_ending_battle();
+        
     }
 }
 

@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "Game_object/interface/Is_screen.hpp"
+#include "Game_object/button/Proceed_button.hpp"
 
 //fwd decl
 namespace Draw{
@@ -22,6 +23,8 @@ public:
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update(Dungeon::Dungeon_shared &dungeon_shared);
 private:
+    Button::Proceed_button proceed_button;
+    int now_reward_pos;
     float open_timer;
     float color_rgb;
     bool took_all;

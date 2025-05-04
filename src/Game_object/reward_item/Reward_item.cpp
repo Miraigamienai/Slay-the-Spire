@@ -8,14 +8,22 @@
 
 namespace Reward{
     Reward_item::Reward_item()
-        :y(0.0F),
+        :flash_timer(0.0F),
+        y(0.0F),
         hb(460.0F * Setting::SCALE, 90.0F * Setting::SCALE),
         eff_dur(EFF_DUR),
         eff_scale(Setting::SCALE),
         eff_a(0.0F){}
 
     void Reward_item::update(){
+        //flash update
+        if(this->flash_timer!=0.0F){
+            this->flash_timer-=RUtil::Game_Input::delta_time();
+            if(this->flash_timer<0.0F) flash_timer=0.0F;
+        }
+        //hb update
         this->hb.update();
+        //eff update
         eff_dur-=RUtil::Game_Input::delta_time();
         if(eff_dur<0.0F){
             eff_dur=EFF_DUR;
@@ -40,6 +48,14 @@ namespace Reward{
         else
             r2->draw(LIST_IMG, (float)Setting::WINDOW_WIDTH/2.0F-232.0F, y-49.0F, 464.0F, 98.0F, 0.0F, 232.0F, 49.0F, Setting::SCALE, Setting::SCALE);
         
+        //flash render
+        if(this->flash_timer!=0.0F){
+            r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
+            r2->SetColor(0.6F,1.0F,1.0F, this->flash_timer*1.5F);
+            r2->draw(LIST_IMG, (float)Setting::WINDOW_WIDTH/2.0F-232.0F, y-49.0F, 464.0F, 98.0F, 0.0F, 232.0F, 49.0F, Setting::SCALE*1.03F, Setting::SCALE*1.15F);
+            r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }
+
         this->child_render(r2);
 
         if(this->hb.Hovered())

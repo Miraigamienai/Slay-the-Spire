@@ -3,15 +3,6 @@
 #include <SDL_stdinc.h>//for Uint32
 
 namespace RUtil{
-//RGBA
-constexpr Uint32 GOLD_COLOR=-272084481;
-constexpr Uint32 RED_TEXT_COLOR = -10132481;
-constexpr Uint32 GREEN_TEXT_COLOR = 2147418367;
-constexpr Uint32 BLUE_TEXT_COLOR = -2016482305;
-constexpr Uint32 PURPLE_COLOR = -293409025;
-constexpr Uint32 WHITE=-1;
-constexpr Uint32 SCARLET=0xff341cff;
-
 enum class Colors : Uint32 {
     ALICE_BLUE = 0xF0F8FF,
     ANTIQUE_WHITE = 0xFAEBD7,
@@ -157,6 +148,16 @@ enum class Colors : Uint32 {
 };
 
 static inline auto constexpr ToRGBA(Colors c){
-    return static_cast<Uint32>(c)<<8;
+    return (static_cast<Uint32>(c)<<8)|0xff;
 }
+
+//RGBA
+constexpr Uint32 GOLD_COLOR=-272084481;
+constexpr Uint32 RED_TEXT_COLOR = -10132481;
+constexpr Uint32 GREEN_TEXT_COLOR = 2147418367;
+constexpr Uint32 BLUE_TEXT_COLOR = -2016482305;
+constexpr Uint32 PURPLE_COLOR = -293409025;
+constexpr Uint32 WHITE=-1;
+constexpr Uint32 SCARLET=0xff341cff;
+constexpr Uint32 CREAM_COLOR=ToRGBA(Colors::LIGHT_YELLOW);
 }

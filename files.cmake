@@ -63,7 +63,6 @@ set(SRC_FILES
 	Game_object/character/Monster/SpikeSlimeS.cpp
 	Game_object/character/Monster/TempMonster.cpp
 	Game_object/character/Monster/WizardGremlin.cpp
-	Game_object/dungeon/Card_reward_screen.cpp
 	Game_object/dungeon/Combat_reward_screen.cpp
 	Game_object/dungeon/Dungeons.cpp
 	Game_object/dungeon/Dungeon_manager.cpp
@@ -96,6 +95,9 @@ set(SRC_FILES
 	Game_object/map/Map_node.cpp
 	Game_object/panel/Energy_panel.cpp
 	Game_object/panel/Panels.cpp
+	Game_object/reward_item/Card_reward.cpp
+	Game_object/reward_item/Card_reward_item.cpp
+	Game_object/reward_item/Reward_item.cpp
 	Game_object/room/Monster_room.cpp
 	Game_object/scene/Bottom_scene.cpp
 	Game_object/scene/Scenes.cpp
@@ -184,7 +186,6 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/SpikeSlimeS.hpp
 	Game_object/character/Monster/TempMonster.hpp
 	Game_object/character/Monster/WizardGremlin.hpp
-	Game_object/dungeon/Card_reward_screen.hpp
 	Game_object/dungeon/Combat_reward_screen.hpp
 	Game_object/dungeon/Dungeons.hpp
 	Game_object/dungeon/Dungeon_manager.hpp
@@ -228,6 +229,9 @@ set(INCLUDE_FILES
 	Game_object/map/Map_node.hpp
 	Game_object/panel/Energy_panel.hpp
 	Game_object/panel/Panels.hpp
+	Game_object/reward_item/Card_reward.hpp
+	Game_object/reward_item/Card_reward_item.hpp
+	Game_object/reward_item/Reward_item.hpp
 	Game_object/room/Monster_room.hpp
 	Game_object/room/Rooms.hpp
 	Game_object/scene/Bottom_scene.hpp

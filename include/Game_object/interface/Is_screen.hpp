@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 //fwd decl
 namespace Dungeon{
     class Dungeon_shared;

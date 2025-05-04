@@ -21,6 +21,7 @@ public:
     virtual ~Dungeons()=default;
     void update();
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
+    bool is_game_over()const{return game_over;}
 protected:
     Uint32 fade_color=0x1e0f0aff;
 private:
@@ -31,7 +32,7 @@ private:
     std::vector<std::vector<std::shared_ptr<Map::Map_node>>> m_map;
     std::shared_ptr<Map::Map_node> m_current_node,m_next_node=nullptr;
     float fade_timer,fade_color_a;
-    bool next_node_is_making_circle,is_fade_in,is_fade_out;
+    bool next_node_is_making_circle,is_fade_in,is_fade_out,game_over;
     const unsigned long long int random_seed;
 
     void set_next_node_oscillate_and_edge(const bool value)const;

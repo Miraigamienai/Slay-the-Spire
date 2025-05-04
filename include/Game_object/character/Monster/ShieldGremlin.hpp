@@ -13,7 +13,7 @@ class ShieldGremlin final:public Monsters
 public:
     ShieldGremlin(float offsetX,float offsetY);
     ~ShieldGremlin()override=default;
-    void Action(ShieldGremlinAction action_type);
+    void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     
     

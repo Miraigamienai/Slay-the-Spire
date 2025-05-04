@@ -12,7 +12,7 @@ class SneakyGremlin final:public Monsters
 public:
     SneakyGremlin(float offsetX,float offsetY);
     ~SneakyGremlin()override=default;
-    void Action(SneakyGremlinAction action_type);
+    void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     
     

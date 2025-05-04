@@ -13,7 +13,7 @@ class Cultist final:public Monsters
 public:
     Cultist(float offsetX,float offsetY);
     ~Cultist()override=default;
-    void Action(CultistAction action_type);
+    void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
 private:

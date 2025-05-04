@@ -41,7 +41,7 @@ public:
     bool hovered()const{return boss_hitbox.Hovered();}
     float GetcX()const{return Character_hb_cX;}
     float GetcY()const{return Character_hb_cY;}
-    bool IsDie()const{return current_HP<=0;}//for test
+    bool IsDie()const{return current_HP<=0 && fadeTimer<=0;}
     void AddBlock(int num){current_Block+=num;};
     void setBlock(int num){current_Block=num;};
     void AddHP(int num){current_HP+=num;};
@@ -77,6 +77,9 @@ protected:
     void render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     glm::vec2 getPosition()const{ return pos;};
     KindOfCharacter KindOfCharacter;
+
+    bool HPDecrease=false,shakeToggle,IsFadeOut;
+    float fadeTimer,FadeColorA,fadeTime=1.5F;
 private:
     RUtil::Hitbox boss_hitbox;
     RUtil::Hitbox HPBar_hitbox;
@@ -86,7 +89,6 @@ private:
           Character_hb_width,Character_hb_height;
     float animX,animY,vX,vY,orgX,orgY;
     float HPDecreaseWaitTimer,animationTimer;
-    bool HPDecrease=false,shakeToggle;
     Animation animation=Animation::NONE;
     Draw::NumberDrawer m_font;
     float shadow_a,bg_a,outline_a,health_width,health_target_width,block_offset,font_scale;
@@ -100,6 +102,7 @@ private:
     static constexpr float SHAKE_SPEED = 150.0F * Setting::SCALE;
     static constexpr float STAGGER_MOVE_SPEED = 20.0F * Setting::SCALE;
     static constexpr int FONTSIZE=22;
+
 };
 }
 #endif

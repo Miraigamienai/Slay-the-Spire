@@ -14,7 +14,7 @@ class RedSlaver final:public Monsters
 public:
     RedSlaver(float offsetX,float offsetY);
     ~RedSlaver()override=default;
-    void Action(RedSlaverAction action_type);
+    void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
 private:

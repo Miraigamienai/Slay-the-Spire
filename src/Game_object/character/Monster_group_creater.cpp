@@ -12,6 +12,9 @@ namespace Monster{
                     group.AddTop(std::make_shared<Cultist>(0.0F, -10.0F));
                 }
                 return;
+            case GroupName::Jaw_Worm:
+                group.AddTop(std::make_shared<JawWorm>(0.0F, 0.0F));
+                return;
             case GroupName::_2_Louse:
                 rng.NextInt(0,2)==0?group.AddTop(std::make_shared<RedLouse>(-200.0F, 10.0F)):group.AddTop(std::make_shared<GreenLouse>(-200.0F, 10.0F));
                 rng.NextInt(0,2)==0?group.AddTop(std::make_shared<RedLouse>(80.0F, 30.0F)):group.AddTop(std::make_shared<GreenLouse>(80.0F, 30.0F));

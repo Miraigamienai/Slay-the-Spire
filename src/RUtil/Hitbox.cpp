@@ -13,7 +13,7 @@ Hitbox::Hitbox(float x,float y,float width,float height,bool isCenter)
     }
     this->just_hovered=this->click_stared=this->clicked=this->hovered=false;
 }
-Hitbox::Hitbox(float height,float width):width(width),height(height){
+Hitbox::Hitbox(float width,float height):width(width),height(height){
     x=y=0.0F;
     this->just_hovered=this->click_stared=this->clicked=this->hovered=false;
 }

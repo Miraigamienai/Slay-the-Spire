@@ -43,7 +43,7 @@ namespace Reward
 
     void Card_reward_item::child_render_text(const std::shared_ptr<Draw::Draw_2D> &r2, Uint32 color)const{
         TEXT()->SetFontColor(color);
-        TEXT()->render_center(r2, TEXT_X, this->y+5.0F*Setting::SCALE, 0.0F, 0.0F, 0.0F, Setting::SCALE);
+        TEXT()->render_top_left(r2, TEXT_X, this->y+5.0F*Setting::SCALE, Setting::SCALE);
     }
     
     const std::shared_ptr<Draw::ReTexture>&Card_reward_item::NORMAL_IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/reward/normalCardReward.png");

@@ -8,8 +8,8 @@
 
 namespace Reward{
     Reward_item::Reward_item()
-        :flash_timer(0.0F),
-        y(0.0F),
+        :y(0.0F),
+        flash_timer(0.0F),
         hb(460.0F * Setting::SCALE, 90.0F * Setting::SCALE),
         eff_dur(EFF_DUR),
         eff_scale(Setting::SCALE),

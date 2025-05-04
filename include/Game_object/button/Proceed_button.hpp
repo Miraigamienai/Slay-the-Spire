@@ -42,7 +42,7 @@ private:
     float m_scale,oscillate_timer;
     std::shared_ptr<Draw::Text_layout> text;
 
-    static const const std::shared_ptr<Draw::ReTexture> &NORMAL_BUTTON,&OUTLINE_BUTTON,&SHADOW_BUTTON;
+    static const std::shared_ptr<Draw::ReTexture> &NORMAL_BUTTON,&OUTLINE_BUTTON,&SHADOW_BUTTON;
     static constexpr float SHOW_X = 1670.0F * Setting::SCALE,
                            SHOW_Y = 320.0F * Setting::SCALE;
     static constexpr float HIDE_X = SHOW_X + 500.0F * Setting::SCALE; 

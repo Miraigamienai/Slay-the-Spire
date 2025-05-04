@@ -22,6 +22,7 @@ public:
     ~Combat_reward_screen()override=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update(Dungeon::Dungeon_shared &dungeon_shared);
+    void open(const std::vector<std::shared_ptr<Reward::Reward_item>> &reward_items);
 private:
     Button::Proceed_button proceed_button;
     int now_reward_pos;

@@ -44,7 +44,7 @@ namespace Dungeon
         if(this->proceed_button.ShouldFlash())
             for(const auto&it:reward_items) it->flash();
 
-        if(now_reward_pos!=-1){
+        if(now_reward_pos==-1){
             for(size_t i=0;i<reward_items.size();i++){
                 //reward position update
                 reward_items[i]->move(static_cast<float>(Setting::WINDOW_HEIGHT)/2.0F + 124.0F - static_cast<float>(i)*100.0F*Setting::SCALE);
@@ -73,5 +73,11 @@ namespace Dungeon
         this->took_all=reward_items.empty();
     }
 
+    void Combat_reward_screen::open(const std::vector<std::shared_ptr<Reward::Reward_item>> &reward_items){
+        open_timer=OPENTIMER;
+        this->reward_items=reward_items;
+        proceed_button.show();
+    }
+    
     const std::shared_ptr<Draw::ReTexture>&Combat_reward_screen::SHEET=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/reward/rewardScreenSheet.png");
 } // namespace Dungeon

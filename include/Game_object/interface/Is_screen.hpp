@@ -11,9 +11,9 @@ namespace Draw{
 }
 
 namespace Interface{
-enum class Screen{
-    On_map,
-    On_battle
+enum class ScreenType{
+    main_dungeon,
+    combat_reward
 };
 
 class Is_screen

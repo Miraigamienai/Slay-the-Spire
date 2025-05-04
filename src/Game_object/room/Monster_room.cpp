@@ -43,6 +43,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             this->m_wait_timer=0.25F;
         }
     }else{
+        
         if(dungeon_shared.action_group_handler.is_nothing_to_do()){
             m_wait_timer-=RUtil::Game_Input::delta_time();
         }else{

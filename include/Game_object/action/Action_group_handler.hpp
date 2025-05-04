@@ -29,7 +29,8 @@ public:
     Action_group_handler &operator=(Action_group_handler &&)=delete;
     
     void update(Dungeon::Dungeon_shared &dungeon_shared, const Monster::Monster_group&room_monsters);
-    bool is_nothing_to_do()const{return this->current_action==nullptr&&action_box.empty();}
+    bool is_nothing_to_do()const{
+        return this->current_action==nullptr&&action_box.empty()&& monster_queue.empty();}
     void prepare_for_battle();
     //need the monsters so they can take there turn.
     void ending_turn(const Monster::Monster_group&room_monsters){

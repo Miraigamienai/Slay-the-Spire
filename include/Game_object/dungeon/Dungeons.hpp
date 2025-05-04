@@ -42,6 +42,7 @@ private:
     void fade_out();
     void update_fading();
     void entering_next_room();
+    void on_room_complete();
 };
 }
 #endif

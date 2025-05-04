@@ -28,6 +28,8 @@ private:
     float m_wait_timer;
     Monster::GroupName m_group_name;
     Monster::Monster_group m_monsters;
+    bool ending_battle;
+    float ending_battle_timer;
 
     static const std::shared_ptr<Draw::ReTexture> &IMG;
     static const std::shared_ptr<Draw::ReTexture> &IMG_O;

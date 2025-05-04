@@ -28,8 +28,10 @@ set(SRC_FILES
 	Game_object/action/Empty_shuffle_action.cpp
 	Game_object/action/Gain_block_action.cpp
 	Game_object/button/End_turn_button.cpp
+	Game_object/button/Proceed_button.cpp
 	Game_object/button/Skip_button.cpp
 	Game_object/card/Cards.cpp
+	Game_object/card/Card_generate.cpp
 	Game_object/card/Card_group.cpp
 	Game_object/card/Card_group_handler.cpp
 	Game_object/card/Card_soul.cpp
@@ -149,8 +151,10 @@ set(INCLUDE_FILES
 	Game_object/action/Show_card_to_discard_action.hpp
 	Game_object/action/Wait_action.hpp
 	Game_object/button/End_turn_button.hpp
+	Game_object/button/Proceed_button.hpp
 	Game_object/button/Skip_button.hpp
 	Game_object/card/Cards.hpp
+	Game_object/card/Card_generate.hpp
 	Game_object/card/Card_group.hpp
 	Game_object/card/Card_group_handler.hpp
 	Game_object/card/Card_item.hpp

@@ -11,19 +11,24 @@ namespace Dungeon
         return RUtil::Game_Input::delta_time();
     }
     Combat_reward_screen::Combat_reward_screen()
-        :open_timer(OPENTIMER),
+        :now_reward_pos(-1),
+        open_timer(OPENTIMER),
         color_rgb(0.0F)
     {
 
     }
     
     void Combat_reward_screen::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        //     AbstractDungeon.overlayMenu.proceedButton.render(sb);
-        r2->SetColor(color_rgb,color_rgb,color_rgb,1.0F);
-        //612*716
-        r2->draw(SHEET, (float)Setting::WINDOW_WIDTH/2.0F-306.0F, (float)Setting::WINDOW_HEIGHT/2.0F-46.0F*Setting::SCALE -358.0F, 612.0F, 716.0F, 0.0F, 306.0F, 358.0F, Setting::SCALE, Setting::SCALE);
-        
-        for(const auto&it:this->reward_items) it->render(r2);
+        if(now_reward_pos!=-1){
+            reward_items[now_reward_pos]->render(r2);
+        }else{
+            proceed_button.render(r2);
+            r2->SetColor(color_rgb,color_rgb,color_rgb,1.0F);
+            //612*716
+            r2->draw(SHEET, (float)Setting::WINDOW_WIDTH/2.0F-306.0F, (float)Setting::WINDOW_HEIGHT/2.0F-46.0F*Setting::SCALE -358.0F, 612.0F, 716.0F, 0.0F, 306.0F, 358.0F, Setting::SCALE, Setting::SCALE);
+            
+            for(const auto&it:this->reward_items) it->render(r2);
+        }
     }
 
     void Combat_reward_screen::update(Dungeon::Dungeon_shared &dungeon_shared){
@@ -34,13 +39,45 @@ namespace Dungeon
                 open_timer=0.0F;
         }
 
-        //reward position
-        for(size_t i=0;i<reward_items.size();i++){
-            reward_items[i]->move(static_cast<float>(Setting::WINDOW_HEIGHT)/2.0F + 124.0F - static_cast<float>(i)*100.0F*Setting::SCALE);
+        //button update
+        this->proceed_button.update();
+        if(this->proceed_button.ShouldFlash())
+            for(const auto&it:reward_items) it->flash();
+
+        if(now_reward_pos==-1){
+            for(size_t i=0;i<reward_items.size();i++){
+                //reward position update
+                reward_items[i]->move(static_cast<float>(Setting::WINDOW_HEIGHT)/2.0F + 124.0F - static_cast<float>(i)*100.0F*Setting::SCALE);
+                //update
+                reward_items[i]->update();
+                //check click
+                if(reward_items[i]->HitboxClicked()){
+                    now_reward_pos=i;
+                    proceed_button.hide();
+                    break;
+                }
+            }
+        }
+
+        //check now
+        if(now_reward_pos!=-1){
+            reward_items[now_reward_pos]->take_reward(dungeon_shared);
+            if(!reward_items[now_reward_pos]->is_taking_reward()){
+                if(reward_items[now_reward_pos]->did_take_reward())
+                    reward_items.erase(reward_items.begin()+now_reward_pos);
+                now_reward_pos=-1;
+                proceed_button.show();
+            }
         }
 
         this->took_all=reward_items.empty();
     }
 
+    void Combat_reward_screen::open(const std::vector<std::shared_ptr<Reward::Reward_item>> &reward_items){
+        open_timer=OPENTIMER;
+        this->reward_items=reward_items;
+        proceed_button.show();
+    }
+    
     const std::shared_ptr<Draw::ReTexture>&Combat_reward_screen::SHEET=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/reward/rewardScreenSheet.png");
 } // namespace Dungeon

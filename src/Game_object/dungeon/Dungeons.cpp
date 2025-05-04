@@ -7,8 +7,10 @@
 #include "Game_object/character/Player.hpp"
 #include "Game_object/effect/Effect_group.hpp"
 #include "Game_object/map/Map_generator.hpp"//generate map
-#include "RUtil/Random.hpp"//rng
 #include "Game_object/scene/Scenes.hpp"
+#include "Game_object/reward_item/Card_reward_item.hpp"
+#include "Game_object/card/Card_generate.hpp"
+#include "RUtil/Random.hpp"//rng
 
 #include "Util/Logger.hpp"
 
@@ -32,7 +34,14 @@ namespace Dungeon{
         dungeon_shared.top_effs.update();
         dungeon_shared.back_effs.update();
         //room update
-        if(m_current_node!=nullptr) m_current_node->GetRoom()->update(dungeon_shared);
+        if(m_current_node!=nullptr){
+            m_current_node->GetRoom()->update(dungeon_shared);
+            if(m_current_node->GetRoom()->get_phase()==Room::Room_phase::complete){
+                //room complete
+                this->on_room_complete();
+                m_current_node=nullptr;
+            }
+        }
         if(dungeon_shared.player->IsDie()) game_over=true;
         //card update
         dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared);
@@ -169,5 +178,15 @@ namespace Dungeon{
         dungeon_shared.action_group_handler.prepare_for_battle();
         scene->next_room();
 
+    }
+    void Dungeons::on_room_complete(){
+        if(m_current_node->GetRoom()->room_type==Room::Room_type::Monster){
+            //random 3 cards
+            std::vector<std::shared_ptr<Card::Cards>> card_vec;
+            for(int i=0;i<3;i++) card_vec.emplace_back(Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng));
+            std::vector<std::shared_ptr<Reward::Reward_item>> reward_vec;
+            reward_vec.emplace_back(std::make_shared<Reward::Card_reward_item>(card_vec,dungeon_shared.player->GetCardRenderColor()));
+            m_dungeon_manager.open<Interface::ScreenType::combat_reward>(reward_vec);
+        }
     }
 }

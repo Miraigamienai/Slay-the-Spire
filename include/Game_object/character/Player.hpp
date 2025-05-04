@@ -31,11 +31,12 @@ public:
     constexpr Uint32 GetCardTrailColor()const noexcept(noexcept(RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F))){return RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F);}
     constexpr Uint32 GetCardRenderColor()const noexcept{return 0xff341cff;}
 private:
+    const float fadeColor=0.0F;
     int max_energy,current_energy;
-    static const std::shared_ptr<Draw::ReTexture> &img;
+    static const std::shared_ptr<Draw::ReTexture> &img,&img_died;
     static constexpr int WIDTH_OFFSET=-800.0F*Setting::SCALE,
                         HEIGHT_OFFSET=-200.0F*Setting::SCALE;
-    static constexpr int WIDTH=300.0F*Setting::SCALE,
+    static constexpr int WIDTH=300.0F*Setting::SCALE,   
                         HIGHT=200.0F*Setting::SCALE;
     static constexpr int HPBarWidth=WIDTH*0.5F;
 };

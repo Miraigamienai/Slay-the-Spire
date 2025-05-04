@@ -8,7 +8,7 @@
 
 TheApp::TheApp(){
     m_dungeon=std::make_shared<Dungeon::Dungeons>(m_dungeon_shared,seed);
-    m_InitScreen=std::make_shared<InitScreen>();
+    m_InitScreen=std::make_shared<InitScreen>(m_CurrentState);
     m_dungeon_shared.player=std::make_shared<Character::Player>();
     m_dungeon_shared.overlay.set_player_to_energy_panel(m_dungeon_shared.player); 
     for(int i=0;i<6;i++)//for test
@@ -42,6 +42,14 @@ void TheApp::update(){
         break;
     case AppStatus::State::PLAYING:
         m_dungeon->update();
+        if (m_dungeon->is_game_over()){
+            m_CurrentState=AppStatus::State::INIT;
+            m_dungeon.reset();
+            m_dungeon_shared.player.reset();
+            m_dungeon=std::make_shared<Dungeon::Dungeons>(m_dungeon_shared,seed);
+            m_dungeon_shared.player=std::make_shared<Character::Player>();
+            m_dungeon_shared.overlay.set_player_to_energy_panel(m_dungeon_shared.player); 
+        }
         break;
     case AppStatus::State::END:
         Core::Context::GetInstance()->SetExit(true);

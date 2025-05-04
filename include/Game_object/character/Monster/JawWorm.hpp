@@ -14,7 +14,7 @@ class JawWorm final:public Monsters
 public:
     JawWorm(float offsetX,float offsetY);
     ~JawWorm()override=default;
-    void Action(JawWormAction action_type);
+    void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     
     // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;

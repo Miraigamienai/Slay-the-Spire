@@ -12,7 +12,7 @@ class MadGremlin final:public Monsters
 public:
     MadGremlin(float offsetX,float offsetY);
     ~MadGremlin()override=default;
-    void Action(MadGremlinAction action_type);
+    void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     
     

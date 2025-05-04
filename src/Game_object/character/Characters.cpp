@@ -3,7 +3,6 @@
 #include "RUtil/Some_Math.hpp"
 #include "RUtil/Game_Input.hpp"
 #include "RUtil/Some_Math.hpp"
-
 namespace Character{
     Characters::Characters(float x, float y, float width, float height,float HPBarWidth):boss_hitbox(x, y, width, height, false)
     ,HPBar_hitbox(x,y,HPBarWidth,HEALTH_BAR_HEIGHT,false)
@@ -35,6 +34,9 @@ namespace Character{
         m_font.ChangeFontWeight(FontWeight::bold);
         m_font.SetFontSize(FONTSIZE);
         font_scale=1.0F;
+
+        fadeTimer=fadeTime;
+        IsFadeOut=false;
     }
     void Characters::updateHealthBar(){
         health_target_width=HPBar_hb_width*(current_HP/(float)max_HP);
@@ -60,6 +62,26 @@ namespace Character{
         updateAnimation();
         pos.x=orgX+animX;
         pos.y=orgY+animY;
+        if (KindOfCharacter==KindOfCharacter::PLAYER){
+            if(IsFadeOut){
+                fadeTimer-=RUtil::Game_Input::delta_time();
+                FadeColorA = RUtil::Math::interpolation_fade(1.0F,0.0F,fadeTimer/fadeTime);
+            }
+            else if(current_HP<=0){
+                IsFadeOut=true;
+            }
+        }
+        else{
+            if(IsFadeOut){
+                fadeTimer-=RUtil::Game_Input::delta_time();
+                FadeColorA = RUtil::Math::interpolation_fade(0.0F,1.0F,fadeTimer/fadeTime);
+            }
+            else if(current_HP<=0){
+                IsFadeOut=true;
+            }
+        }
+
+        
         
     }
     void Characters::render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const{
@@ -122,7 +144,6 @@ namespace Character{
     }
     void Characters::setHPBarWidth(float width){
         HPBar_hb_width=width;
-        update();
     };
     
     void Characters::useFastAttackAnimation(){

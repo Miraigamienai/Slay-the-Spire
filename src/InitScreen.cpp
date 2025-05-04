@@ -12,7 +12,7 @@
 #include "Game_object/effect/Fade_wide.hpp"
 #include "Draw/Fonts.hpp"
 
-InitScreen::InitScreen() {
+InitScreen::InitScreen(AppStatus::State &states): m_CurrentState(states) {
     Create();
     fadeTimer=fadeTime;
 }

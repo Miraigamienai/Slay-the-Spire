@@ -13,7 +13,7 @@ class WizardGremlin final:public Monsters
 public:
     WizardGremlin(float offsetX,float offsetY);
     ~WizardGremlin()override=default;
-    void Action(WizardGremlinAction action_type);
+    void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     
     

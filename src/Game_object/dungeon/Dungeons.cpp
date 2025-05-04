@@ -22,6 +22,7 @@ namespace Dungeon{
         set_next_node_oscillate_and_edge(true);
         is_fade_in=is_fade_out=false;
         fade_color_a=0.0F;
+        game_over=false;
     }
     void Dungeons::update(){
         //gen update
@@ -32,6 +33,7 @@ namespace Dungeon{
         dungeon_shared.back_effs.update();
         //room update
         if(m_current_node!=nullptr) m_current_node->GetRoom()->update(dungeon_shared);
+        if(dungeon_shared.player->IsDie()) game_over=true;
         //card update
         dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared);
         dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.top_effs,dungeon_shared.player->GetCardTrailColor());//for test

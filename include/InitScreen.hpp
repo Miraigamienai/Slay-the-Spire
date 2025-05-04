@@ -9,7 +9,7 @@
 
 class InitScreen {
 public:
-    InitScreen();
+    InitScreen(AppStatus::State &states);
     ~InitScreen()=default;
 
     void CreateLogo();
@@ -24,7 +24,7 @@ public:
     AppStatus::State GetCurrentState() const { return m_CurrentState; }
 
 private:
-    AppStatus::State m_CurrentState = AppStatus::State::INIT;
+    AppStatus::State &m_CurrentState;
     std::shared_ptr<Draw::Image_Region> LogoImg;
     glm::vec2 LogoPos,LogoSize;
     std::vector <std::shared_ptr<Draw::Image_Region>> BlackCloudImg;

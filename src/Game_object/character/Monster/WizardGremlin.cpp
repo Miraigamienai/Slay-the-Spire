@@ -1,4 +1,7 @@
 #include "Game_object/character/Monster/WizardGremlin.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
+#include "Game_object/action/Anim_set_action.hpp"
+#include "Game_object/action/Damage_action.hpp"
 #include "RUtil/Random.hpp"
 
 namespace Monster{
@@ -9,12 +12,24 @@ namespace Monster{
         m_damage=DAMAGE;
 
     }
-    
+    void WizardGremlin::Action(Dungeon::Dungeon_shared &dungeon_shared){
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+            Damage_info{this->m_damage, shared_from_this(), AttackType::blunt_light},
+            dungeon_shared.player
+        ));
+    }
     void WizardGremlin::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {
-        r2->SetColor(-1);
-        r2->draw(img,getPosition().x,getPosition().y,WIDTH,HIGHT); 
-        render_HP(r2);
+        if(IsFadeOut){
+            r2->SetColor(-1,FadeColorA);
+            r2->draw(img,getPosition().x,getPosition().y,WIDTH,HIGHT); 
+        }
+        else{
+            r2->SetColor(-1);
+            r2->draw(img,getPosition().x,getPosition().y,WIDTH,HIGHT); 
+            render_HP(r2);
+        }
     }
     const std::shared_ptr<Draw::ReTexture> &WizardGremlin::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Gremlins/Wizard-gremlin-pretty.png");
 

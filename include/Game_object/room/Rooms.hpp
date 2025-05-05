@@ -25,6 +25,7 @@ enum class Room_type{
 };
 enum class Room_phase{
     complete,
+    just_complete,
     incomplete
 };
 class Rooms{

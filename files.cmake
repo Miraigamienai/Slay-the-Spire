@@ -71,6 +71,8 @@ set(SRC_FILES
 	Game_object/dungeon/Dungeon_screen.cpp
 	Game_object/dungeon/Overlay.cpp
 	Game_object/effect/Auto_release_pool_manager.cpp
+	Game_object/effect/Camfire_bubble_effect.cpp
+	Game_object/effect/Camfire_burning_effect.cpp
 	Game_object/effect/Card_flash.cpp
 	Game_object/effect/Card_glow_border.cpp
 	Game_object/effect/Card_proof_particle.cpp
@@ -101,6 +103,11 @@ set(SRC_FILES
 	Game_object/reward_item/Card_reward_item.cpp
 	Game_object/reward_item/Reward_item.cpp
 	Game_object/room/Monster_room.cpp
+	Game_object/room/Rest_room.cpp
+	Game_object/room/rest_room_options/Options.cpp
+	Game_object/room/rest_room_options/Option_handler.cpp
+	Game_object/room/rest_room_options/Rest_option.cpp
+	Game_object/room/rest_room_options/Smith_option.cpp
 	Game_object/scene/Bottom_scene.cpp
 	Game_object/scene/Scenes.cpp
 	RUtil/All_Image.cpp
@@ -197,6 +204,8 @@ set(INCLUDE_FILES
 	Game_object/dungeon/Dungeon_shared.hpp
 	Game_object/dungeon/Overlay.hpp
 	Game_object/effect/Auto_release_pool_manager.hpp
+	Game_object/effect/Camfire_bubble_effect.hpp
+	Game_object/effect/Camfire_burning_effect.hpp
 	Game_object/effect/Card_flash.hpp
 	Game_object/effect/Card_glow_border.hpp
 	Game_object/effect/Card_proof_particle.hpp
@@ -237,7 +246,12 @@ set(INCLUDE_FILES
 	Game_object/reward_item/Card_reward_item.hpp
 	Game_object/reward_item/Reward_item.hpp
 	Game_object/room/Monster_room.hpp
+	Game_object/room/Rest_room.hpp
 	Game_object/room/Rooms.hpp
+	Game_object/room/rest_room_options/Options.hpp
+	Game_object/room/rest_room_options/Option_handler.hpp
+	Game_object/room/rest_room_options/Rest_option.hpp
+	Game_object/room/rest_room_options/Smith_option.hpp
 	Game_object/scene/Bottom_scene.hpp
 	Game_object/scene/Scenes.hpp
 	RUtil/All_Image.hpp

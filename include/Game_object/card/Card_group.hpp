@@ -4,13 +4,11 @@
 #include <SDL_stdinc.h>//uint32
 #include <memory>
 
+#include "Game_object/card/Cards.hpp"//inline function
 #include "Game_object/Group_template.hpp"//father
 #include "RUtil/Random.hpp"//rng
 
 //fwd decl
-namespace Card{
-    class Cards;
-}
 namespace Draw{
     class Draw_2D;
 }
@@ -37,6 +35,10 @@ public:
     int GetCardPos(const std::shared_ptr<Cards> &card)const;
     void ShuffleWithRng(RUtil::Random &rng){
         std::shuffle(box.begin(),box.end(),rng);
+    }
+    bool CanUpgradeCard()const{
+        for(const auto&it:box) if(!it->IsUpgraded()) return true;
+        return false;
     }
 
     const std::shared_ptr<Cards>&operator[](size_t idx)const{return box[idx];}

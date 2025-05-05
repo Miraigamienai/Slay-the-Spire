@@ -9,6 +9,7 @@ namespace Reward{
     }
 
     void Card_reward::Open(){
+        skip_button.show();
         set_cards_pos();
     } 
 

@@ -158,6 +158,7 @@ constexpr Uint32 GREEN_TEXT_COLOR = 2147418367;
 constexpr Uint32 BLUE_TEXT_COLOR = -2016482305;
 constexpr Uint32 PURPLE_COLOR = -293409025;
 constexpr Uint32 WHITE=-1;
+constexpr Uint32 BLACK=0;
 constexpr Uint32 SCARLET=0xff341cff;
 constexpr Uint32 CREAM_COLOR=ToRGBA(Colors::LIGHT_YELLOW);
 }

@@ -32,6 +32,8 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
     if(ending_battle){
         if(ending_battle_timer>0.0F){
             ending_battle_timer-=RUtil::Game_Input::delta_time();
+        }else if(this->room_phase==Room_phase::incomplete){
+            this->room_phase=Room_phase::just_complete;
         }else{
             this->room_phase=Room_phase::complete;
         }

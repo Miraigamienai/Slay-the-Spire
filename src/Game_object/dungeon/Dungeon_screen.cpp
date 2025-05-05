@@ -27,6 +27,13 @@ namespace Dungeon
         }
     }
     void Dungeon_screen::update(Dungeon_shared &dungeon_shared){
+        if(on_opening){
+            on_opening=false;
+            on_top=true;
+            //TODO: offset y setting
+            this->the_map.show();
+            
+        }
         the_map.update();
         bool pause_offset_y_update=false;
         if(display_map!=nullptr){

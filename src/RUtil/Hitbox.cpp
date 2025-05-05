@@ -5,18 +5,19 @@ namespace RUtil{
 Hitbox::Hitbox(float x,float y,float width,float height,bool isCenter)
                     :width(width),height(height){
     if(isCenter){
+        this->cx=x;
+        this->cy=y;
         this->x=x-width/2.0F;
         this->y=y-height/2.0F;
     }else{
+        this->cx=x+width/2.0F;
+        this->cy=y+height/2.0F;
         this->x=x;
         this->y=y;
     }
     this->just_hovered=this->click_stared=this->clicked=this->hovered=false;
 }
-Hitbox::Hitbox(float width,float height):width(width),height(height){
-    x=y=0.0F;
-    this->just_hovered=this->click_stared=this->clicked=this->hovered=false;
-}
+
 void Hitbox::update(){
     //hover check
     just_hovered=false;

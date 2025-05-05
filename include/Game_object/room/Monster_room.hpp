@@ -12,8 +12,8 @@ namespace Monster{
 }
 
 namespace Room{
-//need:Monster Player Cards BattleManage
-class Monster_room:public Rooms
+//need:Monster Player Cards 
+class Monster_room final:public Rooms
 {
 public:
     Monster_room();
@@ -24,7 +24,6 @@ public:
     void init_room(RUtil::Random_package &random_package)override;
     void set_monster_group_name(Monster::GroupName group_name)noexcept{m_group_name=group_name;}
 private:
-    void prepare_to_battle();
     float m_wait_timer;
     Monster::GroupName m_group_name;
     Monster::Monster_group m_monsters;

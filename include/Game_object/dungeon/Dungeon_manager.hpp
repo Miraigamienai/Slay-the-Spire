@@ -29,12 +29,21 @@ namespace Dungeon{
         std::shared_ptr<Dungeon::Dungeon_screen> m_dungeon_screen;
         std::shared_ptr<Dungeon::Combat_reward_screen> combat_reward_screen;
         
+        void switch_to_next_screen();
         template <Interface::ScreenType ST>
-        auto &GetScreen(){
+        const auto &GetScreen()const{
             if constexpr(ST==Interface::ScreenType::main_dungeon)
                 return m_dungeon_screen;
             else if constexpr(ST==Interface::ScreenType::combat_reward)
                 return combat_reward_screen;
+        }
+        std::shared_ptr<Interface::Is_screen> GetScreen(Interface::ScreenType ST)const{
+            using namespace Interface;
+            switch(ST){
+                case ScreenType::main_dungeon: return m_dungeon_screen;
+                case ScreenType::combat_reward: return combat_reward_screen;
+                default:return nullptr;
+            }
         }
     };
 }

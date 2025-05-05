@@ -26,7 +26,7 @@ namespace Red{
     }
 
     bool Clash::CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const{
-        return dungeon_shared.card_group_handler.Has_all_type_card<Type::attack>();
+        return dungeon_shared.card_group_handler.has_all_type_card<Type::attack>();
     }
 }
 }

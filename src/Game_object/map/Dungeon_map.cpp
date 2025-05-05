@@ -22,11 +22,11 @@ namespace Map{
         r2->draw(map_blend, 0.0F, screen_offsetY+ map_offsetY - 220.0F * Setting::SCALE, (float)Setting::WINDOW_WIDTH, BLEND_H);
         legend.render(r2);
     }
-    // void Dungeon_map::show() {
-    //     map_target_a = 1.0F;
-    //     map_mid_pos = MAP_Y * 16.0F - 1380.0F * Setting::SCALE;
-    //     map_offsetY = map_mid_pos - 120.0F * Setting::SCALE;
-    // }
+    void Dungeon_map::show() {
+        map_target_a = 1.0F;
+        map_mid_pos = MAP_Y * 16.0F - 1380.0F * Setting::SCALE;
+        map_offsetY = map_mid_pos - 120.0F * Setting::SCALE;
+    }
     // void Dungeon_map::hide(){
     //     map_target_a = 0.0F;
     // }

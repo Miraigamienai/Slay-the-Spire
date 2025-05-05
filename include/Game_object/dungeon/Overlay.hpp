@@ -28,7 +28,8 @@ public:
 
     void disable_end_turn_button()noexcept(noexcept(end_turn_button.disable())){end_turn_button.disable();}
     void enable_end_turn_button()noexcept(noexcept(end_turn_button.enable())){end_turn_button.enable();}
-    bool end_turn_button_clicked()const noexcept(noexcept(end_turn_button.is_logically_clicked())){return end_turn_button.is_logically_clicked();} 
+    bool end_turn_button_clicked()const noexcept(noexcept(end_turn_button.is_logically_clicked())){return end_turn_button.is_logically_clicked();}
+    
 private:
     Panel::Energy_panel energy_panel;
     Button::End_turn_button end_turn_button;

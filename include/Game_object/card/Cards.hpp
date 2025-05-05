@@ -109,6 +109,7 @@ public:
     void Flash(Uint32 _c)noexcept{m_card_flash.change_color(_c);}
     void SuperFlash()noexcept{m_card_flash.change_color(GLOWCOLOR,true);}
     //Simply return the current status, dosen't do any actual checking.
+    bool IsUpgraded()const noexcept{return upgraded;}
     bool CanUse()const noexcept{return can_use;}
     int GetCost()const noexcept{return cost;}
     float GetX()const noexcept{return current_x;}

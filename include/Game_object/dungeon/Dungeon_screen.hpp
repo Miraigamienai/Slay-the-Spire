@@ -19,6 +19,7 @@ public:
     void update(Dungeon_shared &dungeon_shared) override;
     void set_display_map(const std::vector<std::vector<std::shared_ptr<Map::Map_node>>>&map);
     void hide_instantly(){the_map.hide_instantly();}
+    void open();
 private:
     void updateOffsetY();
     void reset_scroll();

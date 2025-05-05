@@ -27,6 +27,7 @@ namespace Card
                 return std::make_shared<Strike_red>();
             default:
                 LOG_ERROR("Unknown RedCardName");
+                return std::make_shared<Strike_red>();
         }
     }
 

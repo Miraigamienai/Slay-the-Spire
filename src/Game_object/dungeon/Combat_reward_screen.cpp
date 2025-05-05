@@ -43,6 +43,12 @@ namespace Dungeon
         this->proceed_button.update();
         if(this->proceed_button.ShouldFlash())
             for(const auto&it:reward_items) it->flash();
+        if(proceed_button.is_logically_clicked()){
+            //let manager know I'm finished
+            on_top=false;
+            //change screen to main_dungoen
+            next=Interface::ScreenType::main_dungeon;
+        }
 
         if(now_reward_pos==-1){
             for(size_t i=0;i<reward_items.size();i++){

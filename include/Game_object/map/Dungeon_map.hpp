@@ -8,7 +8,7 @@ public:
     Dungeon_map(const float &screen_offsetY,const bool &on_top);
     ~Dungeon_map()=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
-    // void show();
+    void show();
     // void hide();
     void hide_instantly();
     void update();

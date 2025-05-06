@@ -19,22 +19,20 @@ Hitbox::Hitbox(float x,float y,float width,float height,bool isCenter)
 }
 
 void Hitbox::update(){
+    using namespace RUtil;
     //hover check
     just_hovered=false;
     if(!hovered) just_hovered=true;
-    hovered = x<=nx&&nx<=x+width&&y<=ny&&ny<=y+height;
+    hovered = x<=Game_Input::getX()&&Game_Input::getX()<=x+width&&y<=Game_Input::getY()&&Game_Input::getY()<=y+height;
     if(!hovered) just_hovered=false;
     //click check
-    if(hovered&&just_clicked){
+    if(hovered&&Game_Input::just_clicked()){
         this->click_stared=true;
     }else if(clicked){
         clicked=false;
-    }else if(click_stared&&just_released){
+    }else if(click_stared&&Game_Input::just_released()){
         click_stared=false;
         if(hovered) clicked=true;
     }
 }
-
-const int &Hitbox::nx=RUtil::Game_Input::getX(),&Hitbox::ny=RUtil::Game_Input::getY();   
-const bool &Hitbox::just_clicked=RUtil::Game_Input::just_clicked(),&Hitbox::just_released=RUtil::Game_Input::just_released();    
 }

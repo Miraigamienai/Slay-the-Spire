@@ -14,8 +14,8 @@ namespace Room
         //eff
         //hidden
     }
-    void Rest_room::init_room(RUtil::Random_package &random_package){
-
+    void Rest_room::init_room(RUtil::Random_package &random_package,Uint32 dungeon_fade_color){
+        this->dungeon_fade_color=dungeon_fade_color;
     }
 
     const std::shared_ptr<Draw::ReTexture> &Rest_room::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/monster.png"),

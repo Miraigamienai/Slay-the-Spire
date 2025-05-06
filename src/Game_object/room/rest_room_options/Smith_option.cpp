@@ -30,5 +30,10 @@ namespace Option{
         TEXT_VEC()[pos]->render_center(r2, DESCRIPTION_X, DESCRIPTION_Y, 0.0F, 0.0F, 0.0F, Setting::SCALE);
     }
 
+    void Smith_option::take_reward(Dungeon::Dungeon_shared &dungeon_shared){
+        // this->taking_reward=true;
+        
+        // this->took_reward=true;
+    }
 }
 }    

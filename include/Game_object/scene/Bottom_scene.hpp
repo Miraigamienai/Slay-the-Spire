@@ -26,7 +26,6 @@ private:
                                                      &ceiling_mod1,&ceiling_mod2,&ceiling_mod3,
                                                      &ceiling_mod4,&ceiling_mod5,&ceiling_mod6,
                                                      &bg;
-    static const std::shared_ptr<Draw::ReTexture> &white_square;
 };
 }
 #endif

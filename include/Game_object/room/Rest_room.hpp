@@ -13,9 +13,10 @@ public:
     const std::shared_ptr<Draw::ReTexture> &GetOutlineTexture()const override{return IMG_O;}
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void update(Dungeon::Dungeon_shared &dungeon_shared) override;
-    void init_room(RUtil::Random_package &random_package) override;
+    void init_room(RUtil::Random_package &random_package,Uint32 dungeon_fade_color) override;
 private:
 
+    Uint32 dungeon_fade_color;
     // Effect::Effect_group campfire_bubbles;//
     static const std::shared_ptr<Draw::ReTexture> &IMG;
     static const std::shared_ptr<Draw::ReTexture> &IMG_O;

@@ -1,7 +1,12 @@
 #include "Game_object/room/rest_room_options/Rest_option.hpp"
-#include "Draw/ReTexture.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
+#include "Game_object/character/Player.hpp"
+#include "Game_object/effect/Sleep_cover_eff.hpp"
+#include "Game_object/effect/Effect_pool.hpp"
+#include "Game_object/effect/Rest_option_black_screen.hpp"
 #include "RUtil/Image_book.hpp"
 #include "RUtil/Text_Vector_Reader.hpp"
+#include "Draw/ReTexture.hpp"
 #include "Draw/Text_layout.hpp"
 
 namespace Room{
@@ -10,7 +15,7 @@ namespace Option{
         return RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::Rest_Option);
     }
 
-    Rest_option::Rest_option(int player_max_hp):Options(RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/options/sleep.png")){
+    Rest_option::Rest_option(int player_max_hp,Uint32 dungeon_fade_color):Options(RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/options/sleep.png")),dungeon_fade_color(dungeon_fade_color){
         TEXT_VEC()[0]->SetFontSize(TEXT_SIZE);//label
         TEXT_VEC()[3]->SetFontSize(TEXT_SIZE);//30% hp text
         
@@ -28,5 +33,12 @@ namespace Option{
         TEXT_VEC()[3]->render_center_with_nums(r2, DESCRIPTION_X, DESCRIPTION_Y, 0.0F, 0.0F, 0.0F, Setting::SCALE, Draw::number_info{0,0,heal_amount}); 
     }
 
+    void Rest_option::take_reward(Dungeon::Dungeon_shared &dungeon_shared){
+        dungeon_shared.player->AddHP(heal_amount);
+        dungeon_shared.top_effs.AddTop(std::make_shared<Effect::Rest_option_black_screen>(dungeon_fade_color));
+        for(int i=0;i<30;i++)
+            dungeon_shared.top_effs.AddTop(Effect::Effect_pool<Effect::Sleep_cover_eff>::GetEffect());
+        this->took_reward=true;
+    }
 }
 }    

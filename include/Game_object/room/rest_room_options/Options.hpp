@@ -11,6 +11,9 @@ namespace Draw{
     class Draw_2D;
     class ReTexture;
 }
+namespace Dungeon{
+    class Dungeon_shared;
+}
 
 namespace Room{
 namespace Option{
@@ -22,13 +25,19 @@ public:
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update();
     void move(float center_x, float center_y)noexcept(noexcept(hb.move(center_x, center_y))){hb.move(center_x, center_y);}
+    
+    bool HitboxClicked()const noexcept{return hb.Clicked()&&is_activating;}
+    bool is_taking_reward()const noexcept{return taking_reward;}
+    bool did_take_reward()const noexcept{return took_reward;}
+    virtual void take_reward(Dungeon::Dungeon_shared &dungeon_shared)=0;
+    
 protected:
     virtual void chile_label_render(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 font_color)const=0;
     virtual void chile_description_render(const std::shared_ptr<Draw::Draw_2D> &r2,float font_color_a)const=0;
     RUtil::Hitbox hb;
     float scale;
     bool is_activating;
-
+    bool taking_reward,took_reward;
     static constexpr float DESCRIPTION_X=950.0F * Setting::SCALE,
                            DESCRIPTION_Y=static_cast<float>(Setting::WINDOW_HEIGHT)/2.0F + 20.0F*Setting::SCALE; 
     static constexpr int TEXT_SIZE=26;

@@ -40,8 +40,5 @@ private:
     float x,y,width,height;
     float cx,cy;
     bool just_hovered,hovered,click_stared,clicked;
-    
-    static const int &nx,&ny;
-    static const bool &just_clicked,&just_released;
 };
 }

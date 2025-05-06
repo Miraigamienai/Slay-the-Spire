@@ -76,6 +76,7 @@ namespace Dungeon{
         
     }
     void Dungeons::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+        //TODO:black screen control
         scene->render_bg(r2);
         dungeon_shared.back_effs.render(r2);
         if(m_current_node!=nullptr)m_current_node->GetRoom()->render(r2);
@@ -171,7 +172,7 @@ namespace Dungeon{
         fade_in();
         dungeon_shared.effs.clear();
         dungeon_shared.top_effs.clear();
-        m_current_node->GetRoom()->init_room(dungeon_shared.random_package);
+        m_current_node->GetRoom()->init_room(dungeon_shared.random_package, fade_color);
         dungeon_shared.random_package.ResetRoomRNGs(this->random_seed+m_current_node->y);
         m_dungeon_manager.hide_dungeon_screen_instantly();
         dungeon_shared.card_group_handler.prepare_for_battle(dungeon_shared.random_package.card_shuffle_rng);

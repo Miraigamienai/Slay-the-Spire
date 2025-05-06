@@ -372,10 +372,10 @@ namespace Card{
     void Card_group_handler::render_hand(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 PlayerColor_RGB)const{
         if(hovered_card!=nullptr){
             //for ensure the hovered card is on top.
-            hovered_card->render_hovered_shadow(r2);
             for(const auto&it:hand_cards) 
                 if(it!=hovered_card)
                     it->render(r2,PlayerColor_RGB);
+            hovered_card->render_hovered_shadow(r2);
             hovered_card->render(r2,PlayerColor_RGB);
         }else{
             hand_cards.render(r2,PlayerColor_RGB);

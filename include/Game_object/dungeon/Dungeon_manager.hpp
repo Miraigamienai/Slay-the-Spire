@@ -1,6 +1,8 @@
 #ifndef GAME_OBJECT_DUNGEON_DUNGEON_MANAGER
 #define GAME_OBJECT_DUNGEON_DUNGEON_MANAGER
 
+#include <utility>
+
 #include "Game_object/dungeon/Dungeon_screen.hpp"
 #include "Game_object/dungeon/Combat_reward_screen.hpp"
 #include "Game_object/map/Map_node.hpp"
@@ -18,11 +20,11 @@ namespace Dungeon{
         void set_current_on_top(bool value)const{current_screen->set_on_top(value);}
         void hide_dungeon_screen_instantly()const{m_dungeon_screen->hide_instantly();}
         template <Interface::ScreenType ST, typename ...Args>
-        void open(Args...args){
+        void open(Args&&...args){
             last_screen=current_screen;
             current_screen=GetScreen<ST>();
             if(last_screen==current_screen) last_screen=nullptr;
-            GetScreen<ST>()->open(args...);
+            GetScreen<ST>()->open(std::forward<Args>(args)...);
         }
     private:
         std::shared_ptr<Interface::Is_screen> current_screen=nullptr,last_screen=nullptr;

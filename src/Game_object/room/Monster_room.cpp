@@ -19,7 +19,7 @@ namespace Room{
 Monster_room::Monster_room():Rooms(Room_type::Monster),m_group_name(Monster::GroupName::Jaw_Worm),ending_battle(false),ending_battle_timer(0.25F){
     m_wait_timer=0.0F;
 }
-void Monster_room::init_room(RUtil::Random_package &random_package){
+void Monster_room::init_room(RUtil::Random_package &random_package,Uint32 dungeon_fade_color){
     Monster::Monster_group_creater::CreateGroup(m_monsters,m_group_name,random_package.monster_type_rng);
     m_wait_timer=0.1F;
 }

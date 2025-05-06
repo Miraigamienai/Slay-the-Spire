@@ -1,6 +1,7 @@
 #include <GL/glew.h>//blend func
 
 #include "Game_object/scene/Bottom_scene.hpp"
+#include "Game_object/effect/Fade_wide.hpp"//white square
 #include "RUtil/Random.hpp"//next_room random
 #include "RUtil/ColorValuesOnly.hpp"//colors
 #include "RUtil/All_Image.hpp"//for loading region
@@ -68,7 +69,7 @@ void Bottom_scene::render_combat_room_bg(const std::shared_ptr<Draw::Draw_2D> &r
     if(render_ceiling_mod[5]) render_format(r2,ceiling_mod6);
     r2->SetBlendFunc(GL_SRC_COLOR,GL_ONE);
     r2->SetColor(color.r,color.g,color.b);
-    r2->draw(white_square,0.0F,0.0F,(float)Setting::WINDOW_WIDTH,(float)Setting::WINDOW_HEIGHT);
+    r2->draw(Effect::Fade_wide::white_square,0.0F,0.0F,(float)Setting::WINDOW_WIDTH,(float)Setting::WINDOW_HEIGHT);
     r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 }
 const std::shared_ptr<Draw::Atlas_Region> &Bottom_scene::fg=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::bottom_scene_mod_fg),&Bottom_scene::mg=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::bottom_scene_mod_mg),&Bottom_scene::left_wall=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::bottom_scene_mod_mod1),
@@ -76,5 +77,4 @@ const std::shared_ptr<Draw::Atlas_Region> &Bottom_scene::fg=RUtil::All_Image::Ge
                                           &Bottom_scene::ceiling_mod1=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::bottom_scene_mod_ceilingMod1),&Bottom_scene::ceiling_mod2=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::bottom_scene_mod_ceilingMod2),&Bottom_scene::ceiling_mod3=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::bottom_scene_mod_ceilingMod3),
                                           &Bottom_scene::ceiling_mod4=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::bottom_scene_mod_ceilingMod4),&Bottom_scene::ceiling_mod5=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::bottom_scene_mod_ceilingMod5),&Bottom_scene::ceiling_mod6=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::bottom_scene_mod_ceilingMod6),
                                           &Bottom_scene::bg=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::bottom_scene_bg);                                        
-const std::shared_ptr<Draw::ReTexture> &Bottom_scene::white_square=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/other/whiteSquare32.png");
 } // namespace Scene

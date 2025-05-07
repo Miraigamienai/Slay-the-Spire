@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "RUtil/Hitbox.hpp"
-#include "Draw/Text_layout.hpp"
+#include "Draw/Text_layout.hpp"//for inline
 #include "WindowSize.hpp"
 
 //fwd decl

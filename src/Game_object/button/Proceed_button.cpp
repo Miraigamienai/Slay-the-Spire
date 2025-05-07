@@ -44,36 +44,34 @@ namespace Button
     }
 
     void Proceed_button::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        if(!is_hidden){
-            //shadow
-            r2->SetColor(RUtil::WHITE);
-            r2->draw(SHADOW_BUTTON, this->current_x-256.0F, SHOW_Y-256.0F, 512.0F, 512.0F, 0.0F, 256.0F, 256.0F, this->m_scale, this->m_scale);
-            //outline
-            r2->SetColor(1.0F, 0.9F, 0.2F, std::cos(oscillate_timer)/5.0F +0.6F);
-            r2->draw(OUTLINE_BUTTON, this->current_x-256.0F, SHOW_Y-256.0F, 512.0F, 512.0F, 0.0F, 256.0F, 256.0F, this->m_scale, this->m_scale);
-            //button
-            r2->SetColor(RUtil::WHITE);
+        //shadow
+        r2->SetColor(RUtil::WHITE);
+        r2->draw(SHADOW_BUTTON, this->current_x-256.0F, SHOW_Y-256.0F, 512.0F, 512.0F, 0.0F, 256.0F, 256.0F, this->m_scale, this->m_scale);
+        //outline
+        r2->SetColor(1.0F, 0.9F, 0.2F, std::cos(oscillate_timer)/5.0F +0.6F);
+        r2->draw(OUTLINE_BUTTON, this->current_x-256.0F, SHOW_Y-256.0F, 512.0F, 512.0F, 0.0F, 256.0F, 256.0F, this->m_scale, this->m_scale);
+        //button
+        r2->SetColor(RUtil::WHITE);
+        r2->draw(NORMAL_BUTTON, this->current_x-256.0F, SHOW_Y-256.0F, 512.0F, 512.0F, 0.0F, 256.0F, 256.0F, this->m_scale, this->m_scale);
+        
+        if(this->hb.Hovered()){
+            //lighter
+            r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
+            r2->SetColor(RUtil::WHITE,0.3F);
             r2->draw(NORMAL_BUTTON, this->current_x-256.0F, SHOW_Y-256.0F, 512.0F, 512.0F, 0.0F, 256.0F, 256.0F, this->m_scale, this->m_scale);
-            
-            if(this->hb.Hovered()){
-                //lighter
-                r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
-                r2->SetColor(RUtil::WHITE,0.3F);
-                r2->draw(NORMAL_BUTTON, this->current_x-256.0F, SHOW_Y-256.0F, 512.0F, 512.0F, 0.0F, 256.0F, 256.0F, this->m_scale, this->m_scale);
-                r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            }
+            r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }
 
-            if(this->text!=nullptr){
-                this->text->SetFontSize(32);
-                if(hb.Hovered()&&!hb.ClickStarted()){
-                    this->text->SetFontColor(RUtil::CREAM_COLOR);
-                }else if(hb.ClickStarted()){
-                    this->text->SetFontColor(RUtil::ToRGBA(RUtil::Colors::LIGHT_GRAY));
-                }else{
-                    this->text->SetFontColor(RUtil::ToRGBA(RUtil::Colors::LEMON_CHIFFON));
-                }
-                this->text->render_center(r2, this->current_x, SHOW_Y, 0.0F ,0.0F, 0.0F, Setting::SCALE);
+        if(this->text!=nullptr){
+            this->text->SetFontSize(32);
+            if(hb.Hovered()&&!hb.ClickStarted()){
+                this->text->SetFontColor(RUtil::CREAM_COLOR);
+            }else if(hb.ClickStarted()){
+                this->text->SetFontColor(RUtil::ToRGBA(RUtil::Colors::LIGHT_GRAY));
+            }else{
+                this->text->SetFontColor(RUtil::ToRGBA(RUtil::Colors::LEMON_CHIFFON));
             }
+            this->text->render_center(r2, this->current_x, SHOW_Y, 0.0F ,0.0F, 0.0F, Setting::SCALE);
         }
     }
     

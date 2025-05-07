@@ -14,9 +14,8 @@ namespace Reward
         return RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::RewardItem)[2];
     }
 
-    Card_reward_item::Card_reward_item(const std::vector<std::shared_ptr<Card::Cards>>&cards,Uint32 PlayerColor_RGB)
-        :PlayerColor_RGB(PlayerColor_RGB),
-        card_reward(cards)
+    Card_reward_item::Card_reward_item(const std::vector<std::shared_ptr<Card::Cards>>&cards)
+        :card_reward(cards)
     {
         TEXT()->SetFontSize(24);
     }
@@ -26,7 +25,7 @@ namespace Reward
             r2->SetColor(RUtil::WHITE);
             r2->draw(NORMAL_IMG, ITEM_X-32.0F, this->y-32.0F - 2.0F*Setting::SCALE, 64.0F, 64.0F, 0.0F, 32.0F, 32.0F, Setting::SCALE, Setting::SCALE);
         }else{
-            this->card_reward.render(r2,PlayerColor_RGB);
+            this->card_reward.render(r2);
         }
     }
 

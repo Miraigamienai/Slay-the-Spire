@@ -1,25 +1,118 @@
-#include <utility>
-
 #include "Game_object/dungeon/Grid_card_screen.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
+#include "Game_object/dungeon/Grid_screen_action/Grid_screen_action.hpp"
 #include "Game_object/card/Card_group.hpp"
 #include "Game_object/card/Cards.hpp"
+#include "Game_object/character/Player.hpp"
+#include "RUtil/Random.hpp"
+#include "WindowSize.hpp"
+
+#include "Util/Logger.hpp"
 
 namespace Dungeon{
-    Grid_card_screen::Grid_card_screen(){
+    constexpr float PAD=40.0F*Setting::SCALE;
+    constexpr float DRAW_START_X=(static_cast<float>(Setting::WINDOW_WIDTH)//total
+                                -5.0F*Card::Cards::IMG_WIDTH*0.75F - 4.0F*PAD)//non space size
+                                /2.0F//half non space size
+                                +Card::Cards::IMG_WIDTH*0.75F/2.0F;//to card middle
+    constexpr float CARD_PAD_X=PAD+Card::Cards::IMG_WIDTH*0.75F;
+    constexpr float CARD_PAD_Y=PAD+Card::Cards::IMG_HEIGHT*0.75F;
+    constexpr float DEFAULT_SCROLL_BOUND=Setting::SCALE*50.0F;
+ 
+    Grid_card_screen::Grid_card_screen()
+        :hovered_card(nullptr),
+        offset_y(0.0F),
+        target_offset_y(0.0F),
+        draw_start_y(0.0F),
+        scroll(offset_y, target_offset_y, -DEFAULT_SCROLL_BOUND, DEFAULT_SCROLL_BOUND),
+        is_confirming(false)
+    {
         
     }
 
-    void Grid_card_screen::open(const Card::Card_group &display_group){
-        this->display_group=display_group;
-    }
-
-    void Grid_card_screen::open(Card::Card_group &&display_group){
-        this->display_group=std::move(display_group);
-    }
-
-    void Grid_card_screen::update_cards(){
-        for(size_t i=0;i<display_group.size();++i){
-            
+    void Grid_card_screen::update(Dungeon::Dungeon_shared &dungeon_shared){
+        if(!is_confirming){
+            scroll.update();
+            update_cards(dungeon_shared);
+            //check the hovered card
+            if(hovered_card!=nullptr){
+                hovered_card->Hover();
+                //check if clicked
+                if(hovered_card->HitboxClicked()){
+                    if(screen_action==nullptr){
+                        LOG_ERROR("screen_action is nullptr in Grid_card_screen.cpp");
+                    }else{
+                        is_confirming=true;
+                        screen_action->SetCard(this->hovered_card);
+                    }
+                }
+            }
+        }else{
+            screen_action->update(dungeon_shared);
+            if(screen_action->IsDone()){
+                is_confirming=false;
+                //take reward chekc
+            }
         }
     }
+    
+    void Grid_card_screen::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+        if(hovered_card!=nullptr){
+            //for ensure the hovered card is on top.
+            for(const auto&it:display_group) 
+                if(it!=hovered_card)
+                    it->render(r2);
+            hovered_card->render_hovered_shadow(r2);
+            hovered_card->render(r2);
+        }else{
+            display_group.render(r2);
+        }
+    }
+    
+    void Grid_card_screen::common_open_setting(const std::shared_ptr<GridScreenAction::Grid_screen_action> &screen_action){
+        this->screen_action=screen_action;
+        draw_start_y=static_cast<float>(Setting::WINDOW_HEIGHT) * (display_group.size()<=N?0.5F:0.66F);
+        offset_y = target_offset_y = 0.0F;
+        set_cards_position_when_opening();
+        //set scroll bound
+        const int scroll_y=display_group.size() <= 2*N ? DEFAULT_SCROLL_BOUND : DEFAULT_SCROLL_BOUND+CARD_PAD_Y*((display_group.size()+N-1)/N - 2);
+        this->scroll.ChangeBiggerBound(scroll_y);
+    }
+
+    void Grid_card_screen::update_cards(Dungeon_shared &dungeon_shared){
+        int now_y=0;
+        int now_x=0;
+        this->hovered_card=nullptr;
+        for(const auto&it:display_group){
+            it->SetX(DRAW_START_X+ static_cast<float>(now_x)*CARD_PAD_X);
+            it->SetY(draw_start_y+ offset_y - static_cast<float>(now_y)*CARD_PAD_Y);
+            it->update(dungeon_shared.top_effs);
+            if(it->HitboxHovered()) hovered_card=it;
+            
+            ++now_x;
+            if(now_x>=N){
+                now_x=0;
+                ++now_y;
+            }
+        }
+    }
+
+    void Grid_card_screen::set_cards_position_when_opening(){
+        int now_y=0;
+        int now_x=0;
+        for(const auto&it:display_group){
+            it->SetAngle(0.0F, true);
+            it->SetX(DRAW_START_X+ static_cast<float>(now_x)*CARD_PAD_X + RUtil::Random::GetRandomFloat(-100.0F, 100.0F)*Setting::SCALE, true);
+            it->SetY(draw_start_y+ offset_y - static_cast<float>(now_y)*CARD_PAD_Y - RUtil::Random::GetRandomFloat(100.0F, 200.0F)*Setting::SCALE, true);
+            it->SetDrawScale(0.75F, true);
+            if(it->HitboxHovered()) hovered_card=it;
+            
+            ++now_x;
+            if(now_x>=N){
+                now_x=0;
+                ++now_y;
+            }
+        }
+    }
+
 }

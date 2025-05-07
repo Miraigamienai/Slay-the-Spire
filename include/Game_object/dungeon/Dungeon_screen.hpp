@@ -4,6 +4,8 @@
 
 #include "Game_object/map/Dungeon_map.hpp"
 #include "Game_object/interface/Is_screen.hpp"
+#include "RUtil/Scroll.hpp"
+
 //fwd decl
 namespace Map{
     class Map_node;
@@ -21,13 +23,11 @@ public:
     void hide_instantly(){the_map.hide_instantly();}
     void open();
 private:
-    void updateOffsetY();
-    void reset_scroll();
-    void update_animation();
     const std::vector<std::vector<std::shared_ptr<Map::Map_node>>> *display_map=nullptr;
     Map::Dungeon_map the_map;
-    float offsetY,target_offsetY,scroll_wait_timer,grab_startY;
-    bool grabbed;
+    float offset_y,target_offset_y,scroll_wait_timer;
+    RUtil::Scroll scroll;
+
     static constexpr float SCROLL_SPEED=75.0F*Setting::SCALE;
     static constexpr float MAP_UPPER_SCROLL_NORMAL=-2300.0F * Setting::SCALE;
     static constexpr float MAP_SCROLL_LOWER = 190.0F * Setting::SCALE;

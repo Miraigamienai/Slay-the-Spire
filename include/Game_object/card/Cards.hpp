@@ -71,9 +71,9 @@ public:
     Cards &operator=(const Cards &) = delete;
     Cards &operator=(Cards &&) = delete;
 
-    void render(const std::shared_ptr<Draw::Draw_2D> &r2,const Uint32 PlayerColor_RGB)const;
+    void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void render_hovered_shadow(const std::shared_ptr<Draw::Draw_2D> &r2)const;
-    void update(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB);
+    void update(Effect::Effect_group &top_effs);
     // void update_hover_logic();
     void SetHoverTimer(const float value);//hover timer will be set when releasing card.
     void MoveTargetY(const float value);
@@ -82,24 +82,27 @@ public:
     
     void Darken(bool immediate);
     void Lighten();
-    void Hover();
     void Unhover();
     void draw();
+    //check hover status at specific scale.
     bool IsHoveredInHand(const float scale)const;
     void CanUseUpdate(const Dungeon::Dungeon_shared &dungeon_shared);
     
     //virtual function
-
+    
     //Check if it is usable based on the current situation.
     virtual bool CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const;
     virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &room_monsters,const std::shared_ptr<Monster::Monsters> &target_monster)=0;
     virtual std::shared_ptr<Cards> Clone()const=0;
     virtual void Upgrade()=0;
-
+    
     //inline function
     
-    bool HitboxHovered()const noexcept{return this->hb.Hovered();}
-    bool HitboxClicked()const noexcept{return this->hb.Clicked();}
+    //immediately 1.0F draw scale
+    void Hover()noexcept(noexcept(SetDrawScale(1.0F,true))){SetDrawScale(1.0F,true);}
+    //check hover status at the current scale of card.
+    bool HitboxHovered()const noexcept(noexcept(hb.Hovered())){return this->hb.Hovered();}
+    bool HitboxClicked()const noexcept(noexcept(hb.Clicked())){return this->hb.Clicked();}
     void SetCanHoverInHand(bool value)noexcept{this->can_hover_in_hand=value;}
     //0.12F scale
     void Shrink(bool immediate)noexcept{
@@ -121,7 +124,8 @@ public:
     void SetAngle(const float value,const bool immediate=false)noexcept{target_angle=value;if(immediate)m_angle=value;}
     void SetDrawScale(const float value,const bool immediate=false)noexcept{m_target_draw_scale=value;if(immediate)m_draw_scale=value;}
     bool IsSingleTarget()const noexcept{return target==Target::enemy||target==Target::self_and_enemy;}
-    
+    //static function
+    static void SetRenderColor(Uint32 c)noexcept{s_render_color=c;}
     //member
     const RUtil::AtlasRegionID card_name;
     const Rarity rarity;
@@ -163,8 +167,9 @@ private:
 
     void format_render(const std::shared_ptr<Draw::Draw_2D> &r2,const std::shared_ptr<Draw::Atlas_Region> &img,const float x,const float y,const float scale=1.0F)const;
     void frame_format_render(const std::shared_ptr<Draw::Draw_2D> &r2,const std::shared_ptr<Draw::Atlas_Region> &img,const float x_offset,const float x_scale)const;
-    static void init_static_menber();
     void SetFontTypeOffset();
+    static Uint32 s_render_color;
+    static void init_static_menber();
     static constexpr Uint32 FRAME_SHADOW_COLOR=0,DEFAULT_COLOR=RUtil::Math::GetColorUint32_RGB(255,255,255),TYPE_COLOR=RUtil::Math::GetColorUint32_RGB(0.35F,0.35F,0.35F),TINT_COLOR=RUtil::Math::GetColorUint32_RGB(43,37,65);
     static constexpr float  SHADOW_OFFSET_X = 18.0F * Setting::SCALE,
                             SHADOW_OFFSET_Y = 14.0F * Setting::SCALE,

@@ -1,7 +1,10 @@
 #pragma once
 
+#include <SDL_stdinc.h>
 #include <memory>
 #include <vector>
+
+#include "WindowSize.hpp"
 
 //fwd decl
 namespace Dungeon{
@@ -19,7 +22,7 @@ class Options;
 class Option_handler
 {
 public:
-    Option_handler(const Dungeon::Dungeon_shared& dungeon_shared);
+    Option_handler(const Dungeon::Dungeon_shared& dungeon_shared,Uint32 dungeon_fade_color);
     ~Option_handler()=default;
     
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;

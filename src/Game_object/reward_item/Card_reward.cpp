@@ -13,9 +13,9 @@ namespace Reward{
         set_cards_pos();
     } 
 
-    void Card_reward::render(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 PlayerColor_RGB)const{
+    void Card_reward::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         this->skip_button.render(r2);
-        for(const auto&it:this->reward_cards) it->render(r2,PlayerColor_RGB);
+        for(const auto&it:this->reward_cards) it->render(r2);
     }
 
     void Card_reward::set_cards_pos()const{
@@ -35,7 +35,7 @@ namespace Reward{
         //card update
         hovered_card=nullptr;
         for(const auto&it:reward_cards){
-            it->update(dungeon_shared.top_effs, dungeon_shared.player->GetCardTrailColor());
+            it->update(dungeon_shared.top_effs);
             if(it->HitboxHovered()){
                 this->hovered_card=it;
             }

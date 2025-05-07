@@ -7,9 +7,9 @@
 
 namespace Room{
 namespace Option{
-    Option_handler::Option_handler(const Dungeon::Dungeon_shared& dungeon_shared){
+    Option_handler::Option_handler(const Dungeon::Dungeon_shared& dungeon_shared,Uint32 dungeon_fade_color){
         //rest option
-        opts.emplace_back(std::make_shared<Rest_option>(dungeon_shared.player->GetMaxHP()));
+        opts.emplace_back(std::make_shared<Rest_option>(dungeon_shared.player->GetMaxHP(), dungeon_fade_color));
         //smite option
         opts.emplace_back(std::make_shared<Smith_option>(dungeon_shared.card_group_handler.can_upgrade_card()));
         set_opts_pos();

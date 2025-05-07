@@ -369,30 +369,30 @@ namespace Card{
         single_target=pass_hesitation_line=is_dragging_card=false;
         hovered_monster=nullptr;
     }
-    void Card_group_handler::render_hand(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 PlayerColor_RGB)const{
+    void Card_group_handler::render_hand(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         if(hovered_card!=nullptr){
             //for ensure the hovered card is on top.
             for(const auto&it:hand_cards) 
                 if(it!=hovered_card)
-                    it->render(r2,PlayerColor_RGB);
+                    it->render(r2);
             hovered_card->render_hovered_shadow(r2);
-            hovered_card->render(r2,PlayerColor_RGB);
+            hovered_card->render(r2);
         }else{
-            hand_cards.render(r2,PlayerColor_RGB);
+            hand_cards.render(r2);
         }
 
-        this->render_flying_cards(r2,PlayerColor_RGB);//may need to check.
-        for(const auto&it:force_render_cards) it->render(r2,PlayerColor_RGB);//may need to be check.
+        this->render_flying_cards(r2);//may need to check.
+        for(const auto&it:force_render_cards) it->render(r2);//may need to be check.
 
         if(single_target)
             render_targeting(r2);
     }
 
     void Card_group_handler::update_hand_cards(Effect::Effect_group &top_effs, const Dungeon::Dungeon_shared &dungeon_shared){
-        hand_cards.update(top_effs,dungeon_shared.player->GetCardTrailColor());
+        hand_cards.update(top_effs);
         for(const auto&it:hand_cards)it->CanUseUpdate(dungeon_shared);
         //force_update_cards update here
-        for(const auto&it:force_update_cards) it->update(top_effs,dungeon_shared.player->GetCardTrailColor());
+        for(const auto&it:force_update_cards) it->update(top_effs);
     }
 
     void Card_group_handler::render_targeting(const std::shared_ptr<Draw::Draw_2D> &r2)const{

@@ -11,6 +11,7 @@ public:
     ~Smith_option()override=default;
     void chile_label_render(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 font_color)const override;
     void chile_description_render(const std::shared_ptr<Draw::Draw_2D> &r2,float font_color_a)const override;
+    void take_reward(Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
 };   
 }

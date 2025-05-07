@@ -45,7 +45,7 @@ namespace Dungeon{
         if(dungeon_shared.player->IsDie()) game_over=true;
         //card update
         dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared);
-        dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.top_effs,dungeon_shared.player->GetCardTrailColor());//for test
+        dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.top_effs);//for test
         //overlay update
         dungeon_shared.overlay.update(dungeon_shared.card_group_handler);
         //manager update
@@ -83,7 +83,7 @@ namespace Dungeon{
         dungeon_shared.player->render(r2);//temporary here
         scene->render_fg(r2);
         dungeon_shared.overlay.render(r2);
-        dungeon_shared.card_group_handler.render_hand(r2,dungeon_shared.player->GetCardRenderColor());
+        dungeon_shared.card_group_handler.render_hand(r2);
         dungeon_shared.effs.render(r2);
         m_dungeon_manager.render(r2);
         dungeon_shared.top_effs.render(r2);
@@ -186,7 +186,7 @@ namespace Dungeon{
             std::vector<std::shared_ptr<Card::Cards>> card_vec;
             for(int i=0;i<3;i++) card_vec.emplace_back(Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng));
             std::vector<std::shared_ptr<Reward::Reward_item>> reward_vec;
-            reward_vec.emplace_back(std::make_shared<Reward::Card_reward_item>(card_vec,dungeon_shared.player->GetCardRenderColor()));
+            reward_vec.emplace_back(std::make_shared<Reward::Card_reward_item>(card_vec));
             m_dungeon_manager.open<Interface::ScreenType::combat_reward>(reward_vec);
         }
     }

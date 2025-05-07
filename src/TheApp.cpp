@@ -10,7 +10,10 @@ TheApp::TheApp(){
     m_dungeon=std::make_shared<Dungeon::Dungeons>(m_dungeon_shared,seed);
     m_InitScreen=std::make_shared<InitScreen>(m_CurrentState);
     m_dungeon_shared.player=std::make_shared<Character::Player>();
-    m_dungeon_shared.overlay.set_player_to_energy_panel(m_dungeon_shared.player); 
+    m_dungeon_shared.overlay.set_player_to_energy_panel(m_dungeon_shared.player);
+    //card colors set 
+    Card::Card_soul::SetTrailColor(m_dungeon_shared.player->GetCardTrailColor());
+    Card::Cards::SetRenderColor(m_dungeon_shared.player->GetCardRenderColor());
     for(int i=0;i<6;i++)//for test
         m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Strike_red>());
     for(int i=0;i<2;i++)

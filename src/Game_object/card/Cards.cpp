@@ -86,7 +86,7 @@ namespace Card{
         this->m_angle=this->target_angle=0;
     }
 
-    void Cards::update(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB){
+    void Cards::update(Effect::Effect_group &top_effs){
         //flash update
         if(!m_card_flash.IsDone()) m_card_flash.update();
         //hover time update
@@ -107,6 +107,7 @@ namespace Card{
         //scale
         this->hb.move(this->current_x,this->current_y);
         this->hb.resize(IMG_WIDTH*this->m_draw_scale, IMG_HEIGHT*this->m_draw_scale);
+        this->hb.update();
         if(hb.ClickStarted()){
             this->m_draw_scale=RUtil::Math::varlerp(this->m_draw_scale, this->m_target_draw_scale*0.9F, 7.5F, 0.003F);
             this->m_draw_scale=RUtil::Math::varlerp(this->m_draw_scale, this->m_target_draw_scale*0.9F, 7.5F, 0.003F);
@@ -130,14 +131,14 @@ namespace Card{
         }
         glowgroup.update();
 
-        this->update_flying(top_effs,PlayerTrailColor_RGB);
+        this->update_flying(top_effs);
     }
 
-    void Cards::render(const std::shared_ptr<Draw::Draw_2D> &r2,const Uint32 PlayerColor_RGB)const{
+    void Cards::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         if(is_shuffling&&shuffle_invisible) return;
         //remember to adjust the alpha when flying.
         // if(is_shuffling){
-        //     r2->SetColor(PlayerColor_RGB,1.0F);
+        //     r2->SetColor(s_render_color,1.0F);
         //     format_render(r2,m_card_bg_silhouette,this->current_x,this->current_y,1.0F+this->m_tint_a/5.0F);
         // }
         //flash
@@ -195,10 +196,6 @@ namespace Card{
     void Cards::Lighten(){
         darken=false;
         m_dark_timer=0.3F;
-    }
-    void Cards::Hover(){
-        m_draw_scale=1.0F;
-        m_target_draw_scale=1.0F;
     }
     void Cards::Unhover(){
         m_target_draw_scale=0.75F;
@@ -300,6 +297,7 @@ namespace Card{
     const std::vector<std::shared_ptr<Draw::Text_layout>> &Cards::s_ui_vec=RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::SingleCardViewPopup);
     float Cards::s_type_offset_attack=0.0F,Cards::s_type_offset_skill=0.0F,Cards::s_type_offset_power=0.0F,Cards::s_type_offset_status=0.0F,Cards::s_type_offset_curse=0.0F,Cards::s_type_width_attack=0.0F,Cards::s_type_width_skill=0.0F,Cards::s_type_width_power=0.0F,Cards::s_type_width_status=0.0F,Cards::s_type_width_curse=0.0F;
     const float &Cards::DT=RUtil::Game_Input::delta_time();
+    Uint32 Cards::s_render_color;
 
     using namespace RUtil;
     static const std::shared_ptr<Draw::Atlas_Region> &BgSilhouette(Type type){

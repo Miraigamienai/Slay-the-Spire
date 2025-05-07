@@ -51,7 +51,7 @@ namespace EffectGen{
             dungeon_shared.card_group_handler.AddBot<Card::GroupType::force_render_cards>(card);
         }
         TimeGo();
-        this->card->update(dungeon_shared.top_effs, dungeon_shared.player->GetCardTrailColor());
+        this->card->update(dungeon_shared.top_effs);
         if(this->is_done){
             s_cnt--;
             dungeon_shared.card_group_handler.discard(card,true);//visual only

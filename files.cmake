@@ -27,6 +27,8 @@ set(SRC_FILES
 	Game_object/action/Effect_gen_capsule_action.cpp
 	Game_object/action/Empty_shuffle_action.cpp
 	Game_object/action/Gain_block_action.cpp
+	Game_object/button/Cancel_button.cpp
+	Game_object/button/Confirm_button.cpp
 	Game_object/button/End_turn_button.cpp
 	Game_object/button/Proceed_button.cpp
 	Game_object/button/Skip_button.cpp
@@ -69,7 +71,11 @@ set(SRC_FILES
 	Game_object/dungeon/Dungeons.cpp
 	Game_object/dungeon/Dungeon_manager.cpp
 	Game_object/dungeon/Dungeon_screen.cpp
+	Game_object/dungeon/Grid_card_screen.cpp
 	Game_object/dungeon/Overlay.cpp
+	Game_object/dungeon/Grid_screen_action/Grid_screen_action.cpp
+	Game_object/dungeon/Grid_screen_action/Grid_screen_upgrade_action.cpp
+	Game_object/dungeon/Grid_screen_action/Render_arrow.cpp
 	Game_object/effect/Auto_release_pool_manager.cpp
 	Game_object/effect/Camfire_bubble_effect.cpp
 	Game_object/effect/Camfire_burning_effect.cpp
@@ -84,8 +90,10 @@ set(SRC_FILES
 	Game_object/effect/Flash_attack_effect.cpp
 	Game_object/effect/Map_circle_effect.cpp
 	Game_object/effect/Refresh_energy_effect.cpp
+	Game_object/effect/Rest_option_black_screen.cpp
 	Game_object/effect/Shine_particle.cpp
 	Game_object/effect/Slash_eff.cpp
+	Game_object/effect/Sleep_cover_eff.cpp
 	Game_object/effect/Vertical_aura.cpp
 	Game_object/effect_gen/Effect_gen_group.cpp
 	Game_object/effect_gen/Show_card_to_discard.cpp
@@ -116,6 +124,7 @@ set(SRC_FILES
 	RUtil/Hitbox.cpp
 	RUtil/Image_book.cpp
 	RUtil/Random.cpp
+	RUtil/Scroll.cpp
 	RUtil/Some_Math.cpp
 	RUtil/Text_Vector_Reader.cpp
 )
@@ -157,6 +166,8 @@ set(INCLUDE_FILES
 	Game_object/action/Gain_block_action.hpp
 	Game_object/action/Show_card_to_discard_action.hpp
 	Game_object/action/Wait_action.hpp
+	Game_object/button/Cancel_button.hpp
+	Game_object/button/Confirm_button.hpp
 	Game_object/button/End_turn_button.hpp
 	Game_object/button/Proceed_button.hpp
 	Game_object/button/Skip_button.hpp
@@ -202,7 +213,11 @@ set(INCLUDE_FILES
 	Game_object/dungeon/Dungeon_manager.hpp
 	Game_object/dungeon/Dungeon_screen.hpp
 	Game_object/dungeon/Dungeon_shared.hpp
+	Game_object/dungeon/Grid_card_screen.hpp
 	Game_object/dungeon/Overlay.hpp
+	Game_object/dungeon/Grid_screen_action/Grid_screen_action.hpp
+	Game_object/dungeon/Grid_screen_action/Grid_screen_upgrade_action.hpp
+	Game_object/dungeon/Grid_screen_action/Render_arrow.hpp
 	Game_object/effect/Auto_release_pool_manager.hpp
 	Game_object/effect/Camfire_bubble_effect.hpp
 	Game_object/effect/Camfire_burning_effect.hpp
@@ -219,8 +234,10 @@ set(INCLUDE_FILES
 	Game_object/effect/Flash_attack_effect.hpp
 	Game_object/effect/Map_circle_effect.hpp
 	Game_object/effect/Refresh_energy_effect.hpp
+	Game_object/effect/Rest_option_black_screen.hpp
 	Game_object/effect/Shine_particle.hpp
 	Game_object/effect/Slash_eff.hpp
+	Game_object/effect/Sleep_cover_eff.hpp
 	Game_object/effect/Vertical_aura.hpp
 	Game_object/effect_gen/Card_paticle_gen.hpp
 	Game_object/effect_gen/Clash_eff_gen.hpp
@@ -262,6 +279,7 @@ set(INCLUDE_FILES
 	RUtil/Image_book.hpp
 	RUtil/Random.hpp
 	RUtil/Random_package.hpp
+	RUtil/Scroll.hpp
 	RUtil/Some_Math.hpp
 	RUtil/Text_Vector_Reader.hpp
 )

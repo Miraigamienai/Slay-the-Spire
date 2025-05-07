@@ -57,13 +57,13 @@ public:
     void shuffle(bool shuffle_invisible);
     void hand_hide();
     void update_hand_cards(Effect::Effect_group &top_effs, const Dungeon::Dungeon_shared &dungeon_shared);
-    void render_hand(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 PlayerColor_RGB)const;
+    void render_hand(const std::shared_ptr<Draw::Draw_2D> &r2)const;
 
     void obtain(const std::shared_ptr<Cards> &card);
-    void render_flying_cards(const std::shared_ptr<Draw::Draw_2D> &r2, const Uint32 PlayerColor_RGB)const{for(const auto&it:flying_cards) it->render(r2,PlayerColor_RGB);}
-    void update_flying_cards(Effect::Effect_group &top_effs, Uint32 PlayerTrailColor_RGB){
+    void render_flying_cards(const std::shared_ptr<Draw::Draw_2D> &r2)const{for(const auto&it:flying_cards) it->render(r2);}
+    void update_flying_cards(Effect::Effect_group &top_effs){
         for (auto it = flying_cards.begin(); it != flying_cards.end();) {
-            (*it)->update(top_effs,PlayerTrailColor_RGB);
+            (*it)->update(top_effs);
             if (!(*it)->is_fly())
                 it = flying_cards.erase(it);
             else

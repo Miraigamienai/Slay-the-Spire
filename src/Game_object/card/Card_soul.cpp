@@ -62,7 +62,7 @@ void Card_soul::prepare_to_fly(){
     this->stop_rotate=false;
     this->start_wait_timer=0.0F;
 }
-void Card_soul::update_flying(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB){
+void Card_soul::update_flying(Effect::Effect_group &top_effs){
     if(!is_flying) return;
     if(0.0F<start_wait_timer){
         start_wait_timer-=DT();
@@ -74,7 +74,7 @@ void Card_soul::update_flying(Effect::Effect_group &top_effs,const Uint32 Player
 
     this->movement_update();
     
-    this->vfx_update(top_effs,PlayerTrailColor_RGB);
+    this->vfx_update(top_effs);
     
     //update end_timer
     end_timer-=DT();
@@ -89,7 +89,7 @@ void Card_soul::update_flying(Effect::Effect_group &top_effs,const Uint32 Player
     }
 }
 
-void Card_soul::vfx_update(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB){
+void Card_soul::vfx_update(Effect::Effect_group &top_effs){
     //create effect trail
     vfx_timer-=DT();
     if(vfx_timer<0.0F){
@@ -109,7 +109,7 @@ void Card_soul::vfx_update(Effect::Effect_group &top_effs,const Uint32 PlayerTra
                 top_effs.AddTop(
                     Effect::Effect_pool<Effect::Card_trail_effect>::GetEffect(
                         RUtil::Math::CatmullRomSpline(ctl_pts, (float)i*step, ctl_len, ctl_idx),
-                        PlayerTrailColor_RGB
+                        s_trail_color
                     )
                 );
             }
@@ -154,6 +154,7 @@ void Card_soul::rotate_update(){
     if(glm::length(dir_vec)<HOME_IN_THRESHOLD || std::abs(target_angle-end_angle)<DT()*rotate_rate){
         target_angle=end_angle;
         stop_rotate=true;
-    }
+    }  
 }
+Uint32 Card_soul::s_trail_color;
 } // namespace Card

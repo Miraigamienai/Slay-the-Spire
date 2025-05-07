@@ -6,14 +6,14 @@
 #include "Util/Logger.hpp"
 
 namespace Card{
-    void Card_group::render(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 PlayerColor_RGB)const{
+    void Card_group::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         for(const auto &it:box){
-            it->render(r2,PlayerColor_RGB);
+            it->render(r2);
         }
     }
-    void Card_group::update(Effect::Effect_group &top_effs,const Uint32 PlayerTrailColor_RGB){
+    void Card_group::update(Effect::Effect_group &top_effs){
         for(auto &it:box){
-            it->update(top_effs,PlayerTrailColor_RGB);
+            it->update(top_effs);
         }
     }
     void Card_group::MoveAllCardTo(Card_group &group){

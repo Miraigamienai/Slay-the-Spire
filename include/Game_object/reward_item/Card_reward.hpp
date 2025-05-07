@@ -25,7 +25,7 @@ public:
 
     void Open();
     void update(Dungeon::Dungeon_shared &dungeon_shared);
-    void render(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 PlayerColor_RGB)const;
+    void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     bool IsChosen()const noexcept{return chosen;}
     bool SkipButtonClicked()const noexcept(noexcept(skip_button.is_logically_clicked())){return skip_button.is_logically_clicked();}
 private:

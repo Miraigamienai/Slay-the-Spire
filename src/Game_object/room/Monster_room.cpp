@@ -67,8 +67,10 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
                 //battle start effect
                 dungeon_shared.overlay.show_combat_panel();
             }
+            dungeon_shared.player->resetEnergy();
             //temporary 5
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));
+        
             //Ensure that enable action will be triggered after the card are drawn.
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Enable_end_button_action>());
             

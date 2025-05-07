@@ -27,8 +27,8 @@ public:
     void move(float center_x, float center_y)noexcept(noexcept(hb.move(center_x, center_y))){hb.move(center_x, center_y);}
     
     bool HitboxClicked()const noexcept{return hb.Clicked()&&is_activating;}
-    bool is_taking_reward()const noexcept{return taking_reward;}
-    bool did_take_reward()const noexcept{return took_reward;}
+    bool IsDone()const noexcept{return is_done;}
+    bool IsCancelled()const noexcept{return is_cancelled;}
     virtual void take_reward(Dungeon::Dungeon_shared &dungeon_shared)=0;
     
 protected:
@@ -37,7 +37,8 @@ protected:
     RUtil::Hitbox hb;
     float scale;
     bool is_activating;
-    bool taking_reward,took_reward;
+    bool is_done;
+    bool is_cancelled;
     static constexpr float DESCRIPTION_X=950.0F * Setting::SCALE,
                            DESCRIPTION_Y=static_cast<float>(Setting::WINDOW_HEIGHT)/2.0F + 20.0F*Setting::SCALE; 
     static constexpr int TEXT_SIZE=26;

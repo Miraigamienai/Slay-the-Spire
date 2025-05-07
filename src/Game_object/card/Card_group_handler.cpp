@@ -479,9 +479,18 @@ namespace Card{
             }
         }
     }
+
     void Card_group_handler::hand_hide(){
         for(const auto&it:hand_cards) it->SetY(-Cards::IMG_HEIGHT);
     }
+
+    Card_group Card_group_handler::get_upgradeable_card_group()const{
+        Card_group re;
+        for(const auto&it:this->master_deck)
+            if(!it->IsUpgraded())re.AddTop(it->Clone());
+        return re;
+    }
+
     const std::shared_ptr<Draw::ReTexture>&Card_group_handler::reticleBlock_img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/reticleBlock.png"),&Card_group_handler::reticleArrow_img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/reticleArrow.png");
     const int &Card_group_handler::input_x=RUtil::Game_Input::getX(),&Card_group_handler::input_y=RUtil::Game_Input::getY();
     const bool &Card_group_handler::just_r=RUtil::Game_Input::just_clicked_R(),&Card_group_handler::just_l=RUtil::Game_Input::just_clicked();

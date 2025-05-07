@@ -23,7 +23,8 @@ public:
     Card_group()=default;
     ~Card_group()override=default;
     Card_group(const Card_group&) = delete;
-    Card_group(Card_group&&) = delete;
+    Card_group(Card_group&&) = default;
+    
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update(Effect::Effect_group &effs);
     void SortByRarity(const bool ascending);

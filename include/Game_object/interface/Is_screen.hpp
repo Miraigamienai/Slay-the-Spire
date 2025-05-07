@@ -14,6 +14,7 @@ namespace Interface{
 enum class ScreenType{
     main_dungeon,
     combat_reward,
+    grid_cards,
     NONE
 };
 

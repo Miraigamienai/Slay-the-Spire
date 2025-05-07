@@ -13,8 +13,8 @@ namespace Option{
         :hb(216.0F * Setting::SCALE, 140.0F * Setting::SCALE),
         scale(NORMAL_SCALE),
         is_activating(is_activating),
-        taking_reward(false),
-        took_reward(false),
+        is_done(false),
+        is_cancelled(false),
         img(img)
     {
 

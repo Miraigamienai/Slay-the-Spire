@@ -5,6 +5,7 @@
 
 #include "Game_object/dungeon/Dungeon_screen.hpp"
 #include "Game_object/dungeon/Combat_reward_screen.hpp"
+#include "Game_object/dungeon/Grid_card_screen.hpp"
 #include "Game_object/map/Map_node.hpp"
 
 namespace Dungeon{
@@ -30,6 +31,7 @@ namespace Dungeon{
         std::shared_ptr<Interface::Is_screen> current_screen=nullptr,last_screen=nullptr;
         std::shared_ptr<Dungeon::Dungeon_screen> m_dungeon_screen;
         std::shared_ptr<Dungeon::Combat_reward_screen> combat_reward_screen;
+        std::shared_ptr<Dungeon::Grid_card_screen> grid_card_screen;
         
         void switch_to_next_screen();
         template <Interface::ScreenType ST>
@@ -38,12 +40,15 @@ namespace Dungeon{
                 return m_dungeon_screen;
             else if constexpr(ST==Interface::ScreenType::combat_reward)
                 return combat_reward_screen;
+            else if constexpr(ST==ScreenType::grid_cards)
+                return grid_card_screen;
         }
         std::shared_ptr<Interface::Is_screen> GetScreen(Interface::ScreenType ST)const{
             using namespace Interface;
             switch(ST){
                 case ScreenType::main_dungeon: return m_dungeon_screen;
                 case ScreenType::combat_reward: return combat_reward_screen;
+                case ScreenType::grid_cards: return grid_card_screen;
                 default:return nullptr;
             }
         }

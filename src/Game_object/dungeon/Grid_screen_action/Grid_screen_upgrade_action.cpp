@@ -11,6 +11,8 @@ namespace GridScreenAction{
         this->card=card;
         this->upgraded_card=card->Clone();
         this->upgraded_card->Upgrade();
+        confirm.show();
+        cancel.show();
     }
     
     void Grid_screen_upgrade_action::update(Dungeon::Dungeon_shared &dungeon_shared){

@@ -58,8 +58,9 @@ public:
     void hand_hide();
     void update_hand_cards(Effect::Effect_group &top_effs, const Dungeon::Dungeon_shared &dungeon_shared);
     void render_hand(const std::shared_ptr<Draw::Draw_2D> &r2)const;
-
     void obtain(const std::shared_ptr<Cards> &card);
+    Card_group get_upgradeable_card_group()const;
+
     void render_flying_cards(const std::shared_ptr<Draw::Draw_2D> &r2)const{for(const auto&it:flying_cards) it->render(r2);}
     void update_flying_cards(Effect::Effect_group &top_effs){
         for (auto it = flying_cards.begin(); it != flying_cards.end();) {

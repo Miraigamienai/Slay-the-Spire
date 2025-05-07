@@ -26,6 +26,7 @@ public:
 
     void ReduceEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared);
     void AddEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared);
+    void resetEnergy(){current_energy=max_energy;};
     const int &GetCurrEnergy()const noexcept{return current_energy;}
     const int &GetMaxEnergy()const noexcept{return max_energy;}
     constexpr Uint32 GetCardTrailColor()const noexcept(noexcept(RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F))){return RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F);}

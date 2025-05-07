@@ -13,6 +13,8 @@ namespace Character{
         current_Block=0;
         setPosition(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET);
         KindOfCharacter=KindOfCharacter::PLAYER;
+        fadeTimer=2.5F;
+        fadeTime=2.5F;
     }
 
     void Player::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
@@ -20,6 +22,7 @@ namespace Character{
         if(IsFadeOut){
             r2->SetColor(fadeColor,FadeColorA);
             r2->draw(Effect::Fade_wide::white_square, 0.0F, 0.0F, Setting::WINDOW_WIDTH, Setting::WINDOW_HEIGHT);
+            r2->SetColor(-1,1);
             r2->draw(img_died,getPosition().x,getPosition().y,WIDTH,HIGHT); 
         }
         else{
@@ -45,6 +48,7 @@ namespace Character{
             current_HP-=damage_info.dmg;
         }
     }
+    
 
     void Player::ReduceEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.overlay.on_use_energy();

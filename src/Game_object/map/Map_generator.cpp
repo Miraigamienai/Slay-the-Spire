@@ -3,6 +3,7 @@
 #include "Game_object/map/Map_edge.hpp"
 #include "RUtil/Some_Math.hpp"
 #include "Game_object/room/Monster_room.hpp"
+#include "Game_object/room/Rest_room.hpp"
 
 #include "Util/Logger.hpp"
 
@@ -90,11 +91,19 @@ void Map_generator::AssignRoom(const std::vector<std::vector<std::shared_ptr<Map
     //room multiply some other chance, and 残ったのはモンスターのへやだ
     int remain_room=available_room;
     //...
-    int monster_room=remain_room;
+    // int monster_room=remain_room;
     //shuffle
     //...
     //First three rows should be week monsters.
-    for(const auto &it1:map) for(const auto &it2:it1)if(it2!=nullptr) it2->SetRoom(std::make_shared<Room::Monster_room>());
+    for(size_t i=0;i<map.size();i++){
+        for(size_t j=0;j<map[i].size();j++){
+            if(map[i][j]==nullptr) continue;
+            if(i==2 || i==7 || i==11)
+                map[i][j]->SetRoom(std::make_shared<Room::Rest_room>());
+            else
+                map[i][j]->SetRoom(std::make_shared<Room::Monster_room>());
+        }
+    }
 }
 void Map_generator::SetChance(float value,Room::Room_type type){
     switch(type){

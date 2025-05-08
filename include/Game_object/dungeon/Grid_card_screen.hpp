@@ -1,3 +1,4 @@
+#pragma once
 //how to do????
 #include <utility>
 #include <memory>

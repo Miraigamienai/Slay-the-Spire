@@ -41,10 +41,13 @@ namespace Effect{
         }
         TimeGo();
     }
-
-    void Shine_particle::Initial(float x, float y,float jitter){
-        this->is_done=false;
-        this->img_bool=RUtil::Random::GetRandomBoolean();
+    Shine_particle::Shine_particle(float x, float y,float jitter)
+        :img_bool(RUtil::Random::GetRandomBoolean()),
+        angle(RUtil::Random::GetRandomFloat(0.0F,360.0F)),
+        speed_x(RUtil::Random::GetRandomFloat(-900.0F,900.0F)*Setting::SCALE),
+        speed_y(RUtil::Random::GetRandomFloat(-500.0F,1000.0F)*Setting::SCALE),
+        floor(RUtil::Random::GetRandomFloat(100.0F,250.0F)*Setting::SCALE)
+    {
         auto &img=GetIMG(img_bool);
         this->x= x - (float)img->GetRegionWidth()/2.0F + RUtil::Random::GetRandomFloat(-jitter, jitter)*Setting::SCALE;
         this->y= y - (float)img->GetRegionHeight()/2.0F+ RUtil::Random::GetRandomFloat(-jitter, jitter)*Setting::SCALE;
@@ -54,11 +57,8 @@ namespace Effect{
             RUtil::Random::GetRandomFloat(0.0F,0.2F)
         );
         this->color_a=0.0F;
-        this->angle=RUtil::Random::GetRandomFloat(0.0F,360.0F);
         this->duration=RUtil::Random::GetRandomFloat(0.5F,1.0F);
         this->scale=RUtil::Random::GetRandomFloat(0.5F,2.0F)*Setting::SCALE;
-        this->speed_x=RUtil::Random::GetRandomFloat(-900.0F,900.0F)*Setting::SCALE;
-        this->speed_y=RUtil::Random::GetRandomFloat(-500.0F,1000.0F)*Setting::SCALE;
-        this->floor=RUtil::Random::GetRandomFloat(100.0F,250.0F)*Setting::SCALE;
+        
     }
 }

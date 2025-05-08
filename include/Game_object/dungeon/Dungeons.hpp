@@ -2,6 +2,7 @@
 #define GAME_OBJECT_DUNGEON_DUNGEONS
 #include <vector>
 #include <memory>
+#include <SDL_stdinc.h>
 
 //fwd decl
 namespace Dungeon{
@@ -9,6 +10,12 @@ namespace Dungeon{
 }
 namespace Scene{
     class Scenes;
+}
+namespace Draw{
+    class Draw_2D;
+}
+namespace Map{
+    class Map_node;
 }
 
 namespace Dungeon{

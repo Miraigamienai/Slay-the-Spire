@@ -2,13 +2,12 @@
 #include "Game_object/effect/Hammer_effect.hpp"
 #include "Game_object/effect/Shine_particle.hpp"
 #include "Game_object/dungeon/Dungeon_shared.hpp"
-#include "Game_object/effect/Effect_pool.hpp"
 
 namespace EffectGen{
     static inline void clank(float _x, float _y, Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.top_effs.AddTop(std::make_shared<Effect::Hammer_effect>(_x, _y));
         for(int i=0;i<30;i++)
-            dungeon_shared.top_effs.AddTop(Effect::Effect_pool<Effect::Shine_particle>::GetEffect(_x, _y, 10.0F));
+            dungeon_shared.top_effs.AddTop(std::make_shared<Effect::Shine_particle>(_x, _y, 10.0F));
     }
 
     void Card_upgrade_eff_gen::update(Dungeon::Dungeon_shared &dungeon_shared){

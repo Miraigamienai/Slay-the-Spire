@@ -19,16 +19,26 @@ namespace Room
     void Rest_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         //TODO:player position
         //fire update
+        campfire_burning_effs.update();
         campfire_burning_timer-=RUtil::Game_Input::delta_time();
         if(campfire_burning_timer<0.0F){
             campfire_burning_timer=BURNING_TIMER;
             add_fire();
             add_fire();   
         }
-        //chheck
-        //eff update
-        //eff
-        //hidden
+        //option update
+        if(option_handler!=nullptr){
+            if(option_handler->someone_be_clicked()){
+                option_handler->take_reward(dungeon_shared);
+                if(option_handler->IsCancelled()){
+                    option_handler->update();
+                }else if(option_handler->IsDone()){
+                    option_handler=nullptr;       
+                }
+            }else{
+                option_handler->update();
+            }
+        }
     }
     
     void Rest_room::add_fire(){
@@ -42,6 +52,6 @@ namespace Room
         this->option_handler=std::make_shared<Option::Option_handler>(dungeon_shared, dungeon_fade_color);
     }
 
-    const std::shared_ptr<Draw::ReTexture> &Rest_room::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/monster.png"),
-                                           &Rest_room::IMG_O=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/monsterOutline.png");
+    const std::shared_ptr<Draw::ReTexture> &Rest_room::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/rest.png"),
+                                           &Rest_room::IMG_O=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/restOutline.png");
 } // namespace Room

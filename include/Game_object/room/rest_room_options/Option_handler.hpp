@@ -27,13 +27,16 @@ public:
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update();
     bool someone_be_clicked()const noexcept{return now_clicked_opt!=nullptr;}
-    void take_reward(Dungeon::Dungeon_shared &dungeon_shared){now_clicked_opt->take_reward(dungeon_shared);}
+    void take_reward(Dungeon::Dungeon_shared &dungeon_shared)const{now_clicked_opt->take_reward(dungeon_shared);}
+    bool IsDone()const noexcept{return now_clicked_opt!=nullptr && now_clicked_opt->IsDone();}
+    bool IsCancelled()const noexcept{return now_clicked_opt!=nullptr && now_clicked_opt->IsCancelled();}
 private:
     std::vector<std::shared_ptr<Options>> opts;
     std::shared_ptr<Options> now_clicked_opt;
     Effect::Effect_group bubbles;
     bool more_bubble;
     float bubble_oscillate_timer;
+    float bubble_offset;
 
     void set_opts_pos();
     static constexpr float BUTTON_START_X = static_cast<float>(Setting::WINDOW_WIDTH) * 0.416F,
@@ -41,7 +44,7 @@ private:
                            BUTTON_SPACING_X = 300.0F * Setting::SCALE,
                            BUTTON_SPACING_Y = -200.0F * Setting::SCALE,
                            BUTTON_EXTRA_SPACING_Y = -70.0F * Setting::SCALE;
-    static constexpr size_t MORE_BUBBLE_AMOUNT=60, NORMAL_BUBBLE_AMOUNT=40;
+    static constexpr int MORE_BUBBLE_AMOUNT=60, NORMAL_BUBBLE_AMOUNT=40;
 };
 }
 }

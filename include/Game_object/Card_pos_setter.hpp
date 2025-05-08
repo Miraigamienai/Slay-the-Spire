@@ -1,3 +1,5 @@
+#pragma once
+
 #include <memory>
 
 #include "Game_object/card/Cards.hpp"
@@ -6,7 +8,7 @@
 
 namespace Card
 {
-    void set_card_pos(const std::shared_ptr<Card::Cards>&card, int s_cnt){
+    inline void set_card_pos(const std::shared_ptr<Card::Cards>&card, int s_cnt){
         constexpr float PADDING=30.0F*Setting::SCALE;
         card->SetY(static_cast<float>(Setting::WINDOW_HEIGHT)/2.0F);
         switch(s_cnt){

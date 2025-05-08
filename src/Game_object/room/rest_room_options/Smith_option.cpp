@@ -37,7 +37,7 @@ namespace Option{
             is_cancelled=false;
             is_done=false;
             //open grid_cards screen
-            dungeon_shared.manager.open<Interface::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_upgradeable_card_group(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_upgrade_action>(), &is_done, &is_cancelled);
+            dungeon_shared.manager.open<Interface::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_upgradeable_card_group(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_upgrade_action>(), is_done, is_cancelled);
         }
     }
 }

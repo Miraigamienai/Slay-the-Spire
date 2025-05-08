@@ -31,6 +31,6 @@ public:
 protected:
     bool on_top=false;
     bool on_opening=false;
-    ScreenType next;
+    ScreenType next=ScreenType::NONE;
 };
 }

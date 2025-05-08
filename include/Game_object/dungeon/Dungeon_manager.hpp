@@ -41,7 +41,7 @@ namespace Dungeon{
                 return m_dungeon_screen;
             else if constexpr(ST==Interface::ScreenType::combat_reward)
                 return combat_reward_screen;
-            else if constexpr(ST==ScreenType::grid_cards)
+            else if constexpr(ST==Interface::ScreenType::grid_cards)
                 return grid_card_screen;
         }
         std::shared_ptr<Interface::Is_screen> GetScreen(Interface::ScreenType ST)const{

@@ -174,7 +174,7 @@ namespace Dungeon{
         fade_in();
         dungeon_shared.effs.clear();
         dungeon_shared.top_effs.clear();
-        m_current_node->GetRoom()->init_room(dungeon_shared.random_package, fade_color);
+        m_current_node->GetRoom()->init_room(dungeon_shared, fade_color);
         dungeon_shared.random_package.ResetRoomRNGs(this->random_seed+m_current_node->y);
         dungeon_shared.manager.hide_dungeon_screen_instantly();
         dungeon_shared.card_group_handler.prepare_for_battle(dungeon_shared.random_package.card_shuffle_rng);

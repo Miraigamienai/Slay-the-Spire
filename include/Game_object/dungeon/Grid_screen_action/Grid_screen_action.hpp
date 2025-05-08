@@ -18,7 +18,7 @@ namespace GridScreenAction{
 class Grid_screen_action
 {
 public:
-    Grid_screen_action(bool have_cancel_button)noexcept:is_done(false),have_cancel_button(have_cancel_button){};
+    Grid_screen_action(bool have_cancel_button)noexcept:have_cancel_button(have_cancel_button),is_done(false),is_cancelled(false){};
     virtual ~Grid_screen_action()=default;
     virtual void SetCard(const std::shared_ptr<Card::Cards> &card)=0;
     virtual void update(Dungeon::Dungeon_shared &dungeon_shared)=0;
@@ -30,7 +30,7 @@ public:
 protected:
     bool is_done;
     bool is_cancelled;
-    
+
     void render_two_card(const std::shared_ptr<Draw::Draw_2D> &r2, const std::shared_ptr<Card::Cards> &card1, const std::shared_ptr<Card::Cards> &card2)const;
     void render_dark_cover(const std::shared_ptr<Draw::Draw_2D> &r2)const;
 };

@@ -6,7 +6,6 @@
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/character/Player.hpp"
 #include "Game_object/effect/Camfire_bubble_effect.hpp"
-#include "Game_object/effect/Effect_pool.hpp"
 #include "Draw/Draw_2D.hpp"
 
 namespace Room{
@@ -25,10 +24,10 @@ namespace Option{
     }
 
     void Option_handler::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        //TODO:font
-        //options
         bubbles.render(r2);
+        //options
         for(const auto&it:opts) it->render(r2);
+        //TODO:font
     }
     
     void Option_handler::update(){
@@ -43,10 +42,11 @@ namespace Option{
         //bubbles update
         bubbles.update();
         bubble_oscillate_timer += 2.0F*RUtil::Game_Input::delta_time();
+        bubble_offset = std::sin(bubble_oscillate_timer)*1.25F;
         if(bubbles.size()<(more_bubble? MORE_BUBBLE_AMOUNT : NORMAL_BUBBLE_AMOUNT)){
-            const size_t temp = (more_bubble? MORE_BUBBLE_AMOUNT : NORMAL_BUBBLE_AMOUNT) - bubbles.size();
-            for(size_t i=0;i<temp;++i){
-                bubbles.AddTop(Effect::Effect_pool<Effect::Camfire_bubble_effect>::GetEffect(950.0F*Setting::SCALE, static_cast<float>(Setting::WINDOW_HEIGHT)/2.0F + 60.0F*Setting::SCALE + std::sin(bubble_oscillate_timer)*1.25F));
+            const int temp = (more_bubble? MORE_BUBBLE_AMOUNT : NORMAL_BUBBLE_AMOUNT) - bubbles.size();
+            for(int i=0;i<temp;++i){
+                bubbles.AddTop(std::make_shared<Effect::Camfire_bubble_effect>(950.0F*Setting::SCALE, static_cast<float>(Setting::WINDOW_HEIGHT)/2.0F + 60.0F*Setting::SCALE, more_bubble, bubble_offset));
             }
         }
     }

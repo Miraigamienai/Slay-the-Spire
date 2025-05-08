@@ -13,7 +13,7 @@
 #include "RUtil/Random.hpp"//rng
 
 #include "Util/Logger.hpp"
-
+#include <iostream>
 namespace Dungeon{
     Dungeons::Dungeons(Dungeon_shared &dungeon_shared,unsigned long long int random_seed):dungeon_shared(dungeon_shared),random_seed(random_seed){
         scene=std::make_shared<Scene::Bottom_scene>();
@@ -187,7 +187,7 @@ namespace Dungeon{
             for(int i=0;i<3;i++) card_vec.emplace_back(Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng));
             std::vector<std::shared_ptr<Reward::Reward_item>> reward_vec;
             reward_vec.emplace_back(std::make_shared<Reward::Card_reward_item>(card_vec));
-            m_dungeon_manager.open<Interface::ScreenType::combat_reward>(reward_vec);
+            m_dungeon_manager.open<Interface::ScreenType::combat_reward>(reward_vec); //
         }
     }
 }

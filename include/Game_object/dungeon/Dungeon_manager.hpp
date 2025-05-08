@@ -24,6 +24,7 @@ namespace Dungeon{
             last_screen=current_screen;
             current_screen=GetScreen<ST>();
             if(last_screen==current_screen) last_screen=nullptr;
+            current_screen->set_on_top(true);
             GetScreen<ST>()->open(std::forward<Args>(args)...);
         }
     private:

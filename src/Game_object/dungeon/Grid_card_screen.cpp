@@ -20,7 +20,8 @@ namespace Dungeon{
     constexpr float DEFAULT_SCROLL_BOUND=Setting::SCALE*50.0F;
  
     Grid_card_screen::Grid_card_screen()
-        :hovered_card(nullptr),
+        :Interface::Is_screen(Interface::ScreenType::grid_cards),
+        hovered_card(nullptr),
         offset_y(0.0F),
         target_offset_y(0.0F),
         draw_start_y(0.0F),
@@ -79,6 +80,7 @@ namespace Dungeon{
             }else if(screen_action->IsDone()){
                 if(out_is_done!=nullptr) *out_is_done=true;
                 this->display_group.clear();
+                this->cancel.hide(true);//hide immediately
                 dungeon_shared.manager.set_current_none();//quick leave grid_card screen.
             }
         }
@@ -95,6 +97,10 @@ namespace Dungeon{
         }else{
             display_group.render(r2);
         }
+        this->cancel.render(r2);
+        if(is_confirming){
+            screen_action->render(r2);
+        }
     }
     
     void Grid_card_screen::common_open_setting(){
@@ -104,7 +110,7 @@ namespace Dungeon{
         //set scroll bound
         const int scroll_y=display_group.size() <= 2*N ? DEFAULT_SCROLL_BOUND : DEFAULT_SCROLL_BOUND+CARD_PAD_Y*((display_group.size()+N-1)/N - 2);
         this->scroll.ChangeBiggerBound(scroll_y);
-
+        cancel.show();
         this->out_is_done=nullptr;
         this->out_is_cancelled=nullptr;
         is_confirming=false;
@@ -113,12 +119,12 @@ namespace Dungeon{
     void Grid_card_screen::update_cards(Dungeon_shared &dungeon_shared){
         int now_y=0;
         int now_x=0;
-        this->hovered_card=nullptr;
         for(const auto&it:display_group){
             it->SetX(DRAW_START_X+ static_cast<float>(now_x)*CARD_PAD_X);
             it->SetY(draw_start_y+ offset_y - static_cast<float>(now_y)*CARD_PAD_Y);
             it->update(dungeon_shared.top_effs);
             if(it->HitboxHovered()) hovered_card=it;
+            else it->Unhover();
             
             ++now_x;
             if(now_x>=N){

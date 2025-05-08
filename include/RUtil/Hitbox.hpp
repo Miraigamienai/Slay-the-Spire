@@ -25,8 +25,12 @@ public:
     void resize(float w,float h){
         this->width=w;
         this->height=h;
+        this->x=cx-this->width/2.0F;
+        this->y=cy-this->height/2.0F;
     }
     void move(float center_x,float center_y)noexcept{
+        this->cx=center_x;
+        this->cy=center_y;
         this->x=center_x-this->width/2.0F;
         this->y=center_y-this->height/2.0F;
     }

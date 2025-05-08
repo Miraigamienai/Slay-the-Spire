@@ -5,7 +5,7 @@
 
 //fwd decl
 namespace Dungeon{
-    class Dungeon_shared;
+    struct Dungeon_shared;
 }
 
 namespace Character{

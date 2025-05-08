@@ -48,7 +48,7 @@ namespace Option{
     void Options::update(){
         this->hb.update();
         if(is_activating){
-            if(!hb.ClickStarted()){
+            if(hb.Hovered()&&!hb.ClickStarted()){
                 this->scale=RUtil::Math::varlerp(this->scale, HOVER_SCALE, 8.0F, 0.003F);
                 this->scale=RUtil::Math::varlerp(this->scale, HOVER_SCALE, 8.0F, 0.003F);
             }else{

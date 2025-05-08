@@ -1,3 +1,20 @@
+#pragma once
 
-// const std::shared_ptr<Draw::ReTexture> &Rest_room::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/shop.png"),
-//                                            &Rest_room::IMG_O=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/shopOutline.png");
+#include "Game_object/room/rooms.hpp"
+
+namespace Room{
+class Shop_room final:public Rooms
+{
+public:
+    Shop_room():Rooms(Room_type::Shop){}
+    ~Shop_room()override=default;
+    const std::shared_ptr<Draw::ReTexture> &GetTexture()const override{return IMG;}
+    const std::shared_ptr<Draw::ReTexture> &GetOutlineTexture()const override{return IMG_O;}
+    void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
+    void update(Dungeon::Dungeon_shared &dungeon_shared) override;
+    void init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 dungeon_fade_color) override;
+private:
+    static const std::shared_ptr<Draw::ReTexture> &IMG;
+    static const std::shared_ptr<Draw::ReTexture> &IMG_O;
+};
+}

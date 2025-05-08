@@ -115,6 +115,7 @@ set(SRC_FILES
 	Game_object/reward_item/Reward_item.cpp
 	Game_object/room/Monster_room.cpp
 	Game_object/room/Rest_room.cpp
+	Game_object/room/Shop_room.cpp
 	Game_object/room/rest_room_options/Options.cpp
 	Game_object/room/rest_room_options/Option_handler.cpp
 	Game_object/room/rest_room_options/Rest_option.cpp
@@ -272,6 +273,7 @@ set(INCLUDE_FILES
 	Game_object/room/Monster_room.hpp
 	Game_object/room/Rest_room.hpp
 	Game_object/room/Rooms.hpp
+	Game_object/room/Shop_room.hpp
 	Game_object/room/rest_room_options/Options.hpp
 	Game_object/room/rest_room_options/Option_handler.hpp
 	Game_object/room/rest_room_options/Rest_option.hpp

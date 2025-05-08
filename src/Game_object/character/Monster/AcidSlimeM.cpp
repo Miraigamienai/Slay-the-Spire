@@ -8,15 +8,32 @@ namespace Monster{
     {
         setHP(MIN_HP,MAX_HP);
         setBlock(0);
-        m_damage=DAMAGE;
 
     }
     void AcidSlimeM::Action(Dungeon::Dungeon_shared &dungeon_shared){
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
-            Damage_info{this->m_damage, shared_from_this(), AttackType::blunt_light},
-            dungeon_shared.player
-        ));
+        currentAction=static_cast<Monster::AcidSlimeMAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbability,sizeof(ActionProbability)/sizeof(float)));
+        switch (currentAction){
+            case Monster::AcidSlimeMAction::CorrosiveSpit:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+                Damage_info{CORROSIVE_SPIT_DAMAGE, shared_from_this(), AttackType::blunt_light},
+                dungeon_shared.player));
+
+                // shuffles 1 Slimed into the discard pile.
+                break;
+            case Monster::AcidSlimeMAction::Lick:
+                // Inflict 1  Weak.
+                break;
+            case Monster::AcidSlimeMAction::Tackle:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+                    Damage_info{TACKLE_DAMAGE, shared_from_this(), AttackType::blunt_light},
+                    dungeon_shared.player));
+                break;
+            
+            default:
+                break;
+        }
     }
     void AcidSlimeM::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {

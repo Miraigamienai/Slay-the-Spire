@@ -6,7 +6,8 @@ namespace Monster{
 enum class ShieldGremlinAction
 {
     Protect,
-    ShieldBash
+    ShieldBash,
+    None
 };
 class ShieldGremlin final:public Monsters
 {
@@ -24,7 +25,8 @@ private:
                         HIGHT=200.0F*Setting::SCALE;
     static constexpr int MAX_HP=15,
                         MIN_HP=12,
-                        DAMAGE=6;
+                        PROTECT_BLOCK=7,
+                        SHIELD_BASH_DAMAGE=6;
     static constexpr float HPBarWidth=WIDTH*0.8F;
 };
 }

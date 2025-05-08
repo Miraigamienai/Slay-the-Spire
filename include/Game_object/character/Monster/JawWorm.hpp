@@ -7,7 +7,8 @@ enum class JawWormAction
 {
     Chomp,
     Thrash,
-    Bellow
+    Bellow,
+    None
 };
 class JawWorm final:public Monsters
 {
@@ -24,8 +25,17 @@ private:
                          HIGHT=170.0F*Setting::SCALE;
     static constexpr int MAX_HP=44,
                          MIN_HP=40,
-                         DAMAGE=12;
+                         CHOMP_DAMAGE=11,
+                         THRASH_DAMAGE=7,
+                         THRASH_BLOCK=5,
+                         BELLOWS_STRENGTH=3,
+                         BELLOWS_BLOCK=6;
+                         
     static constexpr int HPBarWidth=WIDTH*0.8F;
+    Monster::JawWormAction currentAction=Monster::JawWormAction::None,
+                           lastAction=Monster::JawWormAction::None;
+    static constexpr float ActionProbability[3]={25.0F,30.0F,45.0F};
+    int ActionCount=0;
 };
 }
 #endif

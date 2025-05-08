@@ -8,15 +8,37 @@ namespace Monster{
     {
         setHP(MIN_HP,MAX_HP);
         setBlock(0);
-        m_damage=DAMAGE;
 
     }
     void AcidSlimeL::Action(Dungeon::Dungeon_shared &dungeon_shared){
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
-            Damage_info{this->m_damage, shared_from_this(), AttackType::blunt_light},
-            dungeon_shared.player
-        ));
+        currentAction=static_cast<Monster::AcidSlimeLAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbability,sizeof(ActionProbability)/sizeof(float)));
+        if(float(current_HP)/MAX_HP<0.5F){
+            currentAction=Monster::AcidSlimeLAction::Split;
+        }
+        switch (currentAction){
+            case Monster::AcidSlimeLAction::CorrosiveSpit:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+                Damage_info{CORROSIVE_SPIT_DAMAGE, shared_from_this(), AttackType::blunt_light},
+                dungeon_shared.player));
+
+                // shuffles 2 Slimed into the discard pile.
+                break;
+            case Monster::AcidSlimeLAction::Lick:
+                // Inflict 2  Weak.
+                break;
+            case Monster::AcidSlimeLAction::Tackle:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+                    Damage_info{TACKLE_DAMAGE, shared_from_this(), AttackType::blunt_light},
+                    dungeon_shared.player));
+                break;
+            case Monster::AcidSlimeLAction::Split:
+                // spawn 2 Acid Slime M.
+                break;
+            default:
+                break;
+        }
     }
     void AcidSlimeL::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {

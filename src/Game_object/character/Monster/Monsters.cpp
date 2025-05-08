@@ -9,7 +9,7 @@ namespace Monster
     }
 
     void Monsters::damage(const Damage_info& damage_info){
-        if(current_Block>damage_info.dmg){
+        if(current_Block>=damage_info.dmg){
             current_Block-=damage_info.dmg;
             useStaggerAnimation();
             return;

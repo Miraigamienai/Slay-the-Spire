@@ -65,7 +65,6 @@ set(SRC_FILES
 	Game_object/character/Monster/SpikeSlimeL.cpp
 	Game_object/character/Monster/SpikeSlimeM.cpp
 	Game_object/character/Monster/SpikeSlimeS.cpp
-	Game_object/character/Monster/TempMonster.cpp
 	Game_object/character/Monster/WizardGremlin.cpp
 	Game_object/dungeon/Combat_reward_screen.cpp
 	Game_object/dungeon/Dungeons.cpp
@@ -210,7 +209,6 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/SpikeSlimeL.hpp
 	Game_object/character/Monster/SpikeSlimeM.hpp
 	Game_object/character/Monster/SpikeSlimeS.hpp
-	Game_object/character/Monster/TempMonster.hpp
 	Game_object/character/Monster/WizardGremlin.hpp
 	Game_object/dungeon/Combat_reward_screen.hpp
 	Game_object/dungeon/Dungeons.hpp
@@ -272,6 +270,7 @@ set(INCLUDE_FILES
 	Game_object/room/Monster_room.hpp
 	Game_object/room/Rest_room.hpp
 	Game_object/room/Rooms.hpp
+	Game_object/room/Shop_room.hpp
 	Game_object/room/rest_room_options/Options.hpp
 	Game_object/room/rest_room_options/Option_handler.hpp
 	Game_object/room/rest_room_options/Rest_option.hpp
@@ -290,6 +289,6 @@ set(INCLUDE_FILES
 	RUtil/Some_Math.hpp
 	RUtil/Text_Vector_Reader.hpp
 )
-
+ 
 set(TEST_FILES
 )

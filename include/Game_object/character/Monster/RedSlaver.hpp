@@ -7,7 +7,8 @@ enum class RedSlaverAction
 {
     Stab,
     Scrape,
-    Entangle
+    Entangle,
+    None
 };
 class RedSlaver final:public Monsters
 {
@@ -24,8 +25,15 @@ private:
                          HIGHT=230.0F*Setting::SCALE;
     static constexpr int MAX_HP=50,
                          MIN_HP=46,
-                         DAMAGE=13;
+                         STAB_DAMAGE=13,
+                         SCRAPE_DAMAGE=8;
     static constexpr int HPBarWidth=WIDTH*0.8F;
+    bool isFirstAction=true;
+    bool EntangleIsUsed=false;
+    Monster::RedSlaverAction currentAction=Monster::RedSlaverAction::None,
+                             lastAction=Monster::RedSlaverAction::None;
+    static constexpr float ActionProbabilityAfterEntangle[2]={45.0F,55.0F};
+    int ActionCount=0;
 };
 }
 #endif

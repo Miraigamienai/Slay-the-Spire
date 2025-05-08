@@ -6,7 +6,8 @@ namespace Monster{
 enum class SpikeSlimeMAction
 {
     FlameTackle,
-    Lick
+    Lick,
+    None
 };
 class SpikeSlimeM final:public Monsters
 {
@@ -23,8 +24,12 @@ private:
                          HIGHT=130.0F*Setting::SCALE;
     static constexpr int MAX_HP=32,
                          MIN_HP=28,
-                         DAMAGE=8;
+                         FLAME_TACKLE_DAMAGE=8;
     static constexpr int HPBarWidth=WIDTH*0.8F;
+    Monster::SpikeSlimeMAction currentAction=Monster::SpikeSlimeMAction::None,
+                               lastAction=Monster::SpikeSlimeMAction::None;
+    static constexpr float ActionProbability[2]={30.0F,70.0F};
+    int ActionCount=0;
 };
 }
 #endif

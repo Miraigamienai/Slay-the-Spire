@@ -9,13 +9,17 @@ namespace Monster{
     {
         setHP(MIN_HP,MAX_HP);
         setBlock(0);
-        m_damage=DAMAGE;
 
     }
     void ShieldGremlin::Action(Dungeon::Dungeon_shared &dungeon_shared){
+        //if there has at least 1 monster, randomly choose one to add block on it.
+
+
+        
+        //if there is no monster, attack on player.
         dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
         dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
-            Damage_info{this->m_damage, shared_from_this(), AttackType::blunt_light},
+            Damage_info{SHIELD_BASH_DAMAGE, shared_from_this(), AttackType::blunt_light},
             dungeon_shared.player
         ));
     }

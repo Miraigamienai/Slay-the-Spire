@@ -6,7 +6,8 @@ namespace Monster{
 enum class WizardGremlinAction
 {
     Charging,
-    UltimateBlast
+    UltimateBlast,
+    None
 };
 class WizardGremlin final:public Monsters
 {
@@ -24,8 +25,10 @@ private:
                         HIGHT=130.0F*Setting::SCALE;
     static constexpr int MAX_HP=25,
                         MIN_HP=23,
-                        DAMAGE=25;
+                        ULTIMATE_BLAST=25;
     static constexpr float HPBarWidth=WIDTH*0.8F;
+    bool isFirstAttack=true;
+    int ChargingCounter=0;
 };
 }
 #endif

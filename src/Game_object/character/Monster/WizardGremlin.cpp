@@ -9,15 +9,22 @@ namespace Monster{
     {
         setHP(MIN_HP,MAX_HP);
         setBlock(0);
-        m_damage=DAMAGE;
 
     }
     void WizardGremlin::Action(Dungeon::Dungeon_shared &dungeon_shared){
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
-            Damage_info{this->m_damage, shared_from_this(), AttackType::blunt_light},
-            dungeon_shared.player
-        ));
+        if(isFirstAttack && ChargingCounter>=2 || ChargingCounter>=3){
+            isFirstAttack=false;
+            ChargingCounter=0;
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+                Damage_info{ULTIMATE_BLAST, shared_from_this(), AttackType::blunt_light},
+                dungeon_shared.player
+            ));
+        }
+        else 
+            ChargingCounter++;
+        
+
     }
     void WizardGremlin::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {

@@ -7,6 +7,7 @@ enum class FungiBeastAction
 {
     Bite,
     Grow,
+    None
 };
 class FungiBeast final:public Monsters
 {
@@ -23,8 +24,12 @@ private:
                          HIGHT=170.0F*Setting::SCALE;
     static constexpr int MAX_HP=44,
                          MIN_HP=40,
-                         DAMAGE=12;
+                         BITE_DAMAGE=12;
     static constexpr int HPBarWidth=WIDTH*0.8F;
+    Monster::FungiBeastAction currentAction=Monster::FungiBeastAction::None,
+                           lastAction=Monster::FungiBeastAction::None;
+    static constexpr float ActionProbability[2]={60.0F,40.0F};
+    int ActionCount=0;
 };
 }
 #endif

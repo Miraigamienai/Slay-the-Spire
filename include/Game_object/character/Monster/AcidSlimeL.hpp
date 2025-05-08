@@ -8,7 +8,8 @@ enum class AcidSlimeLAction
     CorrosiveSpit,
     Lick,
     Tackle,
-    Split
+    Split,
+    None
 };
 class AcidSlimeL final:public Monsters
 {
@@ -25,8 +26,11 @@ private:
                          HIGHT=180.0F*Setting::SCALE;
     static constexpr int MAX_HP=69,
                          MIN_HP=65,
-                         DAMAGE=16;
+                         TACKLE_DAMAGE=16,
+                         CORROSIVE_SPIT_DAMAGE=11;
     static constexpr int HPBarWidth=WIDTH*0.8F;
+    Monster::AcidSlimeLAction currentAction=Monster::AcidSlimeLAction::None;
+    static constexpr float ActionProbability[3]={30.0F,40.0F,30.0F};
 };
 }
 #endif

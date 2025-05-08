@@ -8,15 +8,37 @@ namespace Monster{
     {
         setHP(MIN_HP,MAX_HP);
         setBlock(0);
-        m_damage=int(RUtil::Random::GetRandomFloat(MIN_DAMAGE,MAX_DAMAGE));
+        m_damage=RUtil::Random::GetRandomInt(MAX_DAMAGE-MIN_DAMAGE)+MIN_DAMAGE;
 
     }
     void GreenLouse::Action(Dungeon::Dungeon_shared &dungeon_shared){
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
-            Damage_info{this->m_damage, shared_from_this(), AttackType::blunt_light},
-            dungeon_shared.player
-        ));
+        if(ActionCount>=2) {
+            if(lastAction==Monster::GreenLouseAction::Bite)
+                currentAction=Monster::GreenLouseAction::SpitWeb;
+            else
+                currentAction=Monster::GreenLouseAction::Bite;
+        }
+        else
+            currentAction=static_cast<Monster::GreenLouseAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbability,sizeof(ActionProbability)/sizeof(float)));
+        switch (currentAction){
+            case Monster::GreenLouseAction::Bite:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+                Damage_info{this->m_damage, shared_from_this(), AttackType::blunt_light},
+                dungeon_shared.player));
+                break;
+            case Monster::GreenLouseAction::SpitWeb:
+                //	Applies 2  Weak.
+                break;
+            default:
+                break;
+        }
+        if(currentAction!=lastAction){
+            ActionCount=1;
+            lastAction=currentAction;
+        }
+        else
+            ActionCount++;
     }
     void GreenLouse::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {

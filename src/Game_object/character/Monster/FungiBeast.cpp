@@ -8,15 +8,36 @@ namespace Monster{
     {
         setHP(MIN_HP,MAX_HP);
         setBlock(0);
-        m_damage=DAMAGE;
-
     }
     void FungiBeast::Action(Dungeon::Dungeon_shared &dungeon_shared){
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
-            Damage_info{this->m_damage, shared_from_this(), AttackType::blunt_light},
-            dungeon_shared.player
-        ));
+        if(lastAction==Monster::FungiBeastAction::Bite && ActionCount>=2)
+            currentAction=Monster::FungiBeastAction::Grow;
+        else if(lastAction==Monster::FungiBeastAction::Grow)
+            currentAction=Monster::FungiBeastAction::Bite;
+        else
+            currentAction=static_cast<Monster::FungiBeastAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbability,sizeof(ActionProbability)/sizeof(float)));
+        
+            switch (currentAction){
+            case Monster::FungiBeastAction::Bite:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+                Damage_info{BITE_DAMAGE, shared_from_this(), AttackType::blunt_light},
+                dungeon_shared.player));
+                break;
+            case Monster::FungiBeastAction::Grow:
+                //Gain 3  Strength.
+                break;
+
+
+            default:
+                break;
+        }
+        if(currentAction!=lastAction){
+            ActionCount=1;
+            lastAction=currentAction;
+        }
+        else
+            ActionCount++;
     }
     void FungiBeast::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {

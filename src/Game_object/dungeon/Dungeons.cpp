@@ -13,7 +13,6 @@
 #include "RUtil/Random.hpp"//rng
 
 #include "Util/Logger.hpp"
-#include <iostream>
 namespace Dungeon{
     Dungeons::Dungeons(Dungeon_shared &dungeon_shared,unsigned long long int random_seed):dungeon_shared(dungeon_shared),random_seed(random_seed){
         scene=std::make_shared<Scene::Bottom_scene>();

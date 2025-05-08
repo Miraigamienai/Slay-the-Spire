@@ -1,4 +1,6 @@
 #include "Game_object/room/rest_room_options/Smith_option.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
+#include "Game_object/dungeon/Grid_screen_action/Grid_screen_upgrade_action.hpp"
 #include "RUtil/Image_book.hpp"
 #include "RUtil/Text_Vector_Reader.hpp"
 #include "Draw/ReTexture.hpp"
@@ -31,9 +33,12 @@ namespace Option{
     }
 
     void Smith_option::take_reward(Dungeon::Dungeon_shared &dungeon_shared){
-        // this->taking_reward=true;
-        
-        // this->took_reward=true;
+        if(is_cancelled&&is_done){//first in signal
+            is_cancelled=false;
+            is_done=false;
+            //open grid_cards screen
+            dungeon_shared.manager.open<Interface::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_upgradeable_card_group(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_upgrade_action>(), is_done, is_cancelled);
+        }
     }
 }
 }    

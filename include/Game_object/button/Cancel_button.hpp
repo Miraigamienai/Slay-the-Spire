@@ -20,9 +20,10 @@ public:
     ~Cancel_button()=default;
     void update();
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
-    void hide()noexcept{
+    void hide(bool immediate=false)noexcept{
         is_hidden=true;
         this->target_x=HIDE_X;
+        if(immediate) this->current_x=HIDE_X;
     }
     void show()noexcept{
         is_hidden=false;

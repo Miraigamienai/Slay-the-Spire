@@ -37,7 +37,7 @@ public:
     virtual const std::shared_ptr<Draw::ReTexture> &GetOutlineTexture()const=0;
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2)const=0;
     virtual void update(Dungeon::Dungeon_shared &dungeon_shared)=0;
-    virtual void init_room(RUtil::Random_package &random_package,Uint32 dungeon_fade_color)=0;
+    virtual void init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 dungeon_fade_color)=0;
     const Room_type room_type;
     auto get_phase()const noexcept{return room_phase;}
 protected:

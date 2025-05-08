@@ -2,8 +2,7 @@
 #define GAME_OBJECT_DUNGEON_DUNGEONS
 #include <vector>
 #include <memory>
-
-#include "Game_object/dungeon/Dungeon_manager.hpp"//member
+#include <SDL_stdinc.h>
 
 //fwd decl
 namespace Dungeon{
@@ -11,6 +10,12 @@ namespace Dungeon{
 }
 namespace Scene{
     class Scenes;
+}
+namespace Draw{
+    class Draw_2D;
+}
+namespace Map{
+    class Map_node;
 }
 
 namespace Dungeon{
@@ -27,7 +32,6 @@ protected:
 private:
     Dungeon_shared &dungeon_shared;
 
-    Dungeon_manager m_dungeon_manager;
     std::shared_ptr<Scene::Scenes> scene;
     std::vector<std::vector<std::shared_ptr<Map::Map_node>>> m_map;
     std::shared_ptr<Map::Map_node> m_current_node,m_next_node=nullptr;

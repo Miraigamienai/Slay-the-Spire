@@ -1,9 +1,12 @@
 #include "Game_object/dungeon/Grid_screen_action/Grid_screen_upgrade_action.hpp"
+#include "Game_object/effect_gen/Card_upgrade_eff_gen.hpp"
+#include "Game_object/effect_gen/Show_card_briefly.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/card/Cards.hpp"
 
 namespace Dungeon{
 namespace GridScreenAction{
-    Grid_screen_upgrade_action::Grid_screen_upgrade_action():card(nullptr),upgraded_card(nullptr){
+    Grid_screen_upgrade_action::Grid_screen_upgrade_action():Grid_screen_action(true),card(nullptr),upgraded_card(nullptr){
     }
 
     void Grid_screen_upgrade_action::SetCard(const std::shared_ptr<Card::Cards> &card){
@@ -11,6 +14,8 @@ namespace GridScreenAction{
         this->card=card;
         this->upgraded_card=card->Clone();
         this->upgraded_card->Upgrade();
+        confirm.show();
+        cancel.show();
     }
     
     void Grid_screen_upgrade_action::update(Dungeon::Dungeon_shared &dungeon_shared){
@@ -20,7 +25,9 @@ namespace GridScreenAction{
         if(cancel.is_logically_clicked()){
             is_cancelled=true;
         }else if(confirm.is_logically_clicked()){
-            card->Upgrade();
+            this->card->Upgrade();
+            dungeon_shared.gen_group.AddTop(std::make_shared<EffectGen::Card_upgrade_eff_gen>(static_cast<float>(Setting::WINDOW_WIDTH)/2.0F, static_cast<float>(Setting::WINDOW_HEIGHT)/2.0F));
+            dungeon_shared.gen_group.AddTop(std::make_shared<EffectGen::Show_card_briefly>(this->card));
             is_done=true;
         }
     }

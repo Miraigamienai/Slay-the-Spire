@@ -5,6 +5,7 @@
 #include "Game_object/effect/Effect_group.hpp"
 #include "Game_object/action/Action_group_handler.hpp"
 #include "Game_object/card/Card_group_handler.hpp"
+#include "Game_object/dungeon/Dungeon_manager.hpp"
 #include "Game_object/dungeon/Overlay.hpp"
 #include "Game_object/effect_gen/Effect_gen_group.hpp"
 #include "RUtil/Random_package.hpp"
@@ -26,5 +27,6 @@ struct Dungeon_shared
     RUtil::Random_package random_package;
     Overlay overlay;
     std::shared_ptr<Character::Player> player=nullptr;
+    Dungeon_manager manager;
 };
 }

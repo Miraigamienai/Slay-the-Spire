@@ -25,17 +25,37 @@ namespace Dungeon{
         target_offset_y(0.0F),
         draw_start_y(0.0F),
         scroll(offset_y, target_offset_y, -DEFAULT_SCROLL_BOUND, DEFAULT_SCROLL_BOUND),
-        is_confirming(false)
+        is_confirming(false),
+        out_is_done(nullptr),
+        out_is_cancelled(nullptr)
     {
         
     }
 
     void Grid_card_screen::update(Dungeon::Dungeon_shared &dungeon_shared){
         if(!is_confirming){
-            scroll.update();
+            //cancel timer update
+            if(cancel_display_timer!=0.0F){
+                cancel_display_timer-=RUtil::Game_Input::delta_time();
+                if(cancel_display_timer<0.0F){
+                    cancel_display_timer=0.0F;
+                    cancel.show();
+                }
+            }
+            //cards update first
             update_cards(dungeon_shared);
+            //cancel update
+            this->cancel.update();
+            if(out_is_cancelled!=nullptr&&on_top){
+                if(this->cancel.is_logically_clicked()){
+                    *out_is_cancelled=true;
+                    return;
+                }
+            }
+            //scroll
+            scroll.update();
             //check the hovered card
-            if(hovered_card!=nullptr){
+            if(hovered_card!=nullptr&&on_top){
                 hovered_card->Hover();
                 //check if clicked
                 if(hovered_card->HitboxClicked()){
@@ -44,14 +64,22 @@ namespace Dungeon{
                     }else{
                         is_confirming=true;
                         screen_action->SetCard(this->hovered_card);
+                        this->cancel.hide(screen_action->have_cancel_button);
                     }
                 }
             }
         }else{
             screen_action->update(dungeon_shared);
-            if(screen_action->IsDone()){
+            if(screen_action->IsCancelled()){
                 is_confirming=false;
-                //take reward chekc
+                if(screen_action->have_cancel_button)//show after display time
+                    this->cancel_display_timer=DISPLAY_TIME;
+                else//immediately show if doen't have cancel button in action
+                    this->cancel.show();
+            }else if(screen_action->IsDone()){
+                if(out_is_done!=nullptr) *out_is_done=true;
+                this->display_group.clear();
+                dungeon_shared.manager.set_current_none();//quick leave grid_card screen.
             }
         }
     }
@@ -69,14 +97,17 @@ namespace Dungeon{
         }
     }
     
-    void Grid_card_screen::common_open_setting(const std::shared_ptr<GridScreenAction::Grid_screen_action> &screen_action){
-        this->screen_action=screen_action;
+    void Grid_card_screen::common_open_setting(){
         draw_start_y=static_cast<float>(Setting::WINDOW_HEIGHT) * (display_group.size()<=N?0.5F:0.66F);
         offset_y = target_offset_y = 0.0F;
         set_cards_position_when_opening();
         //set scroll bound
         const int scroll_y=display_group.size() <= 2*N ? DEFAULT_SCROLL_BOUND : DEFAULT_SCROLL_BOUND+CARD_PAD_Y*((display_group.size()+N-1)/N - 2);
         this->scroll.ChangeBiggerBound(scroll_y);
+
+        this->out_is_done=nullptr;
+        this->out_is_cancelled=nullptr;
+        is_confirming=false;
     }
 
     void Grid_card_screen::update_cards(Dungeon_shared &dungeon_shared){

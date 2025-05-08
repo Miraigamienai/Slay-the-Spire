@@ -19,7 +19,7 @@ namespace Dungeon{
         scene=std::make_shared<Scene::Bottom_scene>();
         scene->next_room();
         m_map=Map::Map_generator::Get_Map(15,7,6,dungeon_shared.random_package.map_rng);
-        m_dungeon_manager.set_display_map(m_map);
+        dungeon_shared.manager.set_display_map(m_map);
         m_current_node=nullptr;
         set_next_node_oscillate_and_edge(true);
         is_fade_in=is_fade_out=false;
@@ -46,17 +46,18 @@ namespace Dungeon{
         //card update
         dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared);
         dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.top_effs);//for test
+        dungeon_shared.card_group_handler.update_force_cards(dungeon_shared.top_effs);
         //overlay update
         dungeon_shared.overlay.update(dungeon_shared.card_group_handler);
         //manager update
-        m_dungeon_manager.update(dungeon_shared);
+        dungeon_shared.manager.update(dungeon_shared);
         //check room in or room out
         if(!is_fade_in&&!is_fade_out){
             if(!next_node_is_making_circle){
                 if(check_and_set_next_node_making_circle()){
                     //this function should only be triggered only when the node just starting to make a circle effect.
                     next_node_is_making_circle=true;
-                    m_dungeon_manager.set_current_on_top(false);
+                    dungeon_shared.manager.set_current_on_top(false);
                     dungeon_shared.top_effs.AddTop(std::make_shared<Effect::Fade_wide>(fade_color));
                 }
             }else{
@@ -83,9 +84,10 @@ namespace Dungeon{
         dungeon_shared.player->render(r2);//temporary here
         scene->render_fg(r2);
         dungeon_shared.overlay.render(r2);
-        dungeon_shared.card_group_handler.render_hand(r2);
+        dungeon_shared.card_group_handler.render_hand(r2);//flying card also render inside it.
+        dungeon_shared.card_group_handler.render_force_cards(r2);
         dungeon_shared.effs.render(r2);
-        m_dungeon_manager.render(r2);
+        dungeon_shared.manager.render(r2);
         dungeon_shared.top_effs.render(r2);
         r2->SetColor(fade_color,fade_color_a);
         r2->draw(Effect::Fade_wide::white_square, 0.0F, 0.0F, Setting::WINDOW_WIDTH, Setting::WINDOW_HEIGHT);
@@ -172,9 +174,9 @@ namespace Dungeon{
         fade_in();
         dungeon_shared.effs.clear();
         dungeon_shared.top_effs.clear();
-        m_current_node->GetRoom()->init_room(dungeon_shared.random_package, fade_color);
+        m_current_node->GetRoom()->init_room(dungeon_shared, fade_color);
         dungeon_shared.random_package.ResetRoomRNGs(this->random_seed+m_current_node->y);
-        m_dungeon_manager.hide_dungeon_screen_instantly();
+        dungeon_shared.manager.hide_dungeon_screen_instantly();
         dungeon_shared.card_group_handler.prepare_for_battle(dungeon_shared.random_package.card_shuffle_rng);
         dungeon_shared.action_group_handler.prepare_for_battle();
         scene->next_room();
@@ -187,7 +189,7 @@ namespace Dungeon{
             for(int i=0;i<3;i++) card_vec.emplace_back(Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng));
             std::vector<std::shared_ptr<Reward::Reward_item>> reward_vec;
             reward_vec.emplace_back(std::make_shared<Reward::Card_reward_item>(card_vec));
-            m_dungeon_manager.open<Interface::ScreenType::combat_reward>(reward_vec); //
+            dungeon_shared.manager.open<Interface::ScreenType::combat_reward>(reward_vec);
         }
     }
 }

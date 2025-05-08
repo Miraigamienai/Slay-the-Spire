@@ -54,7 +54,7 @@ namespace Dungeon
         }
 
         if(on_top&&!pause_offset_y_update){
-            if(scroll_wait_timer<0.0F){
+            if(scroll_wait_timer<=0.0F){
                 this->scroll.update();
             }else if(scroll_wait_timer<3.0F){
                 offset_y = RUtil::Math::interpolation_exp10(MAP_SCROLL_LOWER, MAP_UPPER_SCROLL_NORMAL, scroll_wait_timer / 3.0F);

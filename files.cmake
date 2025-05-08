@@ -88,6 +88,7 @@ set(SRC_FILES
 	Game_object/effect/End_turn_button_glow.cpp
 	Game_object/effect/Fade_wide.cpp
 	Game_object/effect/Flash_attack_effect.cpp
+	Game_object/effect/Hammer_effect.cpp
 	Game_object/effect/Map_circle_effect.cpp
 	Game_object/effect/Refresh_energy_effect.cpp
 	Game_object/effect/Rest_option_black_screen.cpp
@@ -95,7 +96,9 @@ set(SRC_FILES
 	Game_object/effect/Slash_eff.cpp
 	Game_object/effect/Sleep_cover_eff.cpp
 	Game_object/effect/Vertical_aura.cpp
+	Game_object/effect_gen/Card_upgrade_eff_gen.cpp
 	Game_object/effect_gen/Effect_gen_group.cpp
+	Game_object/effect_gen/Show_card_briefly.cpp
 	Game_object/effect_gen/Show_card_to_discard.cpp
 	Game_object/energy_orb/Red_orb.cpp
 	Game_object/map/Dungeon_map.cpp
@@ -149,6 +152,7 @@ set(INCLUDE_FILES
 	Draw/Text_layout_all.hpp
 	Draw/Text_layout_color.hpp
 	Draw/Text_layout_normal.hpp
+	Game_object/Card_pos_setter.hpp
 	Game_object/Damage_info.hpp
 	Game_object/Group_template.hpp
 	Game_object/action/Actions.hpp
@@ -232,6 +236,7 @@ set(INCLUDE_FILES
 	Game_object/effect/End_turn_button_glow.hpp
 	Game_object/effect/Fade_wide.hpp
 	Game_object/effect/Flash_attack_effect.hpp
+	Game_object/effect/Hammer_effect.hpp
 	Game_object/effect/Map_circle_effect.hpp
 	Game_object/effect/Refresh_energy_effect.hpp
 	Game_object/effect/Rest_option_black_screen.hpp
@@ -240,9 +245,11 @@ set(INCLUDE_FILES
 	Game_object/effect/Sleep_cover_eff.hpp
 	Game_object/effect/Vertical_aura.hpp
 	Game_object/effect_gen/Card_paticle_gen.hpp
+	Game_object/effect_gen/Card_upgrade_eff_gen.hpp
 	Game_object/effect_gen/Clash_eff_gen.hpp
 	Game_object/effect_gen/Effect_gen.hpp
 	Game_object/effect_gen/Effect_gen_group.hpp
+	Game_object/effect_gen/Show_card_briefly.hpp
 	Game_object/effect_gen/Show_card_to_discard.hpp
 	Game_object/effect_gen/Vertical_aura_gen.hpp
 	Game_object/energy_orb/Energy_orb.hpp

@@ -35,10 +35,9 @@ namespace Dungeon{
         //room update
         if(m_current_node!=nullptr){
             m_current_node->GetRoom()->update(dungeon_shared);
-            if(m_current_node->GetRoom()->get_phase()==Room::Room_phase::complete){
+            if(m_current_node->GetRoom()->get_phase()==Room::Room_phase::just_complete){
                 //room complete
                 this->on_room_complete();
-                m_current_node=nullptr;
             }
         }
         if(dungeon_shared.player->IsDie()) game_over=true;

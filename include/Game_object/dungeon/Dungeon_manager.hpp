@@ -6,6 +6,7 @@
 #include "Game_object/dungeon/Dungeon_screen.hpp"
 #include "Game_object/dungeon/Combat_reward_screen.hpp"
 #include "Game_object/dungeon/Grid_card_screen.hpp"
+#include "Game_object/dungeon/Shop_screen.hpp"
 #include "Game_object/map/Map_node.hpp"
 
 namespace Dungeon{
@@ -21,6 +22,7 @@ namespace Dungeon{
         void set_current_on_top(bool value)const{current_screen->set_on_top(value);}
         void hide_dungeon_screen_instantly()const{m_dungeon_screen->hide_instantly();}
         void set_current_none()noexcept{current_screen->set_on_top(false);current_screen=nullptr;}
+        bool current_screen_equals(Interface::ScreenType ST)noexcept{return current_screen->type==ST;}
         template <Interface::ScreenType ST, typename ...Args>
         void open(Args&&...args){
             last_screen=current_screen;
@@ -34,6 +36,7 @@ namespace Dungeon{
         std::shared_ptr<Dungeon::Dungeon_screen> m_dungeon_screen;
         std::shared_ptr<Dungeon::Combat_reward_screen> combat_reward_screen;
         std::shared_ptr<Dungeon::Grid_card_screen> grid_card_screen;
+        std::shared_ptr<Dungeon::Shop_screen> shop_screen;
         
         void switch_to_next_screen();
         template <Interface::ScreenType ST>
@@ -44,6 +47,8 @@ namespace Dungeon{
                 return combat_reward_screen;
             else if constexpr(ST==Interface::ScreenType::grid_cards)
                 return grid_card_screen;
+            else if constexpr(ST==Interface::ScreenType::shop)
+                return shop_screen;
         }
         std::shared_ptr<Interface::Is_screen> GetScreen(Interface::ScreenType ST)const{
             using namespace Interface;
@@ -51,6 +56,7 @@ namespace Dungeon{
                 case ScreenType::main_dungeon: return m_dungeon_screen;
                 case ScreenType::combat_reward: return combat_reward_screen;
                 case ScreenType::grid_cards: return grid_card_screen;
+                case Interface::ScreenType::shop: return shop_screen;
                 default:return nullptr;
             }
         }

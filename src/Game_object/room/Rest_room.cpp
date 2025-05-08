@@ -13,7 +13,8 @@ namespace Room
 {
     void Rest_room::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         this->campfire_burning_effs.render(r2);
-        this->option_handler->render(r2);
+        if(this->option_handler!=nullptr)
+            this->option_handler->render(r2);
     }
 
     void Rest_room::update(Dungeon::Dungeon_shared &dungeon_shared){

@@ -98,7 +98,7 @@ void Map_generator::AssignRoom(const std::vector<std::vector<std::shared_ptr<Map
     for(size_t i=0;i<map.size();i++){
         for(size_t j=0;j<map[i].size();j++){
             if(map[i][j]==nullptr) continue;
-            if(i==2 || i==7 || i==11)
+            if(i==2 || i==7 || i==11 || i==0)
                 map[i][j]->SetRoom(std::make_shared<Room::Rest_room>());
             else
                 map[i][j]->SetRoom(std::make_shared<Room::Monster_room>());

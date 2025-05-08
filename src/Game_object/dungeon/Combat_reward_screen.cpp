@@ -11,7 +11,8 @@ namespace Dungeon
         return RUtil::Game_Input::delta_time();
     }
     Combat_reward_screen::Combat_reward_screen()
-        :now_reward_pos(-1),
+        :Interface::Is_screen(Interface::ScreenType::combat_reward),
+        now_reward_pos(-1),
         open_timer(OPENTIMER),
         color_rgb(0.0F)
     {

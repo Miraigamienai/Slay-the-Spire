@@ -8,7 +8,8 @@
 namespace Dungeon
 {
     Dungeon_screen::Dungeon_screen()
-        :the_map(offset_y,on_top),
+        :Interface::Is_screen(Interface::ScreenType::main_dungeon),
+        the_map(offset_y,on_top),
         offset_y(-100.0F * Setting::SCALE),
         target_offset_y(offset_y),
         scroll_wait_timer(0.0F),

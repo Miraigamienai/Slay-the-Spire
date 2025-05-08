@@ -11,7 +11,7 @@
 
 //fwd decl
 namespace Dungeon{
-    class Dungeon_shared;
+    struct Dungeon_shared;
     namespace GridScreenAction{
         class Grid_screen_action;
     }
@@ -71,6 +71,6 @@ private:
     void common_open_setting();
     void set_cards_position_when_opening();
     static constexpr int N=5;
-    static constexpr float DISPLAY_TIME=1.5F;
+    static constexpr float DISPLAY_TIME=0.75F;
 };
 }

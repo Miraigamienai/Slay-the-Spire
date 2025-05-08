@@ -21,7 +21,7 @@ public:
     template <typename... Args>
     static void Normalize(Args&... args){
         const auto Sum=(args+...);
-        ((args/=Sum),...);
+        ((args/=static_cast<float>(Sum)),...);
     }
     static float interpolation_exp(float v, float p, float a);
     static float interpolation_expin(float v, float p, float a);

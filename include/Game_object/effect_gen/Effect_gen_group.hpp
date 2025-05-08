@@ -13,7 +13,7 @@ namespace EffectGen{
     using Effect_gen = Action::Actions;
 }
 namespace Dungeon{
-    class Dungeon_shared;
+    struct Dungeon_shared;
 }
 
 namespace EffectGen{

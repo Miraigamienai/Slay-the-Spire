@@ -73,6 +73,7 @@ set(SRC_FILES
 	Game_object/dungeon/Dungeon_screen.cpp
 	Game_object/dungeon/Grid_card_screen.cpp
 	Game_object/dungeon/Overlay.cpp
+	Game_object/dungeon/Shop_screen.cpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_action.cpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_upgrade_action.cpp
 	Game_object/dungeon/Grid_screen_action/Render_arrow.cpp
@@ -115,6 +116,7 @@ set(SRC_FILES
 	Game_object/reward_item/Reward_item.cpp
 	Game_object/room/Monster_room.cpp
 	Game_object/room/Rest_room.cpp
+	Game_object/room/Shop_merchant.cpp
 	Game_object/room/Shop_room.cpp
 	Game_object/room/rest_room_options/Options.cpp
 	Game_object/room/rest_room_options/Option_handler.cpp
@@ -220,6 +222,7 @@ set(INCLUDE_FILES
 	Game_object/dungeon/Dungeon_shared.hpp
 	Game_object/dungeon/Grid_card_screen.hpp
 	Game_object/dungeon/Overlay.hpp
+	Game_object/dungeon/Shop_screen.hpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_action.hpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_upgrade_action.hpp
 	Game_object/dungeon/Grid_screen_action/Render_arrow.hpp
@@ -273,6 +276,7 @@ set(INCLUDE_FILES
 	Game_object/room/Monster_room.hpp
 	Game_object/room/Rest_room.hpp
 	Game_object/room/Rooms.hpp
+	Game_object/room/Shop_merchant.hpp
 	Game_object/room/Shop_room.hpp
 	Game_object/room/rest_room_options/Options.hpp
 	Game_object/room/rest_room_options/Option_handler.hpp

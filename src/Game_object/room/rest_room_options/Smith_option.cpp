@@ -33,8 +33,12 @@ namespace Option{
     }
 
     void Smith_option::take_reward(Dungeon::Dungeon_shared &dungeon_shared){
-        is_cancelled=false;
-        dungeon_shared.manager.open<Interface::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_upgradeable_card_group(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_upgrade_action>(), &is_done, &is_cancelled);
+        if(is_cancelled&&is_done){//first in signal
+            is_cancelled=false;
+            is_done=false;
+            //open grid_cards screen
+            dungeon_shared.manager.open<Interface::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_upgradeable_card_group(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_upgrade_action>(), &is_done, &is_cancelled);
+        }
     }
 }
 }    

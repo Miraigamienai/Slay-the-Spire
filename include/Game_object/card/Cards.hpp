@@ -123,6 +123,7 @@ public:
     void SetX(const float value,const bool immediate=false)noexcept{target_x=value;if(immediate)current_x=value;}
     void SetAngle(const float value,const bool immediate=false)noexcept{target_angle=value;if(immediate)m_angle=value;}
     void SetDrawScale(const float value,const bool immediate=false)noexcept{m_target_draw_scale=value;if(immediate)m_draw_scale=value;}
+    void SetColorAlpha(const float value,const bool immediate=false)noexcept{m_target_color_a=value;if(immediate)m_color_a=value;}
     bool IsSingleTarget()const noexcept{return target==Target::enemy||target==Target::self_and_enemy;}
     //static function
     static void SetRenderColor(Uint32 c)noexcept{s_render_color=c;}
@@ -160,7 +161,8 @@ private:
     Effect::Card_flash m_card_flash;
     RUtil::Hitbox hb;
     bool darken,can_use,can_hover_in_hand;
-    float m_color_a,m_draw_scale,m_angle,m_tint_a,m_target_draw_scale,m_dark_timer,m_glow_timer,m_hover_timer;
+    float m_draw_scale,m_angle,m_tint_a,m_target_draw_scale,m_dark_timer,m_glow_timer,m_hover_timer;
+    float m_color_a,m_target_color_a;
     float m_type_width,m_type_offset;
     int m_text_pos;
     Effect::Effect_group glowgroup;

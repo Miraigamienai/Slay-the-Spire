@@ -52,7 +52,7 @@ namespace Card{
         m_dark_timer=m_glow_timer=m_hover_timer=0.0F;
         m_draw_scale=m_target_draw_scale=0.7F;
         m_tint_a=0.0F;
-        m_color_a=1.0F;
+        m_color_a= m_target_color_a =1.0F;
         
         this->current_x=this->current_y=0;
         this->target_x=this->target_y=0;
@@ -79,7 +79,7 @@ namespace Card{
         m_dark_timer=m_glow_timer=m_hover_timer=0.0F;
         m_draw_scale=m_target_draw_scale=0.7F;
         m_tint_a=0.0F;
-        m_color_a=1.0F;
+        m_color_a= m_target_color_a =1.0F;
 
         this->current_x=this->current_y=0;
         this->target_x=this->target_y=0;
@@ -99,6 +99,17 @@ namespace Card{
             current_y=RUtil::Math::varlerp(current_y,target_y,6.0F,CARD_SNAP_THRESHOLD);
             //update somthing else
             //...
+        }
+        //color_a
+        if(this->m_color_a!=m_target_color_a){
+            const float step=2.0F*DT;
+            if(m_color_a>m_target_color_a){
+                if(m_color_a - m_target_color_a < step) m_color_a=m_target_color_a;
+                else m_color_a -= step;
+            }else{
+                if(m_target_color_a - m_color_a < step) m_color_a=m_target_color_a;
+                else m_color_a += step;
+            }
         }
         //angle
         if(this->m_angle!=this->target_angle){

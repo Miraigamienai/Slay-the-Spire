@@ -46,6 +46,7 @@ namespace Dungeon{
         //card update
         dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared);
         dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.top_effs);//for test
+        dungeon_shared.card_group_handler.update_force_cards(dungeon_shared.top_effs);
         //overlay update
         dungeon_shared.overlay.update(dungeon_shared.card_group_handler);
         //manager update
@@ -83,7 +84,8 @@ namespace Dungeon{
         dungeon_shared.player->render(r2);//temporary here
         scene->render_fg(r2);
         dungeon_shared.overlay.render(r2);
-        dungeon_shared.card_group_handler.render_hand(r2);
+        dungeon_shared.card_group_handler.render_hand(r2);//flying card also render inside it.
+        dungeon_shared.card_group_handler.render_force_cards(r2);
         dungeon_shared.effs.render(r2);
         dungeon_shared.manager.render(r2);
         dungeon_shared.top_effs.render(r2);

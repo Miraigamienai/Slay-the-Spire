@@ -38,6 +38,7 @@ namespace Option{
         dungeon_shared.top_effs.AddTop(std::make_shared<Effect::Rest_option_black_screen>(dungeon_fade_color));
         for(int i=0;i<30;i++)
             dungeon_shared.top_effs.AddTop(Effect::Effect_pool<Effect::Sleep_cover_eff>::GetEffect());
+        this->is_cancelled=false;
         this->is_done=true;
     }
 }

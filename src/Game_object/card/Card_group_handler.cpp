@@ -382,7 +382,6 @@ namespace Card{
         }
 
         this->render_flying_cards(r2);//may need to check.
-        for(const auto&it:force_render_cards) it->render(r2);//may need to be check.
 
         if(single_target)
             render_targeting(r2);
@@ -391,8 +390,6 @@ namespace Card{
     void Card_group_handler::update_hand_cards(Effect::Effect_group &top_effs, const Dungeon::Dungeon_shared &dungeon_shared){
         hand_cards.update(top_effs);
         for(const auto&it:hand_cards)it->CanUseUpdate(dungeon_shared);
-        //force_update_cards update here
-        for(const auto&it:force_update_cards) it->update(top_effs);
     }
 
     void Card_group_handler::render_targeting(const std::shared_ptr<Draw::Draw_2D> &r2)const{

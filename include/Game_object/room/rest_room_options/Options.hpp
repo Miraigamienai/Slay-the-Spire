@@ -26,7 +26,7 @@ public:
     void update();
     void move(float center_x, float center_y)noexcept(noexcept(hb.move(center_x, center_y))){hb.move(center_x, center_y);}
     
-    bool HitboxClicked()const noexcept{return hb.Clicked()&&is_activating;}
+    bool is_logically_clicked()const noexcept{return hb.Clicked()&&is_activating;}
     bool IsDone()const noexcept{return is_done;}
     bool IsCancelled()const noexcept{return is_cancelled;}
     virtual void take_reward(Dungeon::Dungeon_shared &dungeon_shared)=0;

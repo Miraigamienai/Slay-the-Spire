@@ -44,7 +44,7 @@ public:
     bool IsDie()const{return current_HP<=0 && fadeTimer<=0;}
     void AddBlock(int num){current_Block+=num;};
     void setBlock(int num){current_Block=num;};
-    void AddHP(int num){current_HP+=num;};
+    void AddHP(int num){current_HP+num>=max_HP?current_HP=max_HP:current_HP+=num;};
     void setHP(int num){current_HP=num;};
     
     void updateHealthBar();

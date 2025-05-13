@@ -19,7 +19,7 @@ namespace Monster{
                 currentAction=Monster::RedLouseAction::Bite;
         }
         else
-            currentAction=static_cast<Monster::RedLouseAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbability,sizeof(ActionProbability)/sizeof(float)));
+            currentAction=static_cast<Monster::RedLouseAction>(dist(dungeon_shared.random_package.monster_ai_rng));
         switch (currentAction){
             case Monster::RedLouseAction::Bite:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
@@ -54,6 +54,6 @@ namespace Monster{
         }
     }
     const std::shared_ptr<Draw::ReTexture> &RedLouse::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Louses/Louse-red-pretty.png");
-
+    std::discrete_distribution<int> RedLouse::dist{ActionProbability,ActionProbability+2};
 }
 

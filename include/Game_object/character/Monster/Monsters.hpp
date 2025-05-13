@@ -40,7 +40,9 @@ public:
     virtual void damage(const Damage_info& damage_info)override;
     void setHP(int min,int max);
     void setBlock(int num);
+    int GetRandomWithWeight(const float* weights, size_t size);
 protected:
+
     static constexpr int FLOOR_Y=Setting::WINDOW_HEIGHT*0.5F-200.0F*Setting::SCALE;
 };
 }

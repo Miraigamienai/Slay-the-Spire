@@ -1,5 +1,6 @@
 #ifndef GAME_OBJECT_CHARACTER_MONSTER_MUGGER
 #define GAME_OBJECT_CHARACTER_MONSTER_MUGGER
+#include <random>
 #include "Game_object/character/Monster/Monsters.hpp"
 
 namespace Monster{
@@ -36,6 +37,7 @@ private:
                              lastAction=Monster::MuggerAction::None;
     static constexpr float ActionProbabilityAfterFirstTwoActions[2]={50.0F,50.0F};
     int ActionCount=0;
+    static std::discrete_distribution<int> dist;
 };
 }
 #endif

@@ -20,7 +20,7 @@ namespace Monster{
         else if(SmokeBombIsUsed)
             currentAction=Monster::MuggerAction::Escape;
         else
-            currentAction=static_cast<Monster::MuggerAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbabilityAfterFirstTwoActions,sizeof(ActionProbabilityAfterFirstTwoActions)/sizeof(float))+1);
+            currentAction=static_cast<Monster::MuggerAction>(dist(dungeon_shared.random_package.monster_ai_rng));
         
         switch(currentAction){
             case Monster::MuggerAction::Mug:
@@ -68,6 +68,6 @@ namespace Monster{
 
     }
     const std::shared_ptr<Draw::ReTexture> &Mugger::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Thieves/Mugger-pretty.png");
-    
+    std::discrete_distribution<int> Mugger::dist{ActionProbabilityAfterFirstTwoActions,ActionProbabilityAfterFirstTwoActions+2};
 }
 

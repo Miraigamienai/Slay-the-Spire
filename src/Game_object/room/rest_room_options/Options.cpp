@@ -37,12 +37,12 @@ namespace Option{
             r2->SwitchProgram(Programs::DefaultProgram());
 
         if(!is_activating)
-            chile_label_render(r2,RUtil::ToRGBA(RUtil::Colors::LIGHT_GRAY));
+            child_label_render(r2,RUtil::ToRGBA(RUtil::Colors::LIGHT_GRAY));
         else
-            chile_label_render(r2,RUtil::GOLD_COLOR);
+            child_label_render(r2,RUtil::GOLD_COLOR);
         
         if(scale_color_a>0.001F)
-            chile_description_render(r2,scale_color_a);
+            child_description_render(r2,scale_color_a);
     }
 
     void Options::update(){

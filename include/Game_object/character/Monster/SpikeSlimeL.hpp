@@ -1,5 +1,6 @@
 #ifndef GAME_OBJECT_CHARACTER_MONSTER_SPIKESLIMEL
 #define GAME_OBJECT_CHARACTER_MONSTER_SPIKESLIMEL
+#include <random>
 #include "Game_object/character/Monster/Monsters.hpp"
 
 namespace Monster{
@@ -31,6 +32,7 @@ private:
                                lastAction=Monster::SpikeSlimeLAction::None;
     static constexpr float ActionProbability[2]={30.0F,70.0F};
     int ActionCount=0;
+    static std::discrete_distribution<int> dist;
 };
 }
 #endif

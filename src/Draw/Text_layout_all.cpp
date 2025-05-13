@@ -108,6 +108,7 @@ namespace Draw
                     r2->draw(it2.img, center_x+offset_x, center_y+offset_y, (float)it2.img->GetRegionWidth()*orb_scale*font_scale, (float)num_draw.PureHeight()*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
                     now_x+=(float)it2.img->GetRegionWidth()*orb_scale;
                 }else{
+                    
                     if(it2.c==RUtil::WHITE) r2->SetColor(this->font_color, this->font_color_alpha);
                     else r2->SetColor(it2.c, this->font_color_alpha);
                     r2->draw(it2.img, center_x+offset_x, center_y+offset_y, (float)it2.img->GetRegionWidth()*font_scale, (float)it2.img->GetRegionHeight()*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
@@ -130,6 +131,7 @@ namespace Draw
         }
         //split orb string
         for(int i=static_cast<int>(text_vec.size())-1;i>=0;--i){
+            
             auto temp=orb_string_split(text_vec[i]);
             if(temp.size()>=2){
                 text_vec[i]=std::move(temp[0]);
@@ -157,15 +159,20 @@ namespace Draw
         int img_w=0,img_h=0;
         text_rows.emplace_back(text_row{now_y, 0, {}});
         for(const auto&it:text_vec){
+            
             if(it.empty())continue;
             
-            if(it[0]=='!' && it.size()>3 && it[2]=='!'){
+            if(it[0]=='!' && it.size()==3 && it[2]=='!'){
                 //num string
+                TTF_SizeUTF8(font.get(), it.c_str(), &img_w, &img_h);
                 text_rows.back().row.emplace_back(text_item{true, false, NumType(it[1]), nullptr});
-            }else if(it[0]=='[' && it.size()>3 && it[2]==']'){
+                now_x+=img_w;
+            }else if(it[0]=='[' && it.size()==3 && it[2]==']'){
                 //orb string
+                TTF_SizeUTF8(font.get(), it.c_str(), &img_w, &img_h);
                 text_rows.back().row.emplace_back(text_item{false, true, RUtil::WHITE, GetOrb(it[1])});
-            }else if(it[0]=='#' && it.size()>3){
+                now_x+=img_w;
+            }else if(it[0]=='#' && it.size()>=3){
                 //color string
                 TTF_SizeUTF8(font.get(), it.substr(2).c_str(), &img_w, &img_h);
                 text_rows.back().row.emplace_back(text_item{false, false, GetColor(it[1]), std::make_shared<Image_Region>(ori_text_img, now_x, now_y, img_w, img_h)});

@@ -12,7 +12,7 @@ public:
     //!D!:damage !B!:block !M!:magic_num
     //[R]:orb_red [G]:orb_green [B]:orb_blue [W]:orb_purple 
     //[C]:orb_card [P]:orb_potion [T]:orb_relic [S]:orb_special
-    Text_layout_all(const std::string &text):Text_layout(text){};
+    Text_layout_all(const std::string &text):Text_layout(text){text_rows_set();};
     ~Text_layout_all()override=default;
 
     void ChangeFontWeight(FontWeight fw)override{}

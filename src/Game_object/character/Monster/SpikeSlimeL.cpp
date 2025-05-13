@@ -20,7 +20,7 @@ namespace Monster{
         else if(current_HP<MAX_HP*0.5F)
             currentAction=Monster::SpikeSlimeLAction::Split;
         else
-            currentAction=static_cast<Monster::SpikeSlimeLAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbability,sizeof(ActionProbability)/sizeof(float)));
+            currentAction=static_cast<Monster::SpikeSlimeLAction>(dist(dungeon_shared.random_package.monster_ai_rng));
         switch (currentAction){
             case Monster::SpikeSlimeLAction::FlameTackle:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
@@ -60,6 +60,6 @@ namespace Monster{
         }
     }
     const std::shared_ptr<Draw::ReTexture> &SpikeSlimeL::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Spike Slime/Spike-slime-l-pretty.png");
-
+    std::discrete_distribution<int> SpikeSlimeL::dist{ActionProbability,ActionProbability+2};
 }
 

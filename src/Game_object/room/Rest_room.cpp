@@ -8,6 +8,7 @@
 #include "RUtil/Random.hpp"
 #include "Draw/ReTexture.hpp"
 #include "Draw/Draw_2D.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
 
 namespace Room
 {
@@ -34,12 +35,23 @@ namespace Room
                 if(option_handler->IsCancelled()){
                     option_handler->update();
                 }else if(option_handler->IsDone()){
-                    option_handler=nullptr;       
+                    option_handler=nullptr;
+                    ending_rest=true;
                 }
             }else{
                 option_handler->update();
             }
         }
+        if(ending_rest){
+            if(endding_rest_timer>0.0F){
+                endding_rest_timer-=RUtil::Game_Input::delta_time();
+            }else if(this->room_phase==Room_phase::incomplete){
+                this->room_phase=Room_phase::just_complete;
+            }else{
+                this->room_phase=Room_phase::complete;
+            }
+        }
+    
     }
     
     void Rest_room::add_fire(){

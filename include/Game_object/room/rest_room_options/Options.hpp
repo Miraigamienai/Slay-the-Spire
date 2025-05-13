@@ -32,8 +32,8 @@ public:
     virtual void take_reward(Dungeon::Dungeon_shared &dungeon_shared)=0;
     
 protected:
-    virtual void chile_label_render(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 font_color)const=0;
-    virtual void chile_description_render(const std::shared_ptr<Draw::Draw_2D> &r2,float font_color_a)const=0;
+    virtual void child_label_render(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 font_color)const=0;
+    virtual void child_description_render(const std::shared_ptr<Draw::Draw_2D> &r2,float font_color_a)const=0;
     RUtil::Hitbox hb;
     float scale;
     bool is_activating;

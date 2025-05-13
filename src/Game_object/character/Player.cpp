@@ -4,10 +4,13 @@
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/effect/Fade_wide.hpp"
 namespace Character{
-    Player::Player():Characters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F, WIDTH, HIGHT,HPBarWidth),player_type(PlayerType::Ironclad) 
+    Player::Player()
+        :Characters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F, WIDTH, HIGHT,HPBarWidth),
+        player_type(PlayerType::Ironclad)
     {
         max_energy=3;
         current_energy=3;
+        gold=100;
         max_HP=80;
         current_HP=80;
         current_Block=0;

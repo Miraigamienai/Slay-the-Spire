@@ -24,16 +24,20 @@ public:
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     const PlayerType player_type;
 
+    int GetGold()const noexcept{return gold;}
+    void ReduceGold(int value)noexcept{gold-=value;}
+    void AddGold(int value)noexcept{gold+=value;}
     void ReduceEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared);
     void AddEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared);
-    void resetEnergy(){current_energy=max_energy;};
+    void resetEnergy(){current_energy=max_energy;}
     const int &GetCurrEnergy()const noexcept{return current_energy;}
     const int &GetMaxEnergy()const noexcept{return max_energy;}
     constexpr Uint32 GetCardTrailColor()const noexcept(noexcept(RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F))){return RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F);}
     constexpr Uint32 GetCardRenderColor()const noexcept{return 0xff341cff;}
 private:
-    const float fadeColor=0.0F;
+    static constexpr Uint32 fadeColor=0;
     int max_energy,current_energy;
+    int gold;
     static const std::shared_ptr<Draw::ReTexture> &img,&img_died;
     static constexpr int WIDTH_OFFSET=-800.0F*Setting::SCALE,
                         HEIGHT_OFFSET=-200.0F*Setting::SCALE;

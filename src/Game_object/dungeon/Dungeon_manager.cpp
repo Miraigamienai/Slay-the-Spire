@@ -6,6 +6,7 @@ namespace Dungeon{
         m_dungeon_screen=std::make_shared<Dungeon::Dungeon_screen>();
         combat_reward_screen=std::make_shared<Dungeon::Combat_reward_screen>();
         grid_card_screen=std::make_shared<Dungeon::Grid_card_screen>();
+        shop_screen=std::make_shared<Dungeon::Shop_screen>();
         current_screen=m_dungeon_screen;
     }
     void Dungeon_manager::update(Dungeon_shared &dungeon_shared){

@@ -31,7 +31,7 @@ enum class Room_phase{
 };
 class Rooms{
 public:
-    Rooms(Room_type type):room_type(type){}
+    Rooms(Room_type type)noexcept:room_type(type), room_phase(Room_phase::incomplete){}
     virtual ~Rooms()=default;
     virtual const std::shared_ptr<Draw::ReTexture> &GetTexture()const=0;
     virtual const std::shared_ptr<Draw::ReTexture> &GetOutlineTexture()const=0;
@@ -41,6 +41,6 @@ public:
     const Room_type room_type;
     auto get_phase()const noexcept{return room_phase;}
 protected:
-    Room_phase room_phase=Room_phase::incomplete;
+    Room_phase room_phase;
 };
 }

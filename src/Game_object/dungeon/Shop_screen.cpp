@@ -62,8 +62,10 @@ namespace Dungeon{
 
     Shop_screen::Shop_screen()
         :Interface::Is_screen(Interface::ScreenType::shop),
+        card1(nullptr),
+        card2(nullptr),
         price_drawer(PRICE_FONT_SIZE),
-        hovered_card(nullptr),
+        hovered_card_item(nullptr),
         not_hovered_timer(0.0F),
         current_y(Setting::WINDOW_HEIGHT),
         hand_timer(0.0F),
@@ -83,6 +85,8 @@ namespace Dungeon{
     }
     
     void Shop_screen::update(Dungeon::Dungeon_shared &dungeon_shared){
+        //player current gold update
+        player_current_gold=dungeon_shared.player->GetGold();
         //current_y update
         if(current_y!=0.0F)
             current_y=RUtil::Math::varlerp(current_y, 0.0F, 5.0F, Setting::SCALE);
@@ -90,16 +94,27 @@ namespace Dungeon{
         cards_update(dungeon_shared.top_effs);
         //hand update
         hand_update();
-        //hovered card action check
-        if(hovered_card==nullptr){//not hover
+        //hovered card item action check
+        if(hovered_card_item==nullptr){//not hover
             not_hovered_timer+=RUtil::Game_Input::delta_time();
             if(not_hovered_timer>1.0F) hand_target_y=static_cast<float>(Setting::WINDOW_HEIGHT);
         }else{//hover
             not_hovered_timer=0.0F;
             //check click
-            if(hovered_card->HitboxClicked()){
+            if(hovered_card_item->card->HitboxClicked() && hovered_card_item->price <= player_current_gold && on_top){
                 //buy the card
-
+                //reduce gold
+                player_current_gold-=hovered_card_item->price;
+                dungeon_shared.player->ReduceGold(hovered_card_item->price);
+                //obtain the card
+                dungeon_shared.card_group_handler.obtain(hovered_card_item->card);
+                //remove the card from array
+                for(auto&it:*card1) if(&it==hovered_card_item)it.card=nullptr; 
+                for(auto&it:*card2) if(&it==hovered_card_item)it.card=nullptr; 
+                //set nullptr
+                hovered_card_item=nullptr;
+                //reset not_hovered_timer
+                not_hovered_timer=1.0F;
             }
         }
 
@@ -118,7 +133,8 @@ namespace Dungeon{
     }
     
     void Shop_screen::render_cards(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        for(const auto&it:card1){
+        for(const auto&it:*card1){
+            if(it.card==nullptr) continue;
             it.card->render(r2);
             r2->SetColor(RUtil::WHITE);
             r2->draw(GOLD_IMG, it.card->GetX()+GOLD_IMG_OFFSET_X, it.card->GetY()+GOLD_IMG_OFFSET_Y - (it.card->GetDrawScale()-0.75F)*200.0F*Setting::SCALE, (float)GOLD_IMG->GetWidth()*Setting::SCALE, (float)GOLD_IMG->GetHeight()*Setting::SCALE);
@@ -128,7 +144,8 @@ namespace Dungeon{
                 r2->SetColor_RGBA(RUtil::ToRGBA(RUtil::Colors::SKY_BLUE));
             price_drawer.render_center(r2, std::to_string(it.price), it.card->GetX()+PRICE_TEXT_OFFSET_X, it.card->GetY()+PRICE_TEXT_OFFSET_Y - (it.card->GetDrawScale()-0.75F)*200.0F*Setting::SCALE, Setting::SCALE);
         }
-        for(const auto&it:card2){
+        for(const auto&it:*card2){
+            if(it.card==nullptr) continue;
             it.card->render(r2);
             r2->SetColor(RUtil::WHITE);
             r2->draw(GOLD_IMG, it.card->GetX()+GOLD_IMG_OFFSET_X, it.card->GetY()+GOLD_IMG_OFFSET_Y - (it.card->GetDrawScale()-0.75F)*200.0F*Setting::SCALE, (float)GOLD_IMG->GetWidth()*Setting::SCALE, (float)GOLD_IMG->GetHeight()*Setting::SCALE);
@@ -164,7 +181,7 @@ namespace Dungeon{
 
     void Shop_screen::hand_update(){
         //move hand to hovered card if not nullptr
-        if(hovered_card!=nullptr) move_hand(hovered_card->GetX()-Card::Cards::IMG_WIDTH/2.0F, hovered_card->GetY());
+        if(hovered_card_item!=nullptr) move_hand(hovered_card_item->card->GetX()-Card::Cards::IMG_WIDTH/2.0F, hovered_card_item->card->GetY());
         //hand update
         if(hand_timer>0.0F){
             hand_timer-=RUtil::Game_Input::delta_time();
@@ -194,32 +211,36 @@ namespace Dungeon{
         constexpr float SPACE_BETWEEN_CARD=(static_cast<float>(Setting::WINDOW_WIDTH) - DRAW_START_X*2.0F - Card::Cards::IMG_WIDTH_S*5.0F)/4.0F;
         constexpr float CARD_PAD_X=SPACE_BETWEEN_CARD + Card::Cards::IMG_WIDTH_S;
         for(int i=0;i<5;i++){
-            card1[i].card->SetX(static_cast<float>(Setting::WINDOW_WIDTH)/2.0F, true);
-            card1[i].card->SetX(DRAW_START_X + Card::Cards::IMG_WIDTH_S/2.0F + CARD_PAD_X*static_cast<float>(i));
+            if((*card1)[i].card==nullptr) continue;
+            (*card1)[i].card->SetX(static_cast<float>(Setting::WINDOW_WIDTH)/2.0F, true);
+            (*card1)[i].card->SetX(DRAW_START_X + Card::Cards::IMG_WIDTH_S/2.0F + CARD_PAD_X*static_cast<float>(i));
         }
         for(int i=0;i<2;i++){
-            card2[i].card->SetX(static_cast<float>(Setting::WINDOW_WIDTH)/2.0F, true);
-            card2[i].card->SetX(DRAW_START_X + Card::Cards::IMG_WIDTH_S/2.0F + CARD_PAD_X*static_cast<float>(i));
+            if((*card2)[i].card==nullptr) continue;
+            (*card2)[i].card->SetX(static_cast<float>(Setting::WINDOW_WIDTH)/2.0F, true);
+            (*card2)[i].card->SetX(DRAW_START_X + Card::Cards::IMG_WIDTH_S/2.0F + CARD_PAD_X*static_cast<float>(i));
         }
     }
 
     void Shop_screen::cards_update(Effect::Effect_group &top_effs){
-        hovered_card=nullptr;
-        for(const auto&it:card1){
+        hovered_card_item=nullptr;
+        for(auto&it:*card1){
+            if(it.card==nullptr) continue;
             it.card->SetY(this->current_y + TOP_ROW_Y, true);
             it.card->update(top_effs);
             if(it.card->HitboxHovered()){
-                hovered_card=it.card;
+                hovered_card_item=&it;
                 it.card->Hover();
             }else{
                 it.card->Unhover();
             }
         }
-        for(const auto&it:card2){
+        for(auto&it:*card2){
+            if(it.card==nullptr) continue;
             it.card->SetY(this->current_y + BOTTOM_ROW_Y, true);
             it.card->update(top_effs);
             if(it.card->HitboxHovered()){
-                hovered_card=it.card;
+                hovered_card_item=&it;
                 it.card->Hover();
             }else{
                 it.card->Unhover();

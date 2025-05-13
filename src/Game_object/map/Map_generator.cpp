@@ -4,6 +4,7 @@
 #include "RUtil/Some_Math.hpp"
 #include "Game_object/room/Monster_room.hpp"
 #include "Game_object/room/Rest_room.hpp"
+#include "Game_object/room/Shop_room.hpp"
 
 #include "Util/Logger.hpp"
 
@@ -89,7 +90,7 @@ void Map_generator::AssignRoom(const std::vector<std::vector<std::shared_ptr<Map
     int available_room=0;
     for(const auto &it1:map) for(const auto &it2:it1) if(it2!=nullptr) available_room++;
     //room multiply some other chance, and 残ったのはモンスターのへやだ
-    int remain_room=available_room;
+    // int remain_room=available_room;
     //...
     // int monster_room=remain_room;
     //shuffle
@@ -98,7 +99,9 @@ void Map_generator::AssignRoom(const std::vector<std::vector<std::shared_ptr<Map
     for(size_t i=0;i<map.size();i++){
         for(size_t j=0;j<map[i].size();j++){
             if(map[i][j]==nullptr) continue;
-            if(i==2 || i==7 || i==11 || i==0)
+            if(i==0)
+                map[i][j]->SetRoom(std::make_shared<Room::Shop_room>());
+            else if(i==2 || i==7 || i==11)
                 map[i][j]->SetRoom(std::make_shared<Room::Rest_room>());
             else
                 map[i][j]->SetRoom(std::make_shared<Room::Monster_room>());

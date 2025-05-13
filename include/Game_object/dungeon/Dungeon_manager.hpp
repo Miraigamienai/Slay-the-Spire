@@ -22,7 +22,7 @@ namespace Dungeon{
         void set_current_on_top(bool value)const{current_screen->set_on_top(value);}
         void hide_dungeon_screen_instantly()const{m_dungeon_screen->hide_instantly();}
         void set_current_none()noexcept{current_screen->set_on_top(false);current_screen=nullptr;}
-        bool current_screen_equals(Interface::ScreenType ST)noexcept{return current_screen->type==ST;}
+        bool current_screen_equals(Interface::ScreenType ST)const noexcept{return current_screen!=nullptr&&current_screen->type==ST;}
         template <Interface::ScreenType ST, typename ...Args>
         void open(Args&&...args){
             last_screen=current_screen;

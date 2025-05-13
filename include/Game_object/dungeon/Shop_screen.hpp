@@ -24,9 +24,9 @@ public:
     ~Shop_screen()override=default;
     void update(Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
-    void open(std::array<Shop_card_item, 5> card1, std::array<Shop_card_item, 2> card2){
-        this->card1=card1;
-        this->card2=card2;
+    void open(std::array<Shop_card_item, 5> &card1, std::array<Shop_card_item, 2> &card2){
+        this->card1=&card1;
+        this->card2=&card2;
         this->current_y=static_cast<float>(Setting::WINDOW_HEIGHT);
         this->hand_x = this->hand_target_x = static_cast<float>(Setting::WINDOW_WIDTH)/2.0F;
         this->hand_y = this->hand_target_y = static_cast<float>(Setting::WINDOW_HEIGHT);
@@ -34,10 +34,10 @@ public:
         this->set_cards_x_pos();
     }    
 private:
-    std::array<Shop_card_item, 5> card1;   
-    std::array<Shop_card_item, 2> card2;
+    std::array<Shop_card_item, 5> *card1;
+    std::array<Shop_card_item, 2> *card2;
     Draw::NumberDrawer price_drawer;
-    std::shared_ptr<Card::Cards> hovered_card;
+    Shop_card_item* hovered_card_item;
     float not_hovered_timer;
     float current_y;
     float hand_timer;

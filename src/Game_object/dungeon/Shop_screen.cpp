@@ -129,6 +129,7 @@ namespace Dungeon{
         //purge
         render_purge(r2);
         //hand
+        r2->SetColor(RUtil::WHITE);
         r2->draw(HAND_IMG, hand_x+hand_floaty_x, hand_y+hand_floaty_y, (float)HAND_IMG->GetWidth()*Setting::SCALE, (float)HAND_IMG->GetHeight()*Setting::SCALE);
     }
     

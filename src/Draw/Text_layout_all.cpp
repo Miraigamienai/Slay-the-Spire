@@ -142,7 +142,7 @@ namespace Draw
         std::string total_text="";
         for(auto&it:text_vec){
             if(it.empty()) continue;
-            if(it.size()>3 &&((it[0]=='[' && it[2]==']') || (it[0]=='!' && it[2]=='!'))) continue;
+            if(it.size()==3 &&((it[0]=='[' && it[2]==']') || (it[0]=='!' && it[2]=='!'))) continue;
             if(it[0]!='#'){
                 replace(it,"$n","\n");
                 total_text+=it;
@@ -159,19 +159,16 @@ namespace Draw
         int img_w=0,img_h=0;
         text_rows.emplace_back(text_row{now_y, 0, {}});
         for(const auto&it:text_vec){
-            
             if(it.empty())continue;
             
             if(it[0]=='!' && it.size()==3 && it[2]=='!'){
                 //num string
                 TTF_SizeUTF8(font.get(), it.c_str(), &img_w, &img_h);
                 text_rows.back().row.emplace_back(text_item{true, false, NumType(it[1]), nullptr});
-                now_x+=img_w;
             }else if(it[0]=='[' && it.size()==3 && it[2]==']'){
                 //orb string
                 TTF_SizeUTF8(font.get(), it.c_str(), &img_w, &img_h);
                 text_rows.back().row.emplace_back(text_item{false, true, RUtil::WHITE, GetOrb(it[1])});
-                now_x+=img_w;
             }else if(it[0]=='#' && it.size()>=3){
                 //color string
                 TTF_SizeUTF8(font.get(), it.substr(2).c_str(), &img_w, &img_h);

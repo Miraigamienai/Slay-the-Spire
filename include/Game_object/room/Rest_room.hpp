@@ -24,8 +24,7 @@ private:
     std::shared_ptr<Option::Option_handler> option_handler;
     Uint32 dungeon_fade_color;
     Effect::Effect_group campfire_burning_effs;
-    float campfire_burning_timer,endding_rest_timer=0.5F;
-    bool ending_rest=false;
+    float campfire_burning_timer;
     void add_fire();
     static const std::shared_ptr<Draw::ReTexture> &IMG;
     static const std::shared_ptr<Draw::ReTexture> &IMG_O;

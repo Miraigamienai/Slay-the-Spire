@@ -276,6 +276,7 @@ set(INCLUDE_FILES
 	Game_object/room/Monster_room.hpp
 	Game_object/room/Rest_room.hpp
 	Game_object/room/Rooms.hpp
+	Game_object/room/Shop_item.hpp
 	Game_object/room/Shop_merchant.hpp
 	Game_object/room/Shop_room.hpp
 	Game_object/room/rest_room_options/Options.hpp

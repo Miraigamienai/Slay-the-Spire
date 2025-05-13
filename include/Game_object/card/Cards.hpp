@@ -119,6 +119,7 @@ public:
     float GetY()const noexcept{return current_y;}
     float GetTargetX()const noexcept{return target_x;}
     float GetTargetY()const noexcept{return target_y;}
+    float GetDrawScale()const noexcept{return m_draw_scale;}
     void SetY(const float value,const bool immediate=false)noexcept{target_y=value;if(immediate)current_y=value;}
     void SetX(const float value,const bool immediate=false)noexcept{target_x=value;if(immediate)current_x=value;}
     void SetAngle(const float value,const bool immediate=false)noexcept{target_angle=value;if(immediate)m_angle=value;}

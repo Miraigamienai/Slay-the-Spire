@@ -11,8 +11,14 @@ namespace Room{
         :hb(DRAW_X+250.0F*Setting::SCALE, DRAW_Y+130.0F*Setting::SCALE, HB_W, HB_H, true)
     {
         //TODO: card random probability need to be set
-        for(auto &it:card1) it=Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng);
-        for(auto &it:card2) it=Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng);
+        for(auto &it:card1){
+            it.card=Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng);
+            it.price=80 + RUtil::Random::GetRandomInt(40);
+        }
+        for(auto &it:card2){
+            it.card=Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng);
+            it.price=80 + RUtil::Random::GetRandomInt(40);
+        }
     }
 
     void Shop_merchant::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{

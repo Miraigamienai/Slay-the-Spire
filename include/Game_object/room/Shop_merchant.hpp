@@ -3,6 +3,7 @@
 #include <memory>
 #include <array>
 
+#include "Game_object/room/Shop_item.hpp"
 #include "RUtil/Hitbox.hpp"
 #include "WindowSize.hpp"
 
@@ -28,14 +29,13 @@ public:
     void update(Dungeon::Dungeon_shared& dungeon_shared);
 private:
     RUtil::Hitbox hb;
-    std::array<std::shared_ptr<Card::Cards>, 5> card1;   
-    std::array<std::shared_ptr<Card::Cards>, 2> card2;
+    std::array<Shop_card_item, 5> card1;   
+    std::array<Shop_card_item, 2> card2;
     
     static const std::shared_ptr<Draw::ReTexture> &IMG;
     static constexpr float HB_W = 360.0F * Setting::SCALE,
                            HB_H = 300.0F * Setting::SCALE;
     static constexpr float DRAW_X = static_cast<float>(Setting::WINDOW_WIDTH)/2.0F + 34.0F * Setting::SCALE,
                            DRAW_Y = (340.0F - 109.0F) * Setting::SCALE;
-
 };
 }

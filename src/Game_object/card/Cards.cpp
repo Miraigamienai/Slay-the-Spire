@@ -311,14 +311,14 @@ namespace Card{
     Uint32 Cards::s_render_color;
 
     using namespace RUtil;
-    static const std::shared_ptr<Draw::Atlas_Region> &BgSilhouette(Type type){
+    static inline const std::shared_ptr<Draw::Atlas_Region> &BgSilhouette(Type type){
         switch(type){
             case Type::attack: return All_Image::GetAtlasRegion(AtlasRegionID::_512_bg_attack_silhouette);
             case Type::power: return All_Image::GetAtlasRegion(AtlasRegionID::_512_bg_power_silhouette);
             default: return All_Image::GetAtlasRegion(AtlasRegionID::_512_bg_skill_silhouette);
         }   
     }
-    static const std::shared_ptr<Draw::Atlas_Region> &CardBg(Type type,Color color){
+    static inline const std::shared_ptr<Draw::Atlas_Region> &CardBg(Type type,Color color){
         switch(type){
             case Type::attack:
                 switch(color){
@@ -367,7 +367,7 @@ namespace Card{
                 }
         }   
     }
-    static const std::shared_ptr<Draw::Atlas_Region> &CardFrame(Type type,Rarity rarity){
+    static inline const std::shared_ptr<Draw::Atlas_Region> &CardFrame(Type type,Rarity rarity){
         switch(type){
             case Type::attack:
                 switch(rarity){
@@ -398,28 +398,28 @@ namespace Card{
                 }
         }   
     }
-    static const std::shared_ptr<Draw::Atlas_Region> &CardLeftFrame(Rarity rarity){
+    static inline const std::shared_ptr<Draw::Atlas_Region> &CardLeftFrame(Rarity rarity){
         switch(rarity){
             case Rarity::rare: return All_Image::GetAtlasRegion(AtlasRegionID::_512_rare_left);
             case Rarity::uncommon: return All_Image::GetAtlasRegion(AtlasRegionID::_512_uncommon_left);
             default: return All_Image::GetAtlasRegion(AtlasRegionID::_512_common_left);
         }
     }
-    static const std::shared_ptr<Draw::Atlas_Region> &CardMidFrame(Rarity rarity){
+    static inline const std::shared_ptr<Draw::Atlas_Region> &CardMidFrame(Rarity rarity){
         switch(rarity){
             case Rarity::rare: return All_Image::GetAtlasRegion(AtlasRegionID::_512_rare_center);
             case Rarity::uncommon: return All_Image::GetAtlasRegion(AtlasRegionID::_512_uncommon_center);
             default: return All_Image::GetAtlasRegion(AtlasRegionID::_512_common_center);
         }
     }
-    static const std::shared_ptr<Draw::Atlas_Region> &CardRightFrame(Rarity rarity){
+    static inline const std::shared_ptr<Draw::Atlas_Region> &CardRightFrame(Rarity rarity){
         switch(rarity){
             case Rarity::rare: return All_Image::GetAtlasRegion(AtlasRegionID::_512_rare_right);
             case Rarity::uncommon: return All_Image::GetAtlasRegion(AtlasRegionID::_512_uncommon_right);
             default: return All_Image::GetAtlasRegion(AtlasRegionID::_512_common_right);
         }
     }
-    static const std::shared_ptr<Draw::Atlas_Region> &CardBanner(Rarity rarity){
+    static inline const std::shared_ptr<Draw::Atlas_Region> &CardBanner(Rarity rarity){
         switch(rarity){
             case Rarity::rare: return All_Image::GetAtlasRegion(AtlasRegionID::_512_banner_rare);
             case Rarity::uncommon: return All_Image::GetAtlasRegion(AtlasRegionID::_512_banner_uncommon);

@@ -8,15 +8,40 @@ namespace Monster{
     {
         setHP(MIN_HP,MAX_HP);
         setBlock(0);
-        m_damage=DAMAGE;
 
     }
     void SpikeSlimeM::Action(Dungeon::Dungeon_shared &dungeon_shared){
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
-            Damage_info{this->m_damage, shared_from_this(), AttackType::blunt_light},
-            dungeon_shared.player
-        ));
+        if(ActionCount>=2) {
+            if(lastAction==Monster::SpikeSlimeMAction::FlameTackle)
+                currentAction=Monster::SpikeSlimeMAction::Lick;
+            else
+                currentAction=Monster::SpikeSlimeMAction::FlameTackle;
+        }
+        else
+            currentAction=static_cast<Monster::SpikeSlimeMAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbability,sizeof(ActionProbability)/sizeof(float)));
+        switch (currentAction){
+            case Monster::SpikeSlimeMAction::FlameTackle:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+                Damage_info{FLAME_TACKLE_DAMAGE, shared_from_this(), AttackType::blunt_light},
+                dungeon_shared.player));
+
+
+                //shuffles 1 Slimed into the discard pile.
+                break;
+            case Monster::SpikeSlimeMAction::Lick:
+                //	Inflicts 1  Frail.
+                break;
+            default:
+                break;
+        }
+        if(currentAction!=lastAction){
+            ActionCount=1;
+            lastAction=currentAction;
+        }
+        else
+            ActionCount++;
+        
     }
     void SpikeSlimeM::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {

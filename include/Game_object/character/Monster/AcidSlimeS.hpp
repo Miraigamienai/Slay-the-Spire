@@ -6,7 +6,8 @@ namespace Monster{
 enum class AcidSlimeSAction
 {
     Lick,
-    Tackle
+    Tackle,
+    None
 };
 class AcidSlimeS final:public Monsters
 {
@@ -23,8 +24,10 @@ private:
                          HIGHT=100.0F*Setting::SCALE;
     static constexpr int MAX_HP=12,
                          MIN_HP=8,
-                         DAMAGE=3;
+                         TACKLE_DAMAGE=3;
     static constexpr int HPBarWidth=WIDTH*0.8F;
+    AcidSlimeSAction currentAction=Monster::AcidSlimeSAction::None;
+    static constexpr float ActionProbability[2]={50.0F,50.0F};
 };
 }
 #endif

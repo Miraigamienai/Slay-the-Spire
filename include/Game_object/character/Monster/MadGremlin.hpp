@@ -14,16 +14,17 @@ public:
     ~MadGremlin()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
-    
+    void damage(const Damage_info& damage_info) override;
     
     // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
 private:
     static const std::shared_ptr<Draw::ReTexture> &img;
     static constexpr float WIDTH=150.0F*Setting::SCALE,
                         HIGHT=200.0F*Setting::SCALE;
+    int m_damage=0;
     static constexpr int MAX_HP=20,
                         MIN_HP=24,
-                        DAMAGE=4;
+                        SCRATCH_DAMAGE=4;
     static constexpr float HPBarWidth=WIDTH*0.8F;
 };
 }

@@ -8,7 +8,8 @@ enum class MuggerAction
     Mug,
     Lunge,
     SmokeBomb,
-    Escape
+    Escape,
+    None
 };
 class Mugger final:public Monsters
 {
@@ -25,8 +26,16 @@ private:
                          HIGHT=170.0F*Setting::SCALE;
     static constexpr int MAX_HP=52,
                          MIN_HP=48,
-                         DAMAGE=10;
+                         MUG_DAMAGE=10,
+                         LUNGE_DAMAGE=16,
+                         SMOKE_BOMB_BLOCK=11;
     static constexpr int HPBarWidth=WIDTH*0.8F;
+    bool isFirstTwoActions=true;
+    bool SmokeBombIsUsed=false;
+    Monster::MuggerAction currentAction=Monster::MuggerAction::None,
+                             lastAction=Monster::MuggerAction::None;
+    static constexpr float ActionProbabilityAfterFirstTwoActions[2]={50.0F,50.0F};
+    int ActionCount=0;
 };
 }
 #endif

@@ -6,7 +6,8 @@ namespace Monster{
     enum class BlueSlaverAction
     {
         Stab,
-        Rake
+        Rake,
+        None
     };
 class BlueSlaver final:public Monsters
 {
@@ -23,8 +24,13 @@ private:
                          HIGHT=230.0F*Setting::SCALE;
     static constexpr int MAX_HP=50,
                          MIN_HP=46,
-                         DAMAGE=12;
+                         STAB_DAMAGE=12,
+                         RAKE_DAMAGE=7;
     static constexpr int HPBarWidth=WIDTH*0.8F;
+    Monster::BlueSlaverAction currentAction=Monster::BlueSlaverAction::None,
+                               lastAction=Monster::BlueSlaverAction::None;
+    static constexpr float ActionProbability[2]={60.0F,40.0F};
+    int ActionCount=0;
 };
 }
 #endif

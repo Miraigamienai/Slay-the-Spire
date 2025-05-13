@@ -37,11 +37,10 @@ public:
     virtual ~Monsters()=default;
     virtual void Action(Dungeon::Dungeon_shared &dungeon_shared)=0; 
     // virtual void apply(const std::shared_ptr<Action::Action_group> &action_group)const=0;
-    void damage(const Damage_info& damage_info)override;
+    virtual void damage(const Damage_info& damage_info)override;
     void setHP(int min,int max);
     void setBlock(int num);
 protected:
-    int m_damage;
     static constexpr int FLOOR_Y=Setting::WINDOW_HEIGHT*0.5F-200.0F*Setting::SCALE;
 };
 }

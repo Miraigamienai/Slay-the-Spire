@@ -7,6 +7,7 @@ enum class CultistAction
 {
     Incantation,
     DarkStrike,
+    None
 };
 class Cultist final:public Monsters
 {
@@ -23,8 +24,9 @@ private:
                          HIGHT=240.0F*Setting::SCALE;
     static constexpr int MAX_HP=54,
                          MIN_HP=48,
-                         DAMAGE=6;
+                         DARK_STRIKE_DAMAGE=6;
     static constexpr int HPBarWidth=WIDTH*0.8F;
+    Monster::CultistAction currentAction=Monster::CultistAction::None;
 };
 }
 #endif

@@ -1,7 +1,6 @@
 #pragma once
 
 #include<random>
-
 namespace RUtil{
 class Random{
 public:
@@ -18,6 +17,11 @@ public:
     int NextInt(const int min,const int max){return min+NextInt(max-min);}
     int NextInt(const int range){return NextInt()%range;/*分布が偏るだろうが、それは問題ないと思う。*/}
     int NextInt(){return static_cast<int>((*this)()&0x7fffffff);}
+    int GetRandomWithWeight(const float* weights, size_t size){
+        std::vector<double> prob(weights, weights + size);
+        std::discrete_distribution<> dist(prob.begin(), prob.end());
+        return dist(m_gen);
+    }
     bool Nextboolean(){return static_cast<bool>((*this)()&1);}
     auto GetCounter()const{return counter;}
     void SetNewSeed(unsigned long long int seed,int counter=0);
@@ -28,7 +32,7 @@ public:
 private:
     std::mt19937 m_gen;
     unsigned int counter;
-
+    std::discrete_distribution<> m_discrete_dist{0.5,0.5};
     static std::mt19937 s_gen;
 };
 }

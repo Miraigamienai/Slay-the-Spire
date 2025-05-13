@@ -8,7 +8,8 @@ enum class LooterAction
     Mug,
     Lunge,
     SmokeBomb,
-    Escape
+    Escape,
+    None
 };
 class Looter final:public Monsters
 {
@@ -25,8 +26,16 @@ private:
                          HIGHT=170.0F*Setting::SCALE;
     static constexpr int MAX_HP=48,
                          MIN_HP=44,
-                         DAMAGE=10;
+                         MUG_DAMAGE=10,
+                         LUNGE_DAMAGE=12,
+                         SMOKE_BOMB_BLOCK=6;
     static constexpr int HPBarWidth=WIDTH*0.8F;
+    bool isFirstTwoActions=true;
+    bool SmokeBombIsUsed=false;
+    Monster::LooterAction currentAction=Monster::LooterAction::None,
+                             lastAction=Monster::LooterAction::None;
+    static constexpr float ActionProbabilityAfterFirstTwoActions[2]={50.0F,50.0F};
+    int ActionCount=0;
 };
 }
 #endif

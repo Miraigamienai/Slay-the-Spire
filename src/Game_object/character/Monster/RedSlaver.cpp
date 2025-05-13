@@ -8,15 +8,59 @@ namespace Monster{
     {
         setHP(MIN_HP,MAX_HP);
         setBlock(0);
-        m_damage=DAMAGE;
         
     }
     void RedSlaver::Action(Dungeon::Dungeon_shared &dungeon_shared){
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
-            Damage_info{this->m_damage, shared_from_this(), AttackType::blunt_light},
-            dungeon_shared.player
-        ));
+        if(isFirstAction){
+            isFirstAction=false;
+            currentAction=Monster::RedSlaverAction::Stab;
+        }
+        else if(EntangleIsUsed)
+            if(ActionCount>=2) 
+                if(lastAction==Monster::RedSlaverAction::Scrape)
+                    currentAction=Monster::RedSlaverAction::Stab;
+                else
+                    currentAction=Monster::RedSlaverAction::Scrape;
+            else
+                currentAction=static_cast<Monster::RedSlaverAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbabilityAfterEntangle,sizeof(ActionProbabilityAfterEntangle)/sizeof(float)));
+        
+        else if(lastAction==Monster::RedSlaverAction::Stab) 
+            currentAction=Monster::RedSlaverAction::Scrape;
+        
+        else if(lastAction==Monster::RedSlaverAction::Scrape && ActionCount>=2) 
+            currentAction=Monster::RedSlaverAction::Stab;
+        else
+            currentAction=Monster::RedSlaverAction::Scrape;
+
+        switch(currentAction){
+            case Monster::RedSlaverAction::Stab:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+                    Damage_info{STAB_DAMAGE, shared_from_this(), AttackType::blunt_light},
+                    dungeon_shared.player
+                ));
+                break;
+            case Monster::RedSlaverAction::Scrape:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+                    Damage_info{SCRAPE_DAMAGE, shared_from_this(), AttackType::blunt_light},
+                    dungeon_shared.player
+                ));
+                break;
+            case Monster::RedSlaverAction::Entangle:
+                EntangleIsUsed=true;
+
+                //Applies 1  Entangled(You may not play any Attacks this turn.).
+            default:
+                break;
+        }
+        if(currentAction!=lastAction){
+            ActionCount=1;
+            lastAction=currentAction;
+        }
+        else
+            ActionCount++;
+
     }
     void RedSlaver::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {

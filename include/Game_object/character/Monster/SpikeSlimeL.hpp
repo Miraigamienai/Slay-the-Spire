@@ -7,7 +7,8 @@ enum class SpikeSlimeLAction
 {
     FlameTackle,
     Lick,
-    Split
+    Split,
+    None
 };
 class SpikeSlimeL final:public Monsters
 {
@@ -24,8 +25,12 @@ private:
                          HIGHT=180.0F*Setting::SCALE;
     static constexpr int MAX_HP=70,
                          MIN_HP=64,
-                         DAMAGE=16;
+                         FLAME_TACKLE_DAMAGE=16;
     static constexpr int HPBarWidth=WIDTH*0.8F;
+    Monster::SpikeSlimeLAction currentAction=Monster::SpikeSlimeLAction::None,
+                               lastAction=Monster::SpikeSlimeLAction::None;
+    static constexpr float ActionProbability[2]={30.0F,70.0F};
+    int ActionCount=0;
 };
 }
 #endif

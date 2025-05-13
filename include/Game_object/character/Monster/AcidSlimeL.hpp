@@ -1,5 +1,7 @@
 #ifndef GAME_OBJECT_CHARACTER_MONSTER_ACIDSLIMEL
 #define GAME_OBJECT_CHARACTER_MONSTER_ACIDSLIMEL
+#include <random>
+
 #include "Game_object/character/Monster/Monsters.hpp"
 
 namespace Monster{
@@ -31,6 +33,7 @@ private:
     static constexpr int HPBarWidth=WIDTH*0.8F;
     Monster::AcidSlimeLAction currentAction=Monster::AcidSlimeLAction::None;
     static constexpr float ActionProbability[3]={30.0F,40.0F,30.0F};
+    static std::discrete_distribution<int> dist;
 };
 }
 #endif

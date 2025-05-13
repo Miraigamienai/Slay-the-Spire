@@ -20,7 +20,7 @@ public:
     int GetRandomWithWeight(const float* weights, size_t size){
         std::vector<double> prob(weights, weights + size);
         std::discrete_distribution<> dist(prob.begin(), prob.end());
-        return dist(m_gen);
+        return dist(*this);
     }
     bool Nextboolean(){return static_cast<bool>((*this)()&1);}
     auto GetCounter()const{return counter;}
@@ -32,7 +32,6 @@ public:
 private:
     std::mt19937 m_gen;
     unsigned int counter;
-    std::discrete_distribution<> m_discrete_dist{0.5,0.5};
     static std::mt19937 s_gen;
 };
 }

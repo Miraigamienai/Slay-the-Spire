@@ -22,7 +22,7 @@ namespace Monster{
                 else
                     currentAction=Monster::RedSlaverAction::Scrape;
             else
-                currentAction=static_cast<Monster::RedSlaverAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbabilityAfterEntangle,sizeof(ActionProbabilityAfterEntangle)/sizeof(float)));
+                currentAction=static_cast<Monster::RedSlaverAction>(dist(dungeon_shared.random_package.monster_ai_rng));
         
         else if(lastAction==Monster::RedSlaverAction::Stab) 
             currentAction=Monster::RedSlaverAction::Scrape;
@@ -75,6 +75,6 @@ namespace Monster{
         }
     }
     const std::shared_ptr<Draw::ReTexture> &RedSlaver::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Slavers/Slaver-red-pretty.png");
-
+    std::discrete_distribution<int> RedSlaver::dist{ActionProbabilityAfterEntangle,ActionProbabilityAfterEntangle+2};
 }
 

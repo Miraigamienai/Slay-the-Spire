@@ -1,6 +1,8 @@
 #ifndef GAME_OBJECT_CHARACTER_MONSTER_REDLOUSE_HPP
 #define GAME_OBJECT_CHARACTER_MONSTER_REDLOUSE_HPP
+#include <random>
 #include "Game_object/character/Monster/Monsters.hpp"
+
 
 namespace Monster{
 enum class RedLouseAction
@@ -32,6 +34,7 @@ private:
                                lastAction=Monster::RedLouseAction::None;
     static constexpr float ActionProbability[2]={75.0F,25.0F};
     int ActionCount=0;
+    static std::discrete_distribution<int> dist;
 };
 }
 #endif

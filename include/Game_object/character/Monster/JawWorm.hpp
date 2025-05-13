@@ -1,5 +1,6 @@
 #ifndef GAME_OBJECT_CHARACTER_MONSTER_JaWWORM
 #define GAME_OBJECT_CHARACTER_MONSTER_JAWWORM
+#include <random>
 #include "Game_object/character/Monster/Monsters.hpp"
 
 namespace Monster{
@@ -36,6 +37,7 @@ private:
                            lastAction=Monster::JawWormAction::None;
     static constexpr float ActionProbability[3]={25.0F,30.0F,45.0F};
     int ActionCount=0;
+    static std::discrete_distribution<int> dist;
 };
 }
 #endif

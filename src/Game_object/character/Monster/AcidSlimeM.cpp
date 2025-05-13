@@ -11,7 +11,7 @@ namespace Monster{
 
     }
     void AcidSlimeM::Action(Dungeon::Dungeon_shared &dungeon_shared){
-        currentAction=static_cast<Monster::AcidSlimeMAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbability,sizeof(ActionProbability)/sizeof(float)));
+        currentAction=static_cast<Monster::AcidSlimeMAction>(dist(dungeon_shared.random_package.monster_ai_rng));
         switch (currentAction){
             case Monster::AcidSlimeMAction::CorrosiveSpit:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
@@ -48,6 +48,5 @@ namespace Monster{
         }
     }
     const std::shared_ptr<Draw::ReTexture> &AcidSlimeM::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Acid Slime/Acid-slime-m-pretty.png");
-
+    std::discrete_distribution<int> AcidSlimeM::dist{ActionProbability,ActionProbability+3};
 }
-

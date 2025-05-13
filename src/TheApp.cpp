@@ -45,7 +45,7 @@ void TheApp::update(){
         break;
     case AppStatus::State::PLAYING:
         m_dungeon->update();
-        if (m_dungeon->is_game_over()){
+        if (m_dungeon->is_game_over()){ // there is a bug
             m_CurrentState=AppStatus::State::INIT;
             m_dungeon.reset();
             m_dungeon_shared.player.reset();

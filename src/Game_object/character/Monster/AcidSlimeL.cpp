@@ -12,7 +12,6 @@ namespace Monster{
     }
     void AcidSlimeL::Action(Dungeon::Dungeon_shared &dungeon_shared){
         currentAction=static_cast<Monster::AcidSlimeLAction>(dist(dungeon_shared.random_package.monster_ai_rng));
-        // currentAction=static_cast<Monster::AcidSlimeLAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbability,sizeof(ActionProbability)/sizeof(float)));
         if(float(current_HP)/MAX_HP<0.5F){
             currentAction=Monster::AcidSlimeLAction::Split;
         }
@@ -54,6 +53,6 @@ namespace Monster{
         }
     }
     const std::shared_ptr<Draw::ReTexture> &AcidSlimeL::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Acid Slime/Acid-slime-l-pretty.png");
-    std::discrete_distribution<int> AcidSlimeL::dist{ActionProbability, ActionProbability+3};
+    std::discrete_distribution<int> AcidSlimeL::dist{ActionProbability,ActionProbability+3};
 }
 

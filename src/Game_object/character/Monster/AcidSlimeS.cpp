@@ -10,7 +10,7 @@ namespace Monster{
         setBlock(0);
     }
     void AcidSlimeS::Action(Dungeon::Dungeon_shared &dungeon_shared){
-        currentAction=static_cast<Monster::AcidSlimeSAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbability,sizeof(ActionProbability)/sizeof(float)));
+        currentAction=static_cast<Monster::AcidSlimeSAction>(dist(dungeon_shared.random_package.monster_ai_rng));
         switch (currentAction){
             case Monster::AcidSlimeSAction::Lick:
                 // Inflict 1  Weak.
@@ -41,6 +41,6 @@ namespace Monster{
         }
     }
     const std::shared_ptr<Draw::ReTexture> &AcidSlimeS::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Acid Slime/Acid-slime-s-pretty.png");
-
+    std::discrete_distribution<int> AcidSlimeS::dist{ActionProbability,ActionProbability+3};
 }
 

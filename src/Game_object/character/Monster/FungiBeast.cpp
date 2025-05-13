@@ -15,7 +15,7 @@ namespace Monster{
         else if(lastAction==Monster::FungiBeastAction::Grow)
             currentAction=Monster::FungiBeastAction::Bite;
         else
-            currentAction=static_cast<Monster::FungiBeastAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbability,sizeof(ActionProbability)/sizeof(float)));
+            currentAction=static_cast<Monster::FungiBeastAction>(dist(dungeon_shared.random_package.monster_ai_rng));
         
             switch (currentAction){
             case Monster::FungiBeastAction::Bite:
@@ -53,6 +53,6 @@ namespace Monster{
 
     }
     const std::shared_ptr<Draw::ReTexture> &FungiBeast::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Fungi Beast/Fungi-beast-pretty.png");
-    
+    std::discrete_distribution<int> FungiBeast::dist{ActionProbability,ActionProbability+2};
 }
 

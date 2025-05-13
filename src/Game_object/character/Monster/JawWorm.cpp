@@ -4,7 +4,7 @@
 #include "Game_object/action/Damage_action.hpp"
 #include "Game_object/action/Gain_block_action.hpp"
 #include "RUtil/Random.hpp"
-#include <iostream>
+
 namespace Monster{
     JawWorm::JawWorm(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth)
     {
@@ -13,12 +13,7 @@ namespace Monster{
     }
     void JawWorm::Action(Dungeon::Dungeon_shared &dungeon_shared){
         do {
-            currentAction = static_cast<Monster::JawWormAction>(
-                dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(
-                    ActionProbability,
-                    sizeof(ActionProbability) / sizeof(float)
-                )
-            );
+            currentAction=static_cast<Monster::JawWormAction>(dist(dungeon_shared.random_package.monster_ai_rng));
         } while (
             (currentAction == lastAction && ActionCount >= 1 && currentAction != Monster::JawWormAction::Thrash) ||
             (currentAction == Monster::JawWormAction::Thrash && lastAction == Monster::JawWormAction::Thrash && ActionCount >= 2)
@@ -70,6 +65,6 @@ namespace Monster{
 
     }
     const std::shared_ptr<Draw::ReTexture> &JawWorm::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Jaw Worm/Jaw-worm-pretty.png");
-    
+    std::discrete_distribution<int> JawWorm::dist{ActionProbability,ActionProbability+3};
 }
 

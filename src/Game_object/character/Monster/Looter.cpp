@@ -20,7 +20,7 @@ namespace Monster{
         else if(SmokeBombIsUsed)
             currentAction=Monster::LooterAction::Escape;
         else
-            currentAction=static_cast<Monster::LooterAction>(dungeon_shared.random_package.monster_ai_rng.GetRandomWithWeight(ActionProbabilityAfterFirstTwoActions,sizeof(ActionProbabilityAfterFirstTwoActions)/sizeof(float))+1);
+            currentAction=static_cast<Monster::LooterAction>(dist(dungeon_shared.random_package.monster_ai_rng));
         
         switch(currentAction){
             case Monster::LooterAction::Mug:
@@ -67,6 +67,6 @@ namespace Monster{
         }
     }
     const std::shared_ptr<Draw::ReTexture> &Looter::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Thieves/Looter-pretty.png");
-    
+    std::discrete_distribution<int> Looter::dist{ActionProbabilityAfterFirstTwoActions,ActionProbabilityAfterFirstTwoActions+2};
 }
 

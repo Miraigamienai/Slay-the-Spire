@@ -20,12 +20,12 @@ namespace Option{
         TEXT_VEC()[2]->SetFontSize(TEXT_SIZE);//not activate message
     }
     
-    void Smith_option::chile_label_render(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 font_color)const{
+    void Smith_option::child_label_render(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 font_color)const{
         TEXT_VEC()[0]->SetFontColor(font_color);
         TEXT_VEC()[0]->render_center(r2, hb.CenterX(), hb.CenterY() - 60.0F*Setting::SCALE - 50.0F*this->scale, 0.0F, 0.0F, 0.0F, Setting::SCALE);
     }
 
-    void Smith_option::chile_description_render(const std::shared_ptr<Draw::Draw_2D> &r2,float font_color_a)const{
+    void Smith_option::child_description_render(const std::shared_ptr<Draw::Draw_2D> &r2,float font_color_a)const{
         const int pos=is_activating?1:2;
         TEXT_VEC()[pos]->SetFontColor(RUtil::CREAM_COLOR);
         TEXT_VEC()[pos]->SetFontAlpha(font_color_a);

@@ -1,5 +1,6 @@
 #ifndef GAME_OBJECT_CHARACTER_MONSTER_RED_SLAVER_HPP
 #define GAME_OBJECT_CHARACTER_MONSTER_RED_SLAVER_HPP
+#include <random>
 #include "Game_object/character/Monster/Monsters.hpp"
 
 namespace Monster{
@@ -34,6 +35,7 @@ private:
                              lastAction=Monster::RedSlaverAction::None;
     static constexpr float ActionProbabilityAfterEntangle[2]={45.0F,55.0F};
     int ActionCount=0;
+    static std::discrete_distribution<int> dist;
 };
 }
 #endif

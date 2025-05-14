@@ -4,18 +4,14 @@
 #include "Draw/Atlas_Region.hpp"
 #include "Util/Input.hpp"
 #include "Draw/Text_layout_color.hpp"
-// Monster::AcidSlimeL acid_slime_l;
-// Monster::JawWorm jaw_worm;
-// Monster::FatGremlin fat_gremlin;
-// Character::Player player;
+#include "Game_object/top_panel/Top_panel.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
+TopPanel::Top_panel top_panel;
 void test(const std::shared_ptr<Draw::Draw_2D> &r2){
-    // jaw_worm.update();
-    // fat_gremlin.update();
-    // player.update();
-    // acid_slime_l.update();
-    // acid_slime_l.render(r2);
-    // jaw_worm.render(r2);
-    // fat_gremlin.render(r2);
-    // player.render(r2);
-}
+    top_panel.render(r2);
 
+}
+void test2(Dungeon::Dungeon_shared &dungeon_shared){
+
+    top_panel.update(dungeon_shared);
+}

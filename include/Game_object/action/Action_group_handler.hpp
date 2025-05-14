@@ -30,7 +30,8 @@ public:
     
     void update(Dungeon::Dungeon_shared &dungeon_shared, const Monster::Monster_group&room_monsters);
     bool is_nothing_to_do()const{
-        return this->current_action==nullptr&&action_box.empty()&& monster_queue.empty();}
+        return this->current_action==nullptr && action_box.empty() && monster_queue.empty() && card_queue.empty() && !is_endding_turn;
+    }
     void prepare_for_battle();
     //need the monsters so they can take there turn.
     void ending_turn(const Monster::Monster_group&room_monsters){

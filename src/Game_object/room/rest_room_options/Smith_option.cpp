@@ -13,7 +13,8 @@ namespace Option{
     }
 
     Smith_option::Smith_option(bool any_card_can_upgrade)
-        :Options(RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/options/smith.png"),any_card_can_upgrade)
+        :Options(RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/options/smith.png"),any_card_can_upgrade),
+        skip_one_frame(false)
     {
         TEXT_VEC()[0]->SetFontSize(TEXT_SIZE);//label
         TEXT_VEC()[1]->SetFontSize(TEXT_SIZE);//activate message
@@ -33,11 +34,16 @@ namespace Option{
     }
 
     void Smith_option::take_reward(Dungeon::Dungeon_shared &dungeon_shared){
-        if(is_cancelled&&is_done){//first in signal
-            is_cancelled=false;
-            is_done=false;
-            //open grid_cards screen
-            dungeon_shared.manager.open<Interface::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_upgradeable_card_group(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_upgrade_action>(), is_done, is_cancelled);
+        if(!dungeon_shared.manager.current_screen_equals(Interface::ScreenType::grid_cards)){
+            if(skip_one_frame){
+                skip_one_frame=false;
+            }else{
+                skip_one_frame=true;
+                is_cancelled=false;
+                is_done=false;
+                //open grid_cards screen
+                dungeon_shared.manager.open<Interface::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_upgradeable_card_group(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_upgrade_action>(), is_done, is_cancelled);
+            }
         }
     }
 }

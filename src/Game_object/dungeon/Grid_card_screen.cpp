@@ -28,12 +28,17 @@ namespace Dungeon{
         scroll(offset_y, target_offset_y, -DEFAULT_SCROLL_BOUND, DEFAULT_SCROLL_BOUND),
         is_confirming(false),
         out_is_done(nullptr),
-        out_is_cancelled(nullptr)
+        out_is_cancelled(nullptr),
+        closing(false)
     {
         
     }
 
     void Grid_card_screen::update(Dungeon::Dungeon_shared &dungeon_shared){
+        if(!on_top&&closing){
+            cancel.update();
+            return;
+        }
         if(!is_confirming){
             //cancel timer update
             if(cancel_display_timer!=0.0F){
@@ -50,6 +55,9 @@ namespace Dungeon{
             if(out_is_cancelled!=nullptr&&on_top){
                 if(this->cancel.is_logically_clicked()){
                     *out_is_cancelled=true;
+                    closing=true;
+                    cancel.hide();
+                    dungeon_shared.manager.back_to_last_screen();
                     return;
                 }
             }
@@ -87,6 +95,10 @@ namespace Dungeon{
     }
     
     void Grid_card_screen::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+        if(!on_top&&closing){
+            this->cancel.render(r2);
+            return;
+        }
         if(hovered_card!=nullptr){
             //for ensure the hovered card is on top.
             for(const auto&it:display_group) 
@@ -114,9 +126,11 @@ namespace Dungeon{
         this->out_is_done=nullptr;
         this->out_is_cancelled=nullptr;
         is_confirming=false;
+        closing=false;
     }
 
     void Grid_card_screen::update_cards(Dungeon_shared &dungeon_shared){
+        hovered_card=nullptr;
         int now_y=0;
         int now_x=0;
         for(const auto&it:display_group){

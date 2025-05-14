@@ -17,7 +17,6 @@ namespace Button
         current_x(HIDE_X),
         target_x(HIDE_X),
         is_hidden(true),
-        should_flash(false),
         m_scale(Setting::SCALE),
         oscillate_timer(0.0F),
         text(nullptr)
@@ -33,8 +32,6 @@ namespace Button
                 this->hb.update();
             else
                 this->hb.ResetAll();
-
-            should_flash=hb.JustHovered();            
         }
         //move x
         if(current_x!=target_x){

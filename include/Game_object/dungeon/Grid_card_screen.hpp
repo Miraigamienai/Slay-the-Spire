@@ -54,7 +54,6 @@ public:
         this->out_is_cancelled=&is_cancelled;
     }
 
-
 private:
     Card::Card_group display_group;
     std::shared_ptr<Card::Cards> hovered_card;
@@ -66,6 +65,7 @@ private:
     bool *out_is_done, *out_is_cancelled;
     float cancel_display_timer;
     Button::Cancel_button cancel;
+    bool closing;
 
     void update_cards(Dungeon_shared &dungeon_shared);
     void common_open_setting();

@@ -23,7 +23,6 @@ public:
     void hide()noexcept{
         is_hidden=true;
         this->target_x=HIDE_X;
-        should_flash=false;
     }
     void set_text(const std::shared_ptr<Draw::Text_layout> &text)noexcept{this->text=text;}
     void show()noexcept{
@@ -33,12 +32,11 @@ public:
     bool is_logically_clicked()const noexcept{
         return !is_hidden&&hb.Clicked();
     }
-    bool ShouldFlash()const noexcept{return should_flash;}
+    bool is_logically_just_hovered()const noexcept{return !is_hidden&&hb.JustHovered();}
 private:
     RUtil::Hitbox hb;
     float current_x,target_x;
     bool is_hidden;
-    bool should_flash;
     float m_scale,oscillate_timer;
     std::shared_ptr<Draw::Text_layout> text;
 

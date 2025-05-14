@@ -16,7 +16,13 @@ namespace Button{
 class Cancel_button
 {
 public:
-    Cancel_button();
+    Cancel_button()noexcept(noexcept(RUtil::Hitbox{HB_W, HB_H}))
+        :hb(HB_W, HB_H),
+        current_x(HIDE_X),
+        target_x(HIDE_X),
+        is_hidden(true),
+        text(nullptr),
+        oscillate_timer(0.0F){}
     ~Cancel_button()=default;
     void update();
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;

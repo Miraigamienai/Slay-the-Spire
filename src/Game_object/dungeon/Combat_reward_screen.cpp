@@ -1,5 +1,6 @@
 #include "Game_object/dungeon/Combat_reward_screen.hpp"
 #include "Game_object/reward_item/Reward_item.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "RUtil/Game_Input.hpp"
 #include "RUtil/Image_book.hpp"
 #include "Draw/ReTexture.hpp"
@@ -42,13 +43,12 @@ namespace Dungeon
 
         //button update
         this->proceed_button.update();
-        if(this->proceed_button.ShouldFlash())
+        if(this->proceed_button.is_logically_just_hovered())
             for(const auto&it:reward_items) it->flash();
         if(proceed_button.is_logically_clicked()){
-            //let manager know I'm finished
-            on_top=false;
+            proceed_button.hide();
             //change screen to main_dungoen
-            next=Interface::ScreenType::main_dungeon;
+            dungeon_shared.manager.open<Interface::ScreenType::main_dungeon>();
         }
 
         if(now_reward_pos==-1){

@@ -10,7 +10,10 @@ namespace GridScreenAction{
 class Grid_screen_upgrade_action final:public Grid_screen_action,public Render_arrow
 {
 public:
-    Grid_screen_upgrade_action();
+    Grid_screen_upgrade_action()noexcept(noexcept(Button::Cancel_button{}) && noexcept(Button::Confirm_button{}))
+        :Grid_screen_action(true),
+        card(nullptr),
+        upgraded_card(nullptr){}
     ~Grid_screen_upgrade_action()override=default;
     void SetCard(const std::shared_ptr<Card::Cards> &card)override;
     void update(Dungeon::Dungeon_shared &dungeon_shared)override;

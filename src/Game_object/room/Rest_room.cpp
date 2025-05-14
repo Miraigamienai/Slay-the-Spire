@@ -13,12 +13,21 @@
 namespace Room
 {
     void Rest_room::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+        if(room_phase==Room_phase::complete){
+            proceed.render(r2);
+            return;
+        }
         this->campfire_burning_effs.render(r2);
         if(this->option_handler!=nullptr)
             this->option_handler->render(r2);
+        proceed.render(r2);
     }
 
     void Rest_room::update(Dungeon::Dungeon_shared &dungeon_shared){
+        if(room_phase==Room_phase::complete){
+            proceed.update();
+            return;
+        }
         //TODO:player position
         //fire update
         campfire_burning_effs.update();
@@ -26,7 +35,7 @@ namespace Room
         if(campfire_burning_timer<0.0F){
             campfire_burning_timer=BURNING_TIMER;
             add_fire();
-            add_fire();   
+            add_fire();
         }
         //option update
         if(option_handler!=nullptr){
@@ -41,7 +50,28 @@ namespace Room
                 option_handler->update();
             }
         }
-    
+        //check the proceed button status
+        if(dungeon_shared.manager.current_screen_equals(Interface::ScreenType::grid_cards)){
+            //smith
+            proceed_pop_timer=0.0F;
+            proceed.hide();
+        }else{
+            //normal
+            if(proceed_pop_timer>0.0F)
+                proceed_pop_timer-=RUtil::Game_Input::delta_time();
+            else
+                proceed.show();
+        }
+        //update the proceed button
+        proceed.update();
+        if(proceed.is_logically_clicked()){
+            //to main map
+            dungeon_shared.manager.open<Interface::ScreenType::main_dungeon>();
+            //hide button
+            proceed.hide();
+            //set phase
+            room_phase=Room_phase::complete;
+        }
     }
     
     void Rest_room::add_fire(){
@@ -51,6 +81,7 @@ namespace Room
     }
 
     void Rest_room::init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 dungeon_fade_color){
+        room_phase=Room_phase::just_complete;
         this->dungeon_fade_color=dungeon_fade_color;
         this->option_handler=std::make_shared<Option::Option_handler>(dungeon_shared, dungeon_fade_color);
     }

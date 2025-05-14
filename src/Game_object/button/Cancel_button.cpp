@@ -9,14 +9,6 @@
 #include "Draw/Draw_2D.hpp"
 
 namespace Button{
-    Cancel_button::Cancel_button()
-        :hb(HB_W, HB_H),
-        current_x(HIDE_X),
-        target_x(HIDE_X),
-        is_hidden(true),
-        text(nullptr),
-        oscillate_timer(0.0F){}
-    
     void Cancel_button::update(){
         if(!is_hidden){
             oscillate_timer+=RUtil::Game_Input::delta_time()*3.0F;

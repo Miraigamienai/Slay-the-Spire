@@ -42,5 +42,6 @@ public:
     auto get_phase()const noexcept{return room_phase;}
 protected:
     Room_phase room_phase;
+    static constexpr float POP_TIME=1.5F;
 };
 }

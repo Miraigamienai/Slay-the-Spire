@@ -6,15 +6,6 @@
 #include "Draw/Draw_2D.hpp"
 
 namespace Button{
-    Confirm_button::Confirm_button()
-    :hb(HB_W, HB_H),
-    current_x(HIDE_X),
-    target_x(HIDE_X),
-    is_hidden(true),
-    is_disable(false),
-    text(nullptr),
-    oscillate_timer(0.0F){}
-
     void Confirm_button::update(){
         if(!is_hidden){
             oscillate_timer+=RUtil::Game_Input::delta_time()*3.0F;

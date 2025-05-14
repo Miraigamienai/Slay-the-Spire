@@ -3,7 +3,7 @@
 namespace RUtil{
 class Hitbox{
 public:
-    Hitbox(float x,float y,float width,float height,bool isCenter=false);
+    Hitbox(float x,float y,float width,float height,bool isCenter=false)noexcept;
     Hitbox(float width,float height)noexcept
         :x(0.0F),
         y(0.0F),

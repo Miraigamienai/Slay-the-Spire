@@ -295,6 +295,6 @@ set(INCLUDE_FILES
 	RUtil/Some_Math.hpp
 	RUtil/Text_Vector_Reader.hpp
 )
- 
+
 set(TEST_FILES
 )

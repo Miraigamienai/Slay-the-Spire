@@ -2,8 +2,14 @@
 #include "RUtil/Game_Input.hpp"
 
 namespace RUtil{
-Hitbox::Hitbox(float x,float y,float width,float height,bool isCenter)
-                    :width(width),height(height){
+Hitbox::Hitbox(float x,float y,float width,float height,bool isCenter)noexcept
+    :width(width),
+    height(height),
+    just_hovered(false),
+    hovered(false),
+    click_stared(false),
+    clicked(false)
+{
     if(isCenter){
         this->cx=x;
         this->cy=y;
@@ -15,7 +21,6 @@ Hitbox::Hitbox(float x,float y,float width,float height,bool isCenter)
         this->x=x;
         this->y=y;
     }
-    this->just_hovered=this->click_stared=this->clicked=this->hovered=false;
 }
 
 void Hitbox::update(){
@@ -23,7 +28,7 @@ void Hitbox::update(){
     //hover check
     just_hovered=false;
     if(!hovered) just_hovered=true;
-    hovered = x<=Game_Input::getX()&&Game_Input::getX()<=x+width&&y<=Game_Input::getY()&&Game_Input::getY()<=y+height;
+    hovered = x<=static_cast<float>(Game_Input::getX())&&static_cast<float>(Game_Input::getX())<=x+width&&y<=static_cast<float>(Game_Input::getY())&&static_cast<float>(Game_Input::getY())<=y+height;
     if(!hovered) just_hovered=false;
     //click check
     if(hovered&&Game_Input::just_clicked()){

@@ -10,4 +10,5 @@
 #include "Game_object/character/Monster/FatGremlin.hpp"
 #include "Game_object/character/Player.hpp"
 void test(const std::shared_ptr<Draw::Draw_2D> &r2);
+void test2(Dungeon::Dungeon_shared &dungeon_shared);
 #endif // DRAW_TEST_HPP

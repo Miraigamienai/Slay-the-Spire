@@ -132,8 +132,15 @@ set(SRC_FILES
 	RUtil/Scroll.cpp
 	RUtil/Some_Math.cpp
 	RUtil/Text_Vector_Reader.cpp
+	top_panel/Deck_icon.cpp
+	top_panel/Floor_icon.cpp
+	top_panel/Gold_bag_icon.cpp
+	top_panel/Heart_icon.cpp
+	top_panel/Map_icon.cpp
+	top_panel/Setting_icon.cpp
+	top_panel/Top_panel.cpp
 )
-
+ 
 set(INCLUDE_FILES
 	AppStatus.hpp
 	Cursor.hpp
@@ -283,6 +290,14 @@ set(INCLUDE_FILES
 	Game_object/room/rest_room_options/Smith_option.hpp
 	Game_object/scene/Bottom_scene.hpp
 	Game_object/scene/Scenes.hpp
+	Game_object/top_panel/Basic_panel.hpp
+	Game_object/top_panel/Deck_icon.hpp
+	Game_object/top_panel/Floor_icon.hpp
+	Game_object/top_panel/Gold_bag_icon.hpp
+	Game_object/top_panel/Heart_icon.hpp
+	Game_object/top_panel/Map_icon.hpp
+	Game_object/top_panel/Setting_icon.hpp
+	Game_object/top_panel/Top_panel.hpp
 	RUtil/All_Image.hpp
 	RUtil/Atlas_Reader.hpp
 	RUtil/ColorValuesOnly.hpp
@@ -295,6 +310,6 @@ set(INCLUDE_FILES
 	RUtil/Some_Math.hpp
 	RUtil/Text_Vector_Reader.hpp
 )
- 
+
 set(TEST_FILES
 )

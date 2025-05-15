@@ -26,10 +26,12 @@ public:
     ~Shop_screen()override=default;
     void update(Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
-    void open(std::array<Shop_card_item, 5> &card1, std::array<Shop_card_item, 2> &card2){
+    void open(std::array<Shop_card_item, 5> &card1, std::array<Shop_card_item, 2> &card2, bool &can_purge){
         this->card1=&card1;
         this->card2=&card2;
+        this->out_can_purge=&can_purge;
         this->current_y=static_cast<float>(Setting::WINDOW_HEIGHT);
+        this->target_y=0.0F;
         this->hand_x = this->hand_target_x = static_cast<float>(Setting::WINDOW_WIDTH)/2.0F;
         this->hand_y = this->hand_target_y = static_cast<float>(Setting::WINDOW_HEIGHT);
         this->hand_timer=1.0F;
@@ -43,9 +45,11 @@ private:
     Draw::NumberDrawer price_drawer;
     Shop_card_item* hovered_card_item;
     Button::Cancel_button cancel;
+    float cancel_display_timer;
     float not_hovered_timer;
     bool something_hovered;
     float current_y;
+    float target_y;
     float hand_timer;
     float hand_x, hand_target_x;
     float hand_y, hand_target_y;
@@ -54,7 +58,9 @@ private:
     int player_current_gold;
     int purge_cost;
     float purge_card_scale;
-    bool can_purge;
+    bool *out_can_purge;
+    bool purge_is_done;
+    bool purge_is_cancelled;
     RUtil::Hitbox purge_hb;
     bool closing;
     void hand_update();
@@ -62,11 +68,18 @@ private:
     void move_hand(float x,float y)noexcept{
         hand_target_x = x - 50.0F * Setting::SCALE;
         hand_target_y = y + 90.0F * Setting::SCALE;
+        something_hovered=true;
+        cancel_display_timer=Button::Cancel_button::DISPLAY_TIME;
     }
     void cards_update(Effect::Effect_group &top_effs);
     void set_cards_x_pos()const;
     void render_cards(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void render_purge(const std::shared_ptr<Draw::Draw_2D> &r2)const;
+    void hide()noexcept(noexcept(this->cancel.hide(true))){
+        this->target_y=static_cast<float>(Setting::WINDOW_HEIGHT);
+        this->hand_target_y=static_cast<float>(Setting::WINDOW_HEIGHT);
+        this->cancel.hide(true);
+    }
     static const std::shared_ptr<Draw::ReTexture>&GOLD_IMG,&HAND_IMG;
     static constexpr float TOP_ROW_Y = 760.0F * Setting::SCALE,
                            BOTTOM_ROW_Y = 337.0F * Setting::SCALE,

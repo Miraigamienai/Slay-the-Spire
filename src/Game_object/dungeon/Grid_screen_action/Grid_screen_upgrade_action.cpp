@@ -7,6 +7,7 @@
 namespace Dungeon{
 namespace GridScreenAction{
     void Grid_screen_upgrade_action::SetCard(const std::shared_ptr<Card::Cards> &card){
+        this->is_done=false;
         this->is_cancelled=false;
         this->card=card;
         this->upgraded_card=card->Clone();

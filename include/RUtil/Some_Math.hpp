@@ -23,6 +23,8 @@ public:
         const auto Sum=(args+...);
         ((args/=static_cast<float>(Sum)),...);
     }
+    template <typename T>
+    static constexpr T Apply(const T start,const T target,const float t)noexcept(noexcept(start+(target-start)*t)){return start+(target-start)*t;}
     static float interpolation_exp(float v, float p, float a);
     static float interpolation_expin(float v, float p, float a);
     static float interpolation_powout(int p, float a);
@@ -37,6 +39,12 @@ public:
         //from gdx
         return Apply(start,target,std::clamp(a * a * a * (a * (a * 6.0F - 15.0F) + 10.0F),0.0F,1.0F));
     }
+    template <typename T>
+    static constexpr T interpolation_swing_out(T start,T target,float a)noexcept(noexcept(Apply<T>(start, target, 0.0F))){
+        //from gdx
+        --a;
+        return Apply(start, target, a * a * (3.0F * a + 2.0F) + 1.0F);
+    }
     static float interpolation_powout2(float start,float target,float a);
     static constexpr float interpolation_elastic_out(float a){
         return 1.0F-std::pow(2.0F,-10.0F*a)*std::sin(glm::two_pi<float>()*a*-10.0F);
@@ -46,8 +54,6 @@ public:
     static constexpr float GetDegress(const glm::vec2 &v){return glm::degrees(atan2f(v.y,v.x));}
     static float BounceOut(float t);
     static float BounceIn(float t);
-    template <typename T>
-    static constexpr T Apply(const T start,const T target,const float t)noexcept(noexcept(start+(target-start)*t)){return start+(target-start)*t;}
     static glm::vec2 BezierQuadratic(const glm::vec2 p0,const glm::vec2 p1,const glm::vec2 p2,const float t);
     static glm::vec2 CatmullRomSpline(const std::vector<glm::vec2> &controls,float t,const int len,const int vec_start_pos=0);
     static constexpr int GetIntLength(const int x)noexcept{

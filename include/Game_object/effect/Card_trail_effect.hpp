@@ -6,11 +6,6 @@
 #include "Game_object/interface/Reusable.hpp"
 #include "WindowSize.hpp"
 
-//fwd decl
-namespace Draw{
-    class Atlas_Region;
-}
-
 namespace Effect{
 class Card_trail_effect final:public Effects,public Interface::Reusable<Card_trail_effect>
 {
@@ -31,7 +26,6 @@ public:
     static constexpr bool UseAutoRelease()noexcept{return true;}
 private:
 glm::vec2 pos;
-static const std::shared_ptr<Draw::Atlas_Region> &IMG;
 static constexpr float SCALE_MULTI = Setting::SCALE * 22.0F;
 };
 }

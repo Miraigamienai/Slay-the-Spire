@@ -55,5 +55,7 @@ private:
                            TEXT_OFFSET_Y = 57.0F * Setting::SCALE;
     static constexpr float HB_OFFSET_X = -106.0F * Setting::SCALE,
                            HB_OFFSET_Y = 60.0F * Setting::SCALE;
+public:
+    static constexpr float DISPLAY_TIME=0.75F;
 };
 }

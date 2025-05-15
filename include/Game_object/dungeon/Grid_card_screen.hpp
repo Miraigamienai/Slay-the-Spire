@@ -71,6 +71,5 @@ private:
     void common_open_setting();
     void set_cards_position_when_opening();
     static constexpr int N=5;
-    static constexpr float DISPLAY_TIME=0.75F;
 };
 }

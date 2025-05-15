@@ -2,6 +2,7 @@
 
 #include "Game_object/dungeon/Shop_screen.hpp"
 #include "Game_object/dungeon/Dungeon_shared.hpp"
+#include "Game_object/dungeon/Grid_screen_action/Grid_screen_purge_action.hpp"
 #include "Game_object/card/Cards.hpp"
 #include "RUtil/ColorValuesOnly.hpp"
 #include "RUtil/Some_Math.hpp"
@@ -66,9 +67,11 @@ namespace Dungeon{
         card2(nullptr),
         price_drawer(PRICE_FONT_SIZE),
         hovered_card_item(nullptr),
+        cancel_display_timer(0.0F),
         not_hovered_timer(0.0F),
         something_hovered(false),
-        current_y(Setting::WINDOW_HEIGHT),
+        current_y(static_cast<float>(Setting::WINDOW_HEIGHT)),
+        target_y(0.0F),
         hand_timer(0.0F),
         hand_x(0.0F),
         hand_target_x(0.0F),
@@ -81,6 +84,9 @@ namespace Dungeon{
         player_current_gold(0),
         purge_cost(DEFAULT_PURGE_COST),
         purge_card_scale(Setting::SCALE),
+        out_can_purge(nullptr),
+        purge_is_done(false),
+        purge_is_cancelled(false),
         purge_hb(220.0F*Setting::SCALE, 300.0F*Setting::SCALE),
         closing(false)
     {
@@ -94,13 +100,24 @@ namespace Dungeon{
         }
         //set hovered false first
         something_hovered=false;
+        //make the rug down & cancel.show when purge cancelled or done
+        if(purge_is_cancelled || purge_is_done){
+            target_y=0.0F;
+            if(purge_is_done){
+                purge_is_done=false;
+                dungeon_shared.player->ReduceGold(purge_cost);
+                purge_cost+=PURGE_INCREASE_PRICE;
+                *out_can_purge=false;
+            }
+            purge_is_cancelled=false;
+        }
         //current_y update
-        if(current_y!=0.0F)
-            current_y=RUtil::Math::varlerp(current_y, 0.0F, 5.0F, Setting::SCALE);
+        if(current_y!=target_y)
+            current_y=RUtil::Math::varlerp(current_y, target_y, 5.0F, Setting::SCALE);
         //cards && hovered card update
         cards_update(dungeon_shared.top_effs);
         //check click
-        if(hovered_card_item!=nullptr && hovered_card_item->card->HitboxClicked() && hovered_card_item->price <= dungeon_shared.player->GetGold() && on_top){
+        if(hovered_card_item!=nullptr && hovered_card_item->card->HitboxClicked() && hovered_card_item->price <= dungeon_shared.player->GetGold()){
             //buy the card
             //reduce gold
             dungeon_shared.player->ReduceGold(hovered_card_item->price);
@@ -116,6 +133,13 @@ namespace Dungeon{
         }
         //purge update
         purge_update();
+        if(purge_hb.Clicked() && *out_can_purge && purge_cost<=dungeon_shared.player->GetGold() && on_top){
+            //open the purge screen
+            purge_is_done=false;
+            purge_is_cancelled=false;
+            dungeon_shared.manager.open<Interface::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_master_deck(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_purge_action>(), purge_is_done, purge_is_cancelled);
+            this->hide();
+        }
         //check is something hovered
         if(something_hovered){
             not_hovered_timer=0.0F;
@@ -126,9 +150,13 @@ namespace Dungeon{
         //hand update
         hand_update();
         //cancel button update & check
+        if(on_top){
+            if(0.0F<cancel_display_timer) cancel_display_timer-=RUtil::Game_Input::delta_time();
+            else cancel.show();
+        }
         cancel.update();
         if(cancel.is_logically_clicked()){
-            dungeon_shared.manager.back_to_last_screen();
+            dungeon_shared.manager.open<Interface::ScreenType::NONE>();
             closing=true;
             cancel.hide();
         }
@@ -188,7 +216,7 @@ namespace Dungeon{
         r2->draw(img, PURGE_CARD_X+18.0F*Setting::SCALE+img->offsetX-static_cast<float>(img->original_width)/2.0F, purge_card_y - 14.0F*Setting::SCALE+img->offsetY-static_cast<float>(img->original_height)/2.0F, static_cast<float>(img->GetRegionWidth()), static_cast<float>(img->GetRegionHeight()), 0.0F, static_cast<float>(img->original_width)/2.0F-img->offsetX, static_cast<float>(img->original_height)/2.0F-img->offsetY, purge_card_scale, purge_card_scale);
         //render main purge
         r2->SetColor(RUtil::WHITE);
-        if(can_purge){
+        if(*out_can_purge){
             const float purge_scale_offset_y=(purge_card_scale/Setting::SCALE-0.75F)*200.0F*Setting::SCALE;
             //purge img
             r2->draw(PURGE_IMG(), PURGE_CARD_X-256.0F, purge_card_y-256.0F, 512.0F, 512.0F, 0.0F, 256.0F, 256.0F, purge_card_scale, purge_card_scale);
@@ -203,16 +231,14 @@ namespace Dungeon{
     }
 
     void Shop_screen::purge_update(){
-        if(!can_purge){
+        if(!*out_can_purge || !on_top){
             purge_card_scale=RUtil::Math::varlerp(purge_card_scale, 0.75F*Setting::SCALE, 7.5F, 0.003F);
             return;
         }
         const float purge_card_y=this->current_y+BOTTOM_ROW_Y;
         purge_hb.move(PURGE_CARD_X, purge_card_y);
-        if(purge_hb.Clicked()){
-            //open the purge screen
-
-        }else if(purge_hb.Hovered()){
+        purge_hb.update();
+        if(purge_hb.Hovered()){
             move_hand(PURGE_CARD_X-Card::Cards::IMG_WIDTH/2.0F, purge_card_y);
             purge_card_scale=Setting::SCALE;
         }else{
@@ -221,8 +247,6 @@ namespace Dungeon{
     }
 
     void Shop_screen::hand_update(){
-        //move hand to hovered card if not nullptr
-        if(hovered_card_item!=nullptr) move_hand(hovered_card_item->card->GetX()-Card::Cards::IMG_WIDTH/2.0F, hovered_card_item->card->GetY());
         //hand update
         if(hand_timer>0.0F){
             hand_timer-=RUtil::Game_Input::delta_time();
@@ -250,7 +274,7 @@ namespace Dungeon{
 
     void Shop_screen::set_cards_x_pos()const{
         constexpr float SPACE_BETWEEN_CARD=(static_cast<float>(Setting::WINDOW_WIDTH) - DRAW_START_X*2.0F - Card::Cards::IMG_WIDTH_S*5.0F)/4.0F;
-        constexpr float CARD_PAD_X=SPACE_BETWEEN_CARD + Card::Cards::IMG_WIDTH_S;
+        constexpr float CARD_PAD_X=SPACE_BETWEEN_CARD + Card::Cards::IMG_WIDTH_S + 10.0F*Setting::SCALE;
         for(int i=0;i<5;i++){
             if((*card1)[i].card==nullptr) continue;
             (*card1)[i].card->SetX(static_cast<float>(Setting::WINDOW_WIDTH)/2.0F, true);
@@ -269,7 +293,7 @@ namespace Dungeon{
             if(it.card==nullptr) continue;
             it.card->SetY(this->current_y + TOP_ROW_Y, true);
             it.card->update(top_effs);
-            if(it.card->HitboxHovered()){
+            if(it.card->HitboxHovered()&&on_top){
                 hovered_card_item=&it;
                 it.card->Hover();
             }else{
@@ -280,14 +304,16 @@ namespace Dungeon{
             if(it.card==nullptr) continue;
             it.card->SetY(this->current_y + BOTTOM_ROW_Y, true);
             it.card->update(top_effs);
-            if(it.card->HitboxHovered()){
+            if(it.card->HitboxHovered()&&on_top){
                 hovered_card_item=&it;
                 it.card->Hover();
             }else{
                 it.card->Unhover();
             }
         }
-    }   
+        //move hand to hovered card if not nullptr
+        if(hovered_card_item!=nullptr) move_hand(hovered_card_item->card->GetX()-Card::Cards::IMG_WIDTH/2.0F, hovered_card_item->card->GetY());
+    }
 
     const std::shared_ptr<Draw::ReTexture>&Shop_screen::GOLD_IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/shop/gold.png"),
                                           &Shop_screen::HAND_IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/shop/merchantHand.png");

@@ -22,7 +22,7 @@ namespace Room
         }
         merchant->update(dungeon_shared);
         //check the proceed button status
-        if(dungeon_shared.manager.current_screen_equals(Interface::ScreenType::shop)){
+        if(!dungeon_shared.manager.current_screen_equals(Interface::ScreenType::NONE)){
             //already open the shop screen
             proceed_pop_timer=0.0F;
             proceed.hide();

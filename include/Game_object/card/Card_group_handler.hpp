@@ -60,7 +60,8 @@ public:
     void render_hand(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void obtain(const std::shared_ptr<Cards> &card);
     Card_group get_upgradeable_card_group()const;
-    
+    Card_group get_master_deck()const{return master_deck;}
+
     void render_force_cards(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         for(const auto&it:force_render_cards) it->render(r2);
     }

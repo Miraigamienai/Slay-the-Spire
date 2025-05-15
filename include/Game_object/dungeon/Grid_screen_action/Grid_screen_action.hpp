@@ -31,8 +31,9 @@ protected:
     bool is_done;
     bool is_cancelled;
 
-    void render_two_card(const std::shared_ptr<Draw::Draw_2D> &r2, const std::shared_ptr<Card::Cards> &card1, const std::shared_ptr<Card::Cards> &card2)const;
-    void render_dark_cover(const std::shared_ptr<Draw::Draw_2D> &r2)const;
+    static void render_two_card(const std::shared_ptr<Draw::Draw_2D> &r2, const std::shared_ptr<Card::Cards> &card1, const std::shared_ptr<Card::Cards> &card2);
+    static void render_one_card(const std::shared_ptr<Draw::Draw_2D> &r2, const std::shared_ptr<Card::Cards> &card);
+    static void render_dark_cover(const std::shared_ptr<Draw::Draw_2D> &r2);
 };
 }
 }

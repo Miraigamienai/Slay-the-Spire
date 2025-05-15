@@ -51,7 +51,7 @@ namespace Room
             }
         }
         //check the proceed button status
-        if(dungeon_shared.manager.current_screen_equals(Interface::ScreenType::grid_cards)){
+        if(!dungeon_shared.manager.current_screen_equals(Interface::ScreenType::NONE)){
             //smith
             proceed_pop_timer=0.0F;
             proceed.hide();

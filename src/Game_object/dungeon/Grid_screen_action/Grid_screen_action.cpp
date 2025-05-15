@@ -7,7 +7,7 @@
 
 namespace Dungeon{
 namespace GridScreenAction{
-    void Grid_screen_action::render_two_card(const std::shared_ptr<Draw::Draw_2D> &r2, const std::shared_ptr<Card::Cards> &card1, const std::shared_ptr<Card::Cards> &card2)const{
+    void Grid_screen_action::render_two_card(const std::shared_ptr<Draw::Draw_2D> &r2, const std::shared_ptr<Card::Cards> &card1, const std::shared_ptr<Card::Cards> &card2){
         //left card
         card1->SetX(static_cast<float>(Setting::WINDOW_WIDTH)*0.36F, true);
         card1->SetY(static_cast<float>(Setting::WINDOW_HEIGHT)*0.5F, true);
@@ -17,8 +17,14 @@ namespace GridScreenAction{
         card2->SetY(static_cast<float>(Setting::WINDOW_HEIGHT)*0.5F, true);
         card2->render(r2);
     }
+    
+    void Grid_screen_action::render_one_card(const std::shared_ptr<Draw::Draw_2D> &r2, const std::shared_ptr<Card::Cards> &card){
+        card->SetX(static_cast<float>(Setting::WINDOW_WIDTH)*0.5F, true);
+        card->SetY(static_cast<float>(Setting::WINDOW_HEIGHT)*0.5F, true);
+        card->render(r2);
+    }
 
-    void Grid_screen_action::render_dark_cover(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+    void Grid_screen_action::render_dark_cover(const std::shared_ptr<Draw::Draw_2D> &r2){
         r2->SetColor(RUtil::BLACK, 0.8F);
         r2->draw(Effect::Fade_wide::white_square, 0.0F, 0.0F, static_cast<float>(Setting::WINDOW_WIDTH), static_cast<float>(Setting::WINDOW_HEIGHT)-64.0F*Setting::SCALE);
     }

@@ -82,14 +82,15 @@ namespace Dungeon{
             if(screen_action->IsCancelled()){
                 is_confirming=false;
                 if(screen_action->have_cancel_button)//show after display time
-                    this->cancel_display_timer=DISPLAY_TIME;
+                    this->cancel_display_timer=Button::Cancel_button::DISPLAY_TIME;
                 else//immediately show if doen't have cancel button in action
                     this->cancel.show();
             }else if(screen_action->IsDone()){
                 if(out_is_done!=nullptr) *out_is_done=true;
                 this->display_group.clear();
                 this->cancel.hide(true);//hide immediately
-                dungeon_shared.manager.set_current_none();//quick leave grid_card screen.
+                dungeon_shared.manager.back_to_last_screen();
+                closing=true;
             }
         }
     }

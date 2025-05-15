@@ -31,7 +31,8 @@ private:
     RUtil::Hitbox hb;
     std::array<Shop_card_item, 5> card1;   
     std::array<Shop_card_item, 2> card2;
-    
+    bool can_purge;
+
     static const std::shared_ptr<Draw::ReTexture> &IMG;
     static constexpr float HB_W = 360.0F * Setting::SCALE,
                            HB_H = 300.0F * Setting::SCALE;

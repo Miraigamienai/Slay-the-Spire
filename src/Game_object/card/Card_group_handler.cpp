@@ -484,7 +484,7 @@ namespace Card{
     Card_group Card_group_handler::get_upgradeable_card_group()const{
         Card_group re;
         for(const auto&it:this->master_deck)
-            if(!it->IsUpgraded())re.AddTop(it->Clone());
+            if(!it->IsUpgraded())re.AddTop(it);
         return re;
     }
 

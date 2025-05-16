@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "Game_object/top_panel/Basic_panel.hpp"
+#include "Draw/NumberDrawer.hpp"
 #include "WindowSize.hpp"
 
 namespace TopPanel
@@ -13,7 +14,7 @@ public:
     Gold_bag_icon();
     ~Gold_bag_icon()=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
-    void update(Dungeon::Dungeon_shared &dungeon_shared) override;
+    void update(Dungeon::Dungeon_shared &dungeon_shared);
 
 private:
     static const std::shared_ptr<Draw::ReTexture> &img;

@@ -8,6 +8,7 @@
 #include "Game_object/dungeon/Grid_card_screen.hpp"
 #include "Game_object/dungeon/Shop_screen.hpp"
 #include "Game_object/map/Map_node.hpp"
+#include "Game_object/top_panel/Top_panel.hpp"
 
 namespace Dungeon{
     //This class will auto change where need to update or render.
@@ -43,6 +44,7 @@ namespace Dungeon{
         std::shared_ptr<Dungeon::Combat_reward_screen> combat_reward_screen;
         std::shared_ptr<Dungeon::Grid_card_screen> grid_card_screen;
         std::shared_ptr<Dungeon::Shop_screen> shop_screen;
+        std::shared_ptr<TopPanel::Top_panel> top_panel;
         
         void switch_to_next_screen();
         template <Interface::ScreenType ST>

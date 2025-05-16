@@ -1,5 +1,7 @@
 #include "Game_object/top_panel/Top_panel.hpp"
 #include "RUtil/Image_book.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
+
 namespace TopPanel
 {
     Top_panel::Top_panel()
@@ -9,11 +11,11 @@ namespace TopPanel
     void Top_panel::update(Dungeon::Dungeon_shared &dungeon_shared)
     {
         deck.update(dungeon_shared);
-        floor.update(dungeon_shared);
-        map.update(dungeon_shared);
+        floor.update();
+        map.update();
         goldBag.update(dungeon_shared);
         heart.update(dungeon_shared);
-        setting.update(dungeon_shared);
+        setting.update();
     }
     void Top_panel::render(const std::shared_ptr<Draw::Draw_2D> &r2)const
     {

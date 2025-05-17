@@ -16,7 +16,7 @@ namespace TopPanel
         }
         
     }
-    void TopPanel::Floor_icon::update(Dungeon::Dungeon_shared &dungeon_shared)
+    void TopPanel::Floor_icon::update()
     {
         hitbox.update();
     }

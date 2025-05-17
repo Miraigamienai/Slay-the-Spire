@@ -23,13 +23,18 @@ namespace Room{
     }
 
     void Shop_merchant::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        r2->SetColor(RUtil::WHITE);
-        r2->draw(IMG, DRAW_X, DRAW_Y, 512.0F*Setting::SCALE, 512.0F*Setting::SCALE);
+
         if(this->hb.Hovered()){
             r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
             r2->SetColor(RUtil::WHITE, 0.5F);
-            r2->draw(IMG, DRAW_X, DRAW_Y, 512.0F*Setting::SCALE, 512.0F*Setting::SCALE);
+            r2->draw(IMG_MERCHANTOBJECTS, DRAW_X, DRAW_Y, OBJECT_W, OBJECT_H);
+            r2->draw(IMG_MERCHANT, DRAW_X+OBJECT_W/4.0F, DRAW_Y+OBJECT_H/4.0F, MERCHANT_W, MERCHANT_H);
             r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }
+        else{
+            r2->SetColor(RUtil::WHITE);
+            r2->draw(IMG_MERCHANTOBJECTS, DRAW_X, DRAW_Y, OBJECT_W, OBJECT_H);
+            r2->draw(IMG_MERCHANT, DRAW_X+OBJECT_W/4.0F, DRAW_Y+OBJECT_H/4.0F, MERCHANT_W, MERCHANT_H);
         }
     }
 
@@ -45,5 +50,6 @@ namespace Room{
         }
     }
 
-    const std::shared_ptr<Draw::ReTexture> &Shop_merchant::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/shop/merchantObjects.png");
+    const std::shared_ptr<Draw::ReTexture> &Shop_merchant::IMG_MERCHANTOBJECTS=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/shop/merchantObjects.png");
+    const std::shared_ptr<Draw::ReTexture> &Shop_merchant::IMG_MERCHANT=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/shop/MerchantWithoutProps.png");
 }

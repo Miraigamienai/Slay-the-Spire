@@ -13,7 +13,7 @@ public:
     Map_icon();
     ~Map_icon()=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
-    void update(Dungeon::Dungeon_shared &dungeon_shared) override;
+    void update();
 
 private:
     static const std::shared_ptr<Draw::ReTexture> &img;

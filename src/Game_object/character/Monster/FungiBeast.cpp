@@ -14,24 +14,25 @@ namespace Monster{
             currentAction=Monster::FungiBeastAction::Grow;
         else if(lastAction==Monster::FungiBeastAction::Grow)
             currentAction=Monster::FungiBeastAction::Bite;
-        else
-            currentAction=static_cast<Monster::FungiBeastAction>(dist(dungeon_shared.random_package.monster_ai_rng));
-        
-            switch (currentAction){
-            case Monster::FungiBeastAction::Bite:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
-                Damage_info{BITE_DAMAGE, shared_from_this(), AttackType::blunt_light},
-                dungeon_shared.player));
-                break;
-            case Monster::FungiBeastAction::Grow:
-                //Gain 3  Strength.
-                break;
+        else{
+                currentAction=static_cast<Monster::FungiBeastAction>(dist(dungeon_shared.random_package.monster_ai_rng));
+                switch (currentAction){
+                case Monster::FungiBeastAction::Bite:
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
+                    Damage_info{BITE_DAMAGE, shared_from_this(), AttackType::blunt_light},
+                    dungeon_shared.player));
+                    break;
+                case Monster::FungiBeastAction::Grow:
+                    //Gain 3  Strength.
+                    break;
 
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
+
         if(currentAction!=lastAction){
             ActionCount=1;
             lastAction=currentAction;

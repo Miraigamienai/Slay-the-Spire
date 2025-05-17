@@ -9,7 +9,9 @@
 #include "Game_object/top_panel/Map_icon.hpp"
 #include "Game_object/top_panel/Setting_icon.hpp"
 #include "WindowSize.hpp"
-#include "Game_object/dungeon/Dungeon_shared.hpp"
+namespace Dungeon{
+    struct Dungeon_shared;
+}
 namespace TopPanel
 {
 class Top_panel

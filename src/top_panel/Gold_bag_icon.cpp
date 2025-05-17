@@ -1,5 +1,6 @@
 #include "Game_object/top_panel/Gold_bag_icon.hpp"
 #include "RUtil/Image_book.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
 namespace TopPanel
 {
     TopPanel::Gold_bag_icon::Gold_bag_icon():Basic_panel(ICON_X,ICON_Y,ICON_W,ICON_H){

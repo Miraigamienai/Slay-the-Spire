@@ -5,7 +5,6 @@
 #include "Game_object/card/red/Clash.hpp"//for test
 #include "Core/Context.hpp"
 #include "Game_object/character/Player.hpp"
-#include "draw_test.hpp"
 TheApp::TheApp(){
     m_dungeon=std::make_shared<Dungeon::Dungeons>(m_dungeon_shared,seed);
     m_InitScreen=std::make_shared<InitScreen>(m_CurrentState);
@@ -34,7 +33,6 @@ void TheApp::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
     default:
         break;
     }
-    test(r2);
 }
 void TheApp::update(){
     switch (m_CurrentState) {
@@ -46,7 +44,6 @@ void TheApp::update(){
         break;
     case AppStatus::State::PLAYING:
         m_dungeon->update();
-        test2(m_dungeon_shared);
         if (m_dungeon->is_game_over()){ // there is a bug
             m_CurrentState=AppStatus::State::INIT;
             m_dungeon.reset();

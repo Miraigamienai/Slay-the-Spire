@@ -33,10 +33,15 @@ private:
     std::array<Shop_card_item, 2> card2;
     bool can_purge;
 
-    static const std::shared_ptr<Draw::ReTexture> &IMG;
+    static const std::shared_ptr<Draw::ReTexture> &IMG_MERCHANTOBJECTS,&IMG_MERCHANT;
+
     static constexpr float HB_W = 360.0F * Setting::SCALE,
                            HB_H = 300.0F * Setting::SCALE;
     static constexpr float DRAW_X = static_cast<float>(Setting::WINDOW_WIDTH)/2.0F + 34.0F * Setting::SCALE,
-                           DRAW_Y = (340.0F - 109.0F) * Setting::SCALE;
+                           DRAW_Y = (340.0F - 109.0F) * Setting::SCALE,
+                           OBJECT_W= 512.0F * Setting::SCALE,
+                           OBJECT_H= 211.0F * Setting::SCALE,
+                           MERCHANT_W= 512.0F * Setting::SCALE * 0.5F,
+                           MERCHANT_H= 512.0F * Setting::SCALE * 0.5F;
 };
 }

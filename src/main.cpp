@@ -19,7 +19,6 @@ int main(int, char**) {
         app.update();
         Draw2D->begin();
         app.render(Draw2D);
-        test(Draw2D);
         Cursor::Draw(Draw2D);
         Draw2D->end();
         context->Update();

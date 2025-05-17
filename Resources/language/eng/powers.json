@@ -1288,10 +1288,8 @@
   "Weakened": {
     "NAME": "Weakened",
     "DESCRIPTIONS": [
-      "#yAttacks deal #b",
-      "% less damage for #b",
-      " turn.",
-      " turns."
+      "#yAttacks deal !D!#b% less damage for !M! turn.",
+      "#yAttacks deal !D!#b% less damage for !M! turns."
     ]
   },
   "WireheadingPower": {

@@ -81,8 +81,7 @@ namespace Character{
             }
         }
 
-        
-        
+        this->powers.update();
     }
     void Characters::render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         const float x=HPBar_hb_cX-HPBar_hb_width/2.0F,y=HPBar_hb_cY-HEALTH_BAR_HEIGHT/2.0F;

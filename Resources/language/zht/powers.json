@@ -1288,10 +1288,7 @@
   "Weakened": {
     "NAME": "虛弱",
     "DESCRIPTIONS": [
-      " #y攻擊 造成的傷害減少 #b",
-      "% 。持續時間 #b",
-      " 回合",
-      " 回合"
+      "#y攻擊 造成的傷害減少 !D!#b% 。$n持續時間 !M! 回合"
     ]
   },
   "WireheadingPower": {

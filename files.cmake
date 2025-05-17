@@ -114,6 +114,8 @@ set(SRC_FILES
 	Game_object/map/Map_node.cpp
 	Game_object/panel/Energy_panel.cpp
 	Game_object/panel/Panels.cpp
+	Game_object/power/Powers.cpp
+	Game_object/power/Power_group.cpp
 	Game_object/reward_item/Card_reward.cpp
 	Game_object/reward_item/Card_reward_item.cpp
 	Game_object/reward_item/Reward_item.cpp
@@ -285,6 +287,9 @@ set(INCLUDE_FILES
 	Game_object/map/Map_node.hpp
 	Game_object/panel/Energy_panel.hpp
 	Game_object/panel/Panels.hpp
+	Game_object/power/Powers.hpp
+	Game_object/power/Power_group.hpp
+	Game_object/power/Weak_power.hpp
 	Game_object/reward_item/Card_reward.hpp
 	Game_object/reward_item/Card_reward_item.hpp
 	Game_object/reward_item/Reward_item.hpp

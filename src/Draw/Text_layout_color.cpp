@@ -27,7 +27,7 @@ namespace Draw
         }
     }
 
-    void Text_layout_color::text_rows_set(){
+    void Text_layout_color::set_member(){
         text_rows.clear();//Ensure text_rows is empty.
         auto text_vec=color_string_split(this->text);
         //if "$n" appears inside a color tag text, that "$n" will be ignored.

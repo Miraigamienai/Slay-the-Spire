@@ -4,9 +4,10 @@
 #include "Draw/Draw_2D.hpp"
 #include "Draw/Image_Region.hpp"
 #include "Draw/ReText.hpp"
+
 namespace Draw
 {
-    void Text_layout_normal::text_img_set(){
+    void Text_layout_normal::set_member(){
         auto &font=Fonts::GetFont(this->fw);
         std::shared_ptr<ReText> ori_text_img=std::make_shared<ReText>(font,this->text);
         TTF_SizeUTF8(font.get(),this->text.c_str(),&this->width,&this->height);

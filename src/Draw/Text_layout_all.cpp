@@ -26,14 +26,6 @@ namespace Draw
         }
     }
 
-    static inline constexpr auto GetNumColor(NumStatus status)noexcept{
-        switch(status){
-            case NumStatus::up:return RUtil::Colors::CHARTREUSE;
-            case NumStatus::down:return RUtil::Colors::TOMATO;
-            default: return RUtil::Colors::WHITE;
-        }
-    }
-
     static inline Uint32 NumType(char c){
         switch(c){
             case 'D': return 1;
@@ -55,21 +47,17 @@ namespace Draw
 
     static inline constexpr auto GetNumColor(Uint32 num_type, const number_info &num_info){
         switch(num_type){
-            case 'D': return GetNumColor(num_info.damage_status);
-            case 'B': return GetNumColor(num_info.defense_status);
-            default: return GetNumColor(num_info.magic_status);
+            case 'D': return Draw::GetNumColor(num_info.damage_status);
+            case 'B': return Draw::GetNumColor(num_info.defense_status);
+            default: return Draw::GetNumColor(num_info.magic_status);
         }
     }
 
+    void Text_layout_all::render_top_left(const std::shared_ptr<Draw::Draw_2D> &/* r2 */,const float /* x */,const float /* y */,const float /* scale */)const{
+
+    }
+
     void Text_layout_all::render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const{
-        
-    }
-
-    void Text_layout_all::render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const{
-
-    }
-
-    void Text_layout_all::render_center_with_nums(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale,const number_info &num_info)const{
         for(const auto&it:text_rows){
             if(it.row.empty()) continue;
             //calculate row width
@@ -118,8 +106,9 @@ namespace Draw
         }
     }
 
-    void Text_layout_all::text_rows_set(){
+    void Text_layout_all::set_member(){
         text_rows.clear();//Ensure text_rows is empty.
+        num_draw.ChangeFontWeight(this->fw);
         auto text_vec=color_string_split(this->text);
         //split number string
         for(int i=static_cast<int>(text_vec.size())-1;i>=0;--i){
@@ -163,11 +152,9 @@ namespace Draw
             
             if(it[0]=='!' && it.size()==3 && it[2]=='!'){
                 //num string
-                TTF_SizeUTF8(font.get(), it.c_str(), &img_w, &img_h);
                 text_rows.back().row.emplace_back(text_item{true, false, NumType(it[1]), nullptr});
             }else if(it[0]=='[' && it.size()==3 && it[2]==']'){
                 //orb string
-                TTF_SizeUTF8(font.get(), it.c_str(), &img_w, &img_h);
                 text_rows.back().row.emplace_back(text_item{false, true, RUtil::WHITE, GetOrb(it[1])});
             }else if(it[0]=='#' && it.size()>=3){
                 //color string
@@ -203,9 +190,25 @@ namespace Draw
         text_rows.back().img_row_width=now_x+img_w;
         //set width & height
         this->height=now_y+img_h;
-        this->width=0;//NOTE:this width excludes any number or orb.
-        for(const auto&it:text_rows)
-            if(width<it.img_row_width) width=it.img_row_width;
+        this->calculate_width();
     }
 
+    void Text_layout_all::calculate_width(){
+        width=0;
+        for(const auto&it1:text_rows){
+            float now_w=0;
+            for(const auto&it2:it1.row){
+                if(it2.is_num){
+                    now_w += static_cast<float>(num_draw.PureWidth(GetNum(it2.c, num_info)));
+                }else if(it2.is_orb){
+                    const float orb_scale=static_cast<float>(num_draw.PureHeight()) / static_cast<float>(it2.img->GetRegionHeight()) * static_cast<float>(it2.img->GetRegionWidth());
+                    now_w += (float)it2.img->GetRegionWidth()*orb_scale;
+                }else{
+                    now_w += (float)it2.img->GetRegionWidth();
+                }
+            }
+            if(now_w>width)
+                width=now_w;
+        }
+    }
 } // namespace Draw

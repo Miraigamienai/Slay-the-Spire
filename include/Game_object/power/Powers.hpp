@@ -2,11 +2,14 @@
 
 #include <memory>
 
+#include "RUtil/Powers_Text_Reader.hpp"
 #include "Draw/NumberDrawer.hpp"
+#include "Draw/Text_box.hpp"
+#include "Draw/Text_layout.hpp"
+#include "WindowSize.hpp"
 
 //fwd decl
 namespace RUtil{
-    enum class Powers_Text_ID:int;
     enum class AtlasRegionID:int;
 }
 namespace Draw{
@@ -18,23 +21,35 @@ namespace Power
 class Powers
 {
 public:
-    Powers(RUtil::Powers_Text_ID power_id, RUtil::AtlasRegionID region_48_id, RUtil::AtlasRegionID region_128_id)
-        :power_id(power_id),
-        region_48_id(region_48_id),
-        region_128_id(region_128_id),
-        amount(0){}
+    Powers(RUtil::Powers_Text_ID power_id, RUtil::AtlasRegionID region_48_id, RUtil::AtlasRegionID region_128_id, bool reduce_each_turn, bool can_negative=false);
     virtual ~Powers()=default;
     void render_img(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float color_a)const;
     void render_amount(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float color_a)const;
-    void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float color_a)const;
+    void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const;
     void update();
-
+    auto &GetName()const noexcept(noexcept(tip_box.get_title())){return tip_box.get_title();}
+    auto &GetDesc()const noexcept(noexcept(tip_box.get_body())){return tip_box.get_body();}
     const RUtil::Powers_Text_ID power_id;
     const RUtil::AtlasRegionID region_48_id;
     const RUtil::AtlasRegionID region_128_id;
-private:
+    const bool can_negative;
+    const bool reduce_each_turn;
+    
+    //virtual function
+    virtual void desc_update(){tip_box.change_body(get_desc());}
+    virtual float calculate_damage_dealt(float damage)const{return damage;}
+protected:
+    Draw::Text_box tip_box;
     int amount;
+    const std::shared_ptr<Draw::Text_layout> &get_desc(){
+        auto &arr=RUtil::Powers_Text_Reader::GetDescriptions(power_id);
+        return amount==1?arr[0]:(arr[1]==nullptr?arr[0]:arr[1]);
+    }
+private:
+    float font_scale;
+    float color_a;
     static Draw::NumberDrawer amount_drawer;
     static constexpr int FONTSIZE=20;
+    static constexpr float POWER_ICON_OFFSET=40.0F*Setting::SCALE;
 };
 } // namespace Power

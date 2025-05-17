@@ -17,7 +17,7 @@ public:
         color2(color2),
         scale2(Setting::SCALE)
     {
-        this->color=color;
+        this->color=color1;
         this->color_a=0.01F;
         this->duration=2.0F;
         this->scale=Setting::SCALE;

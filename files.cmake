@@ -132,9 +132,11 @@ set(SRC_FILES
 	RUtil/Game_Input.cpp
 	RUtil/Hitbox.cpp
 	RUtil/Image_book.cpp
+	RUtil/Powers_Text_Reader.cpp
 	RUtil/Random.cpp
 	RUtil/Scroll.cpp
 	RUtil/Some_Math.cpp
+	RUtil/Text_layout_creator.cpp
 	RUtil/Text_Vector_Reader.cpp
 	top_panel/Deck_icon.cpp
 	top_panel/Floor_icon.cpp
@@ -309,13 +311,16 @@ set(INCLUDE_FILES
 	RUtil/All_Image.hpp
 	RUtil/Atlas_Reader.hpp
 	RUtil/ColorValuesOnly.hpp
+	RUtil/File_Pos_Getter.hpp
 	RUtil/Game_Input.hpp
 	RUtil/Hitbox.hpp
 	RUtil/Image_book.hpp
+	RUtil/Powers_Text_Reader.hpp
 	RUtil/Random.hpp
 	RUtil/Random_package.hpp
 	RUtil/Scroll.hpp
 	RUtil/Some_Math.hpp
+	RUtil/Text_layout_creator.hpp
 	RUtil/Text_Vector_Reader.hpp
 )
 

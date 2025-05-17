@@ -21,5 +21,6 @@ class Text_Vector_Reader
 public:
     Text_Vector_Reader()=delete;~Text_Vector_Reader()=delete;Text_Vector_Reader(const Text_Vector_Reader &) = delete;Text_Vector_Reader(Text_Vector_Reader &&) = delete;Text_Vector_Reader &operator=(const Text_Vector_Reader &) = delete;Text_Vector_Reader &operator=(Text_Vector_Reader &&) = delete;
     static const std::vector<std::shared_ptr<Draw::Text_layout>> &GetTextVector(const Text_ID id);
+    static constexpr auto FILENAME="ui.json";
 };
 }

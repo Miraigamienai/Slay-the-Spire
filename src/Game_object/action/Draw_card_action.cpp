@@ -1,6 +1,7 @@
 #include "Game_object/action/Draw_card_action.hpp"//the hpp
 #include "Game_object/action/Empty_shuffle_action.hpp"//shuffle when no card
 #include "Game_object/dungeon/Dungeon_shared.hpp"
+#include "Game_object/character/Player.hpp"
 
 namespace Action
 {
@@ -31,7 +32,7 @@ namespace Action
         while(0<amount&&duration<0.0F){
             amount--;
             duration+=ACTION_DUR_FASTER;
-            dungeon_shared.card_group_handler.draw();
+            dungeon_shared.card_group_handler.draw(dungeon_shared.player->get_powers());
         }
         if(amount==0)
             is_done=true;

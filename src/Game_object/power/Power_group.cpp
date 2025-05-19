@@ -19,7 +19,7 @@ namespace Power{
         for(const auto&it:box){
             it->render_amount(r2, x+offset_x, y-66.0F*Setting::SCALE, color_a);
             offset_x+=ICON_PADDING;
-        } 
+        }
     }
 
     void Power_group::render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const{
@@ -28,7 +28,7 @@ namespace Power{
         float now_x = x;
         float curr_h=0.0F;
         for(const auto&it:box){
-            const float desc_h = it->GetDesc()->GetHeight() + TIP_PADDING_Y;
+            const float desc_h = it->get_desc()->GetHeight() + TIP_PADDING_Y;
             if(curr_h + desc_h >= TIP_MAX_HEIGHT){
                 curr_h=0.0F;
                 if(is_left) now_x-=324.0F*Setting::SCALE;
@@ -43,7 +43,7 @@ namespace Power{
         float max_h=0.0F;
         float curr_h=0.0F;
         for(const auto&it:box){
-            const float desc_h = it->GetDesc()->GetHeight() + TIP_PADDING_Y;
+            const float desc_h = it->get_desc()->GetHeight() + TIP_PADDING_Y;
             if(curr_h + desc_h > TIP_MAX_HEIGHT){
                 if(curr_h>max_h) max_h=curr_h;
                 curr_h=desc_h;

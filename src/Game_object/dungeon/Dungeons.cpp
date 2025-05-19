@@ -80,6 +80,7 @@ namespace Dungeon{
         dungeon_shared.back_effs.render(r2);
         if(m_current_node!=nullptr)m_current_node->GetRoom()->render(r2);
         dungeon_shared.player->render(r2);//temporary here
+        dungeon_shared.room_monsters.render(r2);//temporary here
         scene->render_fg(r2);
         dungeon_shared.overlay.render(r2);
         dungeon_shared.card_group_handler.render_hand(r2);//flying card also render inside it.

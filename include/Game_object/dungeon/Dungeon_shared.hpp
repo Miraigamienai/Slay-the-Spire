@@ -8,12 +8,9 @@
 #include "Game_object/dungeon/Dungeon_manager.hpp"
 #include "Game_object/dungeon/Overlay.hpp"
 #include "Game_object/effect_gen/Effect_gen_group.hpp"
+#include "Game_object/character/Monster_group.hpp"
+#include "Game_object/character/Player.hpp"
 #include "RUtil/Random_package.hpp"
-
-//fwd decl
-namespace Character{
-    class Player;
-}
 
 namespace Dungeon{
 struct Dungeon_shared
@@ -28,5 +25,9 @@ struct Dungeon_shared
     Overlay overlay;
     std::shared_ptr<Character::Player> player=nullptr;
     Dungeon_manager manager;
+    Monster::Monster_group room_monsters;
+    void refresh_display(){
+        card_group_handler.hand_cards_values_refresh(player->get_powers());
+    }
 };
 }

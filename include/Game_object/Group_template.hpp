@@ -33,7 +33,7 @@ public:
             box.insert(box.begin(),item);
     }
     T PopTop(){auto temp=std::move(box.back());box.pop_back();return temp;}
-    
+    bool contains(const T&item){return std::find(box.begin(),box.end(),item)!=box.end();}
     void erase(const T& item){
         auto it=std::find(box.begin(),box.end(),item);
         if(it!=box.end()) box.erase(it);

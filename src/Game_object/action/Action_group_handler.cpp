@@ -8,15 +8,15 @@
 
 namespace Action
 {
-    void Action_group_handler::update(Dungeon::Dungeon_shared &dungeon_shared, const Monster::Monster_group&room_monsters){
+    void Action_group_handler::update(Dungeon::Dungeon_shared &dungeon_shared){
         if(is_wating_player){
-            get_next_action(dungeon_shared, room_monsters);
+            get_next_action(dungeon_shared);
         }else{
             if(current_action!=nullptr){
                 current_action->update(dungeon_shared);
                 if(current_action->IsDone()) current_action=nullptr;
             }else{
-                get_next_action(dungeon_shared, room_monsters);
+                get_next_action(dungeon_shared);
                 if(current_action==nullptr){
                     dungeon_shared.card_group_handler.refresh_hand_layout();
                     is_wating_player=true;
@@ -24,7 +24,7 @@ namespace Action
             }
         }
     }
-    void Action_group_handler::get_next_action(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group&room_monsters){
+    void Action_group_handler::get_next_action(Dungeon::Dungeon_shared &dungeon_shared){
         if(!action_box.empty()){
             current_action=action_box.PopTop();
             is_wating_player=false;
@@ -35,7 +35,7 @@ namespace Action
             //let the card can be hovered.
             card_queue.front().card->SetCanHoverInHand(true);
             //check if card playable
-            if((card_queue.front().card->IsSingleTarget()&&card_queue.front().monster->IsDie())|| room_monsters.IsAllDie()){
+            if((card_queue.front().card->IsSingleTarget()&&card_queue.front().monster->IsDie())|| dungeon_shared.room_monsters.IsAllDie()){
                 //can't play //add some logic later
                 
             }else{
@@ -46,7 +46,7 @@ namespace Action
                 dungeon_shared.card_group_handler.AddTop<Card::GroupType::force_render_cards>(card_queue.front().card);
                 dungeon_shared.card_group_handler.AddTop<Card::GroupType::force_update_cards>(card_queue.front().card);
                 //use the card
-                action_box.AddBot(std::make_shared<Card_use_start_action>(card_queue.front(),room_monsters));
+                action_box.AddBot(std::make_shared<Card_use_start_action>(card_queue.front()));
                 card_queue.front().card->SetX((float)Setting::WINDOW_WIDTH/2.0F);
                 card_queue.front().card->SetY((float)Setting::WINDOW_HEIGHT/2.0F);
             }

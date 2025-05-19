@@ -10,7 +10,7 @@ class Clash final:public Interface::CardPrototype<Clash>
 public:
     Clash():CardPrototype<Clash>(RUtil::AtlasRegionID::_red_attack_clash,Rarity::common,Type::attack,Color::red,Target::enemy,0,14,0,0){}
     ~Clash()override=default;
-    void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &room_monsters,const std::shared_ptr<Monster::Monsters> &target_monster)override;
+    void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade()override{
         SetDamage(18);
         upgraded=true;

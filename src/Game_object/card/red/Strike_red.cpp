@@ -7,7 +7,7 @@
 
 namespace Card{
 namespace Red{
-    void Strike_red::Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &/* room_monsters */,const std::shared_ptr<Monster::Monsters> &target_monster){
+    void Strike_red::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster){
            //damage the monster
             dungeon_shared.action_group_handler.AddActionBot(
                 std::make_shared<Action::Damage_action>

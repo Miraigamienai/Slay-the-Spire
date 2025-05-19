@@ -22,8 +22,10 @@ namespace Dungeon{
     struct Dungeon_shared;
 }
 namespace Monster{
-    class Monster_group;//monsters
     class Monsters;
+}
+namespace Power{
+    class Power_group;
 }
 
 namespace Card{
@@ -63,7 +65,7 @@ enum class Target{
 class Cards:public Card_soul{
 public:
     Cards(RUtil::AtlasRegionID card_name,Rarity rarity,Type type,Color color,Target target,
-        const int base_cost,const int base_damage=0,const int base_defense=0,const int base_magic_num=0);
+        const int base_cost,const int base_damage=0,const int base_block=0,const int base_magic_num=0);
     virtual ~Cards() = default;
     Cards(const Cards& other);//ensure internal references are properly set when coping. //(m_card_flash)
     
@@ -92,7 +94,7 @@ public:
     
     //Check if it is usable based on the current situation.
     virtual bool CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const;
-    virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &room_monsters,const std::shared_ptr<Monster::Monsters> &target_monster)=0;
+    virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const std::shared_ptr<Monster::Monsters> &target_monster)=0;
     virtual std::shared_ptr<Cards> Clone()const=0;
     virtual void Upgrade()=0;
     
@@ -126,6 +128,7 @@ public:
     void SetDrawScale(const float value,const bool immediate=false)noexcept{m_target_draw_scale=value;if(immediate)m_draw_scale=value;}
     void SetColorAlpha(const float value,const bool immediate=false)noexcept{m_target_color_a=value;if(immediate)m_color_a=value;}
     bool IsSingleTarget()const noexcept{return target==Target::enemy||target==Target::self_and_enemy;}
+    void RefreshDisplay(const Power::Power_group &player_powers){RefreshBlock(player_powers);RefreshDamage(player_powers);}
     //static function
     static void SetRenderColor(Uint32 c)noexcept{s_render_color=c;}
     //member
@@ -139,23 +142,29 @@ public:
 
     void ResetAttributes(){
         damage=base_damage;
-        defense=base_defense;
+        block=base_block;
         magic_num=base_magic_num;
         cost=base_cost;
     }
 protected:
-    void SetDamage(int num){
+    //protected virtual
+    virtual void RefreshDamage(const Power::Power_group &player_powers){CommonRefreshDamage(player_powers);}
+    virtual void RefreshBlock(const Power::Power_group &player_powers){CommonRefreshBlock(player_powers);}
+    
+    void CommonRefreshDamage(const Power::Power_group &player_powers);
+    void CommonRefreshBlock(const Power::Power_group &player_powers);
+    void SetDamage(int num)noexcept{
         this->base_damage=this->damage=num;
     }
-    void SetDefense(int num){
-        this->base_defense=this->defense=num;
+    void SetDefense(int num)noexcept{
+        this->base_block=this->block=num;
     }
-    void SetMagicNum(int num){
+    void SetMagicNum(int num)noexcept{
         this->base_magic_num=this->magic_num=num;
     }
     bool upgraded=false;
-    int base_damage, base_defense, base_magic_num, base_cost;
-    int damage,      defense,      magic_num,      cost;
+    int base_damage, base_block, base_magic_num, base_cost;
+    int damage,      block,      magic_num,      cost;
 private:
     static const float &DT;
     const std::shared_ptr<Draw::Atlas_Region> &m_card_bg_silhouette,&m_card_bg,&m_card_frame,&m_card_left_frame,&m_card_mid_frame,&m_card_right_frame,&m_card_banner,&m_card_portrait;

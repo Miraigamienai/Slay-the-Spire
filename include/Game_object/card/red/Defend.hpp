@@ -10,7 +10,7 @@ class Defend final:public Interface::CardPrototype<Defend>
 public:
     Defend():CardPrototype<Defend>(RUtil::AtlasRegionID::_red_skill_defend,Rarity::basic,Type::skill,Color::red,Target::self,1,0,5,0){}
     ~Defend()override=default;
-    void Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &room_monsters,const std::shared_ptr<Monster::Monsters> &target_monster)override;
+    void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade()override{
         SetDefense(8);
         upgraded=true;

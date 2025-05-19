@@ -20,12 +20,12 @@ Monster_room::Monster_room():Rooms(Room_type::Monster),m_group_name(Monster::Gro
     m_wait_timer=0.0F;
 }
 void Monster_room::init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 /* dungeon_fade_color */){
-    Monster::Monster_group_creater::CreateGroup(m_monsters,m_group_name,dungeon_shared.random_package.monster_type_rng);
+    Monster::Monster_group_creater::CreateGroup(dungeon_shared.room_monsters, m_group_name,dungeon_shared.random_package.monster_type_rng);
     m_wait_timer=0.1F;
 }
-void Monster_room::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+void Monster_room::render(const std::shared_ptr<Draw::Draw_2D> &/* r2 */)const{
     //moster render
-    m_monsters.render(r2);
+    // m_monsters.render(r2);
     //player render
 }
 void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
@@ -40,19 +40,19 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         return;
     }
 
-    m_monsters.update();
+    dungeon_shared.room_monsters.update();
     dungeon_shared.player->update();
 
     if(m_wait_timer<=0.0F){//Loop until end turn. //Idle also loop here.
-        dungeon_shared.action_group_handler.update(dungeon_shared,m_monsters);
-        dungeon_shared.card_group_handler.update(dungeon_shared.action_group_handler,m_monsters);
+        dungeon_shared.action_group_handler.update(dungeon_shared);
+        dungeon_shared.card_group_handler.update(dungeon_shared.action_group_handler, dungeon_shared.room_monsters);
         
         if(dungeon_shared.overlay.end_turn_button_clicked()){
             //ending turn
             //TODO:end logic need to be check.
             dungeon_shared.overlay.disable_end_turn_button();
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Discard_all_action>());
-            dungeon_shared.action_group_handler.ending_turn(m_monsters);
+            dungeon_shared.action_group_handler.ending_turn(dungeon_shared.room_monsters);
             this->m_wait_timer=0.25F;
         }
     }else{
@@ -60,7 +60,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         if(dungeon_shared.action_group_handler.is_nothing_to_do()){
             m_wait_timer-=RUtil::Game_Input::delta_time();
         }else{
-            dungeon_shared.action_group_handler.update(dungeon_shared,m_monsters);
+            dungeon_shared.action_group_handler.update(dungeon_shared);
         }
         if(m_wait_timer<=0.0F){//ready to start turn
             if(/*first*/true){
@@ -78,7 +78,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
     }
 
     //check does battle end
-    if(m_monsters.IsAllDie() && dungeon_shared.action_group_handler.is_nothing_to_do()){
+    if(dungeon_shared.room_monsters.IsAllDie() && dungeon_shared.action_group_handler.is_nothing_to_do()){
         ending_battle=true;
         dungeon_shared.overlay.hide_combat_panel();
         // card_group_handler.on_ending_battle();

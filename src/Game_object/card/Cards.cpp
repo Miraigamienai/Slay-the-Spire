@@ -2,13 +2,14 @@
 #include "Game_object/effect/Card_glow_border.hpp"//eff
 #include "Game_object/dungeon/Dungeon_shared.hpp"//get current situation for cheking if it is usable.
 #include "Game_object/character/Player.hpp"//for energy check
-#include "Game_object/character/Monster/Monsters.hpp"//for dead check
 #include "RUtil/Game_Input.hpp"//delat time & cursor pos
 #include "RUtil/All_Image.hpp"//loading img
 #include "RUtil/Text_Vector_Reader.hpp"//ui text reader
 #include "Draw/Atlas_Region.hpp"//img
 #include "Draw/Text_layout.hpp"//ui text
 #include "Draw/Draw_2D.hpp"//for rendering
+#include "Game_object/power/Power_group.hpp"//calculate display damage
+#include "Game_object/power/Powers.hpp"//calculate display damage
 
 #include "Util/Logger.hpp"
 
@@ -24,13 +25,13 @@ namespace Card{
     Cards::Cards(
         RUtil::AtlasRegionID card_name, Rarity rarity, Type type, 
         Color color, Target target, const int base_cost,
-        const int base_damage, const int base_defense, const int base_magic_num
+        const int base_damage, const int base_block, const int base_magic_num
     ) : 
         card_name(card_name), rarity(rarity),
         type(type), color(color), target(target),
-        base_damage(base_damage), base_defense(base_defense),
+        base_damage(base_damage), base_block(base_block),
         base_magic_num(base_magic_num), base_cost(base_cost), 
-        damage(base_damage), defense(base_defense),
+        damage(base_damage), block(base_block),
         magic_num(base_magic_num), cost(base_cost),
         m_card_bg_silhouette(BgSilhouette(type)), m_card_bg(CardBg(type, color)), 
         m_card_frame(CardFrame(type, rarity)), m_card_left_frame(CardLeftFrame(rarity)),
@@ -62,9 +63,9 @@ namespace Card{
     Cards::Cards(const Cards& other)://ensure internal references are properly set when coping. //(m_card_flash)
         card_name(other.card_name), rarity(other.rarity),
         type(other.type), color(other.color), target(other.target),
-        base_damage(other.base_damage), base_defense(other.base_defense),
+        base_damage(other.base_damage), base_block(other.base_block),
         base_magic_num(other.base_magic_num), base_cost(other.base_cost), 
-        damage(other.base_damage), defense(other.base_defense),
+        damage(other.base_damage), block(other.base_block),
         magic_num(other.base_magic_num), cost(other.base_cost),
         m_card_bg_silhouette(other.m_card_bg_silhouette), m_card_bg(other.m_card_bg),
         m_card_frame(other.m_card_frame), m_card_left_frame(other.m_card_left_frame),
@@ -221,6 +222,30 @@ namespace Card{
 
     bool Cards::CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const{
         return this->cost <= dungeon_shared.player->GetCurrEnergy();
+    }
+
+    void Cards::CommonRefreshDamage(const Power::Power_group &player_powers){
+        float dmg = static_cast<float>(base_damage);
+        for(const auto&it:player_powers){
+            dmg = it->calculate_damage_dealt(dmg);
+        }
+        for(const auto&it:player_powers){
+            dmg = it->calculate_final_damage_dealt(dmg);
+        }
+        this->damage=static_cast<int>(dmg);
+        if(this->damage < 0) this->damage = 0;
+    }
+    
+    void Cards::CommonRefreshBlock(const Power::Power_group &player_powers){
+        float blk = static_cast<float>(base_block);
+        for(const auto&it:player_powers){
+            blk = it->calculate_block_dealt(blk);
+        }
+        for(const auto&it:player_powers){
+            blk = it->calculate_final_block_dealt(blk);
+        }
+        this->block=static_cast<int>(blk);
+        if(this->block < 0) this->block = 0;
     }
 
     void Cards::SetHoverTimer(const float value){m_hover_timer=value;}

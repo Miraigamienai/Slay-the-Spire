@@ -28,7 +28,7 @@ enum class KindOfCharacter
     PLAYER,
     MONSTER
 };
-class Characters
+class Characters : public std::enable_shared_from_this<Characters>
 {
 public:
     Characters(float x, float y, float width, float height,float HPBarWidth);
@@ -46,7 +46,8 @@ public:
     void setBlock(int num){current_Block=num;};
     void AddHP(int num){current_HP+num>=max_HP?current_HP=max_HP:current_HP+=num;};
     void setHP(int num){current_HP=num;};
-    
+    auto GetHeight()const noexcept{return boss_hitbox.Height();}
+
     void updateHealthBar();
 
     void useFastAttackAnimation();
@@ -81,6 +82,7 @@ public:
             powers.render_tip(r2, Character_hb_cX+Character_hb_width/2.0F, Character_hb_cY);
     }
     auto&get_powers(){return powers;}
+    void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){powers.at_turn_end(dungeon_shared, shared_from_this());}
 protected:
     int max_HP,current_HP,current_Block;
     void render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const;

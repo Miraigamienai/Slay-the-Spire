@@ -53,8 +53,4 @@ namespace Power{
         }
         return curr_h>max_h ? curr_h : max_h;
     }
-
-    void at_turn_end(){
-
-    }
 }

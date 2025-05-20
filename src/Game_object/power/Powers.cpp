@@ -1,6 +1,8 @@
 #include <string>
 
 #include "Game_object/power/Powers.hpp"
+#include "Game_object/action/Reduce_power_action.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "RUtil/All_Image.hpp"
 #include "RUtil/ColorValuesOnly.hpp"
 #include "Draw/Atlas_Region.hpp"
@@ -51,6 +53,12 @@ namespace Power
             font_scale = RUtil::Math::varlerp(font_scale, Setting::SCALE, 10.0F, 0.05F);
         if(color_a!=1.0F)
             color_a = RUtil::Math::fadelerp(color_a, 1.0F);
+    }
+
+    void Powers::at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target){
+        if(reduce_each_turn){
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Reduce_power_action>(shared_from_this(), target));
+        }
     }
 
     Draw::NumberDrawer Powers::amount_drawer(FONTSIZE);

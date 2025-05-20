@@ -8,13 +8,16 @@ namespace RUtil{
     enum class Powers_Text_ID:int;
     enum class AtlasRegionID:int;
 }
+namespace Draw{
+    class Text_layout;
+}
 
 namespace Effect{
 class Power_remove_text_eff final:public Effects
 {
 public:
-    Power_remove_text_eff(float x ,float y , RUtil::Powers_Text_ID power_text_id, RUtil::AtlasRegionID power_128_id)
-        :x(x-64.0F*Setting::SCALE),
+    Power_remove_text_eff(float x ,float y, RUtil::Powers_Text_ID power_text_id, RUtil::AtlasRegionID power_128_id)
+        :x(x),
         y(y),
         offset_y(START_OFFSET_Y),
         power_text_id(power_text_id),
@@ -32,6 +35,8 @@ private:
     float offset_y;
     RUtil::Powers_Text_ID power_text_id;
     RUtil::AtlasRegionID power_128_id;
+    static const std::shared_ptr<Draw::Text_layout> &TEXT;
+public:
     static constexpr float DUR=2.0F,
                            START_OFFSET_Y=80.0F*Setting::SCALE,
                            TARGET_OFFSET_Y=160.0F*Setting::SCALE;

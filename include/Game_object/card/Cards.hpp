@@ -156,7 +156,7 @@ protected:
     void SetDamage(int num)noexcept{
         this->base_damage=this->damage=num;
     }
-    void SetDefense(int num)noexcept{
+    void SetBlock(int num)noexcept{
         this->base_block=this->block=num;
     }
     void SetMagicNum(int num)noexcept{

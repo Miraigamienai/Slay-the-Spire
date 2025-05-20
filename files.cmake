@@ -20,6 +20,7 @@ set(SRC_FILES
 	Game_object/action/Actions.cpp
 	Game_object/action/Action_group_handler.cpp
 	Game_object/action/Anim_set_action.cpp
+	Game_object/action/Apply_power_action.cpp
 	Game_object/action/Card_use_end_action.cpp
 	Game_object/action/Card_use_start_action.cpp
 	Game_object/action/Damage_action.cpp
@@ -27,6 +28,8 @@ set(SRC_FILES
 	Game_object/action/Effect_gen_capsule_action.cpp
 	Game_object/action/Empty_shuffle_action.cpp
 	Game_object/action/Gain_block_action.cpp
+	Game_object/action/Reduce_power_action.cpp
+	Game_object/action/Remove_power_action.cpp
 	Game_object/button/Cancel_button.cpp
 	Game_object/button/Confirm_button.cpp
 	Game_object/button/End_turn_button.cpp
@@ -90,8 +93,10 @@ set(SRC_FILES
 	Game_object/effect/End_turn_button_glow.cpp
 	Game_object/effect/Fade_wide.cpp
 	Game_object/effect/Flash_attack_effect.cpp
+	Game_object/effect/Flying_spike_eff.cpp
 	Game_object/effect/Hammer_effect.cpp
 	Game_object/effect/Map_circle_effect.cpp
+	Game_object/effect/Power_remove_text_eff.cpp
 	Game_object/effect/Purge_card_eff.cpp
 	Game_object/effect/Refresh_energy_effect.cpp
 	Game_object/effect/Rest_option_black_screen.cpp
@@ -116,6 +121,7 @@ set(SRC_FILES
 	Game_object/panel/Panels.cpp
 	Game_object/power/Powers.cpp
 	Game_object/power/Power_group.cpp
+	Game_object/power/Weak_power.cpp
 	Game_object/reward_item/Card_reward.cpp
 	Game_object/reward_item/Card_reward_item.cpp
 	Game_object/reward_item/Reward_item.cpp
@@ -176,6 +182,7 @@ set(INCLUDE_FILES
 	Game_object/action/Action_group.hpp
 	Game_object/action/Action_group_handler.hpp
 	Game_object/action/Anim_set_action.hpp
+	Game_object/action/Apply_power_action.hpp
 	Game_object/action/Card_use_end_action.hpp
 	Game_object/action/Card_use_start_action.hpp
 	Game_object/action/Damage_action.hpp
@@ -185,6 +192,8 @@ set(INCLUDE_FILES
 	Game_object/action/Empty_shuffle_action.hpp
 	Game_object/action/Enable_end_button_action.hpp
 	Game_object/action/Gain_block_action.hpp
+	Game_object/action/Reduce_power_action.hpp
+	Game_object/action/Remove_power_action.hpp
 	Game_object/action/Show_card_to_discard_action.hpp
 	Game_object/action/Wait_action.hpp
 	Game_object/button/Cancel_button.hpp
@@ -255,8 +264,10 @@ set(INCLUDE_FILES
 	Game_object/effect/End_turn_button_glow.hpp
 	Game_object/effect/Fade_wide.hpp
 	Game_object/effect/Flash_attack_effect.hpp
+	Game_object/effect/Flying_spike_eff.hpp
 	Game_object/effect/Hammer_effect.hpp
 	Game_object/effect/Map_circle_effect.hpp
+	Game_object/effect/Power_remove_text_eff.hpp
 	Game_object/effect/Purge_card_eff.hpp
 	Game_object/effect/Refresh_energy_effect.hpp
 	Game_object/effect/Rest_option_black_screen.hpp
@@ -269,6 +280,7 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Clash_eff_gen.hpp
 	Game_object/effect_gen/Effect_gen.hpp
 	Game_object/effect_gen/Effect_gen_group.hpp
+	Game_object/effect_gen/Power_remove_text_gen.hpp
 	Game_object/effect_gen/Purge_card_eff_gen.hpp
 	Game_object/effect_gen/Show_card_briefly.hpp
 	Game_object/effect_gen/Show_card_to_discard.hpp

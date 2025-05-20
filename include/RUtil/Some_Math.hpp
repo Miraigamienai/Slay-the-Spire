@@ -26,14 +26,24 @@ public:
     template <typename T>
     static constexpr T Apply(const T start,const T target,const float t)noexcept(noexcept(start+(target-start)*t)){return start+(target-start)*t;}
     static float interpolation_exp(float v, float p, float a);
-    static float interpolation_expin(float v, float p, float a);
+    static float interpolation_expin(float v, float p, float a){
+        //v^p(a-1)  ->  [v^-p, 1]     //(v^p(a-1) - v^-p) / (1 - v^-p)  ->  [0,1]
+        const float m=(float)std::pow((double)v,(double)(-p));
+        return ((float)std::pow((double)v,(double)(p*(a-1.0F)))-m)/(1.0F-m);
+    }
+    static float interpolation_expout(float v, float p, float a){
+        //v^(-a*p)  ->  [v^-p, 1]     //(v^(-a*p) - v^-p) / (1 - v^-p)  ->  [0,1]
+        const float m=(float)std::pow((double)v,(double)(-p));
+        return 1.0F - ((float)std::pow((double)v,(double)(-a*p))-m)/(1.0F-m);
+    }
     static float interpolation_powout(int p, float a);
     static float fadelerp(float start,float target);
     static float scrolllerp(float start,float target);
     static float varlerp(float start,const float target,const float speed,const float threshold);
     static Uint32 color_lerp_rgb(Uint32 start,Uint32 target,float t);
     static float interpolation_exp10(float start,float target,float a);
-    static float interpolation_exp10in(float start,float target,float a);
+    static float interpolation_exp10in(float start,float target,float a){return Apply(start,target,interpolation_expin(2.0F,10.0F,a));}
+    static float interpolation_exp10out(float start,float target,float a){return Apply(start,target,interpolation_expout(2.0F,10.0F,a));}
     template <typename T>
     static constexpr T interpolation_fade(T start,T target,float a){
         //from gdx

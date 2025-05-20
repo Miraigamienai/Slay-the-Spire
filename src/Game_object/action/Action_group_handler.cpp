@@ -55,10 +55,12 @@ namespace Action
             monster_queue.back()->Action(dungeon_shared);
             //TODO: intent update
             monster_queue.pop_back();
+            if(monster_queue.empty())
+                action_box.AddBot(std::make_shared<Wait_action>(1.0F));//wait after monster turn end.
         }else if(is_endding_turn){
             is_endding_turn=false;
-            action_box.AddBot(std::make_shared<Wait_action>(1.5F));//wait after monster turn end.
-
+            dungeon_shared.player->at_turn_end(dungeon_shared);
+            dungeon_shared.room_monsters.at_turn_end(dungeon_shared);
         }
     }
 

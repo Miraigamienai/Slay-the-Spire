@@ -15,10 +15,16 @@ namespace RUtil{
 namespace Draw{
     class Draw_2D;
 }
+namespace Character{
+    class Characters;
+}
+namespace Dungeon{
+    class Dungeon_shared;
+}
 
 namespace Power
 {
-class Powers
+class Powers : public std::enable_shared_from_this<Powers>
 {
 public:
     Powers(RUtil::Powers_Text_ID power_id, RUtil::AtlasRegionID region_48_id, RUtil::AtlasRegionID region_128_id, bool reduce_each_turn, bool can_negative=false);
@@ -43,6 +49,7 @@ public:
     virtual float calculate_final_damage_dealt(float damage)const{return damage;}
     virtual float calculate_block_dealt(float block)const{return block;}
     virtual float calculate_final_block_dealt(float block)const{return block;}
+    virtual void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target);
 protected:
     Draw::Text_box tip_box;
     int amount;

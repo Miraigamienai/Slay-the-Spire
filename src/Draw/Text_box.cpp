@@ -7,11 +7,7 @@
 namespace Draw
 {
     Text_box::Text_box(const std::shared_ptr<Text_layout> &title,const std::shared_ptr<Text_layout> &body):title(title),body(body){
-        title->SetFontSize(TITLE_FONT_SIZE);
-        title->SetFontColor(RUtil::GOLD_COLOR);
         title->ChangeFontWeight(FontWeight::bold);
-        body->SetFontSize(BODY_FONT_SIZE);
-        body->SetFontColor(BASE_COLOR);
     }
 
     void Text_box::render(const std::shared_ptr<Draw_2D> &r2, float x, float y)const{
@@ -29,8 +25,16 @@ namespace Draw
         r2->draw(s_tip_mid, x, y - h - BOX_EDGE_H, BOX_W, h + BOX_EDGE_H);
         r2->draw(s_tip_bot, x, y - h - BOX_BODY_H, BOX_W, BOX_EDGE_H);
         //text
-        if(title!=nullptr)title->render_top_left(r2, x + TEXT_OFFSET_X, y + HEADER_OFFSET_Y, Setting::SCALE);
-        if(body!=nullptr)body->render_top_left(r2, x + TEXT_OFFSET_X, y + BODY_OFFSET_Y, Setting::SCALE);
+        if(title!=nullptr){
+            title->SetFontSize(TITLE_FONT_SIZE);
+            title->SetFontColor(RUtil::GOLD_COLOR);
+            title->render_top_left(r2, x + TEXT_OFFSET_X, y + HEADER_OFFSET_Y, Setting::SCALE);
+        }
+        if(body!=nullptr){
+            body->SetFontSize(BODY_FONT_SIZE);
+            body->SetFontColor(BASE_COLOR);    
+            body->render_top_left(r2, x + TEXT_OFFSET_X, y + BODY_OFFSET_Y, Setting::SCALE);
+        }
     }
     
     const std::shared_ptr<ReTexture> &Text_box::s_tip_top=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/tip/tipTop.png"),&Text_box::s_tip_mid=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/tip/tipMid.png"),&Text_box::s_tip_bot=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/tip/tipBot.png");

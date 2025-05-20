@@ -30,7 +30,7 @@ enum class MonsterID{
     Looter,
     Mugger
 };
-class Monsters:public Character::Characters, public std::enable_shared_from_this<Monsters>
+class Monsters:public Character::Characters
 {
 public:
     Monsters(float x, float y, float width, float height,float HPBarWidth);

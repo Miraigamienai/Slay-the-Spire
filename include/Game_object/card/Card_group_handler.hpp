@@ -8,6 +8,7 @@
 #include "Game_object/card/Card_group.hpp"//member
 #include "Game_object/effect/Effect_group.hpp"//for inline add
 #include "Game_object/character/Player.hpp"//for inline glow card update
+#include "Game_object/power/Power_group.hpp"//for passing parameter to cards for refreshing display
 
 //fwd decl
 namespace Monster{
@@ -50,7 +51,7 @@ public:
 
     void discard_all();
     void discard(const std::shared_ptr<Cards> &card, bool visual_only=false);
-    void draw();
+    void draw(const Power::Power_group &player_powers);
     void update(Action::Action_group_handler &action_group_handler,const Monster::Monster_group &room_monsters);
     void refresh_hand_layout()const;
     void prepare_for_battle(RUtil::Random &rng);
@@ -123,6 +124,7 @@ public:
     bool is_dragging() const noexcept{return is_dragging_card;}
     bool is_someone_flying()const noexcept{return !flying_cards.empty();}
     void discard_pile_shuffle_with_rng(RUtil::Random &rng){m_discard.ShuffleWithRng(rng);}
+    void hand_cards_values_refresh(const Power::Power_group &player_powers)const{for(const auto&it:hand_cards) it->RefreshDisplay(player_powers);}
 private:
     static const int &input_x,&input_y;
     static const bool &just_r,&just_l;

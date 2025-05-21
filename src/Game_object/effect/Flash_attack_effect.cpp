@@ -9,7 +9,7 @@
 #include "WindowSize.hpp"//Setting::SCALE
 
 namespace Effect{
-    static auto& loadimg(const AttackType type){
+    static inline auto& loadimg(const AttackType type){
         switch(type){
             case AttackType::blunt_heavy:return RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::_attack_blunt_heavy);
             case AttackType::blunt_light:return RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::_attack_blunt_light);

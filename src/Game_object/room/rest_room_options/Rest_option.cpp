@@ -18,6 +18,7 @@ namespace Option{
         TEXT_VEC()[3]->SetFontSize(TEXT_SIZE);//30% hp text
         
         heal_amount=static_cast<int>(static_cast<float>(player_max_hp)*0.3F);
+        TEXT_VEC()[3]->set_num_info(Draw::number_info{0,0,heal_amount});
     }
     
     void Rest_option::child_label_render(const std::shared_ptr<Draw::Draw_2D> &r2,Uint32 font_color)const{
@@ -28,7 +29,7 @@ namespace Option{
     void Rest_option::child_description_render(const std::shared_ptr<Draw::Draw_2D> &r2,float font_color_a)const{
         TEXT_VEC()[3]->SetFontColor(RUtil::CREAM_COLOR);
         TEXT_VEC()[3]->SetFontAlpha(font_color_a);
-        TEXT_VEC()[3]->render_center_with_nums(r2, DESCRIPTION_X, DESCRIPTION_Y, 0.0F, 0.0F, 0.0F, Setting::SCALE, Draw::number_info{0,0,heal_amount}); 
+        TEXT_VEC()[3]->render_center(r2, DESCRIPTION_X, DESCRIPTION_Y, 0.0F, 0.0F, 0.0F, Setting::SCALE); 
     }
 
     void Rest_option::take_reward(Dungeon::Dungeon_shared &dungeon_shared){

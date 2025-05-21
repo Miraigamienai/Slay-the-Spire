@@ -21,9 +21,9 @@ namespace Effect
         :img_type(Random::GetRandomInt(3)),
         angel(Random::GetRandomFloat(0.0F,360.0F)),
         angel_speed(Random::GetRandomFloat(-30.0F,30.0F)),
-        target_a(Random::GetRandomFloat(0.4F,0.7F)),
         flip_x(Random::GetRandomBoolean()),
-        flip_y(Random::GetRandomBoolean())
+        flip_y(Random::GetRandomBoolean()),
+        target_a(Random::GetRandomFloat(0.4F,0.7F))
     {
         this->duration = this->start_duration = Random::GetRandomFloat(2.0F, 2.5F);
         this->scale=Random::GetRandomFloat(16.0F,30.0F)*Setting::SCALE;

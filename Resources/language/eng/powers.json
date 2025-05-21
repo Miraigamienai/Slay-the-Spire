@@ -6,11 +6,25 @@
       " additional damage."
     ]
   },
-  "After Image": {
+  "Adaptation": {
+    "NAME": "Rushdown",
+    "DESCRIPTIONS": [
+      "Whenever you enter #yWrath, draw #b",
+      " card.",
+      " cards."
+    ]
+  },
+  "After_Image": {
     "NAME": "After Image",
     "DESCRIPTIONS": [
       "Whenever you play a card, gain #b",
       " #yBlock."
+    ]
+  },
+  "AlwaysMad": {
+    "NAME": "DEPRECATED Always Mad",
+    "DESCRIPTIONS": [
+      "No longer receive double damage while in #yWrath."
     ]
   },
   "Amplify": {
@@ -19,6 +33,13 @@
       "Your next #yPower card is played twice this turn.",
       "Your next ",
       " #yPower cards are played twice this turn."
+    ]
+  },
+  "AngelForm": {
+    "NAME": "Live Forever",
+    "DESCRIPTIONS": [
+      "At the end of your turn, gain #b",
+      " #yPlated #yArmor."
     ]
   },
   "Anger": {
@@ -44,7 +65,7 @@
       " debuffs."
     ]
   },
-  "Attack Burn": {
+  "Attack_Burn": {
     "NAME": "Attack Burn",
     "DESCRIPTIONS": [
       "For #b",
@@ -53,11 +74,32 @@
       " turns, whenever you play an #yAttack, #yExhaust it."
     ]
   },
+  "BackAttack": {
+    "NAME": "Back Attack",
+    "DESCRIPTIONS": [
+      "Deals #b50% more damage as it is attacking you from behind."
+    ]
+  },
   "Barricade": {
     "NAME": "Barricade",
     "DESCRIPTIONS": [
       "#yBlock is not removed at the start of your turn.",
       "#yBlock is not removed at the start of its turn."
+    ]
+  },
+  "BattleHymn": {
+    "NAME": "Battle Hymn",
+    "DESCRIPTIONS": [
+      "At the start of your turn, add #b",
+      " #ySmites into your hand.",
+      " #ySmite into your hand."
+    ]
+  },
+  "BeatOfDeath": {
+    "NAME": "Beat Of Death",
+    "DESCRIPTIONS": [
+      "Whenever you play a card, take #b",
+      " damage."
     ]
   },
   "Berserk": {
@@ -72,6 +114,13 @@
     "DESCRIPTIONS": [
       "At the start of your turn, lose #b",
       " #yFocus."
+    ]
+  },
+  "BlockReturnPower": {
+    "NAME": "Block Return",
+    "DESCRIPTIONS": [
+      "When attacked, you gain #b",
+      " #yBlock."
     ]
   },
   "Blur": {
@@ -101,7 +150,7 @@
       " times you would lose HP."
     ]
   },
-  "Bullet Time": {
+  "Bullet_Time": {
     "NAME": "Bullet Time",
     "DESCRIPTIONS": [
       "The energy cost of all Green cards are now #b0."
@@ -115,11 +164,25 @@
       " #ySkills are played twice this turn."
     ]
   },
+  "CannotChangeStancePower": {
+    "NAME": "Cannot Change Stance",
+    "DESCRIPTIONS": [
+      "Cannot change your stance this turn."
+    ]
+  },
   "Choked": {
     "NAME": "Choked",
     "DESCRIPTIONS": [
       "Whenever you play a card this turn, loses #b",
       " HP."
+    ]
+  },
+  "Collect": {
+    "NAME": "Collect",
+    "DESCRIPTIONS": [
+      "At the start of your next turn, put a #yMiracle+ into your hand.",
+      "At the start of your next #b",
+      " turns, put a #yMiracle+ into your hand."
     ]
   },
   "Combust": {
@@ -128,6 +191,19 @@
       "At the end of your turn, lose #b",
       " HP and deal #b",
       " damage to ALL enemies."
+    ]
+  },
+  "Compulsive": {
+    "NAME": "Reactive",
+    "DESCRIPTIONS": [
+      "Upon receiving attack damage, changes its intent."
+    ]
+  },
+  "Condense": {
+    "NAME": "DEPRECATED Condense",
+    "DESCRIPTIONS": [
+      "You cannot take more than #b",
+      " from any attack."
     ]
   },
   "Confusion": {
@@ -151,6 +227,21 @@
       " damage."
     ]
   },
+  "Controlled": {
+    "NAME": "Mental Fortress",
+    "DESCRIPTIONS": [
+      "Whenever you switch #yStances, gain #b",
+      " #yBlock."
+    ]
+  },
+  "CorpseExplosionPower": {
+    "NAME": "Corpse Explosion",
+    "DESCRIPTIONS": [
+      "On death, deal damage equal to its Max HP to ALL enemies.",
+      "On death, deal damage equal to its Max HP #b",
+      " times to ALL enemies."
+    ]
+  },
   "Corruption": {
     "NAME": "Corruption",
     "DESCRIPTIONS": [
@@ -158,7 +249,7 @@
       "Whenever you play a #ySkill, #yExhaust it."
     ]
   },
-  "Creative AI": {
+  "Creative_AI": {
     "NAME": "Creative AI",
     "DESCRIPTIONS": [
       "At the start of your turn, add #b",
@@ -173,14 +264,14 @@
       " #yStrength."
     ]
   },
-  "Curl Up": {
+  "Curl_Up": {
     "NAME": "Curl Up",
     "DESCRIPTIONS": [
       "On receiving attack damage, rolls up and gains #b",
       " #yBlock. (Once per combat)"
     ]
   },
-  "Dance Puppet": {
+  "Dance_Puppet": {
     "NAME": "",
     "DESCRIPTIONS": [
       "",
@@ -189,7 +280,7 @@
       ""
     ]
   },
-  "Dark Embrace": {
+  "Dark_Embrace": {
     "NAME": "Dark Embrace",
     "DESCRIPTIONS": [
       "Whenever a card is #yExhausted, draw #b1 card.",
@@ -197,11 +288,29 @@
       " cards."
     ]
   },
-  "Demon Form": {
+  "Demon_Form": {
     "NAME": "Demon Form",
     "DESCRIPTIONS": [
       "At the start of your turn, gain #b",
       " #yStrength."
+    ]
+  },
+  "DevaForm": {
+    "NAME": "Deva",
+    "DESCRIPTIONS": [
+      "At the start of your turn, gain [W] ",
+      "At the start of your turn, gain [W] #b",
+      " times ",
+      "and increase this by #b",
+      ".",
+      "TRANSLATE NOTE: At the start of your turn, gain [W] #b2 times and increase this by #b1."
+    ]
+  },
+  "DevotionPower": {
+    "NAME": "Devotion",
+    "DESCRIPTIONS": [
+      "At the start of your turn, gain #b",
+      " #yMantra."
     ]
   },
   "DexLoss": {
@@ -219,7 +328,13 @@
       "."
     ]
   },
-  "Double Damage": {
+  "DisciplinePower": {
+    "NAME": "DEPRECATED Discipline",
+    "DESCRIPTIONS": [
+      "If you end your turn with unused [W] , draw that many additional cards next turn."
+    ]
+  },
+  "Double_Damage": {
     "NAME": "Double Damage",
     "DESCRIPTIONS": [
       "#yAttacks deal double damage for #b",
@@ -227,7 +342,7 @@
       " turns."
     ]
   },
-  "Double Tap": {
+  "Double_Tap": {
     "NAME": "Double Tap",
     "DESCRIPTIONS": [
       "Your next #yAttack is played twice this turn.",
@@ -245,7 +360,7 @@
       " less cards."
     ]
   },
-  "Draw Card": {
+  "Draw_Card": {
     "NAME": "Draw Card",
     "DESCRIPTIONS": [
       "Draw #b",
@@ -253,7 +368,7 @@
       " additional card next turn."
     ]
   },
-  "Draw Down": {
+  "Draw_Down": {
     "NAME": "Draw Down",
     "DESCRIPTIONS": [
       "Draw #b",
@@ -261,7 +376,7 @@
       " less cards next turn."
     ]
   },
-  "Draw Reduction": {
+  "Draw_Reduction": {
     "NAME": "Draw Reduction",
     "DESCRIPTIONS": [
       "Draw #b1 less card next turn.",
@@ -269,7 +384,15 @@
       " turns."
     ]
   },
-  "Echo Form": {
+  "DuplicationPower": {
+    "NAME": "Duplication",
+    "DESCRIPTIONS": [
+      "Your next card is played twice this turn.",
+      "Your next #b",
+      " cards are played twice this turn."
+    ]
+  },
+  "Echo_Form": {
     "NAME": "Echo Form",
     "DESCRIPTIONS": [
       "The first card you play each turn is played twice.",
@@ -283,6 +406,18 @@
       "#yLightning hits ALL enemies.",
       "",
       ""
+    ]
+  },
+  "EmotionalTurmoilPower": {
+    "NAME": "DEPRECATED Emotional Turmoil",
+    "DESCRIPTIONS": [
+      "At the start of your turn, enter a new random basic stance."
+    ]
+  },
+  "EndTurnDeath": {
+    "NAME": "Blasphemer",
+    "DESCRIPTIONS": [
+      "At the start of your turn, die."
     ]
   },
   "Energized": {
@@ -303,6 +438,13 @@
       " - TRANSLATOR NOTE: - The above line is for plural if needed to distinguish from singular."
     ]
   },
+  "EnergyDownPower": {
+    "NAME": "Fasting",
+    "DESCRIPTIONS": [
+      "At the start of your turn, lose ",
+      ""
+    ]
+  },
   "Entangled": {
     "NAME": "Entangled",
     "DESCRIPTIONS": [
@@ -314,6 +456,21 @@
     "DESCRIPTIONS": [
       "Whenever you deal unblocked attack damage, apply #b",
       " #yPoison."
+    ]
+  },
+  "Equilibrium": {
+    "NAME": "Equilibrium",
+    "DESCRIPTIONS": [
+      "#yRetain your hand this turn.",
+      "#yRetain your hand for #b",
+      " turns."
+    ]
+  },
+  "EstablishmentPower": {
+    "NAME": "Establishment",
+    "DESCRIPTIONS": [
+      "Whenever a card is #yRetained, lower its cost by #b",
+      "."
     ]
   },
   "Evolve": {
@@ -333,7 +490,7 @@
       "Explodes this turn, dealing #b"
     ]
   },
-  "Extra Cards": {
+  "Extra_Cards": {
     "NAME": "Extra Cards",
     "DESCRIPTIONS": [
       "Draw #b1 additional card next turn.",
@@ -341,21 +498,29 @@
       " additional cards next turn."
     ]
   },
-  "Feel No Pain": {
+  "Fading": {
+    "NAME": "Fading",
+    "DESCRIPTIONS": [
+      "Dies in #b",
+      " turns.",
+      "Dies this turn."
+    ]
+  },
+  "Feel_No_Pain": {
     "NAME": "Feel No Pain",
     "DESCRIPTIONS": [
       "Whenever a card is #yExhausted, gain #b",
       " #yBlock."
     ]
   },
-  "Fire Breathing": {
+  "Fire_Breathing": {
     "NAME": "Fire Breathing",
     "DESCRIPTIONS": [
       "Whenever you draw a #yStatus or #yCurse card, deal #b",
       " damage to ALL enemies."
     ]
   },
-  "Flame Barrier": {
+  "Flame_Barrier": {
     "NAME": "Flame Barrier",
     "DESCRIPTIONS": [
       "When attacked, deals #b",
@@ -369,11 +534,28 @@
       " #yStrength."
     ]
   },
+  "FlickPower": {
+    "NAME": "DEPRECATED Flick",
+    "DESCRIPTIONS": [
+      "When this enemy gets #yFlick #b",
+      "2 more times, it receives #b",
+      "1 more time, it receives #b",
+      " damage."
+    ]
+  },
   "Flight": {
     "NAME": "Flight",
     "DESCRIPTIONS": [
       "Receives 50% less attack damage. Cancelled if dealt attack damage #b",
-	  " times in one turn."
+      " times in one turn."
+    ]
+  },
+  "FlowPower": {
+    "NAME": "DEPRECATED FlowPower",
+    "DESCRIPTIONS": [
+      "When you play an Attack, gain #b",
+      " temporary #yStrength. When you play a Skill, gain #b,",
+      " temporary #yDexterity."
     ]
   },
   "Focus": {
@@ -392,6 +574,22 @@
       " turns."
     ]
   },
+  "FreeAttackPower": {
+    "NAME": "Free Attack Power",
+    "DESCRIPTIONS": [
+      "Ignore energy cost on the next #yAttack you play.",
+      "Ignore energy cost on the next #b",
+      " #yAttacks you play."
+    ]
+  },
+  "FreeToPlayPower": {
+    "NAME": "DEPRECATED FreeToPlayPower",
+    "DESCRIPTIONS": [
+      "Ignore energy costs on the next card you play this turn.",
+      "Ignore energy costs on the next #b",
+      " cards you play this turn."
+    ]
+  },
   "Gambit": {
     "NAME": "Gambit",
     "DESCRIPTIONS": [
@@ -401,11 +599,17 @@
       " [B] ."
     ]
   },
-  "Generic Strength Up Power": {
+  "Generic_Strength_Up_Power": {
     "NAME": "",
     "DESCRIPTIONS": [
       "At the end of its turn, gains #b",
       " #yStrength."
+    ]
+  },
+  "Grounded": {
+    "NAME": "DEPRECATED Grounded",
+    "DESCRIPTIONS": [
+      "Whenever you play a #ySkill, enter #yCalm."
     ]
   },
   "GrowthPower": {
@@ -446,7 +650,14 @@
       ""
     ]
   },
-  "Infinite Blades": {
+  "HotHot": {
+    "NAME": "DEPRECATED Hot hot",
+    "DESCRIPTIONS": [
+      "While you are in #yWrath, deal #b",
+      " damage back whenever you receive attack damage."
+    ]
+  },
+  "Infinite_Blades": {
     "NAME": "Infinite Blades",
     "DESCRIPTIONS": [
       "At the start of your turn, add #b",
@@ -460,21 +671,6 @@
       "Reduce ALL damage taken and HP loss to #b1 this turn. #yIntangible is reapplied every other turn."
     ]
   },
-  "Invincible": {
-    "NAME": "Invincible",
-    "DESCRIPTIONS": [
-      "Can only lose #b",
-	    " more HP this turn.",
-	    "Can no longer be harmed this turn."
-    ]
-  },
-  "BeatOfDeath": {
-    "NAME": "Beat Of Death",
-    "DESCRIPTIONS": [
-      "Whenever you play a card, take #b",
-      " damage."
-    ]
-  },
   "IntangiblePlayer": {
     "NAME": "Intangible",
     "DESCRIPTIONS": [
@@ -485,6 +681,14 @@
     "NAME": "Inverted",
     "DESCRIPTIONS": [
       "Immune to damage. Whenever you gain #yBlock, loses that much HP."
+    ]
+  },
+  "Invincible": {
+    "NAME": "Invincible",
+    "DESCRIPTIONS": [
+      "Can only lose #b",
+      " more HP this turn.",
+      "Can no longer be harmed this turn."
     ]
   },
   "Juggernaut": {
@@ -501,10 +705,17 @@
       " cards."
     ]
   },
-  "Life Link": {
+  "Life_Link": {
     "NAME": "Life Link",
     "DESCRIPTIONS": [
       "If other enemies are still alive, revives in #b2 turns at #b50% HP."
+    ]
+  },
+  "LikeWaterPower": {
+    "NAME": "Like Water",
+    "DESCRIPTIONS": [
+      "At the end of your turn, if you are in #yCalm, gain #b",
+      " #yBlock."
     ]
   },
   "Lockon": {
@@ -524,20 +735,12 @@
       " times."
     ]
   },
-  "Machine Learning": {
+  "Machine_Learning": {
     "NAME": "Machine Learning",
     "DESCRIPTIONS": [
       "At the start of your turn, draw #b",
       " additional card.",
       " additional cards."
-    ]
-  },
-  "Study": {
-    "NAME": "Study",
-    "DESCRIPTIONS": [
-	  "At the end of your turn, shuffle #b",
-      " #yInsight into your draw pile.",
-      " #yInsights into your draw pile."
     ]
   },
   "Magnetism": {
@@ -554,6 +757,29 @@
       " #yBlock. #yBlock gain increases as ",
       " is triggered. Resets to #b",
       " at the start of your turn."
+    ]
+  },
+  "Mantra": {
+    "NAME": "Mantra",
+    "DESCRIPTIONS": [
+      "When you obtain #b",
+      " #yMantra, enter #yDivinity."
+    ]
+  },
+  "MasterRealityPower": {
+    "NAME": "Master Reality",
+    "DESCRIPTIONS": [
+      "Whenever a card is created, it is #yUpgraded.",
+      "deprecated",
+      "deprecated",
+      "deprecated"
+    ]
+  },
+  "Mastery": {
+    "NAME": "DEPRECATED Mastery",
+    "DESCRIPTIONS": [
+      "Whenever you attempt to switch Stances to your current Stance, gain #b",
+      " [W]."
     ]
   },
   "Mayhem": {
@@ -579,53 +805,86 @@
       "Minions abandon combat without their leader."
     ]
   },
-  "Mode Shift": {
+  "Mode_Shift": {
     "NAME": "Mode Shift",
     "DESCRIPTIONS": [
       "After receiving #b",
       " damage, changes to a defensive mode."
     ]
   },
-  "Next Turn Block": {
+  "Next_Turn_Block": {
     "NAME": "Next Turn Block",
     "DESCRIPTIONS": [
       "Gain #b",
       " #yBlock next turn."
     ]
   },
-  "Night Terror": {
+  "Night_Terror": {
     "NAME": "Nightmare",
     "DESCRIPTIONS": [
       "Add #b",
       " cards into your hand next turn."
     ]
   },
-  "No Attack": {
+  "Nirvana": {
+    "NAME": "Nirvana",
+    "DESCRIPTIONS": [
+      "Whenever you Scry, gain #b",
+      " #yBlock."
+    ]
+  },
+  "NoBlockPower": {
+    "NAME": "No Block",
+    "DESCRIPTIONS": [
+      "You cannot gain #yBlock from cards."
+    ]
+  },
+  "NoSkills": {
+    "NAME": "No Skills",
+    "DESCRIPTIONS": [
+      "You cannot play #ySkills this turn."
+    ]
+  },
+  "No_Attack": {
     "NAME": "No Attack",
     "DESCRIPTIONS": [
       "You cannot play #yAttacks this turn."
     ]
   },
-  "No Draw": {
+  "No_Draw": {
     "NAME": "No Draw",
     "DESCRIPTIONS": [
       "You cannot draw cards this turn."
     ]
   },
-  "Noxious Fumes": {
+  "Noxious_Fumes": {
     "NAME": "Noxious Fumes",
     "DESCRIPTIONS": [
       "At the start of your turn, apply #b",
       " #yPoison to ALL enemies."
     ]
   },
-  "Nullify Attack": {
+  "Nullify_Attack": {
     "NAME": "Nullify Attack",
     "DESCRIPTIONS": [
       "Fully #yBlocks one #yAttack each turn."
     ]
   },
-  "Painful Stabs": {
+  "OmegaPower": {
+    "NAME": "Omega",
+    "DESCRIPTIONS": [
+      "At the end of your turn, deal #b",
+      " damage to ALL enemies."
+    ]
+  },
+  "OmnisciencePower": {
+    "NAME": "Omniscience",
+    "DESCRIPTIONS": [
+      "DEPERCATED",
+      "DEPRECATED"
+    ]
+  },
+  "Painful_Stabs": {
     "NAME": "Painful Stabs",
     "DESCRIPTIONS": [
       "Whenever you receive attack damage from this enemy, add a #yWound into your discard pile."
@@ -640,7 +899,14 @@
       " more cards this turn, deal #b"
     ]
   },
-  "Pen Nib": {
+  "PathToVictoryPower": {
+    "NAME": "Mark",
+    "DESCRIPTIONS": [
+      "Whenever you play #yPressure #yPoints, loses #b",
+      " HP."
+    ]
+  },
+  "Pen_Nib": {
     "NAME": "Pen Nib",
     "DESCRIPTIONS": [
       "Your next #yAttack deals double damage."
@@ -654,7 +920,7 @@
       " turns."
     ]
   },
-  "Plated Armor": {
+  "Plated_Armor": {
     "NAME": "Plated Armor",
     "DESCRIPTIONS": [
       "At the end of your turn, gain #b",
@@ -702,7 +968,7 @@
       " cards you play this turn are placed on top of your draw pile."
     ]
   },
-  "Reduce Damage": {
+  "Reduce_Damage": {
     "NAME": "Reduce Damage",
     "DESCRIPTIONS": [
       ""
@@ -730,14 +996,14 @@
       " HP."
     ]
   },
-    "Repulse": {
+  "Repulse": {
     "NAME": "",
     "DESCRIPTIONS": [
-    	"",
-    	""
+      "",
+      ""
     ]
   },
-  "Retain Cards": {
+  "Retain_Cards": {
     "NAME": "Retain Cards",
     "DESCRIPTIONS": [
       "At the end of your turn, you may retain #b",
@@ -745,12 +1011,19 @@
       " cards."
     ]
   },
-  "Retain Hand": {
+  "Retain_Hand": {
     "NAME": "Retain Hand",
     "DESCRIPTIONS": [
       "For the next #b ",
       "turns, do not discard your hand",
       "Do not discard your hand at the end of this turn."
+    ]
+  },
+  "Retribution": {
+    "NAME": "DEPRECATED Retribution",
+    "DESCRIPTIONS": [
+      "Whenever you lose HP, gain #b",
+      " #yVigor."
     ]
   },
   "Riposte": {
@@ -782,6 +1055,12 @@
       " damage."
     ]
   },
+  "Serenity": {
+    "NAME": "DEPRECATED Serenity",
+    "DESCRIPTIONS": [
+      "While you are in #yCalm, HP loss is reduced by #b"
+    ]
+  },
   "Serpentine": {
     "NAME": "Serpentine",
     "DESCRIPTIONS": [
@@ -795,20 +1074,27 @@
       " #yStrength."
     ]
   },
-  "Sharp Hide": {
+  "Sharp_Hide": {
     "NAME": "Sharp Hide",
     "DESCRIPTIONS": [
       "Whenever you play an #yAttack, take #b",
       " damage."
     ]
   },
-  "Shriek From Beyond": {
+  "Shifting": {
+    "NAME": "Shifting",
+    "DESCRIPTIONS": [
+      "",
+      "Upon losing HP, loses that much #yStrength until the end of the turn."
+    ]
+  },
+  "Shriek_From_Beyond": {
     "NAME": "Shriek From Beyond",
     "DESCRIPTIONS": [
       "Whenever you play an #yAttack, discard a random card."
     ]
   },
-  "Skill Burn": {
+  "Skill_Burn": {
     "NAME": "Skill Burn",
     "DESCRIPTIONS": [
       "For #b",
@@ -833,7 +1119,7 @@
       "'s current HP."
     ]
   },
-  "Spore Cloud": {
+  "Spore_Cloud": {
     "NAME": "Spore Cloud",
     "DESCRIPTIONS": [
       "On death, applies #b",
@@ -869,6 +1155,27 @@
       "."
     ]
   },
+  "StrikeUp": {
+    "NAME": "Strike Up",
+    "DESCRIPTIONS": [
+      "Cards containing #yStrike deal #b",
+      " additional damage."
+    ]
+  },
+  "Study": {
+    "NAME": "Study",
+    "DESCRIPTIONS": [
+      "At the end of your turn, shuffle #b",
+      " #yInsight into your draw pile.",
+      " #yInsights into your draw pile."
+    ]
+  },
+  "Surrounded": {
+    "NAME": "Surrounded",
+    "DESCRIPTIONS": [
+      "Receive #b50% more damage if attacked from behind. Use targeting cards or potions to change your orientation."
+    ]
+  },
   "TheBomb": {
     "NAME": "The Bomb",
     "DESCRIPTIONS": [
@@ -890,14 +1197,21 @@
       " damage back."
     ]
   },
-  "Thousand Cuts": {
+  "Thousand_Cuts": {
     "NAME": "Thousand Cuts",
     "DESCRIPTIONS": [
       "Whenever you play a card, deal #b",
       " damage to ALL enemies."
     ]
   },
-  "Time Warp": {
+  "TimeMazePower": {
+    "NAME": "Time Maze",
+    "DESCRIPTIONS": [
+      "Whenever you play #b",
+      " cards, your turn is ended"
+    ]
+  },
+  "Time_Warp": {
     "NAME": "Time Warp",
     "DESCRIPTIONS": [
       "Whenever you play #b",
@@ -905,7 +1219,7 @@
       " #yStrength."
     ]
   },
-  "Tools Of The Trade": {
+  "Tools_Of_The_Trade": {
     "NAME": "Tools Of The Trade",
     "DESCRIPTIONS": [
       "At the start of your turn, draw #b",
@@ -927,106 +1241,18 @@
       ""
     ]
   },
+  "Vault": {
+    "NAME": "Vault",
+    "DESCRIPTIONS": [
+      "Receives #b",
+      " damage at the start of your next turn."
+    ]
+  },
   "Venomology": {
     "NAME": "Venomology",
     "DESCRIPTIONS": [
       "#yPoison grows stronger by #b",
       " instead of lowering each turn."
-    ]
-  },
-  "Vulnerable": {
-    "NAME": "Vulnerable",
-    "DESCRIPTIONS": [
-      "Receive #b",
-      "% more damage from #yAttacks for #b",
-      " turn.",
-      " turns."
-    ]
-  },
-  "Weakened": {
-    "NAME": "Weakened",
-    "DESCRIPTIONS": [
-      "#yAttacks deal #b",
-      "% less damage for #b",
-      " turn.",
-      " turns."
-    ]
-  },
-  "Wraith Form v2": {
-    "NAME": "Wraith Form",
-    "DESCRIPTIONS": [
-      "At the end of your turn, lose #b",
-      " #yDexterity."
-    ]
-  },
-  "Equilibrium": {
-    "NAME": "Equilibrium",
-    "DESCRIPTIONS": [
-      "#yRetain your hand this turn.",
-      "#yRetain your hand for #b",
-      " turns."
-    ]
-  },
-  "Fading": {
-    "NAME": "Fading",
-    "DESCRIPTIONS": [
-      "Dies in #b",
-      " turns.",
-      "Dies this turn."
-    ]
-  },
-  "Shifting": {
-    "NAME": "Shifting",
-    "DESCRIPTIONS": [
-      "",
-      "Upon losing HP, loses that much #yStrength until the end of the turn."
-    ]
-  },
-  "TimeMazePower": {
-    "NAME": "Time Maze",
-    "DESCRIPTIONS": [
-      "Whenever you play #b",
-      " cards, your turn is ended"
-    ]
-  },
-  "NoBlockPower": {
-    "NAME": "No Block",
-    "DESCRIPTIONS": [
-      "You cannot gain #yBlock from cards."
-    ]
-  },
-  "CorpseExplosionPower": {
-    "NAME": "Corpse Explosion",
-    "DESCRIPTIONS": 
-    [
-      "On death, deal damage equal to its Max HP to ALL enemies.",
-      "On death, deal damage equal to its Max HP #b",
-      " times to ALL enemies."
-    ]
-  },
-  "Surrounded": {
-    "NAME": "Surrounded",
-    "DESCRIPTIONS": [
-      "Receive #b50% more damage if attacked from behind. Use targeting cards or potions to change your orientation."
-    ]
-  },
-  "Compulsive": {
-    "NAME": "Reactive",
-    "DESCRIPTIONS": [
-      "Upon receiving attack damage, changes its intent."
-    ]
-  },
-  "Nirvana": {
-    "NAME": "Nirvana",
-    "DESCRIPTIONS": [
-      "Whenever you Scry, gain #b",
-	  " #yBlock."
-    ]
-  },
-  "BackAttack": {
-    "NAME": "Back Attack",
-    "DESCRIPTIONS": [
-      "Deals #b50% more damage as it is attacking you from behind."
     ]
   },
   "Vigor": {
@@ -1036,233 +1262,13 @@
       " additional damage."
     ]
   },
-  "Condense": {
-    "NAME": "DEPRECATED Condense",
+  "Vulnerable": {
+    "NAME": "Vulnerable",
     "DESCRIPTIONS": [
-      "You cannot take more than #b",
-      " from any attack."
-    ]
-  },
-  "Grounded": {
-    "NAME": "DEPRECATED Grounded",
-    "DESCRIPTIONS": [
-      "Whenever you play a #ySkill, enter #yCalm."
-    ]
-  },
-  "Adaptation": {
-    "NAME": "Rushdown",
-    "DESCRIPTIONS": [
-      "Whenever you enter #yWrath, draw #b",
-      " card.",
-      " cards."
-    ]
-  },
-  "Mastery": {
-    "NAME": "DEPRECATED Mastery",
-    "DESCRIPTIONS": [
-      "Whenever you attempt to switch Stances to your current Stance, gain #b",
-      " [W]."
-    ]
-  },
-  "Controlled": {
-    "NAME": "Mental Fortress",
-    "DESCRIPTIONS": [
-      "Whenever you switch #yStances, gain #b",
-      " #yBlock."
-    ]
-  },
-  "HotHot": {
-    "NAME": "DEPRECATED Hot hot",
-    "DESCRIPTIONS": [
-      "While you are in #yWrath, deal #b",
-      " damage back whenever you receive attack damage."
-    ]
-  },
-  "FreeToPlayPower": {
-    "NAME": "DEPRECATED FreeToPlayPower",
-    "DESCRIPTIONS": [
-      "Ignore energy costs on the next card you play this turn.",
-      "Ignore energy costs on the next #b",
-      " cards you play this turn."
-    ]
-  },
-  "Collect": {
-    "NAME": "Collect",
-    "DESCRIPTIONS": [
-      "At the start of your next turn, put a #yMiracle+ into your hand.",
-      "At the start of your next #b",
-      " turns, put a #yMiracle+ into your hand."
-    ]
-  },
-  "EmotionalTurmoilPower": {
-    "NAME": "DEPRECATED Emotional Turmoil",
-    "DESCRIPTIONS": [
-      "At the start of your turn, enter a new random basic stance."
-    ]
-  },
-  "Serenity": {
-    "NAME": "DEPRECATED Serenity",
-    "DESCRIPTIONS": [
-      "While you are in #yCalm, HP loss is reduced by #b"
-    ]
-  },
-  "EndTurnDeath": {
-    "NAME": "Blasphemer",
-    "DESCRIPTIONS": [
-      "At the start of your turn, die."
-    ]
-  },
-  "AlwaysMad": {
-    "NAME": "DEPRECATED Always Mad",
-    "DESCRIPTIONS": [
-      "No longer receive double damage while in #yWrath."
-    ]
-  },
-  "Mantra": {
-    "NAME": "Mantra",
-    "DESCRIPTIONS": [
-      "When you obtain #b",
-      " #yMantra, enter #yDivinity."
-    ]
-  },
-  "AngelForm": {
-    "NAME": "Live Forever",
-    "DESCRIPTIONS": [
-      "At the end of your turn, gain #b",
-      " #yPlated #yArmor."
-    ]
-  },
-  "WireheadingPower": {
-    "NAME": "Foresight",
-	"DESCRIPTIONS": [
-    "At the start of your turn, #yScry #b",
-    "."
-	]
-  },
-  "Vault": {
-    "NAME": "Vault",
-  "DESCRIPTIONS": [
-    "Receives #b",
-    " damage at the start of your next turn."
-  ]
-  },
-  "FlowPower": {
-    "NAME": "DEPRECATED FlowPower",
-    "DESCRIPTIONS": [
-      "When you play an Attack, gain #b",
-      " temporary #yStrength. When you play a Skill, gain #b,",
-	  " temporary #yDexterity."
-    ]
-  },
-  "EstablishmentPower": {
-    "NAME": "Establishment",
-    "DESCRIPTIONS": [
-    "Whenever a card is #yRetained, lower its cost by #b",
-    "."
-	]
-  },
-  "DevotionPower": {
-    "NAME": "Devotion",
-    "DESCRIPTIONS": [
-    "At the start of your turn, gain #b",
-    " #yMantra."
-	]
-  },
-  "BlockReturnPower": {
-    "NAME": "Block Return",
-    "DESCRIPTIONS": [
-    "When attacked, you gain #b",
-    " #yBlock."
-  ]
-  },
-  "BattleHymn": {
-    "NAME": "Battle Hymn",
-    "DESCRIPTIONS": [
-     "At the start of your turn, add #b",
-     " #ySmites into your hand.",
-     " #ySmite into your hand."
-  ]
-  },
-  "FreeAttackPower": {
-    "NAME": "Free Attack Power",
-    "DESCRIPTIONS": [
-      "Ignore energy cost on the next #yAttack you play.",
-      "Ignore energy cost on the next #b",
-      " #yAttacks you play."
-    ]
-  },
-  "NoSkills": {
-    "NAME": "No Skills",
-    "DESCRIPTIONS": [
-      "You cannot play #ySkills this turn."
-    ]
-  },
-  "MasterRealityPower": {
-    "NAME": "Master Reality",
-    "DESCRIPTIONS": [
-      "Whenever a card is created, it is #yUpgraded.",
-      "deprecated",
-      "deprecated",
-      "deprecated"
-    ]
-  },
-  "StrikeUp": {
-    "NAME": "Strike Up",
-    "DESCRIPTIONS": [
-      "Cards containing #yStrike deal #b",
-      " additional damage."
-    ]
-  },
-  "Retribution": {
-    "NAME": "DEPRECATED Retribution",
-    "DESCRIPTIONS": [
-      "Whenever you lose HP, gain #b",
-      " #yVigor."
-    ]
-  },
-  "CannotChangeStancePower": {
-    "NAME": "Cannot Change Stance",
-    "DESCRIPTIONS": [
-      "Cannot change your stance this turn."
-    ]
-  },
-  "OmegaPower": {
-    "NAME": "Omega",
-    "DESCRIPTIONS": [
-      "At the end of your turn, deal #b",
-      " damage to ALL enemies."
-    ]
-  },
-  "DuplicationPower": {
-    "NAME": "Duplication",
-    "DESCRIPTIONS": [
-      "Your next card is played twice this turn.",
-      "Your next #b",
-      " cards are played twice this turn."
-    ]
-  },
-  "WrathNextTurnPower": {
-    "NAME": "Simmering Rage",
-    "DESCRIPTIONS": [
-      "Enter #yWrath at the start of your turn."
-    ]
-  },
-  "DevaForm": {
-    "NAME": "Deva",
-    "DESCRIPTIONS": [
-      "At the start of your turn, gain [W] ",
-      "At the start of your turn, gain [W] #b",
-      " times ",
-      "and increase this by #b",
-      ".",
-      "TRANSLATE NOTE: At the start of your turn, gain [W] #b2 times and increase this by #b1."
-    ]
-  },
-  "OmnisciencePower": {
-    "NAME": "Omniscience",
-    "DESCRIPTIONS": [
-      "DEPERCATED",
-      "DEPRECATED"
+      "Receive #b",
+      "% more damage from #yAttacks for #b",
+      " turn.",
+      " turns."
     ]
   },
   "WaveOfTheHandPower": {
@@ -1279,40 +1285,31 @@
       "DEPRECATED"
     ]
   },
-  "EnergyDownPower": {
-    "NAME": "Fasting",
+  "Weakened": {
+    "NAME": "Weakened",
     "DESCRIPTIONS": [
-      "At the start of your turn, lose ",
-      ""
+      "#yAttacks deal !D!#b% less damage for !M! turn.",
+      "#yAttacks deal !D!#b% less damage for !M! turns."
     ]
   },
-  "DisciplinePower": {
-    "NAME": "DEPRECATED Discipline",
+  "WireheadingPower": {
+    "NAME": "Foresight",
     "DESCRIPTIONS": [
-      "If you end your turn with unused [W] , draw that many additional cards next turn."
+      "At the start of your turn, #yScry #b",
+      "."
     ]
   },
-  "FlickPower": {
-    "NAME": "DEPRECATED Flick",
+  "Wraith_Form_v2": {
+    "NAME": "Wraith Form",
     "DESCRIPTIONS": [
-      "When this enemy gets #yFlick #b",
-      "2 more times, it receives #b",
-      "1 more time, it receives #b",
-      " damage."
+      "At the end of your turn, lose #b",
+      " #yDexterity."
     ]
   },
-  "PathToVictoryPower": {
-    "NAME": "Mark",
+  "WrathNextTurnPower": {
+    "NAME": "Simmering Rage",
     "DESCRIPTIONS": [
-      "Whenever you play #yPressure #yPoints, loses #b",
-      " HP."
-    ]
-  },
-  "LikeWaterPower": {
-    "NAME": "Like Water",
-    "DESCRIPTIONS": [
-      "At the end of your turn, if you are in #yCalm, gain #b",
-      " #yBlock."
+      "Enter #yWrath at the start of your turn."
     ]
   }
 }

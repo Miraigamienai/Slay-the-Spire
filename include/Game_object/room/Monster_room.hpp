@@ -3,12 +3,10 @@
 #include <memory>
 
 #include "Game_object/room/rooms.hpp"
-#include "Game_object/character/Monster_group.hpp"//monsters
 
 //fwd decl
 namespace Monster{
     enum class GroupName:int;
-    class Monster_group;
 }
 
 namespace Room{
@@ -26,7 +24,6 @@ public:
 private:
     float m_wait_timer;
     Monster::GroupName m_group_name;
-    Monster::Monster_group m_monsters;
     bool ending_battle;
     float ending_battle_timer;
 

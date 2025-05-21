@@ -6,6 +6,7 @@
 #include "WindowSize.hpp"
 #include "RUtil/Some_Math.hpp"
 #include "Draw/NumberDrawer.hpp"
+#include "Game_object/power/Power_group.hpp"
 
 //fwd decl
 struct Damage_info;
@@ -27,7 +28,7 @@ enum class KindOfCharacter
     PLAYER,
     MONSTER
 };
-class Characters
+class Characters : public std::enable_shared_from_this<Characters>
 {
 public:
     Characters(float x, float y, float width, float height,float HPBarWidth);
@@ -35,7 +36,6 @@ public:
     virtual void damage(const Damage_info& damage_info)=0;
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2) const =0;
     void update();
-    void setPosition(glm::vec2 vec,int WIDTH,int HIGHT);
     void setPosition(float x,float y);
     void setHPBarWidth(float width);
     bool hovered()const{return boss_hitbox.Hovered();}
@@ -46,7 +46,9 @@ public:
     void setBlock(int num){current_Block=num;};
     void AddHP(int num){current_HP+num>=max_HP?current_HP=max_HP:current_HP+=num;};
     void setHP(int num){current_HP=num;};
-    
+    auto GetHitboxHeight()const noexcept{return boss_hitbox.Height();}
+    auto GetOriginX()const noexcept{return Character_hb_cX-animX;}
+    auto GetOriginY()const noexcept{return Character_hb_cY-animY;}
     void updateHealthBar();
 
     void useFastAttackAnimation();
@@ -73,12 +75,22 @@ public:
     bool isPlayer()const{return KindOfCharacter==KindOfCharacter::PLAYER;}
     auto GetMaxHP()const noexcept{return max_HP;}
     auto GetCurrentHP()const noexcept{return current_HP;}
+
+    
+    auto&get_powers(){return powers;}
+    void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){powers.at_turn_end(dungeon_shared, shared_from_this());}
     auto GetWidth()const noexcept{return Character_hb_width;}
     auto GetHeight()const noexcept{return Character_hb_height;}
 protected:
     int max_HP,current_HP,current_Block;
     void render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const;
-    glm::vec2 getPosition()const{ return pos;};
+    void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+        if(Character_hb_cX > static_cast<float>(Setting::WINDOW_WIDTH)/2.0F)
+            powers.render_tip(r2, Character_hb_cX-Character_hb_width/2.0F, Character_hb_cY);
+        else
+            powers.render_tip(r2, Character_hb_cX+Character_hb_width/2.0F, Character_hb_cY);
+    }
+    glm::vec2 getPosition()const{return pos;};
     KindOfCharacter KindOfCharacter;
 
     bool HPDecrease=false,shakeToggle,IsFadeOut;
@@ -94,6 +106,7 @@ private:
     float HPDecreaseWaitTimer,animationTimer;
     Animation animation=Animation::NONE;
     Draw::NumberDrawer m_font;
+    Power::Power_group powers;
     float shadow_a,bg_a,outline_a,health_width,health_target_width,block_offset,font_scale;
     static const std::shared_ptr<Draw::ReTexture>  &_SHADOW_L,&_SHADOW_R,&_SHADOW_B,
                                                 &HEALTH_BAR_B,&HEALTH_BAR_L,&HEALTH_BAR_R,

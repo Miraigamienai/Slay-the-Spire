@@ -9,7 +9,7 @@ namespace Map
     Legend_item::Legend_item(const std::shared_ptr<Draw::ReTexture> &img,const std::shared_ptr<Draw::Text_layout> &label,const std::shared_ptr<Draw::Text_layout> &title,const std::shared_ptr<Draw::Text_layout> &body,int idx):
     y(LEGEND_Y - idx * SPACE + OFFSET),
     img(img),
-    m_text_box(title, body, 1500.0F*Setting::SCALE, 270.0F*Setting::SCALE),
+    m_text_box(title, body),
     hb(TEXT_X, this->y, 230.0F*Setting::SCALE, SPACE-2.0,true),
     label(label){
         label->SetFontColor(0);
@@ -20,7 +20,7 @@ namespace Map
         if(hb.Hovered()){
             r2->draw(img, ICON_X-64.0F, this->y-64.0F, 128.0F, 128.0F, 0.0F, 64.0F, 64.0F, Setting::SCALE/1.2F, Setting::SCALE/1.2F);
             label->render_top_left(r2, TEXT_X-50.0F*Setting::SCALE, this->y+13.0F*Setting::SCALE, Setting::SCALE);
-            m_text_box.render(r2);
+            m_text_box.render(r2, TIP_X, TIP_Y);
         }else{
             r2->draw(img, ICON_X-64.0F, this->y-64.0F, 128.0F, 128.0F, 0.0F, 64.0F, 64.0F, Setting::SCALE/1.65F, Setting::SCALE/1.65F);
             label->render_top_left(r2, TEXT_X-50.0F*Setting::SCALE, this->y+13.0F*Setting::SCALE, Setting::SCALE);

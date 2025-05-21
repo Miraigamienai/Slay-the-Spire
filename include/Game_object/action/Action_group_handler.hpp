@@ -28,7 +28,7 @@ public:
     Action_group_handler &operator=(const Action_group_handler &) = delete;
     Action_group_handler &operator=(Action_group_handler &&)=delete;
     
-    void update(Dungeon::Dungeon_shared &dungeon_shared, const Monster::Monster_group&room_monsters);
+    void update(Dungeon::Dungeon_shared &dungeon_shared);
     bool is_nothing_to_do()const{
         return this->current_action==nullptr && action_box.empty() && monster_queue.empty() && card_queue.empty() && !is_endding_turn;
     }
@@ -48,7 +48,7 @@ public:
     void AddCardQueue(Card::Card_item &&card_item){card_queue.emplace_back(std::move(card_item));}
     void AddCardQueue(const Card::Card_item &card_item){card_queue.emplace_back(card_item);}
 private:
-    void get_next_action(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group&room_monsters);
+    void get_next_action(Dungeon::Dungeon_shared &dungeon_shared);
     Action_group action_box,pre_action_box;
     std::deque<Card::Card_item> card_queue;
     std::vector<std::shared_ptr<Monster::Monsters>> monster_queue;

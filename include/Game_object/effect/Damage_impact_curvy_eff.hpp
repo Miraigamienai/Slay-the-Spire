@@ -15,13 +15,12 @@ public:
     void update() override;
 private:
     static constexpr float COLOR_ALPHA=0.25F;
-    static constexpr int MAX_VEC_SIZE=31;//static_cast<int>(std::log(0.05F/COLOR_ALPHA)/std::log(0.95F));
+    // static constexpr int MAX_VEC_SIZE=31;//static_cast<int>(std::log(0.05F/COLOR_ALPHA)/std::log(0.95F));
     
-    std::array<glm::vec2, MAX_VEC_SIZE> pos_vec;
-    int now_vec_pos;
-    int now_vec_size;
+    // std::array<glm::vec2, MAX_VEC_SIZE> pos_vec;
+    // int now_vec_pos;
+    // int now_vec_size;
     glm::vec2 pos;
-    float start_duration;
     float current_speed;
     float speed_start, speed_target;
     float wave_speed;

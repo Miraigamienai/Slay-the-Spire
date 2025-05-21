@@ -12,13 +12,13 @@ public:
     //!D!:damage !B!:block !M!:magic_num
     //[R]:orb_red [G]:orb_green [B]:orb_blue [W]:orb_purple 
     //[C]:orb_card [P]:orb_potion [T]:orb_relic [S]:orb_special
-    Text_layout_all(const std::string &text):Text_layout(text){text_rows_set();};
+    Text_layout_all(const std::string &text):Text_layout(text){set_member();};
     ~Text_layout_all()override=default;
-
-    void ChangeFontWeight(FontWeight fw)override{}
+    
+    void set_member();
     void render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const override;
     void render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const override;
-    void render_center_with_nums(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale,const number_info &num_info)const override;
+    void set_num_info(const number_info &num_info)override{this->num_info=num_info;}
 private:
     struct text_item{
         bool is_num;
@@ -35,6 +35,7 @@ private:
 
     NumberDrawer num_draw;
     std::vector<text_row> text_rows;
-    void text_rows_set();
+    number_info num_info;
+    void calculate_width();
 };
 }

@@ -2,56 +2,13 @@
 #include <array>
 
 #include "RUtil/Text_Vector_Reader.hpp"
-#include "Draw/Text_layout_all.hpp"
-#include "Draw/Text_layout_color.hpp"
-#include "Draw/Text_layout_normal.hpp"
-#include "WindowSize.hpp"//get language
+#include "RUtil/Text_layout_creator.hpp"
+#include "RUtil/File_Pos_Getter.hpp"
+#include "Draw/Text_layout.hpp"
 
 #include "Util/Logger.hpp"
 
 namespace RUtil{
-    enum class FileName{
-        ui
-    };
-
-    static inline constexpr auto GetJsonFilePos(FileName file_name,Language lang){
-        switch (lang){
-            case Language::eng:
-                switch(file_name){
-                    default:return RESOURCE_DIR"/language/" "eng/" "ui.json";
-                }
-            case Language::jpn:
-                switch(file_name){
-                    default:return RESOURCE_DIR"/language/" "jpn/" "ui.json";
-                }
-            default:
-                switch(file_name){
-                    default:return RESOURCE_DIR"/language/" "zht/" "ui.json";
-                }
-        }
-        
-    }
-
-    static inline bool HasOrbCode(const std::string &text)noexcept{
-        for(size_t i=0;i+2<text.size();i++)
-            if(text[i] == '[' && text[i + 2] == ']')
-                return true;
-        return false;
-    }
-    static inline bool HasNumCode(const std::string &text)noexcept{
-        for(size_t i=0;i+2<text.size();i++)
-            if(text[i] == '!' && text[i + 2] == '!')
-                return true;
-        return false;
-    }
-    static std::shared_ptr<Draw::Text_layout> GetLayout(const std::string &text){
-        if(HasOrbCode(text)||HasNumCode(text))
-            return std::make_shared<Draw::Text_layout_all>(text);
-        if(text.find('#')!=std::string::npos)
-            return std::make_shared<Draw::Text_layout_color>(text);
-        return std::make_shared<Draw::Text_layout_normal>(text);
-    }
-
     static void GetJsonFileText(const std::string &path,std::vector<std::vector<std::string>>&vec){
         std::ifstream inputFile(path);
         if(!inputFile){
@@ -80,13 +37,13 @@ namespace RUtil{
         static const std::vector<std::vector<std::string>> STR_BOX=[](){
             std::vector<std::vector<std::string>> temp;
             //load ui
-            GetJsonFileText(GetJsonFilePos(FileName::ui, Setting::language),temp);
+            GetJsonFileText(File_Pos_Getter::GetLanguageJsonPos()+FILENAME,temp);
             return temp;
         }();
         static std::array<std::vector<std::shared_ptr<Draw::Text_layout>>, static_cast<size_t>(Text_ID::SIZE)> BOX{};
         if(BOX[static_cast<int>(id)].empty()){
             for(const auto &it:STR_BOX[static_cast<int>(id)])
-                BOX[static_cast<int>(id)].emplace_back(it.empty()?nullptr:GetLayout(it));
+                BOX[static_cast<int>(id)].emplace_back(Text_layout_creator::GetLayout(it));
         }
         return BOX[static_cast<int>(id)];
     }

@@ -15,31 +15,47 @@ namespace Draw{
 enum class FontWeight:int;
 
 namespace Draw{
-
 enum class NumStatus{
-    normal, up, down
+    //for cards number
+    normal, up, down,
+    //other
+    blue
 };
 
 struct number_info{
+    number_info()noexcept:damage(0),defense(0),magic_number(0),damage_status(NumStatus::normal),defense_status(NumStatus::normal),magic_status(NumStatus::normal){}
     number_info(int damage, int defense, int magic_number)noexcept:damage(damage),defense(defense),magic_number(magic_number),damage_status(NumStatus::normal),defense_status(NumStatus::normal),magic_status(NumStatus::normal){}
+    number_info(int damage, int defense, int magic_number, NumStatus status)noexcept:damage(damage),defense(defense),magic_number(magic_number),damage_status(status),defense_status(status),magic_status(status){}
     int damage, defense, magic_number;
     NumStatus damage_status, defense_status, magic_status;
 };
-    
+
+static inline constexpr auto GetNumColor(NumStatus status)noexcept{
+    switch(status){
+        case NumStatus::up:return RUtil::ToRGBA(RUtil::Colors::CHARTREUSE);
+        case NumStatus::down:return RUtil::ToRGBA(RUtil::Colors::TOMATO);
+        case NumStatus::blue:return RUtil::BLUE_TEXT_COLOR;
+        default: return RUtil::WHITE;
+    }
+}
+
 class Text_layout
 {
 public:
     Text_layout(const std::string &text):text(text){};
     virtual ~Text_layout()=default;
     
-
     virtual void render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const=0;
     virtual void render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const=0;
-    virtual void render_center_with_nums(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale,const number_info &/* num_info */)const{
-        render_center(r2, center_x, center_y, angle, center_origin_x, center_origin_y, scale);
+    virtual void set_num_info(const number_info &/* num_info */){}
+    
+    void ChangeFontWeight(FontWeight fw){
+        if(fw!=this->fw){
+            this->fw=fw;
+            this->set_member();
+            if(fontsize!=Setting::BIGGIST_SIZE) font_scale=Fonts::CalFontScale(fontsize,fw);
+        }
     }
-    virtual void ChangeFontWeight(FontWeight fw)=0;
-
     void SetFontSize(int fontsize){
         if(this->fontsize==fontsize) return;
         this->fontsize=fontsize;
@@ -57,7 +73,8 @@ protected:
     float font_scale=1.0F;
     int fontsize=Setting::BIGGIST_SIZE;
     FontWeight fw=FontWeight::regular;
-
+    
+    virtual void set_member()=0;
     static void replace(std::string &text, const char* from, const char* to);
     static std::vector<std::string> color_string_split(const std::string &text);
     static std::vector<std::string> num_tag_string_split(const std::string &text){return tag_string_split('!','!',text);}

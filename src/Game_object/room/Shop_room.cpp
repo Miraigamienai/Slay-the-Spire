@@ -7,10 +7,6 @@
 namespace Room
 {
     void Shop_room::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        if(room_phase==Room_phase::complete){
-            proceed.render(r2);
-            return;
-        }
         merchant->render(r2);
         proceed.render(r2);
     }

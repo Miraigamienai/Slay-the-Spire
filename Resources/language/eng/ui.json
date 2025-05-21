@@ -996,9 +996,9 @@
   "Rest_Option": {
     "TEXT": [
       "Rest",
-      "Heal for 100% of your Max HP (",
+      "Heal for 100% of your Max HP ( !M! )",
       " HP from ",
-      "Heal for 30% of your Max HP (",
+      "Heal for 30% of your Max HP ( !M! )",
       ""
     ]
   },

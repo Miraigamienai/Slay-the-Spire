@@ -29,7 +29,9 @@ private:
     static constexpr float SPACE = 58.0F * Setting::SCALE,
                            OFFSET = 100.0F * Setting::SCALE,
                            ICON_X = 1575.0F * Setting::SCALE,
-                           TEXT_X = 1670.0F * Setting::SCALE;
+                           TEXT_X = 1670.0F * Setting::SCALE,
+                           TIP_X = 1500.0F*Setting::SCALE,
+                           TIP_Y = 270.0F*Setting::SCALE;
 public:
     static constexpr float LEGEND_X = 1670.0F * Setting::SCALE,
                            LEGEND_Y = 600.0F * Setting::SCALE;

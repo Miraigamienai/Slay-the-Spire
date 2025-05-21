@@ -43,7 +43,7 @@ namespace Card{
         }
     }
 
-    void Card_group_handler::draw(){
+    void Card_group_handler::draw(const Power::Power_group &player_powers){
         //to hand, don't need to add to flying card list.
         if(draw_pile.empty()){
             LOG_ERROR("the draw_pile is empty, but it was drawn.");
@@ -51,6 +51,7 @@ namespace Card{
             auto card=draw_pile.PopTop();
             card->draw();
             card->SetHoverTimer(0.0F);
+            card->RefreshDisplay(player_powers);
             hand_cards.AddTop(card);
             refresh_hand_layout();
         }
@@ -61,6 +62,7 @@ namespace Card{
             it->Shrink(false);
             it->Darken(false);
             it->discard();
+            it->ResetAttributes();
             flying_cards.emplace_back(it);
         }
         hand_cards.MoveAllCardTo(m_discard);
@@ -70,6 +72,7 @@ namespace Card{
         card->Shrink(false);
         card->Darken(false);
         card->discard();
+        card->ResetAttributes();
         flying_cards.emplace_back(card);
         if(!visual_only)
             this->m_discard.AddTop(card);

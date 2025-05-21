@@ -6,7 +6,7 @@
 
 namespace Card{
 namespace Red{
-    void Clash::Use(Dungeon::Dungeon_shared &dungeon_shared,const Monster::Monster_group &/* room_monsters */,const std::shared_ptr<Monster::Monsters> &target_monster){
+    void Clash::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster){
         if(!target_monster->IsDie()){
             dungeon_shared.action_group_handler.AddActionBot(
                 std::make_shared<Action::Effect_gen_capsule_action>(

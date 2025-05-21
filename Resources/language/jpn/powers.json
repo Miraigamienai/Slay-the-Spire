@@ -6,11 +6,25 @@
       " 増加する。"
     ]
   },
-  "After Image": {
+  "Adaptation": {
+    "NAME": "急襲",
+    "DESCRIPTIONS": [
+      "#y憤怒 に移行するたび、カードを #b",
+      " 枚引く。",
+      " 枚引く。"
+    ]
+  },
+  "After_Image": {
     "NAME": "残像",
     "DESCRIPTIONS": [
       "カードを使用するたび、 #b",
       " #yブロック を得る。"
+    ]
+  },
+  "AlwaysMad": {
+    "NAME": "DEPRECATED Always Mad",
+    "DESCRIPTIONS": [
+      "No longer receive double damage while in #yWrath."
     ]
   },
   "Amplify": {
@@ -19,6 +33,13 @@
       "このターン、次に使用する #yパワー の効果を2回分発動する。",
       "このターン、次に使用する ",
       " 枚の #yパワー の効果を2回分発動する。"
+    ]
+  },
+  "AngelForm": {
+    "NAME": "永遠の命",
+    "DESCRIPTIONS": [
+      "ターン終了時、 #yプレートアーマー #b",
+      " を得る。"
     ]
   },
   "Anger": {
@@ -44,7 +65,7 @@
       " 回打ち消す。"
     ]
   },
-  "Attack Burn": {
+  "Attack_Burn": {
     "NAME": "アタック燃焼",
     "DESCRIPTIONS": [
       "#b",
@@ -53,11 +74,32 @@
       " ターン有効。 #yアタック を使用すると、 #y廃棄 される。"
     ]
   },
+  "BackAttack": {
+    "NAME": "不意打ち",
+    "DESCRIPTIONS": [
+      "背後からのアタックで与えるダメージが #b50% 増加する。"
+    ]
+  },
   "Barricade": {
     "NAME": "バリケード",
     "DESCRIPTIONS": [
       "ターン開始時に #yブロック を失わない。",
       "ターン開始時に #yブロック を失わない。"
+    ]
+  },
+  "BattleHymn": {
+    "NAME": "闘争賛歌",
+    "DESCRIPTIONS": [
+      "ターン開始時、 #yスマイト を #b",
+      " 枚手札に加える。",
+      " 枚手札に加える。"
+    ]
+  },
+  "BeatOfDeath": {
+    "NAME": "死の鼓動",
+    "DESCRIPTIONS": [
+      "プレイヤーはカードを使用するたび、 #b",
+      " ダメージを受ける。"
     ]
   },
   "Berserk": {
@@ -72,6 +114,13 @@
     "DESCRIPTIONS": [
       "ターン開始時に #y集中力 #b",
       " を失う。"
+    ]
+  },
+  "BlockReturnPower": {
+    "NAME": "ブロックリターン",
+    "DESCRIPTIONS": [
+      "攻撃を受けると、プレイヤーが #b",
+      " #yブロック を得る。"
     ]
   },
   "Blur": {
@@ -101,7 +150,7 @@
       " 回防ぐ。"
     ]
   },
-  "Bullet Time": {
+  "Bullet_Time": {
     "NAME": "バレットタイム",
     "DESCRIPTIONS": [
       "グリーンカードのエナジー消費が #b0 になる。"
@@ -115,11 +164,25 @@
       " 枚の #yスキル の効果を2回分発動する。"
     ]
   },
+  "CannotChangeStancePower": {
+    "NAME": "スタンス変更不可",
+    "DESCRIPTIONS": [
+      "このターン、スタンスを変更できない。"
+    ]
+  },
   "Choked": {
     "NAME": "窒息",
     "DESCRIPTIONS": [
       "このターン、カードを使用するたび、HPを #b",
       " 失う。"
+    ]
+  },
+  "Collect": {
+    "NAME": "採集",
+    "DESCRIPTIONS": [
+      "次のターン開始時、 #y奇跡+ を1枚手札に加える。",
+      "次の #b",
+      " ターンの間、ターン開始時に #y奇跡+ を1枚手札に加える。"
     ]
   },
   "Combust": {
@@ -128,6 +191,19 @@
       "ターン終了時、HPを #b",
       " 失い、敵全体に #b",
       " ダメージを与える。"
+    ]
+  },
+  "Compulsive": {
+    "NAME": "反応",
+    "DESCRIPTIONS": [
+      "アタックダメージを受けると、行動予定を変更する。"
+    ]
+  },
+  "Condense": {
+    "NAME": "DEPRECATED Condense",
+    "DESCRIPTIONS": [
+      "You cannot take more than #b",
+      " from any attack."
     ]
   },
   "Confusion": {
@@ -151,6 +227,21 @@
       " ダメージを受ける。"
     ]
   },
+  "Controlled": {
+    "NAME": "精神要塞",
+    "DESCRIPTIONS": [
+      "#yスタンス を変更するたび、 #b",
+      " #yブロック を得る。"
+    ]
+  },
+  "CorpseExplosionPower": {
+    "NAME": "死体爆発",
+    "DESCRIPTIONS": [
+      "死亡すると、その最大HPに等しいダメージを敵全体に与える。",
+      "死亡すると、その最大HPの #b",
+      " 倍に等しいダメージを敵全体に与える。"
+    ]
+  },
   "Corruption": {
     "NAME": "堕落",
     "DESCRIPTIONS": [
@@ -158,7 +249,7 @@
       "使用した #yスキル は #y廃棄 される。"
     ]
   },
-  "Creative AI": {
+  "Creative_AI": {
     "NAME": "クリエイティブAI",
     "DESCRIPTIONS": [
       "ターン開始時、ランダムな #yパワー カードを #b",
@@ -173,14 +264,14 @@
       " を得る。"
     ]
   },
-  "Curl Up": {
+  "Curl_Up": {
     "NAME": "丸くなる",
     "DESCRIPTIONS": [
       "アタックダメージを受けた時に丸まって、 #b",
       " #yブロック を得る (戦闘につき1回)。"
     ]
   },
-  "Dance Puppet": {
+  "Dance_Puppet": {
     "NAME": "",
     "DESCRIPTIONS": [
       "",
@@ -189,7 +280,7 @@
       ""
     ]
   },
-  "Dark Embrace": {
+  "Dark_Embrace": {
     "NAME": "闇の抱擁",
     "DESCRIPTIONS": [
       "カードを #y廃棄 するたび、カードを #b1 枚引く。",
@@ -197,11 +288,29 @@
       " 枚引く。"
     ]
   },
-  "Demon Form": {
+  "Demon_Form": {
     "NAME": "悪魔化",
     "DESCRIPTIONS": [
       "ターン開始時、 #y筋力 #b",
       " を得る。"
+    ]
+  },
+  "DevaForm": {
+    "NAME": "神体",
+    "DESCRIPTIONS": [
+      "ターン開始時、 [W] を得る。",
+      "ターン開始時、 [W] を #b",
+      " 回得る。",
+      "この効果はターンごとに #b",
+      " 増加する。",
+      "TRANSLATE NOTE: At the start of your turn, gain [W] #b2 times and increase this by #b1."
+    ]
+  },
+  "DevotionPower": {
+    "NAME": "献身",
+    "DESCRIPTIONS": [
+      "ターン開始時、 #b",
+      " #yマントラ を得る。"
     ]
   },
   "DexLoss": {
@@ -219,7 +328,13 @@
       " 。"
     ]
   },
-  "Double Damage": {
+  "DisciplinePower": {
+    "NAME": "DEPRECATED Discipline",
+    "DESCRIPTIONS": [
+      "If you end your turn with unused [W] , draw that many additional cards next turn."
+    ]
+  },
+  "Double_Damage": {
     "NAME": "ダブルダメージ",
     "DESCRIPTIONS": [
       "#yアタック で与えるダメージが2倍になる。 #b",
@@ -227,7 +342,7 @@
       " ターン有効。"
     ]
   },
-  "Double Tap": {
+  "Double_Tap": {
     "NAME": "ダブルタップ",
     "DESCRIPTIONS": [
       "このターン、次に使用する #yアタック の効果を2回分発動する。",
@@ -245,7 +360,7 @@
       " 枚、引けるカード数が減る。"
     ]
   },
-  "Draw Card": {
+  "Draw_Card": {
     "NAME": "ドローカード",
     "DESCRIPTIONS": [
       "次のターンでカードを #b",
@@ -253,7 +368,7 @@
       " 枚追加で引く。"
     ]
   },
-  "Draw Down": {
+  "Draw_Down": {
     "NAME": "ドローダウン",
     "DESCRIPTIONS": [
       "次のターン開始時に引けるカードが #b",
@@ -261,7 +376,7 @@
       " 枚減る。"
     ]
   },
-  "Draw Reduction": {
+  "Draw_Reduction": {
     "NAME": "ドロー減少",
     "DESCRIPTIONS": [
       "次のターン開始時に引けるカードが #b1 枚減る。",
@@ -269,7 +384,15 @@
       " ターン有効。"
     ]
   },
-  "Echo Form": {
+  "DuplicationPower": {
+    "NAME": "複製",
+    "DESCRIPTIONS": [
+      "このターン、次のカードを2回プレイする。",
+      "このターン、次の #b",
+      " 枚のカードを2回プレイする。"
+    ]
+  },
+  "Echo_Form": {
     "NAME": "反響化",
     "DESCRIPTIONS": [
       "ターンの最初に使用するカードの効果を2回分発動する。",
@@ -283,6 +406,18 @@
       "#yライトニング が敵全体を攻撃する。",
       "",
       ""
+    ]
+  },
+  "EmotionalTurmoilPower": {
+    "NAME": "DEPRECATED Emotional Turmoil",
+    "DESCRIPTIONS": [
+      "At the start of your turn, enter a new random basic stance."
+    ]
+  },
+  "EndTurnDeath": {
+    "NAME": "冒涜",
+    "DESCRIPTIONS": [
+      "ターン開始時、死亡する。"
     ]
   },
   "Energized": {
@@ -303,6 +438,13 @@
       " - TRANSLATOR NOTE: - The above line is for plural if needed to distinguish from singular."
     ]
   },
+  "EnergyDownPower": {
+    "NAME": "断食",
+    "DESCRIPTIONS": [
+      "ターン開始時、 ",
+      "を失う。"
+    ]
+  },
   "Entangled": {
     "NAME": "拘束",
     "DESCRIPTIONS": [
@@ -314,6 +456,21 @@
     "DESCRIPTIONS": [
       "アタックダメージを ブロック されずに敵に与えた時、 #y毒 #b",
       " も与える。"
+    ]
+  },
+  "Equilibrium": {
+    "NAME": "均衡",
+    "DESCRIPTIONS": [
+      "このターン、手札を #y保留 する。",
+      "手札を #y保留 する。 #b",
+      " ターン有効。"
+    ]
+  },
+  "EstablishmentPower": {
+    "NAME": "制定",
+    "DESCRIPTIONS": [
+      "カードが #y保留 されるたび、この戦闘中そのカードのコストは #b",
+      " 下がる。"
     ]
   },
   "Evolve": {
@@ -333,7 +490,7 @@
       "このターンで爆発して #b"
     ]
   },
-  "Extra Cards": {
+  "Extra_Cards": {
     "NAME": "エクストラカード",
     "DESCRIPTIONS": [
       "次のターンでカードを #b1 枚追加で引く。",
@@ -341,21 +498,29 @@
       " 枚追加で引く。"
     ]
   },
-  "Feel No Pain": {
+  "Fading": {
+    "NAME": "消失",
+    "DESCRIPTIONS": [
+      "#b",
+      " ターン後、死亡する。",
+      "このターンで死亡する。"
+    ]
+  },
+  "Feel_No_Pain": {
     "NAME": "無痛",
     "DESCRIPTIONS": [
       "カードを #y廃棄 するたび、 #b",
       " #yブロック を得る。"
     ]
   },
-  "Fire Breathing": {
+  "Fire_Breathing": {
     "NAME": "炎の息",
     "DESCRIPTIONS": [
       "#y状態異常 か #y呪い カードを引くたび、敵全体に #b",
       " ダメージを与える。"
     ]
   },
-  "Flame Barrier": {
+  "Flame_Barrier": {
     "NAME": "炎の障壁",
     "DESCRIPTIONS": [
       "アタックを受けた時、 #b",
@@ -369,11 +534,28 @@
       " を失う。"
     ]
   },
+  "FlickPower": {
+    "NAME": "DEPRECATED Flick",
+    "DESCRIPTIONS": [
+      "When this enemy gets #yFlick #b",
+      "2 more times, it receives #b",
+      "1 more time, it receives #b",
+      " damage."
+    ]
+  },
   "Flight": {
     "NAME": "飛行",
     "DESCRIPTIONS": [
       "アタックによる被ダメージが 50% 減少。アタックダメージを1ターンに #b",
       " 回受けると解除。"
+    ]
+  },
+  "FlowPower": {
+    "NAME": "DEPRECATED FlowPower",
+    "DESCRIPTIONS": [
+      "When you play an Attack, gain #b",
+      " temporary #yStrength. When you play a Skill, gain #b,",
+      " temporary #yDexterity."
     ]
   },
   "Focus": {
@@ -392,6 +574,22 @@
       " ターン有効。"
     ]
   },
+  "FreeAttackPower": {
+    "NAME": "アタックコスト無視",
+    "DESCRIPTIONS": [
+      "次にプレイする #yアタック のコストを無視する。",
+      "次にプレイする #b",
+      " 枚の #yアタック のコストを無視する。"
+    ]
+  },
+  "FreeToPlayPower": {
+    "NAME": "DEPRECATED FreeToPlayPower",
+    "DESCRIPTIONS": [
+      "Ignore energy costs on the next card you play this turn.",
+      "Ignore energy costs on the next #b",
+      " cards you play this turn."
+    ]
+  },
   "Gambit": {
     "NAME": "先手",
     "DESCRIPTIONS": [
@@ -401,11 +599,17 @@
       " [B] を得る。"
     ]
   },
-  "Generic Strength Up Power": {
+  "Generic_Strength_Up_Power": {
     "NAME": "",
     "DESCRIPTIONS": [
       "ターン終了時、 #y筋力 #b",
       " を得る。"
+    ]
+  },
+  "Grounded": {
+    "NAME": "DEPRECATED Grounded",
+    "DESCRIPTIONS": [
+      "Whenever you play a #ySkill, enter #yCalm."
     ]
   },
   "GrowthPower": {
@@ -446,7 +650,14 @@
       ""
     ]
   },
-  "Infinite Blades": {
+  "HotHot": {
+    "NAME": "DEPRECATED Hot hot",
+    "DESCRIPTIONS": [
+      "While you are in #yWrath, deal #b",
+      " damage back whenever you receive attack damage."
+    ]
+  },
+  "Infinite_Blades": {
     "NAME": "無限の刃",
     "DESCRIPTIONS": [
       "ターン開始時、 #yナイフ を #b",
@@ -460,21 +671,6 @@
       "このターン、すべての被ダメージとHPを失う効果を #b1 に軽減。 無形 は2ターンに1回有効になる。"
     ]
   },
-  "Invincible": {
-    "NAME": "無敵",
-    "DESCRIPTIONS": [
-      "このターン中に減らせるHPは残り #b",
-      "。",
-      "このターン、これ以上ダメージを受けることはない。"
-    ]
-  },
-  "BeatOfDeath": {
-    "NAME": "死の鼓動",
-    "DESCRIPTIONS": [
-      "プレイヤーはカードを使用するたび、 #b",
-      " ダメージを受ける。"
-    ]
-  },
   "IntangiblePlayer": {
     "NAME": "無形",
     "DESCRIPTIONS": [
@@ -485,6 +681,14 @@
     "NAME": "反転",
     "DESCRIPTIONS": [
       "ダメージを無効化。 #yブロック を得るたび、その値に等しいHPを失う。"
+    ]
+  },
+  "Invincible": {
+    "NAME": "無敵",
+    "DESCRIPTIONS": [
+      "このターン中に減らせるHPは残り #b",
+      "。",
+      "このターン、これ以上ダメージを受けることはない。"
     ]
   },
   "Juggernaut": {
@@ -501,10 +705,17 @@
       " 枚引く。"
     ]
   },
-  "Life Link": {
+  "Life_Link": {
     "NAME": "命のリンク",
     "DESCRIPTIONS": [
       "他の敵が生存している場合、 #b2 ターン後に #b50% のHPで復活する。"
+    ]
+  },
+  "LikeWaterPower": {
+    "NAME": "水の如く",
+    "DESCRIPTIONS": [
+      "ターン終了時に #y平静 スタンスの場合、 #b",
+      " #yブロック を得る。"
     ]
   },
   "Lockon": {
@@ -524,7 +735,7 @@
       " 回分発動する。"
     ]
   },
-  "Machine Learning": {
+  "Machine_Learning": {
     "NAME": "機械学習",
     "DESCRIPTIONS": [
       "ターン開始時にカードを #b",
@@ -546,6 +757,29 @@
       " #yブロック を得る。 #yブロック 値は ",
       " 発動のたびに増加する。ターン開始時に鍛錬の値は #b",
       " に戻る。"
+    ]
+  },
+  "Mantra": {
+    "NAME": "マントラ",
+    "DESCRIPTIONS": [
+      "#yマントラ を #b",
+      " 得ると #y神聖 スタンスに移行する。"
+    ]
+  },
+  "MasterRealityPower": {
+    "NAME": "現実掌握",
+    "DESCRIPTIONS": [
+      "カードが作られるたび、それを #yアップグレード する。",
+      "deprecated",
+      "deprecated",
+      "deprecated"
+    ]
+  },
+  "Mastery": {
+    "NAME": "DEPRECATED Mastery",
+    "DESCRIPTIONS": [
+      "Whenever you attempt to switch Stances to your current Stance, gain #b",
+      " [W]."
     ]
   },
   "Mayhem": {
@@ -571,53 +805,86 @@
       "リーダーがいないと、ミニオンは戦闘から逃走する。"
     ]
   },
-  "Mode Shift": {
+  "Mode_Shift": {
     "NAME": "モード変更",
     "DESCRIPTIONS": [
       "#b",
       " ダメージを受けると、防御モードに入る。"
     ]
   },
-  "Next Turn Block": {
+  "Next_Turn_Block": {
     "NAME": "次ターンブロック",
     "DESCRIPTIONS": [
       "次のターンで #b",
       " #yブロック を得る。"
     ]
   },
-  "Night Terror": {
+  "Night_Terror": {
     "NAME": "悪夢",
     "DESCRIPTIONS": [
       "次のターンでカードを #b",
       " 枚手札に加える。"
     ]
   },
-  "No Attack": {
+  "Nirvana": {
+    "NAME": "涅槃",
+    "DESCRIPTIONS": [
+      "占術を行うたび、 #b",
+      " #yブロック を得る。"
+    ]
+  },
+  "NoBlockPower": {
+    "NAME": "ブロック不可能",
+    "DESCRIPTIONS": [
+      "カードから #yブロック を得られない。"
+    ]
+  },
+  "NoSkills": {
+    "NAME": "スキル不可",
+    "DESCRIPTIONS": [
+      "このターン #yスキル をプレイできない。"
+    ]
+  },
+  "No_Attack": {
     "NAME": "アタック不可",
     "DESCRIPTIONS": [
       "このターン #yアタック を使用できない。"
     ]
   },
-  "No Draw": {
+  "No_Draw": {
     "NAME": "ノードロー",
     "DESCRIPTIONS": [
       "このターン、カードを引けない。"
     ]
   },
-  "Noxious Fumes": {
+  "Noxious_Fumes": {
     "NAME": "有毒ガス",
     "DESCRIPTIONS": [
       "ターン開始時、敵全体に #y毒 #b",
       " を与える。"
     ]
   },
-  "Nullify Attack": {
+  "Nullify_Attack": {
     "NAME": "アタック帳消し",
     "DESCRIPTIONS": [
       "各ターンで #yアタック を一度だけ完全に #yブロック する。"
     ]
   },
-  "Painful Stabs": {
+  "OmegaPower": {
+    "NAME": "オメガ",
+    "DESCRIPTIONS": [
+      "ターン終了時、敵全体に #b",
+      " ダメージを与える。"
+    ]
+  },
+  "OmnisciencePower": {
+    "NAME": "Omniscience",
+    "DESCRIPTIONS": [
+      "DEPERCATED",
+      "DEPRECATED"
+    ]
+  },
+  "Painful_Stabs": {
     "NAME": "苦痛の刺創",
     "DESCRIPTIONS": [
       "この敵からアタックダメージを受けるたび、 #y負傷 が1枚捨て札に加えられる。"
@@ -632,7 +899,14 @@
       " 枚使用すると、敵全体に #b"
     ]
   },
-  "Pen Nib": {
+  "PathToVictoryPower": {
+    "NAME": "急所",
+    "DESCRIPTIONS": [
+      "#y経穴殺法 をプレイするたび、 #b",
+      " HPを失う。"
+    ]
+  },
+  "Pen_Nib": {
     "NAME": "ペン先",
     "DESCRIPTIONS": [
       "次の #yアタック のダメージが2倍になる。"
@@ -646,7 +920,7 @@
       " ターンの間、 #y2倍のダメージ を与える。"
     ]
   },
-  "Plated Armor": {
+  "Plated_Armor": {
     "NAME": "プレートアーマー",
     "DESCRIPTIONS": [
       "ターン終了時、 #b",
@@ -694,7 +968,7 @@
       " 枚のカードは山札の一番上に置かれる。"
     ]
   },
-  "Reduce Damage": {
+  "Reduce_Damage": {
     "NAME": "ダメージ減少",
     "DESCRIPTIONS": [
       ""
@@ -729,7 +1003,7 @@
       ""
     ]
   },
-  "Retain Cards": {
+  "Retain_Cards": {
     "NAME": "カード保留",
     "DESCRIPTIONS": [
       "ターン終了時、 #b",
@@ -737,12 +1011,19 @@
       " 枚のカードを 保留 できる。"
     ]
   },
-  "Retain Hand": {
+  "Retain_Hand": {
     "NAME": "手札保留",
     "DESCRIPTIONS": [
       "#b",
       " ターンの間、手札を捨てない。",
       "このターン終了時、手札を捨てない。"
+    ]
+  },
+  "Retribution": {
+    "NAME": "DEPRECATED Retribution",
+    "DESCRIPTIONS": [
+      "Whenever you lose HP, gain #b",
+      " #yVigor."
     ]
   },
   "Riposte": {
@@ -774,6 +1055,12 @@
       " ダメージを与える。"
     ]
   },
+  "Serenity": {
+    "NAME": "DEPRECATED Serenity",
+    "DESCRIPTIONS": [
+      "While you are in #yCalm, HP loss is reduced by #b"
+    ]
+  },
   "Serpentine": {
     "NAME": "サーペンタイン",
     "DESCRIPTIONS": [
@@ -787,20 +1074,27 @@
       " を得る。"
     ]
   },
-  "Sharp Hide": {
+  "Sharp_Hide": {
     "NAME": "尖った殻",
     "DESCRIPTIONS": [
       "プレイヤーは #yアタック を使用するたび、 #b",
       " ダメージを受ける。"
     ]
   },
-  "Shriek From Beyond": {
+  "Shifting": {
+    "NAME": "変化",
+    "DESCRIPTIONS": [
+      "",
+      "HPを失うと、その値に等しい #y筋力 をターン終了時まで失う。"
+    ]
+  },
+  "Shriek_From_Beyond": {
     "NAME": "彼方からの悲鳴",
     "DESCRIPTIONS": [
       "#yアタック を使用するたび、ランダムなカードを1枚捨てる。"
     ]
   },
-  "Skill Burn": {
+  "Skill_Burn": {
     "NAME": "スキル燃焼",
     "DESCRIPTIONS": [
       "#b",
@@ -825,7 +1119,7 @@
       " の現在のHPと同じ)。"
     ]
   },
-  "Spore Cloud": {
+  "Spore_Cloud": {
     "NAME": "胞子雲",
     "DESCRIPTIONS": [
       "死亡時、 #y弱体化 #b",
@@ -861,6 +1155,27 @@
       " 。"
     ]
   },
+  "StrikeUp": {
+    "NAME": "ストライクアップ",
+    "DESCRIPTIONS": [
+      "名前に「 #yストライク 」を含むカードが追加で #b",
+      " ダメージを与える。"
+    ]
+  },
+  "Study": {
+    "NAME": "学習",
+    "DESCRIPTIONS": [
+      "ターン終了時、 #y洞察 を #b",
+      " 枚山札に混ぜる。",
+      " 枚山札に混ぜる。"
+    ]
+  },
+  "Surrounded": {
+    "NAME": "包囲",
+    "DESCRIPTIONS": [
+      "背後からのアタックは被ダメージが #b50% 増加。ターゲットカードかポーションを使用して向きを変えられる。"
+    ]
+  },
   "TheBomb": {
     "NAME": "爆弾",
     "DESCRIPTIONS": [
@@ -882,14 +1197,21 @@
       " ダメージ反撃する。"
     ]
   },
-  "Thousand Cuts": {
+  "Thousand_Cuts": {
     "NAME": "メッタ切り",
     "DESCRIPTIONS": [
       "カードを使用するたび、敵全体に #b",
       " ダメージを与える。"
     ]
   },
-  "Time Warp": {
+  "TimeMazePower": {
+    "NAME": "時の迷宮",
+    "DESCRIPTIONS": [
+      "カードを #b",
+      " 枚使用すると、ターンが強制終了する。"
+    ]
+  },
+  "Time_Warp": {
     "NAME": "タイムワープ",
     "DESCRIPTIONS": [
       "プレイヤーがカードを #b",
@@ -897,7 +1219,7 @@
       " を得る。"
     ]
   },
-  "Tools Of The Trade": {
+  "Tools_Of_The_Trade": {
     "NAME": "商売道具",
     "DESCRIPTIONS": [
       "ターン開始時、カードを #b",
@@ -919,11 +1241,25 @@
       ""
     ]
   },
+  "Vault": {
+    "NAME": "飛躍",
+    "DESCRIPTIONS": [
+      "次のターン開始時、 #b",
+      " ダメージを受ける。"
+    ]
+  },
   "Venomology": {
     "NAME": "毒学",
     "DESCRIPTIONS": [
       "毎ターン #y毒 が減るのではなく、 #b",
       " 増加する。"
+    ]
+  },
+  "Vigor": {
+    "NAME": "活力",
+    "DESCRIPTIONS": [
+      "次のアタックが追加で #b",
+      " ダメージを与える。"
     ]
   },
   "Vulnerable": {
@@ -935,236 +1271,11 @@
       " ターン有効。"
     ]
   },
-  "Weakened": {
-    "NAME": "脱力",
-    "DESCRIPTIONS": [
-      "#yアタック で与えるダメージが #b",
-      "% 減少。 #b",
-      " ターン有効。",
-      " ターン有効。"
-    ]
-  },
-  "Wraith Form v2": {
-    "NAME": "幽体化",
-    "DESCRIPTIONS": [
-      "ターン終了時、 #y敏捷性 #b",
-      " を失う。"
-    ]
-  },
-  "Equilibrium": {
-    "NAME": "均衡",
-    "DESCRIPTIONS": [
-      "このターン、手札を #y保留 する。",
-      "手札を #y保留 する。 #b",
-      " ターン有効。"
-    ]
-  },
-  "Fading": {
-    "NAME": "消失",
-    "DESCRIPTIONS": [
-      "#b",
-      " ターン後、死亡する。",
-      "このターンで死亡する。"
-    ]
-  },
-  "Shifting": {
-    "NAME": "変化",
-    "DESCRIPTIONS": [
-      "",
-      "HPを失うと、その値に等しい #y筋力 をターン終了時まで失う。"
-    ]
-  },
-  "TimeMazePower": {
-    "NAME": "時の迷宮",
-    "DESCRIPTIONS": [
-      "カードを #b",
-      " 枚使用すると、ターンが強制終了する。"
-    ]
-  },
-  "NoBlockPower": {
-    "NAME": "ブロック不可能",
-    "DESCRIPTIONS": [
-      "カードから #yブロック を得られない。"
-    ]
-  },
-  "CorpseExplosionPower": {
-    "NAME": "死体爆発",
-    "DESCRIPTIONS": [
-      "死亡すると、その最大HPに等しいダメージを敵全体に与える。",
-      "死亡すると、その最大HPの #b",
-      " 倍に等しいダメージを敵全体に与える。"
-    ]
-  },
-  "Compulsive": {
-    "NAME": "反応",
-    "DESCRIPTIONS": [
-      "アタックダメージを受けると、行動予定を変更する。"
-    ]
-  },
-  "Surrounded": {
-    "NAME": "包囲",
-    "DESCRIPTIONS": [
-      "背後からのアタックは被ダメージが #b50% 増加。ターゲットカードかポーションを使用して向きを変えられる。"
-    ]
-  },
-  "BackAttack": {
-    "NAME": "不意打ち",
-    "DESCRIPTIONS": [
-      "背後からのアタックで与えるダメージが #b50% 増加する。"
-    ]
-  },
-  "FlowPower": {
-    "NAME": "DEPRECATED FlowPower",
-    "DESCRIPTIONS": [
-      "When you play an Attack, gain #b",
-      " temporary #yStrength. When you play a Skill, gain #b,",
-      " temporary #yDexterity."
-    ]
-  },
   "WaveOfTheHandPower": {
     "NAME": "波打つ手",
     "DESCRIPTIONS": [
       "#yブロック を得るたび、敵全体に #y脱力 #b",
       " を与える。"
-    ]
-  },
-  "OmnisciencePower": {
-    "NAME": "Omniscience",
-    "DESCRIPTIONS": [
-      "DEPERCATED",
-      "DEPRECATED"
-    ]
-  },
-  "NoSkills": {
-    "NAME": "スキル不可",
-    "DESCRIPTIONS": [
-      "このターン #yスキル をプレイできない。"
-    ]
-  },
-  "EnergyDownPower": {
-    "NAME": "断食",
-    "DESCRIPTIONS": [
-      "ターン開始時、 ",
-      "を失う。"
-    ]
-  },
-  "EndTurnDeath": {
-    "NAME": "冒涜",
-    "DESCRIPTIONS": [
-      "ターン開始時、死亡する。"
-    ]
-  },
-  "Vigor": {
-    "NAME": "活力",
-    "DESCRIPTIONS": [
-      "次のアタックが追加で #b",
-      " ダメージを与える。"
-    ]
-  },
-  "Nirvana": {
-    "NAME": "涅槃",
-    "DESCRIPTIONS": [
-      "占術を行うたび、 #b",
-      " #yブロック を得る。"
-    ]
-  },
-  "AlwaysMad": {
-    "NAME": "DEPRECATED Always Mad",
-    "DESCRIPTIONS": [
-      "No longer receive double damage while in #yWrath."
-    ]
-  },
-  "FreeAttackPower": {
-    "NAME": "アタックコスト無視",
-    "DESCRIPTIONS": [
-      "次にプレイする #yアタック のコストを無視する。",
-      "次にプレイする #b",
-      " 枚の #yアタック のコストを無視する。"
-    ]
-  },
-  "WireheadingPower": {
-    "NAME": "未来予見",
-    "DESCRIPTIONS": [
-      "ターン開始時、 #y占術 #b",
-      "。"
-    ]
-  },
-  "BattleHymn": {
-    "NAME": "闘争賛歌",
-    "DESCRIPTIONS": [
-      "ターン開始時、 #yスマイト を #b",
-      " 枚手札に加える。",
-      " 枚手札に加える。"
-    ]
-  },
-  "Controlled": {
-    "NAME": "精神要塞",
-    "DESCRIPTIONS": [
-      "#yスタンス を変更するたび、 #b",
-      " #yブロック を得る。"
-    ]
-  },
-  "OmegaPower": {
-    "NAME": "オメガ",
-    "DESCRIPTIONS": [
-      "ターン終了時、敵全体に #b",
-      " ダメージを与える。"
-    ]
-  },
-  "Vault": {
-    "NAME": "飛躍",
-    "DESCRIPTIONS": [
-      "次のターン開始時、 #b",
-      " ダメージを受ける。"
-    ]
-  },
-  "Collect": {
-    "NAME": "採集",
-    "DESCRIPTIONS": [
-      "次のターン開始時、 #y奇跡+ を1枚手札に加える。",
-      "次の #b",
-      " ターンの間、ターン開始時に #y奇跡+ を1枚手札に加える。"
-    ]
-  },
-  "StrikeUp": {
-    "NAME": "ストライクアップ",
-    "DESCRIPTIONS": [
-      "名前に「 #yストライク 」を含むカードが追加で #b",
-      " ダメージを与える。"
-    ]
-  },
-  "DisciplinePower": {
-    "NAME": "DEPRECATED Discipline",
-    "DESCRIPTIONS": [
-      "If you end your turn with unused [W] , draw that many additional cards next turn."
-    ]
-  },
-  "FreeToPlayPower": {
-    "NAME": "DEPRECATED FreeToPlayPower",
-    "DESCRIPTIONS": [
-      "Ignore energy costs on the next card you play this turn.",
-      "Ignore energy costs on the next #b",
-      " cards you play this turn."
-    ]
-  },
-  "AngelForm": {
-    "NAME": "永遠の命",
-    "DESCRIPTIONS": [
-      "ターン終了時、 #yプレートアーマー #b",
-      " を得る。"
-    ]
-  },
-  "Serenity": {
-    "NAME": "DEPRECATED Serenity",
-    "DESCRIPTIONS": [
-      "While you are in #yCalm, HP loss is reduced by #b"
-    ]
-  },
-  "Mantra": {
-    "NAME": "マントラ",
-    "DESCRIPTIONS": [
-      "#yマントラ を #b",
-      " 得ると #y神聖 スタンスに移行する。"
     ]
   },
   "WaveOfTheHandPower2": {
@@ -1174,144 +1285,30 @@
       "DEPRECATED"
     ]
   },
-  "Retribution": {
-    "NAME": "DEPRECATED Retribution",
+  "Weakened": {
+    "NAME": "脱力",
     "DESCRIPTIONS": [
-      "Whenever you lose HP, gain #b",
-      " #yVigor."
+      "#yアタック で与えるダメ$nージが !D!#b% 減少。$n!M! ターン有効。"
     ]
   },
-  "HotHot": {
-    "NAME": "DEPRECATED Hot hot",
+  "WireheadingPower": {
+    "NAME": "未来予見",
     "DESCRIPTIONS": [
-      "While you are in #yWrath, deal #b",
-      " damage back whenever you receive attack damage."
+      "ターン開始時、 #y占術 #b",
+      "。"
     ]
   },
-  "Mastery": {
-    "NAME": "DEPRECATED Mastery",
+  "Wraith_Form_v2": {
+    "NAME": "幽体化",
     "DESCRIPTIONS": [
-      "Whenever you attempt to switch Stances to your current Stance, gain #b",
-      " [W]."
-    ]
-  },
-  "DuplicationPower": {
-    "NAME": "複製",
-    "DESCRIPTIONS": [
-      "このターン、次のカードを2回プレイする。",
-      "このターン、次の #b",
-      " 枚のカードを2回プレイする。"
-    ]
-  },
-  "Condense": {
-    "NAME": "DEPRECATED Condense",
-    "DESCRIPTIONS": [
-      "You cannot take more than #b",
-      " from any attack."
-    ]
-  },
-  "DevaForm": {
-    "NAME": "神体",
-    "DESCRIPTIONS": [
-      "ターン開始時、 [W] を得る。",
-      "ターン開始時、 [W] を #b",
-      " 回得る。",
-      "この効果はターンごとに #b",
-      " 増加する。",
-      "TRANSLATE NOTE: At the start of your turn, gain [W] #b2 times and increase this by #b1."
-    ]
-  },
-  "MasterRealityPower": {
-    "NAME": "現実掌握",
-    "DESCRIPTIONS": [
-      "カードが作られるたび、それを #yアップグレード する。",
-      "deprecated",
-      "deprecated",
-      "deprecated"
-    ]
-  },
-  "DevotionPower": {
-    "NAME": "献身",
-    "DESCRIPTIONS": [
-      "ターン開始時、 #b",
-      " #yマントラ を得る。"
-    ]
-  },
-  "CannotChangeStancePower": {
-    "NAME": "スタンス変更不可",
-    "DESCRIPTIONS": [
-      "このターン、スタンスを変更できない。"
-    ]
-  },
-  "LikeWaterPower": {
-    "NAME": "水の如く",
-    "DESCRIPTIONS": [
-      "ターン終了時に #y平静 スタンスの場合、 #b",
-      " #yブロック を得る。"
-    ]
-  },
-  "EstablishmentPower": {
-    "NAME": "制定",
-    "DESCRIPTIONS": [
-      "カードが #y保留 されるたび、この戦闘中そのカードのコストは #b",
-      " 下がる。"
+      "ターン終了時、 #y敏捷性 #b",
+      " を失う。"
     ]
   },
   "WrathNextTurnPower": {
     "NAME": "一触即発",
     "DESCRIPTIONS": [
       "ターン開始時、 #y憤怒 に移行する。"
-    ]
-  },
-  "FlickPower": {
-    "NAME": "DEPRECATED Flick",
-    "DESCRIPTIONS": [
-      "When this enemy gets #yFlick #b",
-      "2 more times, it receives #b",
-      "1 more time, it receives #b",
-      " damage."
-    ]
-  },
-  "Grounded": {
-    "NAME": "DEPRECATED Grounded",
-    "DESCRIPTIONS": [
-      "Whenever you play a #ySkill, enter #yCalm."
-    ]
-  },
-  "BlockReturnPower": {
-    "NAME": "ブロックリターン",
-    "DESCRIPTIONS": [
-      "攻撃を受けると、プレイヤーが #b",
-      " #yブロック を得る。"
-    ]
-  },
-  "PathToVictoryPower": {
-    "NAME": "急所",
-    "DESCRIPTIONS": [
-      "#y経穴殺法 をプレイするたび、 #b",
-      " HPを失う。"
-    ]
-  },
-  "EmotionalTurmoilPower": {
-    "NAME": "DEPRECATED Emotional Turmoil",
-    "DESCRIPTIONS": [
-      "At the start of your turn, enter a new random basic stance."
-    ]
-  },
-  "Adaptation": {
-    "NAME": "急襲",
-    "DESCRIPTIONS": [
-      "#y憤怒 に移行するたび、カードを #b",
-      " 枚引く。",
-      " 枚引く。"
-    ]
-  },
-  "Study": {
-    "NAME": "学習",
-    "DESCRIPTIONS": [
-      "ターン終了時、 #y洞察 を #b",
-      " 枚山札に混ぜる。",
-      " 枚山札に混ぜる。"
     ]
   }
 }

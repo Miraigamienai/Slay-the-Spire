@@ -147,7 +147,7 @@ enum class Colors : Uint32 {
     YELLOW_GREEN = 0x9ACD32
 };
 
-static inline auto constexpr ToRGBA(Colors c){
+static inline auto constexpr ToRGBA(Colors c)noexcept{
     return (static_cast<Uint32>(c)<<8)|0xff;
 }
 

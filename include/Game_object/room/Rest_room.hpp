@@ -32,6 +32,7 @@ private:
     void add_fire();
     static const std::shared_ptr<Draw::ReTexture> &IMG;
     static const std::shared_ptr<Draw::ReTexture> &IMG_O;
+    static const std::shared_ptr<Draw::ReTexture> &IMG_CHARACTER;
     static constexpr float BURNING_TIMER=0.05F;
 };
 }

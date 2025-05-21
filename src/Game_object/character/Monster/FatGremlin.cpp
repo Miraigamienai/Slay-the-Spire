@@ -4,7 +4,8 @@
 #include "Game_object/action/Damage_action.hpp"
 #include "RUtil/Random.hpp"
 namespace Monster{
-    FatGremlin::FatGremlin(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth)
+    FatGremlin::FatGremlin(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth
+    ,RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Gremlins/Fat-gremlin-pretty.png"))
     {
         setHP(MIN_HP,MAX_HP);
         setBlock(0);
@@ -18,19 +19,6 @@ namespace Monster{
         
         //apply 1  Weak.
     }
-    void FatGremlin::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
-    {
-        if(IsFadeOut){
-            r2->SetColor(-1,FadeColorA);
-            r2->draw(img,getPosition().x,getPosition().y,WIDTH,HIGHT); 
-        }
-        else{
-            r2->SetColor(-1);
-            r2->draw(img,getPosition().x,getPosition().y,WIDTH,HIGHT); 
-            render_HP(r2);
-        }
-    }
-    const std::shared_ptr<Draw::ReTexture> &FatGremlin::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Gremlins/Fat-gremlin-pretty.png");
 
 }
 

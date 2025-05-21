@@ -1,11 +1,13 @@
 #include "Game_object/character/Monster/Monsters.hpp"
 #include "Game_object/Damage_info.hpp"
 #include "RUtil/Random.hpp"
+#include "string"
 namespace Monster
 {
-    Monsters::Monsters(float x, float y, float width, float height,float HPBarWidth) : Characters(x, y, width, height ,HPBarWidth) {
+    Monsters::Monsters(float x, float y, float width, float height,float HPBarWidth,const std::shared_ptr<Draw::ReTexture> &img) : Characters(x, y, width, height ,HPBarWidth),img(img) {
         KindOfCharacter=Character::KindOfCharacter::MONSTER;
         setHPBarWidth(width*0.8F);
+    
     }
 
     void Monsters::damage(const Damage_info& damage_info){
@@ -35,5 +37,16 @@ namespace Monster
     void Monsters::setBlock(int num){
         this->current_Block=num;
     }
-
+    void Monsters::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
+    {
+        if(IsFadeOut){
+            r2->SetColor(-1,FadeColorA);
+            r2->draw(img,getPosition().x,getPosition().y,GetWidth(),GetHeight()); 
+        }
+        else{
+            r2->SetColor(-1);
+            r2->draw(img,getPosition().x,getPosition().y,GetWidth(),GetHeight()); 
+            render_HP(r2);
+        }
+    }
 } // namespace Monster

@@ -33,7 +33,7 @@ enum class MonsterID{
 class Monsters:public Character::Characters, public std::enable_shared_from_this<Monsters>
 {
 public:
-    Monsters(float x, float y, float width, float height,float HPBarWidth);
+    Monsters(float x, float y, float width, float height,float HPBarWidth,const std::shared_ptr<Draw::ReTexture> &img);
     virtual ~Monsters()=default;
     virtual void Action(Dungeon::Dungeon_shared &dungeon_shared)=0; 
     // virtual void apply(const std::shared_ptr<Action::Action_group> &action_group)const=0;
@@ -41,9 +41,12 @@ public:
     void setHP(int min,int max);
     void setBlock(int num);
     int GetRandomWithWeight(const float* weights, size_t size);
+    void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
 protected:
 
     static constexpr int FLOOR_Y=Setting::WINDOW_HEIGHT*0.5F-200.0F*Setting::SCALE;
+private:
+    const std::shared_ptr<Draw::ReTexture> &img;
 };
 }
 #endif

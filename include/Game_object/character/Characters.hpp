@@ -73,6 +73,8 @@ public:
     bool isPlayer()const{return KindOfCharacter==KindOfCharacter::PLAYER;}
     auto GetMaxHP()const noexcept{return max_HP;}
     auto GetCurrentHP()const noexcept{return current_HP;}
+    auto GetWidth()const noexcept{return Character_hb_width;}
+    auto GetHeight()const noexcept{return Character_hb_height;}
 protected:
     int max_HP,current_HP,current_Block;
     void render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const;

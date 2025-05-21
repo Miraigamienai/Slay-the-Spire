@@ -11,6 +11,8 @@ namespace Character{
         HPBar_hb_width=HPBarWidth;
         HPBar_hb_a=1.0F;
 
+        Character_hb_height=height;
+        
         shadow_a = 1.0F;
         bg_a = 1.0F;
         outline_a =  1.0F;

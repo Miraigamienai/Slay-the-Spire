@@ -18,6 +18,8 @@ namespace Room
             return;
         }
         this->campfire_burning_effs.render(r2);
+        r2->SetColor(RUtil::Colors::WHITE);
+        r2->draw(IMG_CHARACTER, 0.0F, 0.0F, 1920*Setting::SCALE, 1080*Setting::SCALE);
         if(this->option_handler!=nullptr)
             this->option_handler->render(r2);
         proceed.render(r2);
@@ -87,5 +89,6 @@ namespace Room
     }
 
     const std::shared_ptr<Draw::ReTexture> &Rest_room::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/rest.png"),
-                                           &Rest_room::IMG_O=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/restOutline.png");
+                                           &Rest_room::IMG_O=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/restOutline.png"),
+                                           &Rest_room::IMG_CHARACTER=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/character/shoulder.png");
 } // namespace Room

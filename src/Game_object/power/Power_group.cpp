@@ -12,8 +12,13 @@ namespace Power{
             it->render_img(r2, x+offset_x, y-48.0F*Setting::SCALE, color_a);
             offset_x+=ICON_PADDING;
         }
-        //power_effs
-        power_effs.render(r2);
+        //flash 
+        offset_x = 10.0F*Setting::SCALE;
+        for(const auto&it:box){
+            it->render_flash(r2, x+offset_x, y-48.0F*Setting::SCALE);
+            offset_x+=ICON_PADDING;
+        }
+        r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         //amount
         offset_x = 32.0F*Setting::SCALE;
         for(const auto&it:box){

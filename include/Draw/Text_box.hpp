@@ -4,10 +4,10 @@
 
 #include "WindowSize.hpp"
 #include "RUtil/Some_Math.hpp"
+#include "Draw/Text_layout.hpp"
 
 //fwd decl
 namespace Draw{
-    class Text_layout;
     class ReTexture;
     class Draw_2D;
 }
@@ -17,7 +17,8 @@ class Text_box
 {
 public:
     Text_box()noexcept:title(nullptr),body(nullptr){};
-    Text_box(const std::shared_ptr<Text_layout> &title, const std::shared_ptr<Text_layout> &body);
+    Text_box(const std::shared_ptr<Text_layout> &title):title(title),body(nullptr){title->ChangeFontWeight(FontWeight::bold);}
+    Text_box(const std::shared_ptr<Text_layout> &title, const std::shared_ptr<Text_layout> &body):title(title),body(body){title->ChangeFontWeight(FontWeight::bold);}
     ~Text_box()=default;
     void render(const std::shared_ptr<Draw_2D> &r2, float x, float y)const;
     void change_body(const std::shared_ptr<Text_layout> &body){this->body=body;}

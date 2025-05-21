@@ -46,8 +46,9 @@ public:
     void setBlock(int num){current_Block=num;};
     void AddHP(int num){current_HP+num>=max_HP?current_HP=max_HP:current_HP+=num;};
     void setHP(int num){current_HP=num;};
-    auto GetHeight()const noexcept{return boss_hitbox.Height();}
-
+    auto GetHitboxHeight()const noexcept{return boss_hitbox.Height();}
+    auto GetOriginX()const noexcept{return Character_hb_cX-animX;}
+    auto GetOriginY()const noexcept{return Character_hb_cY-animY;}
     void updateHealthBar();
 
     void useFastAttackAnimation();
@@ -75,18 +76,19 @@ public:
     auto GetMaxHP()const noexcept{return max_HP;}
     auto GetCurrentHP()const noexcept{return current_HP;}
 
+    
+    auto&get_powers(){return powers;}
+    void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){powers.at_turn_end(dungeon_shared, shared_from_this());}
+protected:
+    int max_HP,current_HP,current_Block;
+    void render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         if(Character_hb_cX > static_cast<float>(Setting::WINDOW_WIDTH)/2.0F)
             powers.render_tip(r2, Character_hb_cX-Character_hb_width/2.0F, Character_hb_cY);
         else
             powers.render_tip(r2, Character_hb_cX+Character_hb_width/2.0F, Character_hb_cY);
     }
-    auto&get_powers(){return powers;}
-    void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){powers.at_turn_end(dungeon_shared, shared_from_this());}
-protected:
-    int max_HP,current_HP,current_Block;
-    void render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const;
-    glm::vec2 getPosition()const{ return pos;};
+    glm::vec2 getPosition()const{return pos;};
     KindOfCharacter KindOfCharacter;
 
     bool HPDecrease=false,shakeToggle,IsFadeOut;

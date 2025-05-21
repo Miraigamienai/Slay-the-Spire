@@ -29,7 +29,6 @@ public:
     void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target)const{for(const auto&it:box)it->at_turn_end(dungeon_shared,target);}
     float calculate_damage_dealt(float damage)const{for(const auto&it:box)damage=it->calculate_damage_dealt(damage);return damage;}
 private:
-    Effect::Effect_group power_effs;
     float calculate_tip_height()const;
     static constexpr float TIP_MAX_HEIGHT=Setting::SCALE*0.7F,
                            TIP_PADDING_Y=Draw::Text_box::BOX_EDGE_H*3.15F;

@@ -9,13 +9,20 @@
 
 
 namespace Draw{
+    template <size_t N>
+    static inline constexpr int strlen(const char (&str)[N]){
+        //string is null-terminated ('\0' at the end)
+        //the N will not be 0
+        return N-1;
+    }
+
     static void NumsLoader(FontWeight fw,std::vector<std::shared_ptr<Image_Region>>& vec){
         auto &font=Fonts::GetFont(fw);
-        constexpr auto data="012345\n6789/-";
+        constexpr char data[]="01234\n56789\n/-+ ";
         std::shared_ptr<ReText> nums_text=std::make_shared<ReText>(font,data);
         int now_y=0,now_x=0;
         int img_w=0,img_h=0;
-        for(int i=0;i<13;i++){
+        for(int i=0;i<strlen(data);i++){
             if(data[i]=='\n'){
                 now_x=0;
                 now_y+=img_h;
@@ -47,23 +54,21 @@ namespace Draw{
     }
 
     const std::shared_ptr<Image_Region>&NumberDrawer::GetNumIMG(char c, FontWeight fw){
-        if('0'<=c&&c<='9')
-            return GetNums(fw)[c^48];
-        if(c=='/')
-            return GetNums(fw)[10];
-        if(c=='-')
-            return GetNums(fw)[11];
+        if('0'<=c&&c<='9') return GetNums(fw)[c^48];
+        if(c=='/') return GetNums(fw)[10];
+        if(c=='-') return GetNums(fw)[11];
+        if(c=='+') return GetNums(fw)[12];
+        if(c==' ') return GetNums(fw)[13];
         LOG_ERROR("NumberDrawer can't draw '{}'",c);
         return GetNums(fw)[0];
     }
 
     const std::shared_ptr<Image_Region>&NumberDrawer::GetNumIMG(char c)const{
-        if('0'<=c&&c<='9')
-            return GetNums(this->fw)[c^48];
-        if(c=='/')
-            return GetNums(this->fw)[10];
-        if(c=='-')
-            return GetNums(this->fw)[11];
+        if('0'<=c&&c<='9') return GetNums(fw)[c^48];
+        if(c=='/') return GetNums(fw)[10];
+        if(c=='-') return GetNums(fw)[11];
+        if(c=='+') return GetNums(fw)[12];
+        if(c==' ') return GetNums(fw)[13];
         LOG_ERROR("NumberDrawer can't draw '{}'",c);
         return GetNums(this->fw)[0];
     }

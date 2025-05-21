@@ -11,7 +11,7 @@ namespace Action{
                 dungeon_shared.action_group_handler.AddActionTop(std::make_shared<Action::Remove_power_action>(power, target));
                 is_done=true;
                 return;
-            }else if(amount > power_amt){
+            }else if(amount < power_amt){
                 power->reduce_amount(amount);
                 power->desc_update();
                 dungeon_shared.refresh_display();

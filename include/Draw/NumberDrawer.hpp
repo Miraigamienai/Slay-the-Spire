@@ -19,6 +19,7 @@ class NumberDrawer
 {
 public:
     NumberDrawer(int fontsize=Setting::BIGGIST_SIZE){SetFontSize(fontsize);}
+    NumberDrawer(int fontsize, FontWeight fw){SetFontSize(fontsize);ChangeFontWeight(fw);}
     ~NumberDrawer()=default;
     void SetFontSize(int fontsize){
         if(this->fontsize==fontsize) return;

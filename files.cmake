@@ -42,6 +42,7 @@ set(SRC_FILES
 	Game_object/card/Card_soul.cpp
 	Game_object/card/red/Anger.cpp
 	Game_object/card/red/Clash.cpp
+	Game_object/card/red/Clothesline.cpp
 	Game_object/card/red/Defend.cpp
 	Game_object/card/red/Strike_red.cpp
 	Game_object/character/Characters.cpp
@@ -96,6 +97,7 @@ set(SRC_FILES
 	Game_object/effect/Flying_spike_eff.cpp
 	Game_object/effect/Hammer_effect.cpp
 	Game_object/effect/Map_circle_effect.cpp
+	Game_object/effect/Power_buff_debuff_eff.cpp
 	Game_object/effect/Power_remove_text_eff.cpp
 	Game_object/effect/Purge_card_eff.cpp
 	Game_object/effect/Refresh_energy_effect.cpp
@@ -120,6 +122,7 @@ set(SRC_FILES
 	Game_object/panel/Energy_panel.cpp
 	Game_object/panel/Panels.cpp
 	Game_object/power/Powers.cpp
+	Game_object/power/Power_creator.cpp
 	Game_object/power/Power_group.cpp
 	Game_object/power/Weak_power.cpp
 	Game_object/reward_item/Card_reward.cpp
@@ -209,6 +212,7 @@ set(INCLUDE_FILES
 	Game_object/card/Card_soul.hpp
 	Game_object/card/red/Anger.hpp
 	Game_object/card/red/Clash.hpp
+	Game_object/card/red/Clothesline.hpp
 	Game_object/card/red/Defend.hpp
 	Game_object/card/red/Strike_red.hpp
 	Game_object/character/AllMonster.hpp
@@ -264,9 +268,11 @@ set(INCLUDE_FILES
 	Game_object/effect/End_turn_button_glow.hpp
 	Game_object/effect/Fade_wide.hpp
 	Game_object/effect/Flash_attack_effect.hpp
+	Game_object/effect/Flash_power_eff.hpp
 	Game_object/effect/Flying_spike_eff.hpp
 	Game_object/effect/Hammer_effect.hpp
 	Game_object/effect/Map_circle_effect.hpp
+	Game_object/effect/Power_buff_debuff_eff.hpp
 	Game_object/effect/Power_remove_text_eff.hpp
 	Game_object/effect/Purge_card_eff.hpp
 	Game_object/effect/Refresh_energy_effect.hpp
@@ -280,6 +286,7 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Clash_eff_gen.hpp
 	Game_object/effect_gen/Effect_gen.hpp
 	Game_object/effect_gen/Effect_gen_group.hpp
+	Game_object/effect_gen/Power_buff_debuff_gen.hpp
 	Game_object/effect_gen/Power_remove_text_gen.hpp
 	Game_object/effect_gen/Purge_card_eff_gen.hpp
 	Game_object/effect_gen/Show_card_briefly.hpp
@@ -300,6 +307,7 @@ set(INCLUDE_FILES
 	Game_object/panel/Energy_panel.hpp
 	Game_object/panel/Panels.hpp
 	Game_object/power/Powers.hpp
+	Game_object/power/Power_creator.hpp
 	Game_object/power/Power_group.hpp
 	Game_object/power/Weak_power.hpp
 	Game_object/reward_item/Card_reward.hpp

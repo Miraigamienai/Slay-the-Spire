@@ -44,6 +44,8 @@ public:
     static float interpolation_exp10(float start,float target,float a);
     static float interpolation_exp10in(float start,float target,float a){return Apply(start,target,interpolation_expin(2.0F,10.0F,a));}
     static float interpolation_exp10out(float start,float target,float a){return Apply(start,target,interpolation_expout(2.0F,10.0F,a));}
+    static float interpolation_exp5in(float start,float target,float a){return Apply(start,target,interpolation_expin(2.0F,5.0F,a));}
+    static float interpolation_exp5out(float start,float target,float a){return Apply(start,target,interpolation_expout(2.0F,5.0F,a));}
     template <typename T>
     static constexpr T interpolation_fade(T start,T target,float a){
         //from gdx

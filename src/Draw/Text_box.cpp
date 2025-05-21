@@ -1,15 +1,11 @@
 #include "Draw/Text_box.hpp"
-#include "Draw/Text_layout.hpp"
 #include "RUtil/ColorValuesOnly.hpp"//gold color
 #include "RUtil/Image_book.hpp"//for loading img
 #include "Draw/ReTexture.hpp"//img
 #include "Draw/Draw_2D.hpp"//for rendering
+
 namespace Draw
 {
-    Text_box::Text_box(const std::shared_ptr<Text_layout> &title,const std::shared_ptr<Text_layout> &body):title(title),body(body){
-        title->ChangeFontWeight(FontWeight::bold);
-    }
-
     void Text_box::render(const std::shared_ptr<Draw_2D> &r2, float x, float y)const{
         render_box(r2,x,y);
     }

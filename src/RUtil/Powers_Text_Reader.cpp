@@ -61,10 +61,11 @@ namespace RUtil
                 const auto l_pos=sub_str.find('"');
                 const auto r_pos=sub_str.rfind('"');
                 if(l_pos>=r_pos) LOG_ERROR("TEXT contain:'{}' WRONG in path:{}",line,path);    
-                temp[idx]=sub_str.substr(l_pos+1,r_pos-l_pos-1);
+                temp[idx++]=sub_str.substr(l_pos+1,r_pos-l_pos-1);
             }
         }
         inputFile.close();
+        return temp;
     }
 
     const std::array<std::shared_ptr<Draw::Text_layout>, 2> &Powers_Text_Reader::GetDescriptions(const Powers_Text_ID id){

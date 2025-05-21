@@ -131,6 +131,8 @@ namespace Character{
             r2->SetColor(-1,1);
             m_font.render_center(r2, std::to_string(current_Block), x+BLOCK_ICON_XY, y+BLOCK_ICON_XY+block_offset, font_scale*Setting::SCALE);
         }
+        //powers
+        powers.render(r2, x, y, 1.0F);//TODO: alpha
     }
     void Characters::setPosition(float x,float y){
         pos={x,y};

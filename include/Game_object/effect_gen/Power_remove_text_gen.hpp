@@ -2,6 +2,7 @@
 
 #include "Game_object/effect_gen/Effect_gen.hpp"
 #include "Game_object/effect/Flying_spike_eff.hpp"
+#include "Game_object/effect/Effect_pool.hpp"
 #include "Game_object/effect/Power_remove_text_eff.hpp"
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "RUtil/Random.hpp"
@@ -30,9 +31,9 @@ public:
         TimeGo();
         if(is_done){
             for(int i=0;i<10;i++)
-                dungeon_shared.back_effs.AddTop(std::make_shared<Effect::Flying_spike_eff>(x+Random::GetRandomFloat(50.0F, 70.0F)*Setting::SCALE, y+Random::GetRandomFloat(Power_remove_text_eff::START_OFFSET_Y, Power_remove_text_eff::TARGET_OFFSET_Y), Random::GetRandomFloat(50.0F, 400.0F)*Setting::SCALE, 0.0F, RUtil::BLUE_TEXT_COLOR));
+                dungeon_shared.back_effs.AddTop(Effect::Effect_pool<Effect::Flying_spike_eff>::GetEffect(x+Random::GetRandomFloat(50.0F, 70.0F)*Setting::SCALE, y+Random::GetRandomFloat(Power_remove_text_eff::START_OFFSET_Y, Power_remove_text_eff::TARGET_OFFSET_Y), Random::GetRandomFloat(50.0F, 400.0F)*Setting::SCALE, 0.0F, 0.0F, RUtil::BLUE_TEXT_COLOR));
             for(int i=0;i<10;i++)
-                dungeon_shared.back_effs.AddTop(std::make_shared<Effect::Flying_spike_eff>(x+Random::GetRandomFloat(0.0F, 20.0F)*Setting::SCALE, y+Random::GetRandomFloat(Power_remove_text_eff::START_OFFSET_Y, Power_remove_text_eff::TARGET_OFFSET_Y), -Random::GetRandomFloat(50.0F, 400.0F)*Setting::SCALE, 0.0F, RUtil::BLUE_TEXT_COLOR));
+                dungeon_shared.back_effs.AddTop(Effect::Effect_pool<Effect::Flying_spike_eff>::GetEffect(x+Random::GetRandomFloat(0.0F, 20.0F)*Setting::SCALE, y+Random::GetRandomFloat(Power_remove_text_eff::START_OFFSET_Y, Power_remove_text_eff::TARGET_OFFSET_Y), -Random::GetRandomFloat(50.0F, 400.0F)*Setting::SCALE, 0.0F, 0.0F, RUtil::BLUE_TEXT_COLOR));
         }
     }
 private:

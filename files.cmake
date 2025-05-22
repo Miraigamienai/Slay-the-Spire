@@ -132,10 +132,15 @@ set(SRC_FILES
 	Game_object/room/Rest_room.cpp
 	Game_object/room/Shop_merchant.cpp
 	Game_object/room/Shop_room.cpp
+	Game_object/room/Treasure_item.cpp
+	Game_object/room/Treasure_room.cpp
 	Game_object/room/rest_room_options/Options.cpp
 	Game_object/room/rest_room_options/Option_handler.cpp
 	Game_object/room/rest_room_options/Rest_option.cpp
 	Game_object/room/rest_room_options/Smith_option.cpp
+	Game_object/room/Treasure_type/Large_chest.cpp
+	Game_object/room/Treasure_type/Medium_chest.cpp
+	Game_object/room/Treasure_type/Small_chest.cpp
 	Game_object/scene/Bottom_scene.cpp
 	Game_object/scene/Scenes.cpp
 	RUtil/All_Image.cpp
@@ -319,10 +324,15 @@ set(INCLUDE_FILES
 	Game_object/room/Shop_item.hpp
 	Game_object/room/Shop_merchant.hpp
 	Game_object/room/Shop_room.hpp
+	Game_object/room/Treasure_item.hpp
+	Game_object/room/Treasure_room.hpp
 	Game_object/room/rest_room_options/Options.hpp
 	Game_object/room/rest_room_options/Option_handler.hpp
 	Game_object/room/rest_room_options/Rest_option.hpp
 	Game_object/room/rest_room_options/Smith_option.hpp
+	Game_object/room/Treasure_type/Large_chest.hpp
+	Game_object/room/Treasure_type/Medium_chest.hpp
+	Game_object/room/Treasure_type/Small_chest.hpp
 	Game_object/scene/Bottom_scene.hpp
 	Game_object/scene/Scenes.hpp
 	Game_object/top_panel/Basic_panel.hpp
@@ -332,7 +342,7 @@ set(INCLUDE_FILES
 	Game_object/top_panel/Heart_icon.hpp
 	Game_object/top_panel/Map_icon.hpp
 	Game_object/top_panel/Setting_icon.hpp
-	Game_object/top_panel/Top_panel.hpp
+	Game_object/top_panel/Top_panel.hpp 
 	RUtil/All_Image.hpp
 	RUtil/Atlas_Reader.hpp
 	RUtil/ColorValuesOnly.hpp

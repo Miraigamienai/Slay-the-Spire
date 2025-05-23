@@ -26,8 +26,10 @@ struct Dungeon_shared
     std::shared_ptr<Character::Player> player=nullptr;
     Dungeon_manager manager;
     Monster::Monster_group room_monsters;
+    std::shared_ptr<Map::Map_node> current_node = nullptr;
     void refresh_display(){
         card_group_handler.hand_cards_values_refresh(player->get_powers());
     }
+        
 };
 }

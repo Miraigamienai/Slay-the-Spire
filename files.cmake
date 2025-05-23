@@ -128,6 +128,7 @@ set(SRC_FILES
 	Game_object/reward_item/Card_reward.cpp
 	Game_object/reward_item/Card_reward_item.cpp
 	Game_object/reward_item/Reward_item.cpp
+	Game_object/room/Elite_room.cpp
 	Game_object/room/Monster_room.cpp
 	Game_object/room/Rest_room.cpp
 	Game_object/room/Shop_merchant.cpp
@@ -139,7 +140,7 @@ set(SRC_FILES
 	Game_object/room/rest_room_options/Rest_option.cpp
 	Game_object/room/rest_room_options/Smith_option.cpp
 	Game_object/room/Treasure_type/Large_chest.cpp
-	Game_object/room/Treasure_type/Medium_chest.cpp
+	Game_object/room/Treasure_type/Medium_chest.cpp 
 	Game_object/room/Treasure_type/Small_chest.cpp
 	Game_object/scene/Bottom_scene.cpp
 	Game_object/scene/Scenes.cpp
@@ -319,6 +320,7 @@ set(INCLUDE_FILES
 	Game_object/reward_item/Card_reward.hpp
 	Game_object/reward_item/Card_reward_item.hpp
 	Game_object/reward_item/Reward_item.hpp
+	Game_object/room/Elite_room.hpp
 	Game_object/room/Monster_room.hpp
 	Game_object/room/Rest_room.hpp
 	Game_object/room/Rooms.hpp
@@ -343,7 +345,7 @@ set(INCLUDE_FILES
 	Game_object/top_panel/Heart_icon.hpp
 	Game_object/top_panel/Map_icon.hpp
 	Game_object/top_panel/Setting_icon.hpp
-	Game_object/top_panel/Top_panel.hpp 
+	Game_object/top_panel/Top_panel.hpp
 	RUtil/All_Image.hpp
 	RUtil/Atlas_Reader.hpp
 	RUtil/Cards_Text_Reader.hpp

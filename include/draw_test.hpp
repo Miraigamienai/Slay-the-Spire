@@ -1,14 +1,8 @@
-// // #include<vector>
-// // #include"Draw/ReText.hpp"
-// // #include "Core/Context.hpp"
-// // void testfun(const std::shared_ptr<Core::Context>&rr);
-
 // #ifndef DRAW_TEST_HPP
 // #define DRAW_TEST_HPP
-// #include "Game_object/character/Monster/AcidSlimeL.hpp"
-// #include "Game_object/character/Monster/JawWorm.hpp"
-// #include "Game_object/character/Monster/FatGremlin.hpp"
-// #include "Game_object/character/Player.hpp"
-// void test(const std::shared_ptr<Draw::Draw_2D> &r2);
+// #include "Game_object/room/Treasure_item.hpp"
+// #include "Game_object/dungeon/Dungeon_shared.hpp"
+// void test(const std::shared_ptr<Draw::Draw_2D> &r2,Dungeon::Dungeon_shared &dungeon_shared);
 // void test2(Dungeon::Dungeon_shared &dungeon_shared);
+
 // #endif // DRAW_TEST_HPP

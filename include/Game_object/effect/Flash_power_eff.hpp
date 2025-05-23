@@ -15,7 +15,9 @@ class Flash_power_eff final:public Effects
 {
 public:
     Flash_power_eff(float x, float y, RUtil::AtlasRegionID power_128_id)
-        :x(x),y(y),power_128_id(power_128_id)
+        :x(x-static_cast<float>(RUtil::All_Image::GetAtlasRegion(power_128_id)->GetRegionWidth())/2.0F),
+        y(y-static_cast<float>(RUtil::All_Image::GetAtlasRegion(power_128_id)->GetRegionHeight())/2.0F),
+        power_128_id(power_128_id)
     {
         this->duration=DUR;
         this->color_a=1.0F;

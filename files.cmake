@@ -140,6 +140,7 @@ set(SRC_FILES
 	Game_object/scene/Scenes.cpp
 	RUtil/All_Image.cpp
 	RUtil/Atlas_Reader.cpp
+	RUtil/Cards_Text_Reader.cpp
 	RUtil/Game_Input.cpp
 	RUtil/Hitbox.cpp
 	RUtil/Image_book.cpp
@@ -335,6 +336,7 @@ set(INCLUDE_FILES
 	Game_object/top_panel/Top_panel.hpp
 	RUtil/All_Image.hpp
 	RUtil/Atlas_Reader.hpp
+	RUtil/Cards_Text_Reader.hpp
 	RUtil/ColorValuesOnly.hpp
 	RUtil/File_Pos_Getter.hpp
 	RUtil/Game_Input.hpp

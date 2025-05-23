@@ -49,7 +49,7 @@ namespace RUtil
         std::ifstream inputFile(path);
         if(!inputFile){
             LOG_ERROR("The ERROR happends when loading path:{} Vector strings.",path);
-            return BaseType<std::string>{};
+            return {};
         }
         BaseType<std::string> temp;
 

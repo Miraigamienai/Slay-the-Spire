@@ -22,7 +22,7 @@ namespace Effect
     void Refresh_energy_effect::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE);
         r2->SetColor(-1,color_a);
+        auto&white_ring=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::_whiteRing);
         r2->draw(white_ring, panel_x, panel_y, (float)white_ring->GetRegionWidth(), (float)white_ring->GetRegionHeight(), 0.0F, (float)white_ring->GetRegionWidth()/2.0F, (float)white_ring->GetRegionHeight()/2.0F, this->scale, this->scale);
     }
-    const std::shared_ptr<Draw::Atlas_Region> & Refresh_energy_effect::white_ring=RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::_whiteRing);
 } // namespace Effect

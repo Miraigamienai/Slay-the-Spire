@@ -1,3 +1,5 @@
+#include <array>
+
 #include "Game_object/card/Cards.hpp"//the hpp
 #include "Game_object/effect/Card_glow_border.hpp"//eff
 #include "Game_object/dungeon/Dungeon_shared.hpp"//get current situation for cheking if it is usable.
@@ -5,6 +7,7 @@
 #include "RUtil/Game_Input.hpp"//delat time & cursor pos
 #include "RUtil/All_Image.hpp"//loading img
 #include "RUtil/Text_Vector_Reader.hpp"//ui text reader
+#include "RUtil/Cards_Text_Reader.hpp"//card text
 #include "Draw/Atlas_Region.hpp"//img
 #include "Draw/Text_layout.hpp"//ui text
 #include "Draw/Draw_2D.hpp"//for rendering
@@ -23,11 +26,11 @@ namespace Card{
     static const std::shared_ptr<Draw::Atlas_Region> &CardBanner(Rarity rarity);
     
     Cards::Cards(
-        RUtil::AtlasRegionID card_name, Rarity rarity, Type type, 
+        RUtil::AtlasRegionID card_name, RUtil::Cards_Text_ID card_text_id, Rarity rarity, Type type, 
         Color color, Target target, const int base_cost,
         const int base_damage, const int base_block, const int base_magic_num
     ) : 
-        card_name(card_name), rarity(rarity),
+        card_name(card_name), card_text_id(card_text_id), rarity(rarity),
         type(type), color(color), target(target),
         base_damage(base_damage), base_block(base_block),
         base_magic_num(base_magic_num), base_cost(base_cost), 
@@ -38,7 +41,7 @@ namespace Card{
         m_card_mid_frame(CardMidFrame(rarity)), m_card_right_frame(CardRightFrame(rarity)),
         m_card_banner(CardBanner(rarity)), m_card_portrait(RUtil::All_Image::GetAtlasRegion(card_name)),
         m_card_flash(m_card_bg_silhouette, this->current_x, this->current_y, this->m_angle, this->m_draw_scale, true),
-        hb(IMG_WIDTH_S, IMG_HEIGHT_S)
+        hb(IMG_WIDTH_S, IMG_HEIGHT_S), energy_num_color(RUtil::WHITE)
     {
         static bool once=false;
         if(!once){
@@ -58,10 +61,11 @@ namespace Card{
         this->current_x=this->current_y=0;
         this->target_x=this->target_y=0;
         this->m_angle=this->target_angle=0;
+        this->update_desc();
     }
 
     Cards::Cards(const Cards& other)://ensure internal references are properly set when coping. //(m_card_flash)
-        card_name(other.card_name), rarity(other.rarity),
+        card_name(other.card_name), card_text_id(other.card_text_id), rarity(other.rarity),
         type(other.type), color(other.color), target(other.target),
         base_damage(other.base_damage), base_block(other.base_block),
         base_magic_num(other.base_magic_num), base_cost(other.base_cost), 
@@ -72,7 +76,7 @@ namespace Card{
         m_card_mid_frame(other.m_card_mid_frame), m_card_right_frame(other.m_card_right_frame),
         m_card_banner(other.m_card_banner), m_card_portrait(other.m_card_portrait),
         m_card_flash(other.m_card_bg_silhouette,this->current_x,this->current_y,this->m_angle,this->m_draw_scale,true),
-        hb(other.hb), m_type_width(other.m_type_width), m_type_offset(other.m_type_offset), m_text_pos(other.m_text_pos)
+        hb(other.hb), m_type_width(other.m_type_width), m_type_offset(other.m_type_offset), m_text_pos(other.m_text_pos), energy_num_color(RUtil::WHITE)
     {
         can_hover_in_hand=true;
         can_use=false;
@@ -85,6 +89,7 @@ namespace Card{
         this->current_x=this->current_y=0;
         this->target_x=this->target_y=0;
         this->m_angle=this->target_angle=0;
+        this->update_desc();
     }
 
     void Cards::update(Effect::Effect_group &top_effs){
@@ -98,8 +103,6 @@ namespace Card{
             //update position
             current_x=RUtil::Math::varlerp(current_x,target_x,6.0F,CARD_SNAP_THRESHOLD);
             current_y=RUtil::Math::varlerp(current_y,target_y,6.0F,CARD_SNAP_THRESHOLD);
-            //update somthing else
-            //...
         }
         //color_a
         if(this->m_color_a!=m_target_color_a){
@@ -181,11 +184,38 @@ namespace Card{
         }
         //banner
         this->format_render(r2,m_card_banner,this->current_x,this->current_y);
-
         //type
         s_ui_vec[this->m_text_pos]->SetFontColor(TYPE_COLOR);
         s_ui_vec[this->m_text_pos]->SetFontAlpha(m_color_a);
-        s_ui_vec[this->m_text_pos]->render_center(r2, this->current_x, this->current_y-22.0F*this->m_draw_scale*Setting::SCALE, this->m_angle, 0.0F, 22.0F*this->m_draw_scale*Setting::SCALE,this->m_draw_scale);
+        s_ui_vec[this->m_text_pos]->render_center(r2, this->current_x, this->current_y-23.0F, this->m_angle, 0.0F, 23.0F, m_draw_scale*Setting::SCALE);
+        //title
+        auto &card_info=RUtil::Cards_Text_Reader::GetInfo(card_text_id);
+        card_info.name->SetFontSize(CARD_TITLE_FONT_SIZE);
+        card_info.name->SetFontColor(this->upgraded ? RUtil::GREEN_TEXT_COLOR : RUtil::WHITE);
+        card_info.name->render_center(r2, current_x, current_y + 175.0F, this->m_angle, 0.0F, -175.0F, m_draw_scale*Setting::SCALE);
+        //description
+        auto &desc= upgraded ? card_info.upgrade_desc : card_info.desc;
+        //render desc
+        desc->SetFontSize(CARD_DESC_FONT_SIZE);
+        desc->SetFontAlpha(m_color_a);
+        desc->SetFontColor(RUtil::CREAM_COLOR);
+        desc->render_center(r2, current_x, current_y - 100.0F, this->m_angle, 0.0F, 100.0F, m_draw_scale*Setting::SCALE);
+        //energy
+        static constexpr std::array<RUtil::AtlasRegionID, 6> energy_id_convert=[]()constexpr{
+            std::array<RUtil::AtlasRegionID, 6>temp{};
+            temp[static_cast<int>(Color::red)] = RUtil::AtlasRegionID::_512_card_red_orb;
+            temp[static_cast<int>(Color::green)] = RUtil::AtlasRegionID::_512_card_green_orb;
+            temp[static_cast<int>(Color::blue)] = RUtil::AtlasRegionID::_512_card_blue_orb;
+            temp[static_cast<int>(Color::purple)] = RUtil::AtlasRegionID::_512_card_purple_orb;
+            temp[static_cast<int>(Color::colorless)] = RUtil::AtlasRegionID::_512_card_colorless_orb;
+            temp[static_cast<int>(Color::curse)] = RUtil::AtlasRegionID::_512_card_colorless_orb;
+            return temp;
+        }();
+        this->format_render(r2, RUtil::All_Image::GetAtlasRegion(energy_id_convert[static_cast<int>(this->color)]), current_x, current_y);
+        //energy number
+        r2->SetColor(energy_num_color, m_color_a);
+        // FontHelper.renderRotatedText(sb, font, text, this.current_x, this.current_y, -132.0F * this.drawScale * Settings.scale, 192.0F * this.drawScale * Settings.scale, this.angle, false, costColor);
+        // s_energy_drawer.render_center(r2, std::to_string(cost), current_x, current_y, )
         //tint
         r2->SetColor(TINT_COLOR,this->m_tint_a);
         this->format_render(r2, m_card_bg_silhouette, this->current_x, this->current_y);
@@ -218,6 +248,16 @@ namespace Card{
         can_use = this->CanUse(dungeon_shared);
         if(last && !can_use)
             for(const auto&it:glowgroup)it->QuickDisappear(5.0F);
+        //update energy number color
+        if(!is_flying){
+            if(dungeon_shared.player->GetCurrEnergy() < cost || base_cost < cost){
+                energy_num_color=ENERGY_RED_COLOR;
+            }else if(base_cost>cost){
+                energy_num_color=ENERGY_GREEN_COLOR;
+            }else{
+                energy_num_color=RUtil::WHITE;
+            }
+        }
     }
 
     bool Cards::CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const{
@@ -267,31 +307,42 @@ namespace Card{
         Lighten();
         m_draw_scale=0.12F;
         m_target_draw_scale=0.75F;
+        update_desc();
     }
     void Cards::render_hovered_shadow(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         r2->SetColor(0,0.66F);
         this->format_render(r2,RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::_512_card_super_shadow),this->current_x,this->current_y,1.15F);
     }
+
+    void Cards::update_desc(){
+        const auto &card_info=RUtil::Cards_Text_Reader::GetInfo(card_text_id);
+        const auto &desc= upgraded ? card_info.upgrade_desc : card_info.desc;
+        static constexpr auto foo=[](int a, int b)constexpr{
+            return a==b?(Draw::NumStatus::normal):(a>b?Draw::NumStatus::up:Draw::NumStatus::down);
+        };
+        desc->set_num_info(Draw::number_info{damage, block, magic_num, foo(damage, base_damage), foo(block, base_block), foo(magic_num, base_magic_num)});
+    }
+
     void Cards::init_static_menber(){
-        s_ui_vec[0]->SetFontSize(CARD_FONT_SIZE);
+        s_ui_vec[0]->SetFontSize(CARD_TYPE_FONT_SIZE);
         constexpr float padding=10.0F*Setting::SCALE;
         float jitai_width=s_ui_vec[0]->GetWidth()+padding;
         constexpr float mid_frame_width=48.0F*Setting::SCALE;
         s_type_offset_attack=(jitai_width-mid_frame_width)/2.0F;
         s_type_width_attack=(jitai_width/mid_frame_width-1.0F)*2.0F+1.0F;//let the space have twice as large
-        s_ui_vec[1]->SetFontSize(CARD_FONT_SIZE);
+        s_ui_vec[1]->SetFontSize(CARD_TYPE_FONT_SIZE);
         jitai_width=s_ui_vec[1]->GetWidth()+padding;
         s_type_offset_skill=(jitai_width-mid_frame_width)/2.0F;
         s_type_width_skill=(jitai_width/mid_frame_width-1.0F)*2.0F+1.0F;
-        s_ui_vec[2]->SetFontSize(CARD_FONT_SIZE);
+        s_ui_vec[2]->SetFontSize(CARD_TYPE_FONT_SIZE);
         jitai_width=s_ui_vec[2]->GetWidth()+padding;
         s_type_offset_power=(jitai_width-mid_frame_width)/2.0F;
         s_type_width_power=(jitai_width/mid_frame_width-1.0F)*2.0F+1.0F;
-        s_ui_vec[3]->SetFontSize(CARD_FONT_SIZE);
+        s_ui_vec[3]->SetFontSize(CARD_TYPE_FONT_SIZE);
         jitai_width=s_ui_vec[3]->GetWidth()+padding;
         s_type_offset_curse=(jitai_width-mid_frame_width)/2.0F;
         s_type_width_curse=(jitai_width/mid_frame_width-1.0F)*2.0F+1.0F;
-        s_ui_vec[7]->SetFontSize(CARD_FONT_SIZE);
+        s_ui_vec[7]->SetFontSize(CARD_TYPE_FONT_SIZE);
         jitai_width=s_ui_vec[7]->GetWidth()+padding;
         s_type_offset_status=(jitai_width-mid_frame_width)/2.0F;
         s_type_width_status=(jitai_width/mid_frame_width-1.0F)*2.0F+1.0F;
@@ -334,6 +385,7 @@ namespace Card{
     float Cards::s_type_offset_attack=0.0F,Cards::s_type_offset_skill=0.0F,Cards::s_type_offset_power=0.0F,Cards::s_type_offset_status=0.0F,Cards::s_type_offset_curse=0.0F,Cards::s_type_width_attack=0.0F,Cards::s_type_width_skill=0.0F,Cards::s_type_width_power=0.0F,Cards::s_type_width_status=0.0F,Cards::s_type_width_curse=0.0F;
     const float &Cards::DT=RUtil::Game_Input::delta_time();
     Uint32 Cards::s_render_color;
+    Draw::NumberDrawer Cards::s_energy_drawer{ENERGY_Font_SIZE, FontWeight::bold};
 
     using namespace RUtil;
     static inline const std::shared_ptr<Draw::Atlas_Region> &BgSilhouette(Type type){

@@ -15,24 +15,24 @@ namespace Effect{
 class Power_buff_debuff_eff final:public Effects
 {
 public:
-    Power_buff_debuff_eff(float x, float y, RUtil::Powers_Text_ID power_id, int amount, Uint32 target_color)noexcept(noexcept(common_setting()))
+    Power_buff_debuff_eff(float x, float y, RUtil::Powers_Text_ID power_id, int amount, glm::vec3 target_rgb)noexcept(noexcept(common_setting()))
         :x(x),
         y(y),
         offset_y(START_OFFSET_Y),
         current_rgb(255, 255, 255),
-        target_rgb(TO_VEC3(target_color)),
+        target_rgb(target_rgb),
         with_number(true),
         number(amount),
         power_id(power_id)
     {
         common_setting();
     }
-    Power_buff_debuff_eff(float x, float y, RUtil::Powers_Text_ID power_id, Uint32 target_color)noexcept(noexcept(common_setting()))
+    Power_buff_debuff_eff(float x, float y, RUtil::Powers_Text_ID power_id, glm::vec3 target_rgb)noexcept(noexcept(common_setting()))
         :x(x),
         y(y),
         offset_y(START_OFFSET_Y),
         current_rgb(255, 255, 255),
-        target_rgb(TO_VEC3(target_color)),
+        target_rgb(target_rgb),
         with_number(false),
         number(0),
         power_id(power_id)
@@ -56,14 +56,6 @@ private:
         this->color_a=1.0F;
     }
     static Draw::NumberDrawer s_number_drawer;
-    static constexpr glm::vec3 TO_VEC3(Uint32 color){
-        return glm::vec3{
-            (color&0xff000000)>>24,
-            (color&0x00ff0000)>>16,
-            (color&0x0000ff00)>>8
-        };
-    }
-    static constexpr float color_norm(Uint32 x)noexcept{return static_cast<float>(x)/255.0F;}
     static constexpr float START_OFFSET_Y = 60.0F * Setting::SCALE,
                            TARGET_OFFSET_Y = 100.0F * Setting::SCALE,
                            DUR = 2.0F;

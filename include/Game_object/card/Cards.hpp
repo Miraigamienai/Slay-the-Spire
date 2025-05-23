@@ -8,6 +8,7 @@
 #include "Game_object/effect/Effect_group.hpp"//member (glowgroup)
 #include "RUtil/Some_Math.hpp"//get rgb color
 #include "RUtil/Hitbox.hpp"//member
+#include "Draw/NumberDrawer.hpp"//draw energy number
 
 //fwd decl
 namespace Draw{
@@ -17,6 +18,7 @@ namespace Draw{
 }
 namespace RUtil{
     enum class AtlasRegionID:int;
+    enum class Cards_Text_ID:int;
 }
 namespace Dungeon{
     struct Dungeon_shared;
@@ -64,8 +66,8 @@ enum class Target{
 //and normal move
 class Cards:public Card_soul{
 public:
-    Cards(RUtil::AtlasRegionID card_name,Rarity rarity,Type type,Color color,Target target,
-        const int base_cost,const int base_damage=0,const int base_block=0,const int base_magic_num=0);
+    Cards(RUtil::AtlasRegionID card_name, RUtil::Cards_Text_ID card_text_id, Rarity rarity, Type type, Color color, Target target,
+        const int base_cost, const int base_damage, const int base_block, const int base_magic_num);
     virtual ~Cards() = default;
     Cards(const Cards& other);//ensure internal references are properly set when coping. //(m_card_flash)
     
@@ -76,6 +78,7 @@ public:
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void render_hovered_shadow(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update(Effect::Effect_group &top_effs);
+    void update_desc();
     // void update_hover_logic();
     void SetHoverTimer(const float value);//hover timer will be set when releasing card.
     void MoveTargetY(const float value);
@@ -89,7 +92,7 @@ public:
     //check hover status at specific scale.
     bool IsHoveredInHand(const float scale)const;
     void CanUseUpdate(const Dungeon::Dungeon_shared &dungeon_shared);
-    
+
     //virtual function
     
     //Check if it is usable based on the current situation.
@@ -128,11 +131,12 @@ public:
     void SetDrawScale(const float value,const bool immediate=false)noexcept{m_target_draw_scale=value;if(immediate)m_draw_scale=value;}
     void SetColorAlpha(const float value,const bool immediate=false)noexcept{m_target_color_a=value;if(immediate)m_color_a=value;}
     bool IsSingleTarget()const noexcept{return target==Target::enemy||target==Target::self_and_enemy;}
-    void RefreshDisplay(const Power::Power_group &player_powers){RefreshBlock(player_powers);RefreshDamage(player_powers);}
+    void RefreshDisplay(const Power::Power_group &player_powers){RefreshBlock(player_powers);RefreshDamage(player_powers);update_desc();}
     //static function
     static void SetRenderColor(Uint32 c)noexcept{s_render_color=c;}
     //member
     const RUtil::AtlasRegionID card_name;
+    const RUtil::Cards_Text_ID card_text_id;
     const Rarity rarity;
     const Type type;
     const Color color;
@@ -176,20 +180,24 @@ private:
     float m_type_width,m_type_offset;
     int m_text_pos;
     Effect::Effect_group glowgroup;
+    Uint32 energy_num_color;
 
     void format_render(const std::shared_ptr<Draw::Draw_2D> &r2,const std::shared_ptr<Draw::Atlas_Region> &img,const float x,const float y,const float scale=1.0F)const;
     void frame_format_render(const std::shared_ptr<Draw::Draw_2D> &r2,const std::shared_ptr<Draw::Atlas_Region> &img,const float x_offset,const float x_scale)const;
     void SetFontTypeOffset();
     static Uint32 s_render_color;
+    static float s_type_offset_attack,s_type_offset_skill,s_type_offset_power,s_type_offset_status,s_type_offset_curse,s_type_width_attack,s_type_width_skill,s_type_width_power,s_type_width_status,s_type_width_curse;
+    static const std::vector<std::shared_ptr<Draw::Text_layout>> &s_ui_vec;
+    static Draw::NumberDrawer s_energy_drawer;
     static void init_static_menber();
     static constexpr Uint32 FRAME_SHADOW_COLOR=0,DEFAULT_COLOR=RUtil::Math::GetColorUint32_RGB(255,255,255),TYPE_COLOR=RUtil::Math::GetColorUint32_RGB(0.35F,0.35F,0.35F),TINT_COLOR=RUtil::Math::GetColorUint32_RGB(43,37,65);
     static constexpr float  SHADOW_OFFSET_X = 18.0F * Setting::SCALE,
                             SHADOW_OFFSET_Y = 14.0F * Setting::SCALE,
                             CARD_SNAP_THRESHOLD = 1.0F * Setting::SCALE;
-    static const std::vector<std::shared_ptr<Draw::Text_layout>> &s_ui_vec;
-    static float s_type_offset_attack,s_type_offset_skill,s_type_offset_power,s_type_offset_status,s_type_offset_curse,s_type_width_attack,s_type_width_skill,s_type_width_power,s_type_width_status,s_type_width_curse;
-    static constexpr int CARD_FONT_SIZE=17;
-    static constexpr Uint32 GLOWCOLOR=RUtil::Math::GetColorUint32_RGB(0.2F,0.9F,1.0F);
+    static constexpr int CARD_TYPE_FONT_SIZE=20, CARD_TITLE_FONT_SIZE=27, CARD_DESC_FONT_SIZE=24, ENERGY_Font_SIZE=38;
+    static constexpr Uint32 GLOWCOLOR=RUtil::Math::GetColorUint32_RGB(0.2F,0.9F,1.0F),
+                            ENERGY_RED_COLOR=RUtil::Math::GetColorUint32_RGB(1.0F,0.3F,0.3F),
+                            ENERGY_GREEN_COLOR=RUtil::Math::GetColorUint32_RGB(0.4F,1.0F,0.4F);
 public:
     static constexpr float  IMG_WIDTH = 300.0F * Setting::SCALE,
                             IMG_HEIGHT = 420.0F * Setting::SCALE,

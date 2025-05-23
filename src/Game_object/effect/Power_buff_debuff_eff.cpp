@@ -2,7 +2,6 @@
 
 #include "Game_object/effect/Power_buff_debuff_eff.hpp"
 #include "RUtil/Powers_Text_Reader.hpp"
-#include "RUtil/ColorValuesOnly.hpp"
 #include "RUtil/Some_Math.hpp"
 #include "Draw/Text_layout.hpp"
 #include "Draw/Draw_2D.hpp"

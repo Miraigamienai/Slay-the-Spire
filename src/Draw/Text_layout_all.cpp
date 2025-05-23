@@ -39,16 +39,16 @@ namespace Draw
 
     static inline constexpr auto GetNum(Uint32 num_type, const number_info &num_info){
         switch(num_type){
-            case 'D': return num_info.damage;
-            case 'B': return num_info.defense;
+            case 1: return num_info.damage;
+            case 2: return num_info.defense;
             default: return num_info.magic_number;
         }
     }
 
     static inline constexpr auto GetNumColor(Uint32 num_type, const number_info &num_info){
         switch(num_type){
-            case 'D': return Draw::GetNumColor(num_info.damage_status);
-            case 'B': return Draw::GetNumColor(num_info.defense_status);
+            case 1: return Draw::GetNumColor(num_info.damage_status);
+            case 2: return Draw::GetNumColor(num_info.defense_status);
             default: return Draw::GetNumColor(num_info.magic_status);
         }
     }
@@ -96,7 +96,7 @@ namespace Draw
                     r2->draw(it2.img, center_x+offset_x, center_y+offset_y, (float)it2.img->GetRegionWidth()*orb_scale*font_scale, (float)num_draw.PureHeight()*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
                     now_x+=(float)it2.img->GetRegionWidth()*orb_scale;
                 }else{
-                    
+                    //normal text or colored text
                     if(it2.c==RUtil::WHITE) r2->SetColor(this->font_color, this->font_color_alpha);
                     else r2->SetColor(it2.c, this->font_color_alpha);
                     r2->draw(it2.img, center_x+offset_x, center_y+offset_y, (float)it2.img->GetRegionWidth()*font_scale, (float)it2.img->GetRegionHeight()*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
@@ -207,8 +207,8 @@ namespace Draw
                     now_w += (float)it2.img->GetRegionWidth();
                 }
             }
-            if(now_w>width)
-                width=now_w;
+            if(static_cast<int>(now_w)>width)
+                width=static_cast<int>(now_w);
         }
     }
 } // namespace Draw

@@ -26,6 +26,7 @@ struct number_info{
     number_info()noexcept:damage(0),defense(0),magic_number(0),damage_status(NumStatus::normal),defense_status(NumStatus::normal),magic_status(NumStatus::normal){}
     number_info(int damage, int defense, int magic_number)noexcept:damage(damage),defense(defense),magic_number(magic_number),damage_status(NumStatus::normal),defense_status(NumStatus::normal),magic_status(NumStatus::normal){}
     number_info(int damage, int defense, int magic_number, NumStatus status)noexcept:damage(damage),defense(defense),magic_number(magic_number),damage_status(status),defense_status(status),magic_status(status){}
+    number_info(int damage, int defense, int magic_number, NumStatus damage_status, NumStatus defense_status, NumStatus magic_status)noexcept:damage(damage),defense(defense),magic_number(magic_number),damage_status(damage_status),defense_status(defense_status),magic_status(magic_status){}
     int damage, defense, magic_number;
     NumStatus damage_status, defense_status, magic_status;
 };

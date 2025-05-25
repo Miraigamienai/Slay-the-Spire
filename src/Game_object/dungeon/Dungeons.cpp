@@ -164,6 +164,8 @@ namespace Dungeon{
         m_current_node=m_next_node;
         m_current_node->MarkTaken();
         m_next_node=nullptr;
+        dungeon_shared.current_node=m_current_node;
+
     }
     void Dungeons::entering_next_room(){
         set_next_node_oscillate_and_edge(false);
@@ -181,7 +183,7 @@ namespace Dungeon{
 
     }
     void Dungeons::on_room_complete(){
-        if(m_current_node->GetRoom()->room_type==Room::Room_type::Monster){
+        if(m_current_node->GetRoom()->room_type==Room::Room_type::Monster || m_current_node->GetRoom()->room_type==Room::Room_type::Elite){
             //random 3 cards
             std::vector<std::shared_ptr<Card::Cards>> card_vec;
             for(int i=0;i<3;i++) card_vec.emplace_back(Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng));
@@ -189,5 +191,6 @@ namespace Dungeon{
             reward_vec.emplace_back(std::make_shared<Reward::Card_reward_item>(card_vec));
             dungeon_shared.manager.open<Interface::ScreenType::combat_reward>(reward_vec);
         }
+        
     }
 }

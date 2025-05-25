@@ -7,7 +7,6 @@
 #include "RUtil/Some_Math.hpp"
 
 #include "Util/Logger.hpp"
-
 namespace Draw
 {
     static inline auto&GetOrb(char c){
@@ -212,7 +211,7 @@ namespace Draw
             }
         }
         //set last img row width.
-        text_rows.back().img_row_width=now_x+img_w;
+        text_rows.back().img_row_width=now_x/* +img_w */;
         //set width & height
         this->height=now_y+img_h;
         this->calculate_width();

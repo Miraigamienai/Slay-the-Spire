@@ -33,7 +33,6 @@ private:
     static const std::shared_ptr<Draw::ReTexture> &bar_img;
     //,&deck,&floor,&map,&goldBag,&heart,&setting;
     static constexpr float bar_x=0.0F,bar_y=Setting::WINDOW_HEIGHT-128.0F*Setting::SCALE,bar_h=128.0F*Setting::SCALE,bar_w=Setting::WINDOW_WIDTH;  
-
 };
 }
 

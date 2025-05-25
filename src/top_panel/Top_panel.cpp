@@ -11,7 +11,7 @@ namespace TopPanel
     void Top_panel::update(Dungeon::Dungeon_shared &dungeon_shared)
     {
         deck.update(dungeon_shared);
-        floor.update();
+        floor.update(dungeon_shared);
         map.update();
         goldBag.update(dungeon_shared);
         heart.update(dungeon_shared);

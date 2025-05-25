@@ -45,7 +45,7 @@ void Elite_room::update(Dungeon::Dungeon_shared &dungeon_shared){
 
     if(m_wait_timer<=0.0F){//Loop until end turn. //Idle also loop here.
         dungeon_shared.action_group_handler.update(dungeon_shared);
-        dungeon_shared.card_group_handler.update(dungeon_shared.action_group_handler, dungeon_shared.room_monsters);
+        dungeon_shared.card_group_handler.update(dungeon_shared.action_group_handler, dungeon_shared);
         
         if(dungeon_shared.overlay.end_turn_button_clicked()){
             //ending turn

@@ -44,7 +44,6 @@ namespace Dungeon{
         //card update
         dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared);
         dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.top_effs);//for test
-        dungeon_shared.card_group_handler.update_force_cards(dungeon_shared.top_effs);
         //overlay update
         dungeon_shared.overlay.update(dungeon_shared.card_group_handler);
         //manager update

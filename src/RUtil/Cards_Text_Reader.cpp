@@ -106,7 +106,7 @@ namespace RUtil{
             return BOX[static_cast<int>(id)];
         }
         LOG_ERROR("Try to find the Extended that doesn't exist.");
-        return {};
+        return BOX[0];
     }
 
     const CardInfo &Cards_Text_Reader::GetInfo(Cards_Text_ID id){

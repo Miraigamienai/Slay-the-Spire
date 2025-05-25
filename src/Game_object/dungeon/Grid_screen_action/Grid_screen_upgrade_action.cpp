@@ -11,7 +11,7 @@ namespace GridScreenAction{
         this->is_cancelled=false;
         this->card=card;
         this->upgraded_card=card->Clone();
-        this->upgraded_card->Upgrade();
+        this->upgraded_card->CallUpgrade();
         this->card->SetDrawScale(1.0F, true);
         this->upgraded_card->SetDrawScale(1.0F, true);
         confirm.show();
@@ -25,7 +25,7 @@ namespace GridScreenAction{
         if(cancel.is_logically_clicked()){
             is_cancelled=true;
         }else if(confirm.is_logically_clicked()){
-            this->card->Upgrade();
+            this->card->CallUpgrade();
             dungeon_shared.gen_group.AddTop(std::make_shared<EffectGen::Card_upgrade_eff_gen>(static_cast<float>(Setting::WINDOW_WIDTH)/2.0F, static_cast<float>(Setting::WINDOW_HEIGHT)/2.0F));
             dungeon_shared.gen_group.AddTop(std::make_shared<EffectGen::Show_card_briefly>(this->card));
             is_done=true;

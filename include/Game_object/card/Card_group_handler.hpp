@@ -52,7 +52,7 @@ public:
     void discard_all();
     void discard(const std::shared_ptr<Cards> &card, bool visual_only=false);
     void draw(const Power::Power_group &player_powers);
-    void update(Action::Action_group_handler &action_group_handler,const Monster::Monster_group &room_monsters);
+    void update(Action::Action_group_handler &action_group_handler, const Dungeon::Dungeon_shared &dungeon_shared);
     void refresh_hand_layout()const;
     void prepare_for_battle(RUtil::Random &rng);
     void shuffle(bool shuffle_invisible);
@@ -60,6 +60,7 @@ public:
     void update_hand_cards(Effect::Effect_group &top_effs, const Dungeon::Dungeon_shared &dungeon_shared);
     void render_hand(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void obtain(const std::shared_ptr<Cards> &card);
+    void exhaust(const std::shared_ptr<Cards> &card);
     Card_group get_upgradeable_card_group()const;
     Card_group get_master_deck()const{return master_deck;}
 

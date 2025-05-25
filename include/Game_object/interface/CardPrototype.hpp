@@ -14,7 +14,9 @@ public:
     template <typename...Args>
     CardPrototype(Args&&...args):Card::Cards(std::forward<Args>(args)...){}
     std::shared_ptr<Card::Cards> Clone() const override {
-        return std::make_shared<Derived>(static_cast<const Derived&>(*this));
+        auto temp = std::make_shared<Derived>();
+        if(this->upgraded) temp->CallUpgrade();
+        return temp;
     }
 };
 }

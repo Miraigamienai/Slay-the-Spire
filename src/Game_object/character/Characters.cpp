@@ -4,15 +4,13 @@
 #include "RUtil/Game_Input.hpp"
 #include "RUtil/Some_Math.hpp"
 namespace Character{
-    Characters::Characters(float x, float y, float width, float height,float HPBarWidth):boss_hitbox(x, y, width, height, false)
-    ,HPBar_hitbox(x,y,HPBarWidth,HEALTH_BAR_HEIGHT,false)
+    Characters::Characters(float x, float y, float width, float height,float HPBarWidth)
+        :boss_hitbox(x, y, width, height, false),
+        HPBar_hitbox(x, y, HPBarWidth, HEALTH_BAR_HEIGHT, false)
     {
-        Character_hb_width=width;
         HPBar_hb_width=HPBarWidth;
         HPBar_hb_a=1.0F;
-
-        Character_hb_height=height;
-        
+ 
         shadow_a = 1.0F;
         bg_a = 1.0F;
         outline_a =  1.0F;
@@ -26,10 +24,6 @@ namespace Character{
         shakeToggle=true;
 
         pos={x,y};
-        Character_hb_cX=x+Character_hb_width*0.5F;
-        Character_hb_cY=y+Character_hb_height*0.5F;
-        HPBar_hb_cX=x+Character_hb_width*0.5F;
-        HPBar_hb_cY=y-HEALTH_BAR_HEIGHT*0.5F;
         orgX=x;
         orgY=y;
         
@@ -58,9 +52,11 @@ namespace Character{
         }
     }
     void Characters::update(){
-        updateHealthBar();
+        boss_hitbox.move(orgX + animX + boss_hitbox.Width()/2.0F, orgY + animY + boss_hitbox.Height()/2.0F);
+        HPBar_hitbox.move(boss_hitbox.CenterX(), boss_hitbox.CenterY() - boss_hitbox.Height()/2.0F - HEALTH_BAR_HEIGHT*0.5F);
         boss_hitbox.update();
         HPBar_hitbox.update();
+        updateHealthBar();
         updateAnimation();
         pos.x=orgX+animX;
         pos.y=orgY+animY;
@@ -86,7 +82,7 @@ namespace Character{
         this->powers.update();
     }
     void Characters::render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        const float x=HPBar_hb_cX-HPBar_hb_width/2.0F,y=HPBar_hb_cY-HEALTH_BAR_HEIGHT/2.0F;
+        const float x=HPBar_hitbox.CenterX()-HPBar_hb_width/2.0F,y=HPBar_hitbox.CenterY()-HEALTH_BAR_HEIGHT/2.0F;
 
         //shadow
         r2->SetColor(0,shadow_a);
@@ -125,7 +121,7 @@ namespace Character{
             r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         }
         r2->SetColor(-1,1);
-        m_font.render_center(r2, std::to_string(current_HP)+"/"+std::to_string(max_HP), HPBar_hb_cX, HPBar_hb_cY+HEALTH_BAR_OFFSET_Y, font_scale*Setting::SCALE);
+        m_font.render_center(r2, std::to_string(current_HP)+"/"+std::to_string(max_HP), HPBar_hitbox.CenterX(), HPBar_hitbox.CenterY()+HEALTH_BAR_OFFSET_Y, font_scale*Setting::SCALE);
         if(current_Block!=0&&HPBar_hb_a!=0.0F){
             //block icon
             r2->SetColor(BLOCK_COLOR,1);
@@ -135,13 +131,13 @@ namespace Character{
         }
         //powers
         powers.render(r2, x, y, 1.0F);//TODO: alpha
+        if(boss_hitbox.Hovered())
+            this->render_tip(r2);
     }
     void Characters::setPosition(float x,float y){
         pos={x,y};
-        Character_hb_cX=x+Character_hb_width*0.5F;
-        Character_hb_cY=y+Character_hb_height*0.5F;
-        HPBar_hb_cX=x+Character_hb_width*0.5F;
-        HPBar_hb_cY=y-HEALTH_BAR_HEIGHT*0.5F;
+        boss_hitbox.move(x + boss_hitbox.Width()/2.0F, y + boss_hitbox.Height()/2.0F);
+        HPBar_hitbox.move(boss_hitbox.CenterX(), y - HEALTH_BAR_HEIGHT*0.5F);
         orgX=x;
         orgY=y;
     }

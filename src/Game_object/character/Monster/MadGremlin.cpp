@@ -20,28 +20,5 @@ namespace Monster{
             dungeon_shared.player
         ));
     }
-    void MadGremlin::damage(const Damage_info& damage_info){
-        if(current_Block>=damage_info.dmg){
-            current_Block-=damage_info.dmg;
-            useStaggerAnimation();
-            return;
-        }
-        else if (current_Block){
-            current_Block=0;
-            current_HP-=damage_info.dmg-current_Block;
-        }
-        else if (current_HP){
-            if(current_HP>damage_info.dmg){
-                current_HP-=damage_info.dmg;
-            }
-            else if (current_HP<=damage_info.dmg){
-                current_HP=0;
-            }
-        }
-        m_damage++;
-        useStaggerAnimation();
-    }
-
-
 }
 

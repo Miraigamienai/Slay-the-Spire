@@ -69,8 +69,7 @@ public:
     Cards(RUtil::AtlasRegionID card_name, RUtil::Cards_Text_ID card_text_id, Rarity rarity, Type type, Color color, Target target,
         const int base_cost, const int base_damage, const int base_block, const int base_magic_num);
     virtual ~Cards() = default;
-    Cards(const Cards& other);//ensure internal references are properly set when coping. //(m_card_flash)
-    
+    Cards(const Cards& other) = delete;
     Cards(Cards &&) = delete;
     Cards &operator=(const Cards &) = delete;
     Cards &operator=(Cards &&) = delete;
@@ -103,6 +102,11 @@ public:
     
     //inline function
     
+    void CallUpgrade(){
+        upgraded=true;
+        Upgrade();
+        update_desc();
+    }
     //immediately 1.0F draw scale
     void Hover()noexcept(noexcept(SetDrawScale(1.0F,true))){SetDrawScale(1.0F,true);}
     //check hover status at the current scale of card.
@@ -118,6 +122,7 @@ public:
     void SuperFlash()noexcept{m_card_flash.change_color(GLOWCOLOR,true);}
     //Simply return the current status, dosen't do any actual checking.
     bool IsUpgraded()const noexcept{return upgraded;}
+    bool IsExhaust()const noexcept{return exhaust;}
     bool CanUse()const noexcept{return can_use;}
     int GetCost()const noexcept{return cost;}
     float GetX()const noexcept{return current_x;}
@@ -131,7 +136,13 @@ public:
     void SetDrawScale(const float value,const bool immediate=false)noexcept{m_target_draw_scale=value;if(immediate)m_draw_scale=value;}
     void SetColorAlpha(const float value,const bool immediate=false)noexcept{m_target_color_a=value;if(immediate)m_color_a=value;}
     bool IsSingleTarget()const noexcept{return target==Target::enemy||target==Target::self_and_enemy;}
+    void StopGlowing()const{for(const auto&it:glowgroup)it->QuickDisappear(5.0F);}
     void RefreshDisplay(const Power::Power_group &player_powers){RefreshBlock(player_powers);RefreshDamage(player_powers);update_desc();}
+    void RefreshDisplay(const Power::Power_group &player_powers, const Power::Power_group &monster_powers){
+        RefreshBlock(player_powers);
+        RefreshDamage(player_powers, monster_powers);
+        update_desc();
+    }
     //static function
     static void SetRenderColor(Uint32 c)noexcept{s_render_color=c;}
     //member
@@ -153,9 +164,11 @@ public:
 protected:
     //protected virtual
     virtual void RefreshDamage(const Power::Power_group &player_powers){CommonRefreshDamage(player_powers);}
+    virtual void RefreshDamage(const Power::Power_group &player_powers, const Power::Power_group &monster_powers){CommonRefreshDamage(player_powers, monster_powers);}
     virtual void RefreshBlock(const Power::Power_group &player_powers){CommonRefreshBlock(player_powers);}
     
     void CommonRefreshDamage(const Power::Power_group &player_powers);
+    void CommonRefreshDamage(const Power::Power_group &player_powers, const Power::Power_group &monster_powers);
     void CommonRefreshBlock(const Power::Power_group &player_powers);
     void SetDamage(int num)noexcept{
         this->base_damage=this->damage=num;
@@ -167,11 +180,10 @@ protected:
         this->base_magic_num=this->magic_num=num;
     }
     bool upgraded=false;
+    bool exhaust=false;
     int base_damage, base_block, base_magic_num, base_cost;
     int damage,      block,      magic_num,      cost;
 private:
-    static const float &DT;
-    const std::shared_ptr<Draw::Atlas_Region> &m_card_bg_silhouette,&m_card_bg,&m_card_frame,&m_card_left_frame,&m_card_mid_frame,&m_card_right_frame,&m_card_banner,&m_card_portrait;
     Effect::Card_flash m_card_flash;
     RUtil::Hitbox hb;
     bool darken,can_use,can_hover_in_hand;

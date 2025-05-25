@@ -37,6 +37,7 @@ namespace Card{
             auto card=m_discard.PopTop();
             card->Darken(true);
             card->Shrink(true);
+            card->StopGlowing();
             card->shuffle(shuffle_invisible);
             flying_cards.emplace_back(card);
             draw_pile.AddTop(card);
@@ -61,6 +62,7 @@ namespace Card{
         for(const auto&it:hand_cards){
             it->Shrink(false);
             it->Darken(false);
+            it->StopGlowing();
             it->discard();
             it->ResetAttributes();
             flying_cards.emplace_back(it);
@@ -71,6 +73,7 @@ namespace Card{
     void Card_group_handler::discard(const std::shared_ptr<Cards> &card, bool visual_only){
         card->Shrink(false);
         card->Darken(false);
+        card->StopGlowing();
         card->discard();
         card->ResetAttributes();
         flying_cards.emplace_back(card);
@@ -83,6 +86,12 @@ namespace Card{
         card->obtain();
         flying_cards.emplace_back(card);
         this->master_deck.AddTop(card);
+    }
+
+    void Card_group_handler::exhaust(const std::shared_ptr<Cards> &card){
+        this->exhaust_pile.AddTop(card);
+        card->StopGlowing();
+        card->ResetAttributes();
     }
 
     void Card_group_handler::release_card(){
@@ -265,10 +274,16 @@ namespace Card{
         }
     }
     
-    void Card_group_handler::update(Action::Action_group_handler &action_group_handler,const Monster::Monster_group &room_monsters){
+    void Card_group_handler::update(Action::Action_group_handler &action_group_handler, const Dungeon::Dungeon_shared &dungeon_shared){
         //single_target -> drop zone -> drag -> hover -> check drag start
         if(single_target){
-            hovered_monster=room_monsters.GetHoveredMonster();
+            bool last_has_not=hovered_monster==nullptr;
+            hovered_monster=dungeon_shared.room_monsters.GetHoveredMonster();
+            if(last_has_not && hovered_monster!=nullptr){
+                hovered_card->RefreshDisplay(dungeon_shared.player->get_powers(), hovered_monster->get_powers());
+            }else if(!last_has_not && hovered_monster==nullptr){
+                hovered_card->RefreshDisplay(dungeon_shared.player->get_powers());
+            }
             this->update_targeting(action_group_handler);
             return;
         }
@@ -393,6 +408,7 @@ namespace Card{
     void Card_group_handler::update_hand_cards(Effect::Effect_group &top_effs, const Dungeon::Dungeon_shared &dungeon_shared){
         hand_cards.update(top_effs);
         for(const auto&it:hand_cards)it->CanUseUpdate(dungeon_shared);
+        update_force_cards(top_effs);
     }
 
     void Card_group_handler::render_targeting(const std::shared_ptr<Draw::Draw_2D> &r2)const{

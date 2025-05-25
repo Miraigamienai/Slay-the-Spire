@@ -39,16 +39,11 @@ public:
     void setPosition(float x,float y);
     void setHPBarWidth(float width);
     bool hovered()const{return boss_hitbox.Hovered();}
-    float GetcX()const{return Character_hb_cX;}
-    float GetcY()const{return Character_hb_cY;}
     bool IsDie()const{return current_HP<=0 && fadeTimer<=0;}
     void AddBlock(int num){current_Block+=num;};
     void setBlock(int num){current_Block=num;};
     void AddHP(int num){current_HP+num>=max_HP?current_HP=max_HP:current_HP+=num;};
     void setHP(int num){current_HP=num;};
-    auto GetHitboxHeight()const noexcept{return boss_hitbox.Height();}
-    auto GetOriginX()const noexcept{return Character_hb_cX-animX;}
-    auto GetOriginY()const noexcept{return Character_hb_cY-animY;}
     void updateHealthBar();
 
     void useFastAttackAnimation();
@@ -76,21 +71,28 @@ public:
     auto GetMaxHP()const noexcept{return max_HP;}
     auto GetCurrentHP()const noexcept{return current_HP;}
 
-    
     auto&get_powers(){return powers;}
     void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){powers.at_turn_end(dungeon_shared, shared_from_this());}
-    auto GetWidth()const noexcept{return Character_hb_width;}
-    auto GetHeight()const noexcept{return Character_hb_height;}
+    
+    auto GetWidth()const noexcept{return boss_hitbox.Width();}
+    auto GetHeight()const noexcept{return boss_hitbox.Height();}
+    auto GetcX()const noexcept{return boss_hitbox.CenterX();}
+    auto GetcY()const noexcept{return boss_hitbox.CenterY();}
+    auto GetOriginX()const noexcept{return boss_hitbox.CenterX()-animX;}
+    auto GetOriginY()const noexcept{return boss_hitbox.CenterY()-animY;}
+    
 protected:
     int max_HP,current_HP,current_Block;
     void render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        if(Character_hb_cX > static_cast<float>(Setting::WINDOW_WIDTH)/2.0F)
-            powers.render_tip(r2, Character_hb_cX-Character_hb_width/2.0F, Character_hb_cY);
-        else
-            powers.render_tip(r2, Character_hb_cX+Character_hb_width/2.0F, Character_hb_cY);
+        const float temp_pos=boss_hitbox.CenterX() + boss_hitbox.Width() / 2.0F;
+        if(temp_pos < TIP_X_THRESHOLD){//right
+            powers.render_tip(r2, temp_pos + TIP_OFFSET_R_X, boss_hitbox.CenterY());
+        }else{//left
+            powers.render_tip(r2, temp_pos + TIP_OFFSET_L_X, boss_hitbox.CenterY());
+        }
     }
-    glm::vec2 getPosition()const{return pos;};
+    glm::vec2 getPosition()const{return pos;}
     KindOfCharacter KindOfCharacter;
 
     bool HPDecrease=false,shakeToggle,IsFadeOut;
@@ -99,9 +101,7 @@ private:
     RUtil::Hitbox boss_hitbox;
     RUtil::Hitbox HPBar_hitbox;
     glm::vec2 pos={0,0};
-    float HPBar_hb_width,HPBar_hb_height,HPBar_hb_a,HPBar_hb_cX,HPBar_hb_cY;
-    float Character_hb_cX,Character_hb_cY,
-          Character_hb_width,Character_hb_height;
+    float HPBar_hb_width, HPBar_hb_a;
     float animX,animY,vX,vY,orgX,orgY;
     float HPDecreaseWaitTimer,animationTimer;
     Animation animation=Animation::NONE;
@@ -117,6 +117,10 @@ private:
     static constexpr float SHAKE_THRESHOLD = Setting::SCALE * 8.0F;
     static constexpr float SHAKE_SPEED = 150.0F * Setting::SCALE;
     static constexpr float STAGGER_MOVE_SPEED = 20.0F * Setting::SCALE;
+    static constexpr float TIP_X_THRESHOLD = 1554.0F * Setting::SCALE;
+    static constexpr float TIP_OFFSET_R_X = 20.0F * Setting::SCALE;
+    static constexpr float TIP_OFFSET_L_X = -380.0F * Setting::SCALE;
+      
     static constexpr int FONTSIZE=22;
 
 };

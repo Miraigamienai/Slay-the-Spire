@@ -24,11 +24,13 @@ namespace Draw
         if(title!=nullptr){
             title->SetFontSize(TITLE_FONT_SIZE);
             title->SetFontColor(RUtil::GOLD_COLOR);
+            title->SetFontAlpha(1.0F);
             title->render_top_left(r2, x + TEXT_OFFSET_X, y + HEADER_OFFSET_Y, Setting::SCALE);
         }
         if(body!=nullptr){
             body->SetFontSize(BODY_FONT_SIZE);
-            body->SetFontColor(BASE_COLOR);    
+            body->SetFontColor(BASE_COLOR);
+            body->SetFontAlpha(1.0F);    
             body->render_top_left(r2, x + TEXT_OFFSET_X, y + BODY_OFFSET_Y, Setting::SCALE);
         }
     }

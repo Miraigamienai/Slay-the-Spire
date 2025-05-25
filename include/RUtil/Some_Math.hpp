@@ -52,6 +52,16 @@ public:
         return Apply(start,target,std::clamp(a * a * a * (a * (a * 6.0F - 15.0F) + 10.0F),0.0F,1.0F));
     }
     template <typename T>
+    static constexpr T interpolation_swing(T start,T target,float a)noexcept(noexcept(Apply<T>(start, target, 0.0F))){
+        //from gdx
+        if(a<=0.5F){
+            a*=2.0F;
+            return Apply(start, target, a * a * (2.5F * a + 1.5F)/2.0F);
+        }
+        --a;
+        return Apply(start, target, a * a * (2.5F * a + 1.5F)/2.0F + 1.0F);
+    }
+    template <typename T>
     static constexpr T interpolation_swing_out(T start,T target,float a)noexcept(noexcept(Apply<T>(start, target, 0.0F))){
         //from gdx
         --a;

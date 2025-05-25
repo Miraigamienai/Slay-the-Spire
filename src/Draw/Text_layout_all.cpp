@@ -53,8 +53,33 @@ namespace Draw
         }
     }
 
-    void Text_layout_all::render_top_left(const std::shared_ptr<Draw::Draw_2D> &/* r2 */,const float /* x */,const float /* y */,const float /* scale */)const{
-
+    void Text_layout_all::render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const{
+        for(const auto&it:text_rows){
+            if(it.row.empty()) continue;
+            const float offset_y = -static_cast<float>(it.y + num_draw.PureHeight());
+            float now_x=0.0F;
+            for(const auto&it2:it.row){
+                if(it2.is_num){
+                    r2->SetColor(GetNumColor(it2.c, num_info), this->font_color_alpha);
+                    auto the_number_str=std::to_string(GetNum(it2.c, num_info));
+                    for(const auto &num_digit:the_number_str){
+                        auto &img=num_draw.GetNumIMG(num_digit);
+                        r2->draw(img, x+now_x, y+offset_y, (float)img->GetRegionWidth(), (float)img->GetRegionHeight(), 0.0F, -now_x, -offset_y, font_scale*scale, font_scale*scale);
+                        now_x += (float)img->GetRegionWidth();
+                    }
+                }else if(it2.is_orb){
+                    r2->SetColor(RUtil::WHITE, this->font_color_alpha);
+                    const float orb_scale=static_cast<float>(num_draw.PureHeight()) / static_cast<float>(it2.img->GetRegionHeight()) * static_cast<float>(it2.img->GetRegionWidth());
+                    r2->draw(it2.img, x+now_x, y+offset_y, (float)it2.img->GetRegionWidth()*orb_scale, (float)num_draw.PureHeight(), 0.0F, -now_x, -offset_y, font_scale*scale, font_scale*scale);
+                    now_x+=(float)it2.img->GetRegionWidth()*orb_scale;
+                }else{
+                    if(it2.c==RUtil::WHITE) r2->SetColor(this->font_color, this->font_color_alpha);
+                    else r2->SetColor(it2.c, this->font_color_alpha);
+                    r2->draw(it2.img, x+now_x, y+offset_y, (float)it2.img->GetRegionWidth(), (float)it2.img->GetRegionHeight(), 0.0F, -now_x, -offset_y, font_scale*scale, font_scale*scale);
+                    now_x+=(float)it2.img->GetRegionWidth();
+                }
+            }
+        }
     }
 
     void Text_layout_all::render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const{
@@ -73,7 +98,7 @@ namespace Draw
                 }
             }
             //calculate offset_y
-            const float offset_y=(static_cast<float>(height)/2.0F - static_cast<float>(it.y + it.row[0].img->GetRegionHeight()))*font_scale;
+            const float offset_y=(static_cast<float>(height)/2.0F - static_cast<float>(it.y + num_draw.PureHeight()))*font_scale;
             float now_x=0.0F;
             for(const auto&it2:it.row){
                 //calculate offset_x
@@ -93,7 +118,7 @@ namespace Draw
                     //draw orb
                     r2->SetColor(RUtil::WHITE, this->font_color_alpha);
                     const float orb_scale=static_cast<float>(num_draw.PureHeight()) / static_cast<float>(it2.img->GetRegionHeight()) * static_cast<float>(it2.img->GetRegionWidth());
-                    r2->draw(it2.img, center_x+offset_x, center_y+offset_y, (float)it2.img->GetRegionWidth()*orb_scale*font_scale, (float)num_draw.PureHeight()*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
+                    r2->draw(it2.img, center_x+offset_x, center_y+offset_y, (float)it2.img->GetRegionWidth()*font_scale, (float)num_draw.PureHeight()*orb_scale*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
                     now_x+=(float)it2.img->GetRegionWidth()*orb_scale;
                 }else{
                     //normal text or colored text

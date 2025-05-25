@@ -54,6 +54,8 @@ public:
     virtual void desc_update(){tip_box.change_body(get_amount_based_desc());}
     virtual float calculate_damage_dealt(float damage)const{return damage;}
     virtual float calculate_final_damage_dealt(float damage)const{return damage;}
+    virtual float calculate_damage_receive(float damage)const{return damage;}
+    virtual float calculate_final_damage_receive(float damage)const{return damage;}
     virtual float calculate_block_dealt(float block)const{return block;}
     virtual float calculate_final_block_dealt(float block)const{return block;}
     virtual void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target);
@@ -64,7 +66,7 @@ protected:
     int amount;
     const std::shared_ptr<Draw::Text_layout> &get_amount_based_desc()const{
         auto &arr=RUtil::Powers_Text_Reader::GetDescriptions(power_id);
-        return amount==1?arr[0]:(arr[1]==nullptr?arr[0]:arr[1]);
+        return amount!=1 && arr[1]!=nullptr ? arr[1] : arr[0];
     }
 private:
     float font_scale;

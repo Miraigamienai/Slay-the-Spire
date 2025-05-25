@@ -13,6 +13,6 @@ public:
     ~Card_use_start_action() override=default;
     void update(Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
-    const Card::Card_item card_itme;
+    const Card::Card_item card_item;
 };
 }

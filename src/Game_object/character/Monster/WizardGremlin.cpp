@@ -13,7 +13,7 @@ namespace Monster{
 
     }
     void WizardGremlin::Action(Dungeon::Dungeon_shared &dungeon_shared){
-        if(isFirstAttack && ChargingCounter>=2 || ChargingCounter>=3){
+        if((isFirstAttack && ChargingCounter>=2) || ChargingCounter>=3){
             isFirstAttack=false;
             ChargingCounter=0;
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));

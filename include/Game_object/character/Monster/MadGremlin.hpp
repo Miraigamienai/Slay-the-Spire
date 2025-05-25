@@ -13,9 +13,6 @@ public:
     MadGremlin(float offsetX,float offsetY);
     ~MadGremlin()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
-
-    void damage(const Damage_info& damage_info) override;
-    
     // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
 private:
     static constexpr float WIDTH=150.0F*Setting::SCALE,

@@ -6,16 +6,17 @@
 
 namespace Card{
 namespace Red{
-class Anger final:public Interface::CardPrototype<Anger>
+class Shockwave final:public Interface::CardPrototype<Shockwave>
 {
 public:
-    Anger():CardPrototype<Anger>(RUtil::AtlasRegionID::_red_attack_anger,RUtil::Cards_Text_ID::Anger,Rarity::common,Type::attack,Color::red,Target::enemy,0,6,0,0){}
-    ~Anger()override=default;
+    Shockwave():Interface::CardPrototype<Shockwave>(RUtil::AtlasRegionID::_red_skill_shockwave,RUtil::Cards_Text_ID::Shockwave,Rarity::uncommon,Type::skill,Color::red,Target::all_enemy,2,0,0,3){
+        this->exhaust=true;
+    }
+    ~Shockwave()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade()override{
-        SetDamage(8);
+        SetMagicNum(5);
     }
-private:
 };   
 }
 } // namespace Card

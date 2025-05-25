@@ -1265,10 +1265,8 @@
   "Vulnerable": {
     "NAME": "Vulnerable",
     "DESCRIPTIONS": [
-      "Receive #b",
-      "% more damage from #yAttacks for #b",
-      " turn.",
-      " turns."
+      "Receive !D!#b% more damage from #yAttacks for !M! turn.",
+      "Receive !D!#b% more damage from #yAttacks for !M! turns."
     ]
   },
   "WaveOfTheHandPower": {

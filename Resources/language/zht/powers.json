@@ -1265,10 +1265,7 @@
   "Vulnerable": {
     "NAME": "易傷",
     "DESCRIPTIONS": [
-      "從 #y攻擊 受到的傷害增加 #b",
-      "% 。持續時間 #b",
-      " 回合",
-      " 回合"
+      "從 #y攻擊 受到的傷害增加 !D!#b% 。$n持續時間 !M! 回合"
     ]
   },
   "WaveOfTheHandPower": {

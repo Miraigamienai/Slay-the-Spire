@@ -44,6 +44,7 @@ set(SRC_FILES
 	Game_object/card/red/Clash.cpp
 	Game_object/card/red/Clothesline.cpp
 	Game_object/card/red/Defend.cpp
+	Game_object/card/red/Shockwave.cpp
 	Game_object/card/red/Strike_red.cpp
 	Game_object/character/Characters.cpp
 	Game_object/character/Monster_group.cpp
@@ -92,6 +93,8 @@ set(SRC_FILES
 	Game_object/effect/Effects.cpp
 	Game_object/effect/Effect_group.cpp
 	Game_object/effect/End_turn_button_glow.cpp
+	Game_object/effect/Exhaust_blur_eff.cpp
+	Game_object/effect/Exhaust_ember_eff.cpp
 	Game_object/effect/Fade_wide.cpp
 	Game_object/effect/Flash_attack_effect.cpp
 	Game_object/effect/Flying_spike_eff.cpp
@@ -108,6 +111,7 @@ set(SRC_FILES
 	Game_object/effect/Vertical_aura.cpp
 	Game_object/effect_gen/Card_upgrade_eff_gen.cpp
 	Game_object/effect_gen/Effect_gen_group.cpp
+	Game_object/effect_gen/Exhaust_card_eff_gen.cpp
 	Game_object/effect_gen/Purge_card_eff_gen.cpp
 	Game_object/effect_gen/Show_card_briefly.cpp
 	Game_object/effect_gen/Show_card_to_discard.cpp
@@ -220,6 +224,7 @@ set(INCLUDE_FILES
 	Game_object/card/red/Clash.hpp
 	Game_object/card/red/Clothesline.hpp
 	Game_object/card/red/Defend.hpp
+	Game_object/card/red/Shockwave.hpp
 	Game_object/card/red/Strike_red.hpp
 	Game_object/character/AllMonster.hpp
 	Game_object/character/Characters.hpp
@@ -272,6 +277,8 @@ set(INCLUDE_FILES
 	Game_object/effect/Effect_pool.hpp
 	Game_object/effect/Effect_pool.inl
 	Game_object/effect/End_turn_button_glow.hpp
+	Game_object/effect/Exhaust_blur_eff.hpp
+	Game_object/effect/Exhaust_ember_eff.hpp
 	Game_object/effect/Fade_wide.hpp
 	Game_object/effect/Flash_attack_effect.hpp
 	Game_object/effect/Flash_power_eff.hpp
@@ -292,6 +299,7 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Clash_eff_gen.hpp
 	Game_object/effect_gen/Effect_gen.hpp
 	Game_object/effect_gen/Effect_gen_group.hpp
+	Game_object/effect_gen/Exhaust_card_eff_gen.hpp
 	Game_object/effect_gen/Power_buff_debuff_gen.hpp
 	Game_object/effect_gen/Power_remove_text_gen.hpp
 	Game_object/effect_gen/Purge_card_eff_gen.hpp
@@ -315,6 +323,7 @@ set(INCLUDE_FILES
 	Game_object/power/Powers.hpp
 	Game_object/power/Power_creator.hpp
 	Game_object/power/Power_group.hpp
+	Game_object/power/Vulnerable_power.hpp
 	Game_object/power/Weak_power.hpp
 	Game_object/reward_item/Card_reward.hpp
 	Game_object/reward_item/Card_reward_item.hpp
@@ -343,7 +352,7 @@ set(INCLUDE_FILES
 	Game_object/top_panel/Heart_icon.hpp
 	Game_object/top_panel/Map_icon.hpp
 	Game_object/top_panel/Setting_icon.hpp
-	Game_object/top_panel/Top_panel.hpp 
+	Game_object/top_panel/Top_panel.hpp
 	RUtil/All_Image.hpp
 	RUtil/Atlas_Reader.hpp
 	RUtil/Cards_Text_Reader.hpp

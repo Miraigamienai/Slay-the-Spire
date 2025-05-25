@@ -30,7 +30,7 @@ public:
     float calculate_damage_dealt(float damage)const{for(const auto&it:box)damage=it->calculate_damage_dealt(damage);return damage;}
 private:
     float calculate_tip_height()const;
-    static constexpr float TIP_MAX_HEIGHT=Setting::SCALE*0.7F,
+    static constexpr float TIP_MAX_HEIGHT=Setting::WINDOW_HEIGHT*0.7F,
                            TIP_PADDING_Y=Draw::Text_box::BOX_EDGE_H*3.15F;
 };
 } // namespace Power

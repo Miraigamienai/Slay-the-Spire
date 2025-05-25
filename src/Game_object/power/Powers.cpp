@@ -36,12 +36,9 @@ namespace Power
 
     void Powers::render_amount(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float color_a)const{
         if(amount>0){
-            if(!reduce_each_turn) r2->SetColor(RUtil::ToRGBA(RUtil::Colors::GREEN), color_a);
-            else r2->SetColor(RUtil::WHITE, color_a);
-            amount_drawer.render_bot_right(r2, std::to_string(amount), x, y, font_scale);
+            amount_drawer.render_center_with_bg(r2, std::to_string(amount), x, y, 0.0F, 0.0F, 0.0F, font_scale, (reduce_each_turn ? RUtil::WHITE : RUtil::ToRGBA(RUtil::Colors::GREEN)), color_a);
         }else if(amount<0&&can_negative){
-            r2->SetColor(RUtil::ToRGBA(RUtil::Colors::RED), color_a);
-            amount_drawer.render_bot_right(r2, std::to_string(amount), x, y, font_scale);
+            amount_drawer.render_center_with_bg(r2, std::to_string(amount), x, y, 0.0F, 0.0F, 0.0F, font_scale, RUtil::ToRGBA(RUtil::Colors::RED), color_a);
         }
     }
     
@@ -50,7 +47,7 @@ namespace Power
         tip_box.render(r2, x, y);
         r2->SetColor(RUtil::WHITE);
         auto&img=All_Image::GetAtlasRegion(region_48_id);
-        r2->draw(img, x + tip_box.get_title()->GetWidth() + POWER_ICON_OFFSET - (float)img->GetRegionWidth()/2.0F, y+5.0F*Setting::SCALE-(float)img->GetRegionHeight()/2.0F, (float)img->GetRegionWidth(), (float)img->GetRegionHeight(), 0.0F, (float)img->GetRegionWidth()/2.0F, (float)img->GetRegionHeight()/2.0F, Setting::SCALE*0.75F, Setting::SCALE*0.75F);
+        r2->draw(img, x + tip_box.get_title()->GetWidth()*Setting::SCALE + POWER_ICON_OFFSET - (float)img->GetRegionWidth()/2.0F, y-(float)img->GetRegionHeight()/2.0F, (float)img->GetRegionWidth(), (float)img->GetRegionHeight(), 0.0F, (float)img->GetRegionWidth()/2.0F, (float)img->GetRegionHeight()/2.0F, Setting::SCALE*0.75F, Setting::SCALE*0.75F);
     }
     
     void Powers::render_flash(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const{

@@ -9,19 +9,19 @@
 
 namespace Action{
     Card_use_start_action::Card_use_start_action(const Card::Card_item &card_item):
-        card_itme(card_item){}
+        card_item(card_item){}
 
     void Card_use_start_action::update(Dungeon::Dungeon_shared &dungeon_shared){
         //set player move
-        if(card_itme.card->type==Card::Type::attack)
+        if(card_item.card->type==Card::Type::attack)
             dungeon_shared.player->useFastAttackAnimation();
         
         //use card
-        dungeon_shared.player->ReduceEnergy(card_itme.card->GetCost(),dungeon_shared);
-        card_itme.card->Use(dungeon_shared, card_itme.monster);
-
+        dungeon_shared.player->ReduceEnergy(card_item.card->GetCost(),dungeon_shared);
+        card_item.card->Use(dungeon_shared, card_item.monster);
+        
         //add end to bot
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Card_use_end_action>(card_itme));
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Card_use_end_action>(card_item));
         
         //done immediately
         this->is_done=true;

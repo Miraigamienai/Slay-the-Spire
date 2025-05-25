@@ -15,7 +15,6 @@ public:
     void Upgrade()override{
         SetDamage(14);
         SetMagicNum(3);
-        upgraded=true;
     }
 };   
 }

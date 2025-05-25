@@ -14,7 +14,6 @@ public:
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade()override{
         SetDamage(18);
-        upgraded=true;
     }
     bool CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const override;
 private:

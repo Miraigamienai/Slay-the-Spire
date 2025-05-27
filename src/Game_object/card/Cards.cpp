@@ -175,7 +175,6 @@ namespace Card{
         this->current_x=this->current_y=0;
         this->target_x=this->target_y=0;
         this->m_angle=this->target_angle=0;
-        this->update_desc();
     }
 
     void Cards::update(Effect::Effect_group &top_effs){
@@ -272,15 +271,28 @@ namespace Card{
         //type
         s_ui_vec[this->m_text_pos]->SetFontColor(TYPE_COLOR);
         s_ui_vec[this->m_text_pos]->SetFontAlpha(m_color_a);
-        s_ui_vec[this->m_text_pos]->render_center(r2, this->current_x, this->current_y-23.0F, this->m_angle, 0.0F, 23.0F, m_draw_scale*Setting::SCALE);
+        s_ui_vec[this->m_text_pos]->render_center(r2, this->current_x, this->current_y-21.0F, this->m_angle, 0.0F, 21.0F, m_draw_scale*Setting::SCALE);
         //title
         auto &card_info=RUtil::Cards_Text_Reader::GetInfo(card_text_id);
         card_info.name->SetFontSize(CARD_TITLE_FONT_SIZE);
-        card_info.name->SetFontColor(this->upgraded ? RUtil::GREEN_TEXT_COLOR : RUtil::WHITE);
-        card_info.name->render_center(r2, current_x, current_y + 175.0F, this->m_angle, 0.0F, -175.0F, m_draw_scale*Setting::SCALE);
+        card_info.name->SetFontAlpha(m_color_a);
+        if(upgraded){
+            //name
+            card_info.name->SetFontColor(RUtil::GREEN_TEXT_COLOR);
+            auto plus_half_width=s_title_plus_drawer.Width("+")/2.0F;
+            card_info.name->render_center(r2, current_x - plus_half_width, current_y + 175.0F, this->m_angle, plus_half_width, -175.0F, m_draw_scale*Setting::SCALE);
+            //plus
+            r2->SetColor(RUtil::GREEN_TEXT_COLOR, m_color_a);
+            s_title_plus_drawer.render_center(r2, "+", current_x + card_info.name->GetWidth()/2.0F, current_y + 175.0F, this->m_angle, -card_info.name->GetWidth()/2.0F, -175.0F, m_draw_scale*Setting::SCALE);
+        }else{
+            card_info.name->SetFontColor(RUtil::WHITE);
+            card_info.name->render_center(r2, current_x, current_y + 175.0F, this->m_angle, 0.0F, -175.0F, m_draw_scale*Setting::SCALE);
+        }
         //description
         const auto &desc= upgraded && card_info.upgrade_desc!=nullptr ? card_info.upgrade_desc : card_info.desc;
         //render desc
+        static constexpr auto foo=[](int a, int b)constexpr{return a==b?(Draw::NumStatus::normal):(a>b?Draw::NumStatus::up:Draw::NumStatus::down);};
+        desc->set_num_info(Draw::number_info{damage, block, magic_num, foo(damage, base_damage), foo(block, base_block), foo(magic_num, base_magic_num)});
         desc->SetFontSize(CARD_DESC_FONT_SIZE);
         desc->SetFontAlpha(m_color_a);
         desc->SetFontColor(RUtil::CREAM_COLOR);
@@ -327,7 +339,7 @@ namespace Card{
             }else if(base_cost>cost){
                 energy_num_color=ENERGY_GREEN_COLOR;
             }else{
-                energy_num_color=ToRGBA(RUtil::Colors::WHITE);
+                energy_num_color=RUtil::WHITE;
             }
         }
     }
@@ -389,20 +401,10 @@ namespace Card{
         Lighten();
         m_draw_scale=0.12F;
         m_target_draw_scale=0.75F;
-        update_desc();
     }
     void Cards::render_hovered_shadow(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         r2->SetColor(0,0.66F);
         this->format_render(r2,RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::_512_card_super_shadow),this->current_x,this->current_y,1.15F);
-    }
-
-    void Cards::update_desc(){
-        const auto &card_info=RUtil::Cards_Text_Reader::GetInfo(card_text_id);
-        const auto &desc= upgraded && card_info.upgrade_desc!=nullptr ? card_info.upgrade_desc : card_info.desc;
-        static constexpr auto foo=[](int a, int b)constexpr{
-            return a==b?(Draw::NumStatus::normal):(a>b?Draw::NumStatus::up:Draw::NumStatus::down);
-        };
-        desc->set_num_info(Draw::number_info{damage, block, magic_num, foo(damage, base_damage), foo(block, base_block), foo(magic_num, base_magic_num)});
     }
 
     void Cards::init_static_menber(){
@@ -466,5 +468,6 @@ namespace Card{
     const std::vector<std::shared_ptr<Draw::Text_layout>> &Cards::s_ui_vec=RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::SingleCardViewPopup);
     float Cards::s_type_offset_attack=0.0F,Cards::s_type_offset_skill=0.0F,Cards::s_type_offset_power=0.0F,Cards::s_type_offset_status=0.0F,Cards::s_type_offset_curse=0.0F,Cards::s_type_width_attack=0.0F,Cards::s_type_width_skill=0.0F,Cards::s_type_width_power=0.0F,Cards::s_type_width_status=0.0F,Cards::s_type_width_curse=0.0F;
     Uint32 Cards::s_render_color;
-    Draw::NumberDrawer Cards::s_energy_drawer{ENERGY_Font_SIZE, FontWeight::bold};
+    Draw::NumberDrawer Cards::s_energy_drawer{ENERGY_Font_SIZE, FontWeight::bold},
+                       Cards::s_title_plus_drawer{CARD_TITLE_FONT_SIZE, FontWeight::bold};
 }

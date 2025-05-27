@@ -11,7 +11,7 @@ namespace GridScreenAction{
         this->is_cancelled=false;
         this->card=card;
         this->upgraded_card=card->Clone();
-        this->upgraded_card->CallUpgrade();
+        this->upgraded_card->CallUpgrade(true);
         this->card->SetDrawScale(1.0F, true);
         this->upgraded_card->SetDrawScale(1.0F, true);
         confirm.show();

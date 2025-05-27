@@ -52,7 +52,7 @@ public:
     void discard_all();
     void discard(const std::shared_ptr<Cards> &card, bool visual_only=false);
     void draw(const Power::Power_group &player_powers);
-    void update(Action::Action_group_handler &action_group_handler, const Dungeon::Dungeon_shared &dungeon_shared);
+    void update(Dungeon::Dungeon_shared &dungeon_shared);
     void refresh_hand_layout()const;
     void prepare_for_battle(RUtil::Random &rng);
     void shuffle(bool shuffle_invisible);
@@ -61,6 +61,7 @@ public:
     void render_hand(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void obtain(const std::shared_ptr<Cards> &card);
     void exhaust(const std::shared_ptr<Cards> &card);
+    void empower(const std::shared_ptr<Cards> &card, float target_center_x, float target_center_y);
     Card_group get_upgradeable_card_group()const;
     Card_group get_master_deck()const{return master_deck;}
 
@@ -74,10 +75,12 @@ public:
     void update_flying_cards(Effect::Effect_group &top_effs){
         for (auto it = flying_cards.begin(); it != flying_cards.end();) {
             (*it)->update(top_effs);
-            if (!(*it)->is_fly())
+            if (!(*it)->is_fly()){
+                (*it)->ResetAttributes();
                 it = flying_cards.erase(it);
-            else
+            }else{
                 ++it;
+            }
         }
     }
     template <GroupType GT>
@@ -141,7 +144,7 @@ private:
     void release_card();
     void play_card(Action::Action_group_handler &action_group_handler);
     void render_targeting(const std::shared_ptr<Draw::Draw_2D> &r2)const;
-    void update_targeting(Action::Action_group_handler &action_group_handler);
+    void update_targeting(Dungeon::Dungeon_shared &dungeon_shared);
     void update_drop_zone_status();
     void update_hovered_card();
     void handle_dragging(Action::Action_group_handler &action_group_handler);

@@ -47,8 +47,7 @@ namespace Panel
         
         if(energy_orb!=nullptr)energy_orb->render(r2);
         render_vfx(r2);
-        r2->SetColor(TEXTCOLOR,1.0F);
-        m_font.render_center(r2, std::to_string(*current_energy)+"/"+std::to_string(*max_energy), current_x, current_y, font_scale*Setting::SCALE);
+        m_font.render_center_with_bg(r2, std::to_string(*current_energy)+"/"+std::to_string(*max_energy), current_x, current_y, 0.0F, 0.0F, 0.0F, font_scale*Setting::SCALE, TEXTCOLOR, 1.0F);
     }
     void Energy_panel::render_vfx(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         if(vfx_timer!=0.0F){

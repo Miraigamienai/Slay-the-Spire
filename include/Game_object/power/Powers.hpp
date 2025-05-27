@@ -39,6 +39,13 @@ public:
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const;
     void render_flash(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const;
     void update();
+    void reduce_amount(int value)noexcept{font_scale=8.0F*Setting::SCALE;amount-=value;}
+    void add_amount(int value)noexcept{
+        if(can_negative || amount!=NO_DISPLAY_AMOUNT){
+            font_scale=8.0F*Setting::SCALE;
+            amount+=value;
+        }
+    }
     void flash()noexcept{flash_a=0.5F; flash_scale=3.0F*Setting::SCALE; flash_timer=2.0F;}
     auto &get_name()const noexcept(noexcept(tip_box.get_title())){return tip_box.get_title();}
     auto &get_desc()const noexcept(noexcept(tip_box.get_body())){return tip_box.get_body();}
@@ -49,7 +56,7 @@ public:
     const PowerType power_type;
     const bool reduce_each_turn;
     const bool can_negative;
-    
+
     //virtual functions
     virtual void desc_update(){tip_box.change_body(get_amount_based_desc());}
     virtual float calculate_damage_dealt(float damage)const{return damage;}
@@ -59,8 +66,6 @@ public:
     virtual float calculate_block_dealt(float block)const{return block;}
     virtual float calculate_final_block_dealt(float block)const{return block;}
     virtual void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target);
-    virtual void reduce_amount(int value){font_scale=8.0F*Setting::SCALE;amount-=value;if(amount<0&&!can_negative)amount=0;}
-    virtual void add_amount(int value){font_scale=8.0F*Setting::SCALE;amount+=value;if(amount<0&&!can_negative)amount=0;}
 protected:
     Draw::Text_box tip_box;
     int amount;
@@ -68,6 +73,7 @@ protected:
         auto &arr=RUtil::Powers_Text_Reader::GetDescriptions(power_id);
         return amount!=1 && arr[1]!=nullptr ? arr[1] : arr[0];
     }
+    static constexpr int NO_DISPLAY_AMOUNT = -1;
 private:
     float font_scale;
     float color_a;

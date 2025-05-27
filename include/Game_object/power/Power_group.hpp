@@ -2,6 +2,7 @@
 
 #include <list>
 #include <memory>
+#include <array>
 
 #include "Game_object/Group_template.hpp"
 #include "Game_object/effect/Effect_group.hpp"
@@ -28,6 +29,12 @@ public:
     //events
     void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target)const{for(const auto&it:box)it->at_turn_end(dungeon_shared,target);}
     float calculate_damage_dealt(float damage)const{for(const auto&it:box)damage=it->calculate_damage_dealt(damage);return damage;}
+
+    //special
+    bool no_lose_block()const{
+        for(const auto&it:box) if(it->power_id == RUtil::Powers_Text_ID::Barricade) return true;
+        return false;
+    }
 private:
     float calculate_tip_height()const;
     static constexpr float TIP_MAX_HEIGHT=Setting::WINDOW_HEIGHT*0.7F,

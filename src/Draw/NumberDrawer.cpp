@@ -86,7 +86,21 @@ namespace Draw{
             now_x+=img->GetRegionWidth();
         }
     }
-
+    
+    void NumberDrawer::render_center(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const{
+        const int width=PureWidth(num_str);
+        const int height=GetNums(this->fw)[0]->GetRegionHeight();
+        int now_x = 0;
+        for(const auto&it:num_str){
+            auto& img=GetNumIMG(it);
+            const float offset_x=((float)now_x-(float)width/2.0F)*font_scale;
+            const float offset_y=((float)height/2.0F-(float)(img->GetRegionHeight()))*font_scale;
+            r2->draw(img, center_x+offset_x, center_y+offset_y, (float)img->GetRegionWidth()*font_scale, (float)img->GetRegionHeight()*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
+            now_x+=img->GetRegionWidth();
+        }
+    
+    }
+    
     void NumberDrawer::render_center_with_bg(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale, Uint32 c, float a)const{
         const int width=PureWidth(num_str);
         const int height=GetNums(this->fw)[0]->GetRegionHeight();

@@ -5,6 +5,7 @@
 #include "Game_object/card/red/Clash.hpp"//for test
 #include "Game_object/card/red/Clothesline.hpp"//for test
 #include "Game_object/card/red/Shockwave.hpp"//for test
+#include "Game_object/card/red/Barricade.hpp"//for test
 #include "Core/Context.hpp"
 #include "Game_object/character/Player.hpp"
 TheApp::TheApp(){
@@ -27,6 +28,8 @@ TheApp::TheApp(){
         m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Clothesline>());
     for(int i=0;i<1;i++)
         m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Shockwave>());
+    for(int i=0;i<1;i++)
+        m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Barricade>());
 }
 void TheApp::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
     switch (m_CurrentState) {

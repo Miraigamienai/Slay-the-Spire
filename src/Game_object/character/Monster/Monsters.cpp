@@ -1,7 +1,7 @@
 #include "Game_object/character/Monster/Monsters.hpp"
 #include "Game_object/Damage_info.hpp"
 #include "RUtil/Random.hpp"
-#include "string"
+
 namespace Monster
 {
     Monsters::Monsters(float x, float y, float width, float height,float HPBarWidth,const std::shared_ptr<Draw::ReTexture> &img) : Characters(x, y, width, height ,HPBarWidth),img(img) {
@@ -34,9 +34,6 @@ namespace Monster
         this->max_HP=max-int(RUtil::Random::GetRandomFloat(0.0F,max-min+1));
         this->current_HP=max_HP;
     } // namespace Monster
-    void Monsters::setBlock(int num){
-        this->current_Block=num;
-    }
     void Monsters::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {
         if(IsFadeOut){

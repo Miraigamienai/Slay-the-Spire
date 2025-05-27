@@ -3,6 +3,7 @@
 
 #include "Game_object/power/Weak_power.hpp"
 #include "Game_object/power/Vulnerable_power.hpp"
+#include "Game_object/power/Barricade_power.hpp"
 
 namespace Power
 {
@@ -10,6 +11,7 @@ namespace Power
         switch(power_id){
             case RUtil::Powers_Text_ID::Weakened: return std::make_shared<Weak_power>();
             case RUtil::Powers_Text_ID::Vulnerable: return std::make_shared<Vulnerable_power>();
+            case RUtil::Powers_Text_ID::Barricade: return std::make_shared<Barricade_power>();
             default:return nullptr;
         }
     }

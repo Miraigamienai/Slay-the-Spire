@@ -12,9 +12,9 @@ public:
     Clothesline():CardPrototype<Clothesline>(RUtil::AtlasRegionID::_red_attack_clothesline, RUtil::Cards_Text_ID::Clothesline, Rarity::common,Type::attack,Color::red,Target::enemy,2,12,0,2){}
     ~Clothesline()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
-    void Upgrade()override{
-        SetDamage(14);
-        SetMagicNum(3);
+    void Upgrade(bool for_preview)override{
+        SetDamage(14, for_preview);
+        SetMagicNum(3, for_preview);
     }
 };   
 }

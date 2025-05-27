@@ -14,18 +14,14 @@ namespace Monster
     void Monster_group::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         for(const auto &it:box){
             if(!it->IsDie()) it->render(r2);
-            
-        } 
+        }
     }
     void Monster_group::update(){
-        
-        auto it = std::remove_if(box.begin(), box.end(), 
-            [](const std::shared_ptr<Monsters>& monster) { 
-                monster->update();
-                return monster->IsDie(); 
-            });
-        
-        box.erase(it, box.end());
+        const int len=static_cast<int>(box.size());
+        for(int i=len-1;i>=0;--i){
+            box[i]->update();
+            if(box[i]->IsDie())box.erase(box.begin()+i);
+        }
     }
     bool Monster_group::IsAllDie()const{
         for(const auto &it:box) 
@@ -34,8 +30,18 @@ namespace Monster
     }
     
     void Monster_group::at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){
-        for(const auto&it1:box)
-            for(const auto&it2:it1->get_powers())
-                it2->at_turn_end(dungeon_shared, it1);
+        for(const auto&it:box){
+            if(!it->IsDie()){
+                it->at_turn_end(dungeon_shared);
+            }
+        }
+    }
+    
+    void Monster_group::at_turn_start(){
+        for(const auto&it:box){
+            if(!it->IsDie()){
+                it->at_turn_start();
+            }
+        }
     }
 } // namespace Monster

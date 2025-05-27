@@ -64,7 +64,6 @@ namespace Card{
             it->Darken(false);
             it->StopGlowing();
             it->discard();
-            it->ResetAttributes();
             flying_cards.emplace_back(it);
         }
         hand_cards.MoveAllCardTo(m_discard);
@@ -75,7 +74,6 @@ namespace Card{
         card->Darken(false);
         card->StopGlowing();
         card->discard();
-        card->ResetAttributes();
         flying_cards.emplace_back(card);
         if(!visual_only)
             this->m_discard.AddTop(card);
@@ -91,7 +89,12 @@ namespace Card{
     void Card_group_handler::exhaust(const std::shared_ptr<Cards> &card){
         this->exhaust_pile.AddTop(card);
         card->StopGlowing();
-        card->ResetAttributes();
+    }
+
+    void Card_group_handler::empower(const std::shared_ptr<Cards> &card, float target_center_x, float target_center_y){
+        card->Shrink(false);
+        card->empower(target_center_x, target_center_y);
+        flying_cards.emplace_back(card);
     }
 
     void Card_group_handler::release_card(){
@@ -274,7 +277,7 @@ namespace Card{
         }
     }
     
-    void Card_group_handler::update(Action::Action_group_handler &action_group_handler, const Dungeon::Dungeon_shared &dungeon_shared){
+    void Card_group_handler::update(Dungeon::Dungeon_shared &dungeon_shared){
         //single_target -> drop zone -> drag -> hover -> check drag start
         if(single_target){
             bool last_has_not=hovered_monster==nullptr;
@@ -284,14 +287,14 @@ namespace Card{
             }else if(!last_has_not && hovered_monster==nullptr){
                 hovered_card->RefreshDisplay(dungeon_shared.player->get_powers());
             }
-            this->update_targeting(action_group_handler);
+            this->update_targeting(dungeon_shared);
             return;
         }
 
         if(is_dragging_card){//is_dragging_card==true only if (hovered_card!=nullptr)
             this->update_drop_zone_status();
             if(is_dragging_card){//if is_dragging_card after update_drop_zone_status();
-                this->handle_dragging(action_group_handler);
+                this->handle_dragging(dungeon_shared.action_group_handler);
                 if(single_target)
                     return;
             }
@@ -437,7 +440,7 @@ namespace Card{
         //draw arrow
         r2->draw(reticleArrow_img, arrowX-128.0F, arrowY-128.0F, 256.0F, 256.0F, RUtil::Math::GetDegress(now_pt-last_pt)-90.0F, 128.0F, 128.0F, arrow_scale, arrow_scale);
     }
-    void Card_group_handler::update_targeting(Action::Action_group_handler &action_group_handler){
+    void Card_group_handler::update_targeting(Dungeon::Dungeon_shared &dungeon_shared){
         if(hovered_monster!=nullptr){
             m_arrow_timer+=RUtil::Game_Input::delta_time();
             if(m_arrow_timer>1.0F){
@@ -452,6 +455,7 @@ namespace Card{
         }
 
         if(just_r||(float)input_y<LOW_LOW_LINE||(float)input_y<hover_start_line - 400.0F*Setting::SCALE){//release if height is not in range.
+            hovered_card->RefreshDisplay(dungeon_shared.player->get_powers());
             release_card();
             single_target=false;
             Cursor::SetVisible(true);
@@ -463,7 +467,8 @@ namespace Card{
             if(hovered_monster!=nullptr){
                 single_target=false;
                 Cursor::SetVisible(true);
-                play_card(action_group_handler);
+                play_card(dungeon_shared.action_group_handler);
+                hovered_monster=nullptr;
             }
             return;
         }

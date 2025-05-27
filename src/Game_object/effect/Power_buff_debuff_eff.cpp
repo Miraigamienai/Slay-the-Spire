@@ -15,12 +15,11 @@ namespace Effect{
         text->SetFontColor(this->color);
         if(with_number){
             std::string msg="+" + std::to_string(number) + " ";
-            const float number_widht=s_number_drawer.Width(msg);
-            const float text_width=text->GetWidth();
-            const float half_width=(number_widht + text_width)/2.0F;
+            //w=4 mid=2
+            //w=1,3 mid=0.5,2.5 = mid-3/2,mid+1/2
             r2->SetColor(this->color, this->color_a);
-            s_number_drawer.render_center(r2, msg, this->x - half_width + number_widht/2.0F, this->y + this->offset_y, Setting::SCALE*1.25F);
-            text->render_center(r2, this->x + half_width - text_width/2.0F, this->y + this->offset_y, 0.0F, 0.0F, 0.0F, Setting::SCALE*1.25F);
+            s_number_drawer.render_center(r2, msg, this->x - text->GetWidth()/2.0F, this->y + this->offset_y, Setting::SCALE*1.25F);
+            text->render_center(r2, this->x + s_number_drawer.Width(msg)/2.0F, this->y + this->offset_y, 0.0F, 0.0F, 0.0F, Setting::SCALE*1.25F);
         }else{
             text->render_center(r2, this->x, this->y + this->offset_y, 0.0F, 0.0F, 0.0F, Setting::SCALE*1.25F);
         }

@@ -6,16 +6,15 @@
 
 namespace Card{
 namespace Red{
-class Defend final:public Interface::CardPrototype<Defend>
+class Barricade final:public Interface::CardPrototype<Barricade>
 {
 public:
-    Defend():CardPrototype<Defend>(RUtil::AtlasRegionID::_red_skill_defend,RUtil::Cards_Text_ID::Defend_R,Rarity::basic,Type::skill,Color::red,Target::self,1,0,5,0){}
-    ~Defend()override=default;
+    Barricade():Interface::CardPrototype<Barricade>(RUtil::AtlasRegionID::_red_power_barricade, RUtil::Cards_Text_ID::Barricade, Rarity::rare, Type::power, Color::red, Target::self, 3, 0, 0, 0){}
+    ~Barricade()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade(bool for_preview)override{
-        SetBlock(8, for_preview);
+        SetCost(2, for_preview);
     }
-private:
 };   
 }
 } // namespace Card

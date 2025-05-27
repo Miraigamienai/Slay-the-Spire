@@ -1,12 +1,15 @@
 #include "Game_object/room/Monster_room.hpp"//the hpp
-#include "Game_object/action/Action_group_handler.hpp"//for update
 #include "Game_object/card/Card_group_handler.hpp"//for update
+#include "Game_object/action/Action_group_handler.hpp"//for update
 #include "Game_object/action/Draw_card_action.hpp"//draw card
 #include "Game_object/action/Discard_all_action.hpp"//end turn discard
 #include "Game_object/action/Enable_end_button_action.hpp"//controls the time for enabling the end button 
-#include "Game_object/dungeon/Overlay.hpp"//combat panel
+#include "Game_object/action/Gain_energy_action.hpp"//gain energy 
+#include "Game_object/action/Effect_capsule_action.hpp"//capsule the Enemy_turn_eff
+#include "Game_object/effect/Enemy_turn_eff.hpp"
 #include "Game_object/dungeon/Dungeon_shared.hpp"//for update function
 #include "Game_object/character/Monster_group_creater.hpp"//create monsters & group_name
+#include "Game_object/character/Monster/Monsters.hpp"//render tip
 #include "RUtil/Image_book.hpp"//for Retexture loading
 #include "RUtil/Random_package.hpp"//for passing rng to create monsters
 #include "RUtil/Game_Input.hpp"//delta time
@@ -16,17 +19,22 @@
 #include "Util/Logger.hpp"//LOG_ERROR
 
 namespace Room{
-Monster_room::Monster_room():Rooms(Room_type::Monster),m_group_name(Monster::GroupName::Jaw_Worm),ending_battle(false),ending_battle_timer(0.25F){
-    m_wait_timer=0.0F;
-}
-void Monster_room::init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 /* dungeon_fade_color */){
+Monster_room::Monster_room()
+    :Rooms(Room_type::Monster),
+    m_wait_timer(0.0F),
+    m_group_name(Monster::GroupName::Jaw_Worm),
+    ending_battle(false),
+    ending_battle_timer(0.25F),
+    dungeon_fade_color(RUtil::BLACK),
+    tip_character(nullptr)
+{}
+void Monster_room::init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 dungeon_fade_color){
     Monster::Monster_group_creater::CreateGroup(dungeon_shared.room_monsters, m_group_name,dungeon_shared.random_package.monster_type_rng);
+    this->dungeon_fade_color=dungeon_fade_color;
     m_wait_timer=0.1F;
 }
-void Monster_room::render(const std::shared_ptr<Draw::Draw_2D> &/* r2 */)const{
-    //moster render
-    // m_monsters.render(r2);
-    //player render
+void Monster_room::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+    if(tip_character!=nullptr) tip_character->render_tip(r2);
 }
 void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
     if(ending_battle){
@@ -42,21 +50,28 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
 
     dungeon_shared.room_monsters.update();
     dungeon_shared.player->update();
+    if(!dungeon_shared.card_group_handler.is_dragging()){
+        if(dungeon_shared.player->hovered()) tip_character=dungeon_shared.player;
+        else tip_character=dungeon_shared.room_monsters.GetHoveredMonster();
+    }else{
+        tip_character=nullptr;
+    }
 
     if(m_wait_timer<=0.0F){//Loop until end turn. //Idle also loop here.
         dungeon_shared.action_group_handler.update(dungeon_shared);
-        dungeon_shared.card_group_handler.update(dungeon_shared.action_group_handler, dungeon_shared);
+        dungeon_shared.card_group_handler.update(dungeon_shared);
         
         if(dungeon_shared.overlay.end_turn_button_clicked()){
             //ending turn
             //TODO:end logic need to be check.
             dungeon_shared.overlay.disable_end_turn_button();
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Discard_all_action>());
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_capsule_action>(std::make_shared<Effect::Enemy_turn_eff>(dungeon_fade_color), 1.2F, Action::Effect_capsule_action::Layer::top));
             dungeon_shared.action_group_handler.ending_turn(dungeon_shared.room_monsters);
+            dungeon_shared.room_monsters.at_turn_start();
             this->m_wait_timer=0.25F;
         }
     }else{
-        
         if(dungeon_shared.action_group_handler.is_nothing_to_do()){
             m_wait_timer-=RUtil::Game_Input::delta_time();
         }else{
@@ -67,7 +82,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
                 //battle start effect
                 dungeon_shared.overlay.show_combat_panel();
             }
-            dungeon_shared.player->resetEnergy();
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_energy_action>(dungeon_shared.player->GetMaxEnergy()));
             //temporary 5
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));
         

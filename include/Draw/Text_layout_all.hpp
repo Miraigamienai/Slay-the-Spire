@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utility>
+
 #include "Draw/Text_layout.hpp"
 #include "Draw/NumberDrawer.hpp"
 
@@ -19,6 +21,7 @@ public:
     void render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const override;
     void render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const override;
     void set_num_info(const number_info &num_info)override{this->num_info=num_info;}
+    void set_num_info(number_info &&num_info)override{this->num_info=std::move(num_info);}
 private:
     struct text_item{
         bool is_num;

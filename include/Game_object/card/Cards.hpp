@@ -8,6 +8,7 @@
 #include "Game_object/effect/Effect_group.hpp"//member (glowgroup)
 #include "RUtil/Some_Math.hpp"//get rgb color
 #include "RUtil/Hitbox.hpp"//member
+#include "RUtil/ColorValuesOnly.hpp"//color
 #include "Draw/NumberDrawer.hpp"//draw energy number
 
 //fwd decl
@@ -77,7 +78,6 @@ public:
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void render_hovered_shadow(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update(Effect::Effect_group &top_effs);
-    void update_desc();
     // void update_hover_logic();
     void SetHoverTimer(const float value);//hover timer will be set when releasing card.
     void MoveTargetY(const float value);
@@ -98,14 +98,13 @@ public:
     virtual bool CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const;
     virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const std::shared_ptr<Monster::Monsters> &target_monster)=0;
     virtual std::shared_ptr<Cards> Clone()const=0;
-    virtual void Upgrade()=0;
+    virtual void Upgrade(bool for_preview)=0;
     
     //inline function
     
-    void CallUpgrade(){
+    void CallUpgrade(bool for_preview=false){
         upgraded=true;
-        Upgrade();
-        update_desc();
+        Upgrade(for_preview);
     }
     //immediately 1.0F draw scale
     void Hover()noexcept(noexcept(SetDrawScale(1.0F,true))){SetDrawScale(1.0F,true);}
@@ -137,11 +136,10 @@ public:
     void SetColorAlpha(const float value,const bool immediate=false)noexcept{m_target_color_a=value;if(immediate)m_color_a=value;}
     bool IsSingleTarget()const noexcept{return target==Target::enemy||target==Target::self_and_enemy;}
     void StopGlowing()const{for(const auto&it:glowgroup)it->QuickDisappear(5.0F);}
-    void RefreshDisplay(const Power::Power_group &player_powers){RefreshBlock(player_powers);RefreshDamage(player_powers);update_desc();}
+    void RefreshDisplay(const Power::Power_group &player_powers){RefreshBlock(player_powers);RefreshDamage(player_powers);}
     void RefreshDisplay(const Power::Power_group &player_powers, const Power::Power_group &monster_powers){
         RefreshBlock(player_powers);
         RefreshDamage(player_powers, monster_powers);
-        update_desc();
     }
     //static function
     static void SetRenderColor(Uint32 c)noexcept{s_render_color=c;}
@@ -155,7 +153,7 @@ public:
 
     //for child classes 
 
-    void ResetAttributes(){
+    void ResetAttributes()noexcept{
         damage=base_damage;
         block=base_block;
         magic_num=base_magic_num;
@@ -170,14 +168,26 @@ protected:
     void CommonRefreshDamage(const Power::Power_group &player_powers);
     void CommonRefreshDamage(const Power::Power_group &player_powers, const Power::Power_group &monster_powers);
     void CommonRefreshBlock(const Power::Power_group &player_powers);
-    void SetDamage(int num)noexcept{
-        this->base_damage=this->damage=num;
+    void SetDamage(int num, bool for_preview)noexcept{
+        this->damage=num;
+        if(!for_preview) this->base_damage=num;
     }
-    void SetBlock(int num)noexcept{
-        this->base_block=this->block=num;
+    void SetBlock(int num, bool for_preview)noexcept{
+        this->block=num;
+        if(!for_preview) this->base_block=num;
     }
-    void SetMagicNum(int num)noexcept{
-        this->base_magic_num=this->magic_num=num;
+    void SetMagicNum(int num, bool for_preview)noexcept{
+        this->magic_num=num;
+        if(!for_preview) this->base_magic_num=num;
+    }
+    void SetCost(int num, bool for_preview)noexcept{
+        this->cost=num; 
+        if(!for_preview) this->base_cost=num;
+        else{
+            if(base_cost<cost)energy_num_color=ENERGY_RED_COLOR;
+            else if(base_cost>cost)energy_num_color=ENERGY_GREEN_COLOR;
+            else energy_num_color=RUtil::WHITE;
+        }
     }
     bool upgraded=false;
     bool exhaust=false;
@@ -200,7 +210,7 @@ private:
     static Uint32 s_render_color;
     static float s_type_offset_attack,s_type_offset_skill,s_type_offset_power,s_type_offset_status,s_type_offset_curse,s_type_width_attack,s_type_width_skill,s_type_width_power,s_type_width_status,s_type_width_curse;
     static const std::vector<std::shared_ptr<Draw::Text_layout>> &s_ui_vec;
-    static Draw::NumberDrawer s_energy_drawer;
+    static Draw::NumberDrawer s_energy_drawer, s_title_plus_drawer;
     static void init_static_menber();
     static constexpr Uint32 FRAME_SHADOW_COLOR=0,DEFAULT_COLOR=RUtil::Math::GetColorUint32_RGB(255,255,255),TYPE_COLOR=RUtil::Math::GetColorUint32_RGB(0.35F,0.35F,0.35F),TINT_COLOR=RUtil::Math::GetColorUint32_RGB(43,37,65);
     static constexpr float  SHADOW_OFFSET_X = 18.0F * Setting::SCALE,

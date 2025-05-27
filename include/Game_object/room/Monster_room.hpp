@@ -8,6 +8,9 @@
 namespace Monster{
     enum class GroupName:int;
 }
+namespace Character{
+    class Characters;
+}
 
 namespace Room{
 //need:Monster Player Cards 
@@ -26,7 +29,9 @@ private:
     Monster::GroupName m_group_name;
     bool ending_battle;
     float ending_battle_timer;
-
+    Uint32 dungeon_fade_color;
+    std::shared_ptr<Character::Characters> tip_character;
+ 
     static const std::shared_ptr<Draw::ReTexture> &IMG;
     static const std::shared_ptr<Draw::ReTexture> &IMG_O;
 };

@@ -131,8 +131,6 @@ namespace Character{
         }
         //powers
         powers.render(r2, x, y, 1.0F);//TODO: alpha
-        if(boss_hitbox.Hovered())
-            this->render_tip(r2);
     }
     void Characters::setPosition(float x,float y){
         pos={x,y};

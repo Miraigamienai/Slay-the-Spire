@@ -55,12 +55,13 @@ namespace Character{
 
     void Player::ReduceEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.overlay.on_use_energy();
-        this->current_energy-=value;
+        current_energy-=value;
     }
     
     void Player::AddEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.overlay.on_add_energy(dungeon_shared.effs);
-        this->current_energy+=value;
+        current_energy+=value;
+        if(current_energy > max_energy) current_energy=max_energy;
     }
 
     const std::shared_ptr<Draw::ReTexture> &Player::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/character/Ironclad.png");

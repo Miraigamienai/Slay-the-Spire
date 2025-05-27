@@ -36,11 +36,8 @@ public:
     Monsters(float x, float y, float width, float height,float HPBarWidth,const std::shared_ptr<Draw::ReTexture> &img);
     virtual ~Monsters()=default;
     virtual void Action(Dungeon::Dungeon_shared &dungeon_shared)=0; 
-    // virtual void apply(const std::shared_ptr<Action::Action_group> &action_group)const=0;
     virtual void damage(const Damage_info& damage_info)override;
     void setHP(int min,int max);
-    void setBlock(int num);
-    int GetRandomWithWeight(const float* weights, size_t size);
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
 protected:
 

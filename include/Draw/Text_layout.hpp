@@ -49,6 +49,7 @@ public:
     virtual void render_top_left(const std::shared_ptr<Draw::Draw_2D> &r2,const float x,const float y,const float scale)const=0;
     virtual void render_center(const std::shared_ptr<Draw_2D> &r2,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const=0;
     virtual void set_num_info(const number_info &/* num_info */){}
+    virtual void set_num_info(number_info &&/* num_info */){}
     
     void ChangeFontWeight(FontWeight fw){
         if(fw!=this->fw){

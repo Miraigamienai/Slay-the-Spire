@@ -31,7 +31,7 @@ namespace Button
     void Skip_button::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         if(!is_hidden){
             text_vec[0]->SetFontSize(32);
-            if(text_vec[0]->GetWidth()>200.0F)
+            if(text_vec[0]->GetWidth()*Setting::SCALE>200.0F)
                 text_vec[0]->render_center(r2, this->current_x, SHOW_Y, 0.0F, 0.0F, 0.0F, Setting::SCALE*0.8F);
             else
                 text_vec[0]->render_center(r2, this->current_x, SHOW_Y, 0.0F, 0.0F, 0.0F, Setting::SCALE);

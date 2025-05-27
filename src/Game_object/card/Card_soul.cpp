@@ -20,7 +20,6 @@ Card_soul::Card_soul(){
     vfx_timer=0.015F;
     is_flying=false;
     is_shuffling=false;
-
 }
 void Card_soul::discard(){
     //here just do discard move, but not really add the card to card_group.
@@ -38,6 +37,13 @@ void Card_soul::obtain(){
     this->end_y=MASTER_DECK_Y;
     this->prepare_to_fly();
     this->is_clockwise=RUtil::Random::GetRandomBoolean();
+}
+void Card_soul::empower(float target_center_x, float target_center_y){
+    this->end_x=target_center_x;
+    this->end_y=target_center_y;
+    this->prepare_to_fly();
+    this->is_clockwise=RUtil::Random::GetRandomBoolean();
+    if(!is_clockwise) this->target_angle+=720.0F;
 }
 void Card_soul::shuffle(bool shuffle_invisible){
     this->is_shuffling=true;

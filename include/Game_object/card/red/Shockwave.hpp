@@ -14,8 +14,8 @@ public:
     }
     ~Shockwave()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
-    void Upgrade()override{
-        SetMagicNum(5);
+    void Upgrade(bool for_preview)override{
+        SetMagicNum(5, for_preview);
     }
 };   
 }

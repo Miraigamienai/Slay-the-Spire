@@ -78,7 +78,7 @@ namespace Draw
                 }
             }
         }
-        text_rows.back().row_width=now_x+img_w;//set last row width.
+        text_rows.back().row_width=now_x/* +img_w */;//set last row width.
                         
         //set width & height
         this->height=now_y+img_h;

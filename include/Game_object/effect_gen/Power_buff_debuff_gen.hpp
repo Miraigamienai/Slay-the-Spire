@@ -7,18 +7,11 @@
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/power/Powers.hpp"
 #include "RUtil/Random.hpp"
+#include "RUtil/Some_Math.hpp"
 
 #include "Util/Logger.hpp"
 
 namespace EffectGen{
-static constexpr inline float color_norm(Uint32 x)noexcept{return static_cast<float>(x)/255.0F;}
-static constexpr inline glm::vec3 TO_VEC3(Uint32 color){
-    return glm::vec3{
-        color_norm((color&0xff000000)>>24),
-        color_norm((color&0x00ff0000)>>16),
-        color_norm((color&0x0000ff00)>>8)
-    };
-}
 class Power_buff_debuff_gen final:public Effect_gen
 {
 public:
@@ -61,7 +54,7 @@ private:
     const int amount;
     const Power::PowerType power_type;
     const bool already_have;
-    static constexpr auto RED_TEXT_RGB=TO_VEC3(RUtil::RED_TEXT_COLOR),
-                          GREEN_TEXT_RGB=TO_VEC3(RUtil::GREEN_TEXT_COLOR);
+    static constexpr auto RED_TEXT_RGB=RUtil::Math::TO_VEC3(RUtil::RED_TEXT_COLOR),
+                          GREEN_TEXT_RGB=RUtil::Math::TO_VEC3(RUtil::GREEN_TEXT_COLOR);
 };
 }

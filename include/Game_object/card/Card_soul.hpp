@@ -21,6 +21,7 @@ public:
     virtual ~Card_soul()=default;
     void discard();
     void obtain();
+    void empower(float target_center_x, float target_center_y);
     void shuffle(bool shuffle_invisible);
     bool is_fly()const{return is_flying;}
     //static function

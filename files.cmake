@@ -41,6 +41,7 @@ set(SRC_FILES
 	Game_object/card/Card_group_handler.cpp
 	Game_object/card/Card_soul.cpp
 	Game_object/card/red/Anger.cpp
+	Game_object/card/red/Barricade.cpp
 	Game_object/card/red/Clash.cpp
 	Game_object/card/red/Clothesline.cpp
 	Game_object/card/red/Defend.cpp
@@ -83,6 +84,7 @@ set(SRC_FILES
 	Game_object/dungeon/Grid_screen_action/Grid_screen_upgrade_action.cpp
 	Game_object/dungeon/Grid_screen_action/Render_arrow.cpp
 	Game_object/effect/Auto_release_pool_manager.cpp
+	Game_object/effect/Battle_start_eff.cpp
 	Game_object/effect/Camfire_bubble_effect.cpp
 	Game_object/effect/Camfire_burning_effect.cpp
 	Game_object/effect/Card_flash.cpp
@@ -93,6 +95,7 @@ set(SRC_FILES
 	Game_object/effect/Effects.cpp
 	Game_object/effect/Effect_group.cpp
 	Game_object/effect/End_turn_button_glow.cpp
+	Game_object/effect/Enemy_turn_eff.cpp
 	Game_object/effect/Exhaust_blur_eff.cpp
 	Game_object/effect/Exhaust_ember_eff.cpp
 	Game_object/effect/Fade_wide.cpp
@@ -144,7 +147,7 @@ set(SRC_FILES
 	Game_object/room/rest_room_options/Rest_option.cpp
 	Game_object/room/rest_room_options/Smith_option.cpp
 	Game_object/room/Treasure_type/Large_chest.cpp
-	Game_object/room/Treasure_type/Medium_chest.cpp 
+	Game_object/room/Treasure_type/Medium_chest.cpp
 	Game_object/room/Treasure_type/Small_chest.cpp
 	Game_object/scene/Bottom_scene.cpp
 	Game_object/scene/Scenes.cpp
@@ -202,10 +205,12 @@ set(INCLUDE_FILES
 	Game_object/action/Damage_action.hpp
 	Game_object/action/Discard_all_action.hpp
 	Game_object/action/Draw_card_action.hpp
+	Game_object/action/Effect_capsule_action.hpp
 	Game_object/action/Effect_gen_capsule_action.hpp
 	Game_object/action/Empty_shuffle_action.hpp
 	Game_object/action/Enable_end_button_action.hpp
 	Game_object/action/Gain_block_action.hpp
+	Game_object/action/Gain_energy_action.hpp
 	Game_object/action/Reduce_power_action.hpp
 	Game_object/action/Remove_power_action.hpp
 	Game_object/action/Show_card_to_discard_action.hpp
@@ -222,6 +227,7 @@ set(INCLUDE_FILES
 	Game_object/card/Card_item.hpp
 	Game_object/card/Card_soul.hpp
 	Game_object/card/red/Anger.hpp
+	Game_object/card/red/Barricade.hpp
 	Game_object/card/red/Clash.hpp
 	Game_object/card/red/Clothesline.hpp
 	Game_object/card/red/Defend.hpp
@@ -266,6 +272,7 @@ set(INCLUDE_FILES
 	Game_object/dungeon/Grid_screen_action/Grid_screen_upgrade_action.hpp
 	Game_object/dungeon/Grid_screen_action/Render_arrow.hpp
 	Game_object/effect/Auto_release_pool_manager.hpp
+	Game_object/effect/Battle_start_eff.hpp
 	Game_object/effect/Camfire_bubble_effect.hpp
 	Game_object/effect/Camfire_burning_effect.hpp
 	Game_object/effect/Card_flash.hpp
@@ -277,7 +284,9 @@ set(INCLUDE_FILES
 	Game_object/effect/Effect_group.hpp
 	Game_object/effect/Effect_pool.hpp
 	Game_object/effect/Effect_pool.inl
+	Game_object/effect/Empower_circle_eff.hpp
 	Game_object/effect/End_turn_button_glow.hpp
+	Game_object/effect/Enemy_turn_eff.hpp
 	Game_object/effect/Exhaust_blur_eff.hpp
 	Game_object/effect/Exhaust_ember_eff.hpp
 	Game_object/effect/Fade_wide.hpp
@@ -300,6 +309,7 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Clash_eff_gen.hpp
 	Game_object/effect_gen/Effect_gen.hpp
 	Game_object/effect_gen/Effect_gen_group.hpp
+	Game_object/effect_gen/Empower_circle_gen.hpp
 	Game_object/effect_gen/Exhaust_card_eff_gen.hpp
 	Game_object/effect_gen/Power_buff_debuff_gen.hpp
 	Game_object/effect_gen/Power_remove_text_gen.hpp
@@ -321,6 +331,7 @@ set(INCLUDE_FILES
 	Game_object/map/Map_node.hpp
 	Game_object/panel/Energy_panel.hpp
 	Game_object/panel/Panels.hpp
+	Game_object/power/Barricade_power.hpp
 	Game_object/power/Powers.hpp
 	Game_object/power/Power_creator.hpp
 	Game_object/power/Power_group.hpp

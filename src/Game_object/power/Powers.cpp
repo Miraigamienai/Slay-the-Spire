@@ -47,7 +47,7 @@ namespace Power
         tip_box.render(r2, x, y);
         r2->SetColor(RUtil::WHITE);
         auto&img=All_Image::GetAtlasRegion(region_48_id);
-        r2->draw(img, x + tip_box.get_title()->GetWidth()*Setting::SCALE + POWER_ICON_OFFSET - (float)img->GetRegionWidth()/2.0F, y-(float)img->GetRegionHeight()/2.0F, (float)img->GetRegionWidth(), (float)img->GetRegionHeight(), 0.0F, (float)img->GetRegionWidth()/2.0F, (float)img->GetRegionHeight()/2.0F, Setting::SCALE*0.75F, Setting::SCALE*0.75F);
+        r2->draw(img, x + tip_box.get_title()->GetWidth()*Setting::SCALE + POWER_ICON_OFFSET - (float)img->GetRegionWidth()/2.0F, y-(float)img->GetRegionHeight()/2.0F - 6.0F*Setting::SCALE, (float)img->GetRegionWidth(), (float)img->GetRegionHeight(), 0.0F, (float)img->GetRegionWidth()/2.0F, (float)img->GetRegionHeight()/2.0F, Setting::SCALE*0.75F, Setting::SCALE*0.75F);
     }
     
     void Powers::render_flash(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const{

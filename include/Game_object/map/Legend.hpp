@@ -22,7 +22,6 @@ public:
 private:
     std::vector<Legend_item> items;
     float legend_a;
-    static const std::vector<std::shared_ptr<Draw::Text_layout>> &s_vec_text;
     static const std::shared_ptr<Draw::ReTexture> &event,&merchant,&treasure,&rest,&enemy,&elite;
     static const std::shared_ptr<Draw::ReTexture> &legend_img;
 };

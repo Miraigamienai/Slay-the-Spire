@@ -46,9 +46,10 @@ namespace Action
                 dungeon_shared.card_group_handler.AddTop<Card::GroupType::force_render_cards>(card_queue.front().card);
                 dungeon_shared.card_group_handler.AddTop<Card::GroupType::force_update_cards>(card_queue.front().card);
                 //use the card
-                action_box.AddBot(std::make_shared<Card_use_start_action>(card_queue.front()));
                 card_queue.front().card->SetX((float)Setting::WINDOW_WIDTH/2.0F);
                 card_queue.front().card->SetY((float)Setting::WINDOW_HEIGHT/2.0F);
+                card_queue.front().card->SetAngle(0.0F, true);
+                action_box.AddBot(std::make_shared<Card_use_start_action>(card_queue.front()));
             }
             card_queue.pop_front();
         }else if(!monster_queue.empty()){
@@ -61,6 +62,8 @@ namespace Action
             is_endding_turn=false;
             dungeon_shared.player->at_turn_end(dungeon_shared);
             dungeon_shared.room_monsters.at_turn_end(dungeon_shared);
+            //player turn start
+            dungeon_shared.player->at_turn_start();
         }
     }
 

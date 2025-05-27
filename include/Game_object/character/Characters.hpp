@@ -41,6 +41,7 @@ public:
     bool hovered()const{return boss_hitbox.Hovered();}
     bool IsDie()const{return current_HP<=0 && fadeTimer<=0;}
     void AddBlock(int num){current_Block+=num;};
+    void ReduceBlock(int num){current_Block-=num;};
     void setBlock(int num){current_Block=num;};
     void AddHP(int num){current_HP+num>=max_HP?current_HP=max_HP:current_HP+=num;};
     void setHP(int num){current_HP=num;};
@@ -68,12 +69,24 @@ public:
     float getAnimY()const{return animY;}
 
     bool isPlayer()const{return KindOfCharacter==KindOfCharacter::PLAYER;}
-    auto GetMaxHP()const noexcept{return max_HP;}
-    auto GetCurrentHP()const noexcept{return current_HP;}
-
+    
     auto&get_powers(){return powers;}
     void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){powers.at_turn_end(dungeon_shared, shared_from_this());}
+    void at_turn_start(){
+        if(!powers.no_lose_block()) this->ReduceBlock(current_Block);
+    }
+    void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+        const float temp_pos=boss_hitbox.CenterX() + boss_hitbox.Width() / 2.0F;
+        if(temp_pos < TIP_X_THRESHOLD){//right
+            powers.render_tip(r2, temp_pos + TIP_OFFSET_R_X, boss_hitbox.CenterY());
+        }else{//left
+            powers.render_tip(r2, temp_pos + TIP_OFFSET_L_X, boss_hitbox.CenterY());
+        }
+    }
     
+    auto GetCurrentBlock()const noexcept{return current_Block;}
+    auto GetMaxHP()const noexcept{return max_HP;}
+    auto GetCurrentHP()const noexcept{return current_HP;}
     auto GetWidth()const noexcept{return boss_hitbox.Width();}
     auto GetHeight()const noexcept{return boss_hitbox.Height();}
     auto GetcX()const noexcept{return boss_hitbox.CenterX();}
@@ -84,14 +97,6 @@ public:
 protected:
     int max_HP,current_HP,current_Block;
     void render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const;
-    void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        const float temp_pos=boss_hitbox.CenterX() + boss_hitbox.Width() / 2.0F;
-        if(temp_pos < TIP_X_THRESHOLD){//right
-            powers.render_tip(r2, temp_pos + TIP_OFFSET_R_X, boss_hitbox.CenterY());
-        }else{//left
-            powers.render_tip(r2, temp_pos + TIP_OFFSET_L_X, boss_hitbox.CenterY());
-        }
-    }
     glm::vec2 getPosition()const{return pos;}
     KindOfCharacter KindOfCharacter;
 
@@ -119,7 +124,7 @@ private:
     static constexpr float STAGGER_MOVE_SPEED = 20.0F * Setting::SCALE;
     static constexpr float TIP_X_THRESHOLD = 1554.0F * Setting::SCALE;
     static constexpr float TIP_OFFSET_R_X = 20.0F * Setting::SCALE;
-    static constexpr float TIP_OFFSET_L_X = -380.0F * Setting::SCALE;
+    static constexpr float TIP_OFFSET_L_X = -600.0F * Setting::SCALE;
       
     static constexpr int FONTSIZE=22;
 

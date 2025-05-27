@@ -4,8 +4,9 @@
 namespace Action
 {
     void Effect_gen_capsule_action::update(Dungeon::Dungeon_shared &dungeon_shared){
-        if(duration==start_dur&& eff_gen!=nullptr){
-            dungeon_shared.gen_group.AddTop(eff_gen);
+        if(!once){
+            once=true;
+            if(eff_gen!=nullptr) dungeon_shared.gen_group.AddTop(eff_gen);
         }
         TimeGo();
     }

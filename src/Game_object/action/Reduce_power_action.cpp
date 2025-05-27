@@ -7,11 +7,11 @@ namespace Action{
     void Reduce_power_action::update(Dungeon::Dungeon_shared &dungeon_shared){
         if(this->duration==ACTION_DUR_FAST){//first in
             const int power_amt=power->get_amount();
-            if(amount==power_amt || power_amt==0){
+            if((amount>=power_amt && !power->can_negative) || amount==power_amt){
                 dungeon_shared.action_group_handler.AddActionTop(std::make_shared<Action::Remove_power_action>(power, target));
                 is_done=true;
                 return;
-            }else if(amount < power_amt){
+            }else{
                 power->reduce_amount(amount);
                 power->desc_update();
                 dungeon_shared.refresh_display();

@@ -84,6 +84,14 @@ public:
     };
     static constexpr Uint32 GetColorUint32_RGB(int r,int g,int b)noexcept{return r<<24|g<<16|b<<8;};
     static constexpr Uint32 GetColorUint32_RGB(float r,float g,float b)noexcept{return static_cast<Uint32>(r*255.0F)<<24|static_cast<Uint32>(g*255.0F)<<16|static_cast<Uint32>(b*255.0F)<<8;}
+    static constexpr float color_norm(Uint32 x)noexcept{return static_cast<float>(x)/255.0F;}
+    static constexpr glm::vec3 TO_VEC3(Uint32 color){
+        return glm::vec3{
+            color_norm((color&0xff000000)>>24),
+            color_norm((color&0x00ff0000)>>16),
+            color_norm((color&0x0000ff00)>>8)
+        };
+    }
     //only work if value not bigger or smaller than 2*len
     static constexpr int SimpleRangeChange(const int value,const int len)noexcept{return len<=value?value-len:(value<0?value+len:value);}
 };

@@ -43,5 +43,6 @@ public:
 
     const std::shared_ptr<Cards>&operator[](size_t idx)const{return box[idx];}
     Card_group& operator=(const Card_group&other);
+    Card_group& operator=(Card_group&&other)=default;
 };
 }

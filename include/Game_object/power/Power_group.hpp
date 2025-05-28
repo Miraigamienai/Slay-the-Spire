@@ -13,6 +13,7 @@
 //fwd decl
 namespace Draw{
     class Draw_2D;
+    class Atlas_Region;
 }
 
 namespace Power
@@ -24,6 +25,7 @@ public:
     ~Power_group()override=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float color_a)const;
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const;
+    void render_tip_with_other(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, const Draw::Text_box&other_box, const std::shared_ptr<Draw::Atlas_Region> &other_img)const;
     void update(){for(const auto&it:box)it->update();}
 
     //events
@@ -37,6 +39,7 @@ public:
     }
 private:
     float calculate_tip_height()const;
+    float calculate_tip_height_with_other(const Draw::Text_box&other_box)const;
     static constexpr float TIP_MAX_HEIGHT=Setting::WINDOW_HEIGHT*0.7F,
                            TIP_PADDING_Y=Draw::Text_box::BOX_EDGE_H*3.15F;
 };

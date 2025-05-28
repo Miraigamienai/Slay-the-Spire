@@ -17,10 +17,7 @@ public:
     JawWorm(float offsetX,float offsetY);
     ~JawWorm()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
-
-    
-    // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
-private:                 
+private:
     static constexpr int WIDTH=260.0F*Setting::SCALE,
                          HIGHT=170.0F*Setting::SCALE;
     static constexpr int MAX_HP=44,

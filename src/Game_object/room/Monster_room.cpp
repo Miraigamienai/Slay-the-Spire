@@ -6,7 +6,8 @@
 #include "Game_object/action/Enable_end_button_action.hpp"//controls the time for enabling the end button 
 #include "Game_object/action/Gain_energy_action.hpp"//gain energy 
 #include "Game_object/action/Effect_capsule_action.hpp"//capsule the Enemy_turn_eff
-#include "Game_object/effect/Enemy_turn_eff.hpp"
+#include "Game_object/effect/Enemy_turn_eff.hpp"//apply when enemy turn start
+#include "Game_object/effect/Player_turn_eff.hpp"//apply when player turn start
 #include "Game_object/dungeon/Dungeon_shared.hpp"//for update function
 #include "Game_object/character/Monster_group_creater.hpp"//create monsters & group_name
 #include "Game_object/character/Monster/Monsters.hpp"//render tip
@@ -26,7 +27,8 @@ Monster_room::Monster_room()
     ending_battle(false),
     ending_battle_timer(0.25F),
     dungeon_fade_color(RUtil::BLACK),
-    tip_character(nullptr)
+    tip_character(nullptr),
+    turn_count(0)
 {}
 void Monster_room::init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 dungeon_fade_color){
     Monster::Monster_group_creater::CreateGroup(dungeon_shared.room_monsters, m_group_name,dungeon_shared.random_package.monster_type_rng);
@@ -78,14 +80,17 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             dungeon_shared.action_group_handler.update(dungeon_shared);
         }
         if(m_wait_timer<=0.0F){//ready to start turn
-            if(/*first*/true){
-                //battle start effect
+            ++turn_count;
+            if(turn_count==1){
                 dungeon_shared.overlay.show_combat_panel();
+            }else{
+                dungeon_shared.top_effs.AddTop(std::make_shared<Effect::Player_turn_eff>(dungeon_fade_color, turn_count));
+                //show intent
             }
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_energy_action>(dungeon_shared.player->GetMaxEnergy()));
             //temporary 5
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));
-        
+            
             //Ensure that enable action will be triggered after the card are drawn.
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Enable_end_button_action>());
             

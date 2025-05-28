@@ -210,7 +210,7 @@ private:
     static Uint32 s_render_color;
     static float s_type_offset_attack,s_type_offset_skill,s_type_offset_power,s_type_offset_status,s_type_offset_curse,s_type_width_attack,s_type_width_skill,s_type_width_power,s_type_width_status,s_type_width_curse;
     static const std::vector<std::shared_ptr<Draw::Text_layout>> &s_ui_vec;
-    static Draw::NumberDrawer s_energy_drawer, s_title_plus_drawer;
+    static const Draw::NumberDrawer s_energy_drawer, s_title_plus_drawer;
     static void init_static_menber();
     static constexpr Uint32 FRAME_SHADOW_COLOR=0,DEFAULT_COLOR=RUtil::Math::GetColorUint32_RGB(255,255,255),TYPE_COLOR=RUtil::Math::GetColorUint32_RGB(0.35F,0.35F,0.35F),TINT_COLOR=RUtil::Math::GetColorUint32_RGB(43,37,65);
     static constexpr float  SHADOW_OFFSET_X = 18.0F * Setting::SCALE,

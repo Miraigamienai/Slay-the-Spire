@@ -13,14 +13,14 @@ namespace Monster
     }
     void Monster_group::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         for(const auto &it:box){
-            if(!it->IsDie()) it->render(r2);
+            if(!it->IsDie()||it->IsFading()) it->render(r2);
         }
     }
     void Monster_group::update(){
         const int len=static_cast<int>(box.size());
         for(int i=len-1;i>=0;--i){
             box[i]->update();
-            if(box[i]->IsDie())box.erase(box.begin()+i);
+            if(box[i]->IsDie()&&!box[i]->IsFading())box.erase(box.begin()+i);
         }
     }
     bool Monster_group::IsAllDie()const{

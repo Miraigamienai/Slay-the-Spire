@@ -7,7 +7,9 @@
 #include "Draw/Text_layout.hpp"
 
 namespace Effect{
-    Enemy_turn_eff::Enemy_turn_eff(Uint32 dungeon_fade_color){
+    Enemy_turn_eff::Enemy_turn_eff(Uint32 dungeon_fade_color)
+        :current_h(0.0F)
+    {
         this->duration=2.0F;
         auto fade_vec3=RUtil::Math::TO_VEC3(dungeon_fade_color)/2.0F;
         this->color=RUtil::Math::GetColorUint32_RGB(fade_vec3.r, fade_vec3.g, fade_vec3.b);
@@ -22,8 +24,7 @@ namespace Effect{
         r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
         const auto &text=RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::BattleStartEffect)[2];
         text->ChangeFontWeight(FontWeight::bold);
-        text->SetFontColor(RUtil::GOLD_COLOR);
-        text->SetFontAlpha(color_a);
+        text->SetFontColorAlpha(RUtil::GOLD_COLOR, color_a);
         text->SetFontSize(Battle_start_eff::FONTSIZE);
         text->render_center(r2, static_cast<float>(Setting::WINDOW_WIDTH)/2.0F, static_cast<float>(Setting::WINDOW_HEIGHT)/2.0F, 0.0F, 0.0F, 0.0F, this->scale);
     }

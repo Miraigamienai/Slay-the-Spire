@@ -468,6 +468,6 @@ namespace Card{
     const std::vector<std::shared_ptr<Draw::Text_layout>> &Cards::s_ui_vec=RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::SingleCardViewPopup);
     float Cards::s_type_offset_attack=0.0F,Cards::s_type_offset_skill=0.0F,Cards::s_type_offset_power=0.0F,Cards::s_type_offset_status=0.0F,Cards::s_type_offset_curse=0.0F,Cards::s_type_width_attack=0.0F,Cards::s_type_width_skill=0.0F,Cards::s_type_width_power=0.0F,Cards::s_type_width_status=0.0F,Cards::s_type_width_curse=0.0F;
     Uint32 Cards::s_render_color;
-    Draw::NumberDrawer Cards::s_energy_drawer{ENERGY_Font_SIZE, FontWeight::bold},
-                       Cards::s_title_plus_drawer{CARD_TITLE_FONT_SIZE, FontWeight::bold};
+    Draw::NumberDrawer const Cards::s_energy_drawer{ENERGY_Font_SIZE, FontWeight::bold},
+                             Cards::s_title_plus_drawer{CARD_TITLE_FONT_SIZE, FontWeight::bold};
 }

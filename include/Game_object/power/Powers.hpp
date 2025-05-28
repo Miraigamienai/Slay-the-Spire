@@ -80,6 +80,8 @@ private:
     float flash_timer, flash_scale, flash_a;
     static Draw::NumberDrawer amount_drawer;
     static constexpr int FONTSIZE=22;
-    static constexpr float POWER_ICON_OFFSET=40.0F*Setting::SCALE;
+public:
+    static constexpr float POWER_ICON_OFFSET_X=40.0F*Setting::SCALE,
+                           POWER_ICON_OFFSET_Y=-6.0F*Setting::SCALE;
 };
 } // namespace Power

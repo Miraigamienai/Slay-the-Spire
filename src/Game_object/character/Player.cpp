@@ -15,7 +15,6 @@ namespace Character{
         current_HP=80;
         current_Block=0;
         setPosition(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET);
-        KindOfCharacter=KindOfCharacter::PLAYER;
         fadeTimer=2.5F;
         fadeTime=2.5F;
     }
@@ -23,7 +22,7 @@ namespace Character{
     void Player::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {
         if(IsFadeOut){
-            r2->SetColor(fadeColor,FadeColorA);
+            r2->SetColor(fadeColor,img_color_a);
             r2->draw(Effect::Fade_wide::white_square, 0.0F, 0.0F, Setting::WINDOW_WIDTH, Setting::WINDOW_HEIGHT);
             r2->SetColor(-1,1);
             r2->draw(img_died,getPosition().x,getPosition().y,WIDTH,HIGHT); 
@@ -31,7 +30,7 @@ namespace Character{
         else{
             r2->SetColor(-1);
             r2->draw(img,getPosition().x,getPosition().y,WIDTH,HIGHT); 
-            render_HP(r2);
+            render_HP_and_power(r2);
         }
     }
 
@@ -61,7 +60,6 @@ namespace Character{
     void Player::AddEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.overlay.on_add_energy(dungeon_shared.effs);
         current_energy+=value;
-        if(current_energy > max_energy) current_energy=max_energy;
     }
 
     const std::shared_ptr<Draw::ReTexture> &Player::img=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/character/Ironclad.png");

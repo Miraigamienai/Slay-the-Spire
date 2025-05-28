@@ -13,7 +13,11 @@ public:
     ~Gain_energy_action()override=default;
     void update(Dungeon::Dungeon_shared &dungeon_shared)override{
         if(duration == ACTION_DUR_MED){
-            dungeon_shared.player->AddEnergy(amount, dungeon_shared);
+            if(amount + dungeon_shared.player->GetCurrEnergy() > dungeon_shared.player->GetMaxEnergy()){
+                dungeon_shared.player->AddEnergy(dungeon_shared.player->GetMaxEnergy()-dungeon_shared.player->GetCurrEnergy(), dungeon_shared);
+            }else{
+                dungeon_shared.player->AddEnergy(amount, dungeon_shared);
+            }
         }
         TimeGo();
     }

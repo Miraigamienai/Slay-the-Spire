@@ -17,7 +17,6 @@
 #include "Util/Logger.hpp"
 
 namespace Card{
-    
     static inline auto DT()noexcept(noexcept(RUtil::Game_Input::delta_time())){
         return RUtil::Game_Input::delta_time();
     }
@@ -363,10 +362,10 @@ namespace Card{
     void Cards::CommonRefreshBlock(const Power::Power_group &player_powers){
         float blk = static_cast<float>(base_block);
         for(const auto&it:player_powers){
-            blk = it->calculate_block_dealt(blk);
+            blk = it->calculate_block_modify(blk);
         }
         for(const auto&it:player_powers){
-            blk = it->calculate_final_block_dealt(blk);
+            blk = it->calculate_final_block_modify(blk);
         }
         this->block=static_cast<int>(blk);
         if(this->block < 0) this->block = 0;

@@ -70,7 +70,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Discard_all_action>());
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_capsule_action>(std::make_shared<Effect::Enemy_turn_eff>(dungeon_fade_color), 1.2F, Action::Effect_capsule_action::Layer::top));
             dungeon_shared.action_group_handler.ending_turn(dungeon_shared.room_monsters);
-            dungeon_shared.room_monsters.at_turn_start();
+            dungeon_shared.room_monsters.at_turn_start(dungeon_shared);
             this->m_wait_timer=0.25F;
         }
     }else{

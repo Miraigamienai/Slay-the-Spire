@@ -63,7 +63,7 @@ namespace Action
             dungeon_shared.player->at_turn_end(dungeon_shared);
             dungeon_shared.room_monsters.at_turn_end(dungeon_shared);
             //player turn start
-            dungeon_shared.player->at_turn_start();
+            dungeon_shared.player->at_turn_start(dungeon_shared);
         }
     }
 

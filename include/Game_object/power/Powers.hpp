@@ -63,8 +63,8 @@ public:
     virtual float calculate_final_damage_dealt(float damage)const{return damage;}
     virtual float calculate_damage_receive(float damage)const{return damage;}
     virtual float calculate_final_damage_receive(float damage)const{return damage;}
-    virtual float calculate_block_dealt(float block)const{return block;}
-    virtual float calculate_final_block_dealt(float block)const{return block;}
+    virtual float calculate_block_modify(float block)const{return block;}
+    virtual float calculate_final_block_modify(float block)const{return block;}
     virtual void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target);
 protected:
     Draw::Text_box tip_box;

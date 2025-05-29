@@ -8,20 +8,10 @@ namespace RUtil{
         const float s=1.0F/(1.0F-m);
         return a <= 0.5F ? ((float)std::pow((double)v, (double)(p * (a * 2.0F - 1.0F))) - m) * s / 2.0F : (2.0F - ((float)std::pow((double)v, (double)(-p * (a * 2.0F - 1.0F))) - m) * s) / 2.0F;
     }
-    inline float Math::interpolation_powout(int p, float a){
-        return (float)std::pow(a-1,p)*(bool(p&1)?1:-1)+1;
-    }
     float Math::fadelerp(float start,float target){
         if(start!=target){
             start=Apply(start,target,RUtil::Game_Input::delta_time()*12.0F);
             if(std::abs(start-target)<0.01F) start=target;
-        }
-        return start;
-    }
-    float Math::varlerp(float start,const float target,const float speed,const float threshold){
-        if(start!=target){
-            start=Apply(start,target,RUtil::Game_Input::delta_time()*speed);
-            if(std::abs(start-target)<threshold) start=target;
         }
         return start;
     }
@@ -34,9 +24,6 @@ namespace RUtil{
     }
     float Math::interpolation_exp10(float start,float target,float a){
         return start+(target-start)*interpolation_exp(2.0F,10.0F,a);
-    }
-    float Math::interpolation_powout2(float start,float target,float a){
-        return start+(target-start)*interpolation_powout(2,a);
     }
     //t is[0,1)
     glm::vec2 Math::CatmullRomSpline(const std::vector<glm::vec2> &controls,const float t,const int len,const int vec_start_pos){

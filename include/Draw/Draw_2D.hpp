@@ -73,6 +73,12 @@ public:
         const float w,const float h,
         const float rotate,const float origin_x,const float origin_y,
         const float scale_x=1.0F,const float scale_y=1.0F);
+    void draw(  const std::shared_ptr<ReTexture> &texture, 
+        const float x,const float y,
+        const float w,const float h,
+        const float rotate,const float origin_x,const float origin_y,
+        const float scale_x,const float scale_y,
+        const bool flip_x,const bool flip_y);
     
     void draw(  const std::shared_ptr<Image_Region> &RegionTexture, 
         const float x,const float y);
@@ -96,22 +102,24 @@ private:
     void SetCombine();
     void SetVert(const float x,const float y,const float x2,const float y2,
                  const float u,const float v,const float u2,const float v2);
+    void SetVert(const float v_x,const float v_y,const float v_x2,const float v_y2,
+                 const float w_x,const float w_y,const float rotate,    
+                 const float u,const float v,const float u2,const float v2);
     GLuint  m_EBO_BufferId,//only have one EBO. 
             m_ArrayId,//one VAO.
             m_VBO_BufferId;//one VBO.
             //VAO VBO EBO will die after draw_2d die.
 
     std::shared_ptr<Core::Program> NowProgram;
-    
-    std::shared_ptr<ReTexture> LastTexture=nullptr;
-    int idx=0,max_len;
+    std::shared_ptr<ReTexture> LastTexture;
+    GLint CombineMatrixPos, Sampler2DPos;
+    glm::mat4 m_Projection, m_Transform, u_Combine;
+    int idx, max_len;
     std::vector<float> vertices;
     float color;
-    glm::mat4 m_Projection,m_Transform,u_Combine;
     bool drawing;
-    GLint CombineMatrixPos,Sampler2DPos;
-    static constexpr GLint SLOTPOS=0;
     bool blending_diabled;
     int blendSrc,blendDst;
+    static constexpr GLint SLOTPOS=0;
 };
 }

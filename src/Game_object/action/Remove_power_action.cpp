@@ -13,7 +13,7 @@ namespace Action{
             auto &powers=target->get_powers();
             if(powers.contains(power)){
                 dungeon_shared.gen_group.AddTop(std::make_shared<EffectGen::Power_remove_text_gen>(target->GetFixedOriginX(), target->GetFixedOriginY()+target->GetHeight()/2.0F, power->power_id, power->region_128_id));
-                powers.erase(power);
+                target->erase_power(power);
                 dungeon_shared.refresh_display();
             }else{
                 is_done=true;

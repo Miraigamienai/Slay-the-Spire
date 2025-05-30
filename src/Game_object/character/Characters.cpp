@@ -91,10 +91,6 @@ namespace Character{
         r2->SetColor(RUtil::WHITE, alpha);
         r2->draw(RETICLE_CORNER, x-18.0F, y-18.0F, 36.0F, 36.0F, 0.0F, 18.0F, 18.0F, Setting::SCALE, Setting::SCALE, flip_x, flip_y);
     }
-    
-    void Characters::update_reticle(){
-
-    }
 
     void Characters::update_HP_and_power(){
         //hitbox update

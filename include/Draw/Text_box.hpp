@@ -21,6 +21,7 @@ public:
     Text_box(const std::shared_ptr<Text_layout> &title, const std::shared_ptr<Text_layout> &body):title(title),body(body){title->ChangeFontWeight(FontWeight::bold);}
     ~Text_box()=default;
     void render(const std::shared_ptr<Draw_2D> &r2, float x, float y)const;
+    void change_title(const std::shared_ptr<Text_layout> &title){this->title=title;}
     void change_body(const std::shared_ptr<Text_layout> &body){this->body=body;}
     auto&get_body()const noexcept{return this->body;}
     auto&get_title()const noexcept{return this->title;}

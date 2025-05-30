@@ -51,7 +51,7 @@ namespace Action
             }else{
                 //not
                 power=Power::Power_creator::GetPowerByID(this->power_id);
-                powers.AddTop(power);
+                target->add_power(power);
             }
             power->add_amount(this->amount);
             power->desc_update();

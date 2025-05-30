@@ -88,7 +88,11 @@ public:
         }
     }
   
-    auto&get_powers(){return powers;}
+    const auto&get_powers()const{return powers;}
+    template <typename T>
+    void add_power(T&& item){powers.AddTop(std::forward<T>(item));}
+    template <typename T>
+    void erase_power(const T&item){powers.erase(item);}
     void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){powers.at_turn_end(dungeon_shared, shared_from_this());}
     void at_turn_start(Dungeon::Dungeon_shared &dungeon_shared){if(!powers.no_lose_block()) this->ReduceBlock(current_Block, dungeon_shared);}
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2)const{
@@ -120,9 +124,10 @@ protected:
     const float orgX, orgY;
     int current_HP;
     bool escaping;
+    Power::Power_group powers;
+
     void render_HP_and_power(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update_HP_and_power();
-    void update_reticle();
     void update_animation(){
         if(animation_timer==0.0F) return;
         switch (animation) {
@@ -158,6 +163,13 @@ protected:
             }
         }
     }
+    void health_update_event()noexcept(noexcept(HP_hb.Width())){
+        HP_anim_wait_timer=HP_ANIM_WAIT_TIME;
+        if(max_HP==current_HP) health_width = health_target_width = HP_hb.Width(); 
+        else health_target_width = HP_hb.Width()*static_cast<float>(current_HP)/static_cast<float>(max_HP);
+        
+        if(health_target_width > health_width) health_width=health_target_width;
+    }
 private:
     //members
     int max_HP;
@@ -177,16 +189,8 @@ private:
     float animation_timer;
     Animation animation;
     bool shake_toggle;
-    Power::Power_group powers;
 
     //functions
-    void health_update_event()noexcept(noexcept(HP_hb.Width())){
-        HP_anim_wait_timer=HP_ANIM_WAIT_TIME;
-        if(max_HP==current_HP) health_width = health_target_width = HP_hb.Width(); 
-        else health_target_width = HP_hb.Width()*static_cast<float>(current_HP)/static_cast<float>(max_HP);
-        
-        if(health_target_width > health_width) health_width=health_target_width;
-    }
     void updateFastAttackAnimation(float target_x){
         if(animation_timer>0.5F) animX=RUtil::Math::interpolation_exp5in(0.0F, target_x, (1.0F-animation_timer)*2.0F);
         else animX=RUtil::Math::interpolation_fade(0.0F, target_x, animation_timer * 2.0F);

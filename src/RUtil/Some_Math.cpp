@@ -51,21 +51,6 @@ namespace RUtil{
             }
         return re;
     }
-    float Math::BounceOut(float t){
-        if (t < 0.36363637F) {
-            return 7.5625F * t * t;
-        } else if (t < 0.72727275F) {
-            t -= 0.54545456F;
-            return 7.5625F * t * t + 0.75F;
-        } else if (t < 0.90909094F) {
-            t -= 0.8181818F;
-            return 7.5625F * t * t + 0.9375F;
-        } else {
-            t -= 0.95454544F;
-            return 7.5625F * t * t + 0.984375F;
-        }
-    }
-    float Math::BounceIn(float t){return 1.0F-BounceOut(t);}
     Uint32 Math::color_lerp_rgb(Uint32 start,Uint32 target,float t){
         Uint32 re=0;
         for(int i=1;i<4;i++)

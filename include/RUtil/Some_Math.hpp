@@ -93,13 +93,27 @@ public:
     }
     template <typename T>
     static constexpr T interpolation_elastic_out(T start,T target,float a){
-        return Apply(start, target, a);
+        return Apply(start, target, interpolation_elastic_out(a));
     }
     static int StrToInt(const std::string &str);
     static float GetRadian(const glm::vec2 &v){return atan2f(v.y,v.x);}
     static float GetDegress(const glm::vec2 &v){return glm::degrees(atan2f(v.y,v.x));}
-    static float BounceOut(float t);
-    static float BounceIn(float t);
+    static constexpr float BounceOut(float t)noexcept{
+        if (t < 0.36363637F) {
+            return 7.5625F * t * t;
+        } else if (t < 0.72727275F) {
+            t -= 0.54545456F;
+            return 7.5625F * t * t + 0.75F;
+        } else if (t < 0.90909094F) {
+            t -= 0.8181818F;
+            return 7.5625F * t * t + 0.9375F;
+        } else {
+            t -= 0.95454544F;
+            return 7.5625F * t * t + 0.984375F;
+        }
+    }
+    static float BounceIn(float t)noexcept(noexcept(BounceOut(t))){return 1.0F-BounceOut(t);}
+
     static glm::vec2 BezierQuadratic(const glm::vec2 p0,const glm::vec2 p1,const glm::vec2 p2,const float t);
     static glm::vec2 CatmullRomSpline(const std::vector<glm::vec2> &controls,float t,const int len,const int vec_start_pos=0);
     static constexpr int GetIntLength(const int x)noexcept{

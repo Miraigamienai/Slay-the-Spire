@@ -59,8 +59,8 @@ namespace Character{
     }
     
     void Characters::ReduceBlock(int num, Dungeon::Dungeon_shared &dungeon_shared){
-        if(current_Block<=0){
-            LOG_ERROR("Reducing block when current_block is {}, type{}", current_Block, static_cast<int>(type));
+        if(current_Block < num){
+            LOG_ERROR("Reducing block when current_block is {}, num is {}, type{}", current_Block, num, static_cast<int>(type));
             return;
         }
         current_Block-=num;

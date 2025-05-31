@@ -11,15 +11,18 @@
 #include "Game_object/effect/Effect_pool.hpp"
 #include "RUtil/Text_Vector_Reader.hpp"
 #include "RUtil/Image_book.hpp"
+#include "RUtil/Random.hpp"
 #include "Draw/ReTexture.hpp"
 #include "Draw/Draw_2D.hpp"
-
-#include "RUtil/Random.hpp"
 
 #include "Util/Logger.hpp"
 
 namespace Monster
 {
+    static SETTING_CONSTEXPR float ORIGIN_X = Setting::WINDOW_WIDTH*0.75F,
+                                   ORIGIN_Y = Setting::WINDOW_HEIGHT*0.5F - 200.0F*Setting::SCALE;
+    static SETTING_CONSTEXPR float INTENT_HB_W=64.0F*Setting::SCALE;
+
     template <int N>
     static inline auto &ATK_TIP_IMG(){
         static auto&IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/intent/tip/" + std::to_string(N) + ".png");
@@ -125,36 +128,60 @@ namespace Monster
     }
 
     Monsters::Monsters(float offset_x, float offset_y, float width, float height, 
-        float hb_offset_x, float hb_offset_y, int HP_min, int HP_max, 
-        const std::shared_ptr<Draw::ReTexture> &img)
+        float hb_offset_x, float hb_offset_y, int HP, const std::shared_ptr<Draw::ReTexture> &img)
+        :Character::Characters(Character::CharacterType::MONSTER, ORIGIN_X+offset_x, ORIGIN_Y+offset_y, width, height, hb_offset_x, hb_offset_y, HP),
+        img(img),
+        img_color_a(1.0F),
+        dying_fade_timer(0.0F),
+        move(),
+        intent_tip_img(nullptr),
+        intent_hb(INTENT_HB_W, INTENT_HB_W),
+        intent_a(0.0F),
+        intent_target_a(0.0F),
+        intent_offset_y(0.0F),
+        intent_offset_timer(RUtil::Random::GetRandomFloat(0.0F, 360.0F)),
+        intent_angle(0.0F),
+        intent_particle_timer(0.0F)
     {
-
+        intent_hb.move(GetcX(), GetcY() + GetHeight()/2.0F + INTENT_HB_W/2.0F);
     }
     
 
-    void Monsters::damage(const Damage_info& damage_info){
-        if(current_Block>=damage_info.dmg){
-            current_Block-=damage_info.dmg;
-            useStaggerAnimation();
-            return;
-        }
-        else if (current_Block){
-            current_Block=0;
-            current_HP-=damage_info.dmg-current_Block;
-        }
-        else if (current_HP){
-            if(current_HP>damage_info.dmg){
-                current_HP-=damage_info.dmg;
-            }
-            else if (current_HP<=damage_info.dmg){
-                current_HP=0;
+    void Monsters::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
+        if(IsDie() || escaping) return;
+
+        int dmg = damage_info.dmg;
+        const bool had_block = GetCurrentBlock() > 0;
+        if(had_block){
+            if(damage_info.dmg > GetCurrentBlock()){
+                const auto temp=GetCurrentBlock();
+                ReduceBlock(temp, dungeon_shared);
+                dmg -= temp;
+            }else{
+                ReduceBlock(damage_info.dmg, dungeon_shared);
+                dmg = 0;
             }
         }
-        useStaggerAnimation();
-    }
-    void Monsters::setHP(int min,int max){
-        this->max_HP=max-int(RUtil::Random::GetRandomFloat(0.0F,max-min+1));
-        this->current_HP=max_HP;
+        
+        //TODO: effs
+        if(dmg>0){
+            if(damage_info.src.get()!=this) use_animation<Character::Animation::STAGGER>();
+            //strike eff if hp!=0
+            current_HP-=dmg;
+            if(current_HP<0)current_HP=0;
+            health_update_event();
+        }else{
+            //dmg==0
+            if(!had_block && GetCurrentBlock()==0){
+                //strike eff
+            }else{
+                //block eff
+            }
+        }
+
+        if(IsDie()){
+            dying_fade_timer = FADE_TIME;
+        }
     }
 
     void Monsters::update(){
@@ -182,9 +209,16 @@ namespace Monster
         intent_effs.update();
         intent_back_effs.update();
         if(!IsDie() && intent_a>0.0F) update_intent_vfx();
+        //intent hb
+        intent_hb.move(GetcX(), GetcY() + GetHeight()/2.0F + INTENT_HB_W/2.0F);
+        intent_hb.update();
     }
 
     void Monsters::update_intent_vfx(){
+        //offset_y
+        intent_offset_y = std::sin(intent_offset_timer)*5.0F*Setting::SCALE;
+        intent_offset_timer += RUtil::Game_Input::delta_time()*4.0F;
+        //particle
         intent_particle_timer-=RUtil::Game_Input::delta_time();
         if(intent_particle_timer<0.0F){
             switch(move.intent){
@@ -235,12 +269,16 @@ namespace Monster
         r2->draw(img, getAnimX()+orgX, getAnimY()+orgY, GetWidth(), GetHeight());
         //intent
         if(!IsDie() && !IsInDyingFade()){
+            //img & effs
             intent_back_effs.render(r2);
             r2->SetColor(RUtil::WHITE, intent_a);
-            // r2->draw(move.intent_img, intent_hb.CenterX()-64.0F, intent_hb.CenterY()-64.0F);
-            //    sb.draw(this.intentImg, this.intentHb.cX - 64.0F, this.intentHb.cY - 64.0F + this.bobEffect.y, 64.0F, 64.0F, 128.0F, 128.0F, Settings.scale, Settings.scale, this.intentAngle, 0, 0, 128, 128, false, false);
-         
+            r2->draw(move.intent_img, intent_hb.CenterX()-64.0F, intent_hb.CenterY()-64.0F+intent_offset_y, 128.0F, 128.0F, intent_angle, 64.0F, 64.0F, Setting::SCALE, Setting::SCALE); 
             intent_effs.render(r2);
+            //num
+            if(move.intent==Intent::attack||move.intent==Intent::attack_buff||move.intent==Intent::attack_debuff||move.intent==Intent::attack_defend){
+                if(move.is_multi_dmg) s_intent_num_drawer.render_top_left_with_bg(r2, std::to_string(move.damage) + "x" + std::to_string(move.multiplier), intent_hb.CenterX()-30.0F*Setting::SCALE, intent_hb.CenterY()+intent_offset_y-12.0F*Setting::SCALE, Setting::SCALE, RUtil::WHITE, intent_a);
+                else s_intent_num_drawer.render_top_left_with_bg(r2, std::to_string(move.damage), intent_hb.CenterX()-30.0F*Setting::SCALE, intent_hb.CenterY()+intent_offset_y-12.0F*Setting::SCALE, Setting::SCALE, RUtil::WHITE, intent_a);
+            }
         }
         render_HP_and_power(r2);
     }
@@ -357,4 +395,6 @@ namespace Monster
                 break;
         }
     }
+
+    const Draw::NumberDrawer Monsters::s_intent_num_drawer{INTENT_FONTSIZE, FontWeight::bold};
 } // namespace Monster

@@ -1,6 +1,5 @@
-#ifndef GAME_OBJECT_CHARACTER_MONSTER_JaWWORM
-#define GAME_OBJECT_CHARACTER_MONSTER_JAWWORM
-#include <random>
+#pragma once
+
 #include "Game_object/character/Monster/Monsters.hpp"
 
 namespace Monster{
@@ -17,6 +16,7 @@ public:
     JawWorm(float offsetX,float offsetY);
     ~JawWorm()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
+    void next_move(const Power::Power_group &player_powers) override;
 private:
     static constexpr int WIDTH=260.0F*Setting::SCALE,
                          HIGHT=170.0F*Setting::SCALE;
@@ -27,13 +27,8 @@ private:
                          THRASH_BLOCK=5,
                          BELLOWS_STRENGTH=3,
                          BELLOWS_BLOCK=6;
-                         
-    static constexpr int HPBarWidth=WIDTH*0.8F;
-    Monster::JawWormAction currentAction=Monster::JawWormAction::None,
-                           lastAction=Monster::JawWormAction::None;
     static constexpr float ActionProbability[3]={25.0F,30.0F,45.0F};
     int ActionCount=0;
     static std::discrete_distribution<int> dist;
 };
 }
-#endif

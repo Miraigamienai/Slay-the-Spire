@@ -110,13 +110,27 @@ namespace Draw{
             const float offset_x=((float)now_x-(float)width/2.0F)*font_scale;
             const float offset_y=((float)height/2.0F-(float)(img->GetRegionHeight()))*font_scale;
             //black background
-            constexpr float BLACK_BG_W=0.08F;
             r2->SetColor(RUtil::BLACK, a);
             r2->draw(img, center_x+offset_x-(float)img->GetRegionWidth()*font_scale*BLACK_BG_W, center_y+offset_y-(float)img->GetRegionHeight()*font_scale*BLACK_BG_W, (float)img->GetRegionWidth()*font_scale*(1.0F+BLACK_BG_W*2.0F), (float)img->GetRegionHeight()*font_scale*(1.0F+BLACK_BG_W*2.0F), angle, -offset_x+center_origin_x+(float)img->GetRegionWidth()*font_scale*BLACK_BG_W, -offset_y+center_origin_y+(float)img->GetRegionHeight()*font_scale*BLACK_BG_W, scale, scale);
             r2->draw(img, center_x+offset_x+(float)img->GetRegionWidth()*font_scale*BLACK_BG_W, center_y+offset_y+(float)img->GetRegionHeight()*font_scale*BLACK_BG_W, (float)img->GetRegionWidth()*font_scale*(1.0F-BLACK_BG_W*2.0F), (float)img->GetRegionHeight()*font_scale*(1.0F-BLACK_BG_W*2.0F), angle, -offset_x+center_origin_x-(float)img->GetRegionWidth()*font_scale*BLACK_BG_W, -offset_y+center_origin_y-(float)img->GetRegionHeight()*font_scale*BLACK_BG_W, scale, scale);
             //number
             r2->SetColor(c, a);
             r2->draw(img, center_x+offset_x, center_y+offset_y, (float)img->GetRegionWidth()*font_scale, (float)img->GetRegionHeight()*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
+            now_x+=img->GetRegionWidth();
+        }
+    }
+    
+    void NumberDrawer::render_top_left_with_bg(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,float x,float y,float scale, Uint32 c, float a)const{
+        int now_x = 0;
+        for(const auto&it:num_str){
+            auto& img=GetNumIMG(it);
+            //bg
+            r2->SetColor(RUtil::BLACK, a);
+            r2->draw(img, x+(float)now_x-(float)img->GetRegionWidth()*BLACK_BG_W, y-(float)img->GetRegionHeight()-(float)img->GetRegionHeight()*BLACK_BG_W, (float)img->GetRegionWidth()*(1.0F+BLACK_BG_W*2.0F), (float)img->GetRegionHeight()*(1.0F+BLACK_BG_W*2.0F), 0.0F, (float)(-now_x)+(float)img->GetRegionWidth()*BLACK_BG_W, (float)img->GetRegionHeight()+(float)img->GetRegionHeight()*BLACK_BG_W, font_scale*scale, font_scale*scale);
+            r2->draw(img, x+(float)now_x+(float)img->GetRegionWidth()*BLACK_BG_W, y-(float)img->GetRegionHeight()+(float)img->GetRegionHeight()*BLACK_BG_W, (float)img->GetRegionWidth()*(1.0F-BLACK_BG_W*2.0F), (float)img->GetRegionHeight()*(1.0F-BLACK_BG_W*2.0F), 0.0F, (float)(-now_x)-(float)img->GetRegionWidth()*BLACK_BG_W, (float)img->GetRegionHeight()-(float)img->GetRegionHeight()*BLACK_BG_W, font_scale*scale, font_scale*scale);
+            //number
+            r2->SetColor(c, a);
+            r2->draw(img, x+(float)now_x, y-(float)img->GetRegionHeight(), (float)img->GetRegionWidth(), (float)img->GetRegionHeight(), 0.0F, (float)(-now_x), (float)img->GetRegionHeight(), font_scale*scale, font_scale*scale);
             now_x+=img->GetRegionWidth();
         }
     }

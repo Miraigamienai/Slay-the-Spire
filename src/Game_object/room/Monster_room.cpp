@@ -84,9 +84,10 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             if(turn_count==1){
                 dungeon_shared.overlay.show_combat_panel();
             }else{
-                dungeon_shared.top_effs.AddTop(std::make_shared<Effect::Player_turn_eff>(dungeon_fade_color, turn_count));
                 //show intent
+                dungeon_shared.top_effs.AddTop(std::make_shared<Effect::Player_turn_eff>(dungeon_fade_color, turn_count));
             }
+
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_energy_action>(dungeon_shared.player->GetMaxEnergy()));
             //temporary 5
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));

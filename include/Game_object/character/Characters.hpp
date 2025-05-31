@@ -39,7 +39,7 @@ class Characters : public std::enable_shared_from_this<Characters>
 public:
     Characters(CharacterType type, float x, float y, float width, float height, float hb_offset_x, float hb_offset_y, int HP);
     virtual ~Characters()=default;
-    virtual void damage(const Damage_info& damage_info)=0;
+    virtual void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)=0;
     virtual void heal(int num, Dungeon::Dungeon_shared &dungeon_shared)=0;
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2) const =0;
     virtual void update()=0;
@@ -270,7 +270,6 @@ private:
     static constexpr float TIP_OFFSET_R_X = 20.0F * Setting::SCALE;
     static constexpr float TIP_OFFSET_L_X = -600.0F * Setting::SCALE;
     //timer constexpr
-    static constexpr float FADE_TIME = 1.5F;
     static constexpr float BLOCK_ANIM_TIME = 0.7F;
     static constexpr float HP_ANIM_TIME = 0.7F;
     static constexpr float HP_ANIM_WAIT_TIME = 1.2F;

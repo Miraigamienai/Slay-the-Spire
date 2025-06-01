@@ -22,7 +22,7 @@ public:
 private:
     
     static constexpr int WIDTH=320.0F*Setting::SCALE,
-                         HIGHT=230.0F*Setting::SCALE;
+                         HEIGHT=230.0F*Setting::SCALE;
     static constexpr int MAX_HP=50,
                          MIN_HP=46,
                          STAB_DAMAGE=13,

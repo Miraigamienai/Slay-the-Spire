@@ -4,7 +4,7 @@
 #include "Game_object/action/Damage_action.hpp"
 #include "RUtil/Random.hpp"
 namespace Monster{
-    SpikeSlimeM::SpikeSlimeM(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth
+    SpikeSlimeM::SpikeSlimeM(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HEIGHT,HPBarWidth
     ,RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Spike Slime/Spike-slime-l-pretty.png"))
     {
         setHP(MIN_HP,MAX_HP);

@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Game_object/effect/Effects.hpp"
-#include "Game_object/interface/Reusable.hpp"
+#include "Game_object/abstraction/Reusable.hpp"
 #include "WindowSize.hpp"
 
 namespace Effect{
-class Shield_particle_eff final:public Effects,public Interface::Reusable<Shield_particle_eff>
+class Shield_particle_eff final:public Effects,public Abstraction::Reusable<Shield_particle_eff>
 {
 public:
     Shield_particle_eff(float x, float y)noexcept(noexcept(Initial(x, y))){Initial(x, y);}

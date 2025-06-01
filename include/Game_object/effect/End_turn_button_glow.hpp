@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Game_object/effect/Effects.hpp"
-#include "Game_object/interface/Reusable.hpp"
+#include "Game_object/abstraction/Reusable.hpp"
 #include "WindowSize.hpp"
 
 //fwd decl
@@ -10,7 +10,7 @@ namespace Draw{
 }
 
 namespace Effect{
-class End_turn_button_glow final:public Effects,public Interface::Reusable<End_turn_button_glow>
+class End_turn_button_glow final:public Effects,public Abstraction::Reusable<End_turn_button_glow>
 {
 public:
     End_turn_button_glow(const float &button_x,const float &button_y)noexcept(noexcept(Initial(button_x,button_y))){

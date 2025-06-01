@@ -5,7 +5,7 @@
 #include "Game_object/action/Gain_block_action.hpp"
 #include "RUtil/Random.hpp"
 namespace Monster{
-    Looter::Looter(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth
+    Looter::Looter(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HEIGHT,HPBarWidth
     ,RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Thieves/Looter-pretty.png"))
     {
         setHP(MIN_HP,MAX_HP);

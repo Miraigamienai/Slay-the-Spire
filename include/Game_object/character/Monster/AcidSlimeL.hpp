@@ -23,7 +23,7 @@ public:
     // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
 private:
     static constexpr int WIDTH=300.0F*Setting::SCALE,
-                         HIGHT=180.0F*Setting::SCALE;
+                         HEIGHT=180.0F*Setting::SCALE;
     static constexpr int MAX_HP=69,
                          MIN_HP=65,
                          TACKLE_DAMAGE=16,

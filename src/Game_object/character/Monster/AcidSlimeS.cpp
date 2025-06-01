@@ -3,15 +3,15 @@
 #include "Game_object/action/Anim_set_action.hpp"
 #include "Game_object/action/Damage_action.hpp"
 #include "RUtil/Random.hpp"
+#include "RUtil/Image_book.hpp"
+#include "Draw/ReTexture.hpp"
+
 namespace Monster{
-    AcidSlimeS::AcidSlimeS(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth,RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Acid Slime/Acid-slime-s-pretty.png"))
-    {
-        setHP(MIN_HP,MAX_HP);
-        setBlock(0);
-    }
+    AcidSlimeS::AcidSlimeS(float offset_x, float offset_y, RUtil::Random& rng)
+        :Abstraction::Monster_move_tracker<2, AcidSlimeSAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, rng.NextInt(MIN_HP, MAX_HP+1), IMG){}
+
     void AcidSlimeS::Action(Dungeon::Dungeon_shared &dungeon_shared){
-        currentAction=static_cast<Monster::AcidSlimeSAction>(dist(dungeon_shared.random_package.monster_ai_rng));
-        switch (currentAction){
+        switch (current_move()){
             case Monster::AcidSlimeSAction::Lick:
                 // Inflict 1  Weak.
                 break;
@@ -24,11 +24,12 @@ namespace Monster{
             default:
                 break;
         }
-
-        
-
     }
 
-    std::discrete_distribution<int> AcidSlimeS::dist{ActionProbability,ActionProbability+3};
+    void AcidSlimeS::next_move(RUtil::Random &ai_rng, const Power::Power_group &player_powers){
+        
+    }
+
+    const std::shared_ptr<Draw::ReTexture> &AcidSlimeS::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Acid Slime/Acid-slime-s-pretty.png");
 }
 

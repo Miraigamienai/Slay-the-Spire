@@ -24,12 +24,12 @@ namespace Dungeon{
         void hide_dungeon_screen_instantly(){m_dungeon_screen->hide_instantly();last_screen=m_dungeon_screen;current_screen=nullptr;}
         void set_current_none()noexcept{current_screen->set_on_top(false);current_screen=nullptr;}
         void back_to_last_screen()noexcept{current_screen->set_on_top(false);std::swap(current_screen,last_screen);if(current_screen!=nullptr)current_screen->set_on_top(true);}
-        bool current_screen_equals(Interface::ScreenType ST)const noexcept{return ST==Interface::ScreenType::NONE ? current_screen==nullptr : current_screen!=nullptr&&current_screen->type==ST;}
-        template <Interface::ScreenType ST, typename ...Args>
+        bool current_screen_equals(Abstraction::ScreenType ST)const noexcept{return ST==Abstraction::ScreenType::NONE ? current_screen==nullptr : current_screen!=nullptr&&current_screen->type==ST;}
+        template <Abstraction::ScreenType ST, typename ...Args>
         void open(Args&&...args){
             if(current_screen!=nullptr) current_screen->set_on_top(false);
             last_screen=current_screen;
-            if constexpr (ST==Interface::ScreenType::NONE){
+            if constexpr (ST==Abstraction::ScreenType::NONE){
                 current_screen=nullptr;
             }else{
                 current_screen=GetScreen<ST>();
@@ -39,7 +39,7 @@ namespace Dungeon{
             }
         }
     private:
-        std::shared_ptr<Interface::Is_screen> current_screen=nullptr,last_screen=nullptr;
+        std::shared_ptr<Abstraction::Is_screen> current_screen=nullptr,last_screen=nullptr;
         std::shared_ptr<Dungeon::Dungeon_screen> m_dungeon_screen;
         std::shared_ptr<Dungeon::Combat_reward_screen> combat_reward_screen;
         std::shared_ptr<Dungeon::Grid_card_screen> grid_card_screen;
@@ -47,15 +47,15 @@ namespace Dungeon{
         std::shared_ptr<TopPanel::Top_panel> top_panel;
         
         void switch_to_next_screen();
-        template <Interface::ScreenType ST>
+        template <Abstraction::ScreenType ST>
         const auto &GetScreen()const{
-            if constexpr(ST==Interface::ScreenType::main_dungeon)
+            if constexpr(ST==Abstraction::ScreenType::main_dungeon)
                 return m_dungeon_screen;
-            else if constexpr(ST==Interface::ScreenType::combat_reward)
+            else if constexpr(ST==Abstraction::ScreenType::combat_reward)
                 return combat_reward_screen;
-            else if constexpr(ST==Interface::ScreenType::grid_cards)
+            else if constexpr(ST==Abstraction::ScreenType::grid_cards)
                 return grid_card_screen;
-            else if constexpr(ST==Interface::ScreenType::shop)
+            else if constexpr(ST==Abstraction::ScreenType::shop)
                 return shop_screen;
         }
     };

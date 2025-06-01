@@ -3,10 +3,10 @@
 #include <SDL_stdinc.h>//Uint32
 
 #include "Game_object/effect/Effects.hpp"
-#include "Game_object/interface/Reusable.hpp"
+#include "Game_object/abstraction/Reusable.hpp"
 
 namespace Effect{
-class Vertical_aura:public Effects,public Interface::Reusable<Vertical_aura>
+class Vertical_aura:public Effects,public Abstraction::Reusable<Vertical_aura>
 {
 public:
     Vertical_aura(Uint32 color, float x, float y){Initial(color,x,y);}

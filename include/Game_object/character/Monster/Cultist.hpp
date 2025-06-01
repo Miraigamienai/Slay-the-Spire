@@ -1,31 +1,29 @@
-#ifndef GAME_OBJECT_CHARACTER_MONSTER_CULTIST_HPP
-#define GAME_OBJECT_CHARACTER_MONSTER_CULTIST_HPP
-#include "Game_object/character/Monster/Monsters.hpp"
+#pragma once
+
+#include "Game_object/abstraction/Monster_move_tracker.hpp"
 
 namespace Monster{
 enum class CultistAction
 {
     Incantation,
-    DarkStrike,
-    None
+    DarkStrike
 };
-class Cultist final:public Monsters
+class Cultist final:public Abstraction::Monster_move_tracker<1, CultistAction>
 {
 public:
-    Cultist(float offsetX,float offsetY);
+    Cultist(float offset_x, float offset_y, RUtil::Random& rng);
     ~Cultist()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
-
-    // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
+    void next_move(RUtil::Random &ai_rng, const Power::Power_group &player_powers) override;
 private:
-    
-    static constexpr int WIDTH=230.0F*Setting::SCALE,
-                         HIGHT=240.0F*Setting::SCALE;
+    bool first_move;
+    static constexpr float WIDTH=230.0F*Setting::SCALE,
+                           HEIGHT=240.0F*Setting::SCALE,
+                           HB_OFFSET_X=-8.0F*Setting::SCALE,
+                           HB_OFFSET_Y=10.0F*Setting::SCALE;
     static constexpr int MAX_HP=54,
                          MIN_HP=48,
                          DARK_STRIKE_DAMAGE=6;
-    static constexpr int HPBarWidth=WIDTH*0.8F;
-    Monster::CultistAction currentAction=Monster::CultistAction::None;
+    static const std::shared_ptr<Draw::ReTexture> &IMG;
 };
 }
-#endif

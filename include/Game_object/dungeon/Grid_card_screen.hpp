@@ -4,7 +4,7 @@
 #include <memory>
 #include <type_traits>
 
-#include "Game_object/interface/Is_screen.hpp"
+#include "Game_object/abstraction/Is_screen.hpp"
 #include "Game_object/card/Card_group.hpp"
 #include "Game_object/button/Cancel_button.hpp"
 #include "RUtil/Scroll.hpp"
@@ -23,7 +23,7 @@ namespace Card{
 namespace Dungeon{
 //need cards,buttons,???
 //smith: cancel and confirm button and upgraded card? //need to do in other class?
-class Grid_card_screen final:public Interface::Is_screen
+class Grid_card_screen final:public Abstraction::Is_screen
 {
 public:
     Grid_card_screen();

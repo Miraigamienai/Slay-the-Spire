@@ -5,7 +5,7 @@
 
 #include "Game_object/card/Cards.hpp"//base
 
-namespace Interface{
+namespace Abstraction{
 //Inheriting from CardPrototype automatically inherits from Cards.
 //Don't inherit from Cards again to avoid ambiguity.
 template<typename Derived>

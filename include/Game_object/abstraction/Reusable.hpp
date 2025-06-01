@@ -2,8 +2,8 @@
 
 #include <utility>//std::forward
 
-namespace Interface{
-//Reusable effect interface.
+namespace Abstraction{
+//Reusable effect abstraction.
 //the derived class should implement the Initial() method,
 //with same parameters as its constructor for reinitialization.
 template<typename T>

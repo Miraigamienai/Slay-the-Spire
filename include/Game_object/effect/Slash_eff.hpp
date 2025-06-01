@@ -5,7 +5,7 @@
 #include <SDL_stdinc.h>
 
 #include "Game_object/effect/Effects.hpp"
-#include "Game_object/interface/Reusable.hpp"
+#include "Game_object/abstraction/Reusable.hpp"
 
 //fwd decl
 namespace Draw{
@@ -13,7 +13,7 @@ namespace Draw{
 }
 
 namespace Effect{
-class Slash_eff:public Effects,public Interface::Reusable<Slash_eff>
+class Slash_eff:public Effects,public Abstraction::Reusable<Slash_eff>
 {
 public:
     Slash_eff(glm::vec2 pos, glm::vec2 distant, float angle, float target_scale, Uint32 color1, Uint32 color2){

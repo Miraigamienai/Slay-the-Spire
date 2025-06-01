@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Game_object/effect/Effects.hpp"
-#include "Game_object/interface/Reusable.hpp"
+#include "Game_object/abstraction/Reusable.hpp"
 
 namespace Effect{
-class Buff_particle_eff final:public Effects,public Interface::Reusable<Buff_particle_eff>
+class Buff_particle_eff final:public Effects,public Abstraction::Reusable<Buff_particle_eff>
 {
 public:
     Buff_particle_eff(float x, float y)noexcept(noexcept(Initial(x, y))){Initial(x, y);}

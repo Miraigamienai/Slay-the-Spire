@@ -39,11 +39,11 @@ namespace Room{
     }
 
     void Shop_merchant::update(Dungeon::Dungeon_shared& dungeon_shared){
-        if(dungeon_shared.manager.current_screen_equals(Interface::ScreenType::NONE)){
+        if(dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::NONE)){
             this->hb.update();
             //open screen if the hb be clicked and the shop screen is not opening
             if(this->hb.Clicked()){
-                dungeon_shared.manager.open<Interface::ScreenType::shop>(this->card1, this->card2, this->can_purge);
+                dungeon_shared.manager.open<Abstraction::ScreenType::shop>(this->card1, this->card2, this->can_purge);
             }
         }else{
             this->hb.UnHovered();

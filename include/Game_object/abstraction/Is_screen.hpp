@@ -10,7 +10,7 @@ namespace Draw{
     class Draw_2D;
 }
 
-namespace Interface{
+namespace Abstraction{
 enum class ScreenType{
     main_dungeon,
     combat_reward,

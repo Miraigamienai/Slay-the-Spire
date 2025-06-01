@@ -3,10 +3,10 @@
 #include <memory>
 
 #include "Game_object/effect/Effects.hpp"
-#include "Game_object/interface/Reusable.hpp"
+#include "Game_object/abstraction/Reusable.hpp"
 
 namespace Effect{
-class Card_proof_particle final:public Effects,public Interface::Reusable<Card_proof_particle>
+class Card_proof_particle final:public Effects,public Abstraction::Reusable<Card_proof_particle>
 {
 public:
     Card_proof_particle(const float x,const float y){Initial(x,y);}

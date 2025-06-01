@@ -5,7 +5,7 @@
 #include "Game_object/effect/Fade_wide.hpp"
 namespace Character{
     Player::Player()
-        :Characters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F, WIDTH, HIGHT,HPBarWidth),
+        :Characters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F, WIDTH, HEIGHT,HPBarWidth),
         player_type(PlayerType::Ironclad)
     {
         max_energy=3;
@@ -25,11 +25,11 @@ namespace Character{
             r2->SetColor(fadeColor,img_color_a);
             r2->draw(Effect::Fade_wide::white_square, 0.0F, 0.0F, Setting::WINDOW_WIDTH, Setting::WINDOW_HEIGHT);
             r2->SetColor(-1,1);
-            r2->draw(img_died,getPosition().x,getPosition().y,WIDTH,HIGHT); 
+            r2->draw(img_died,getPosition().x,getPosition().y,WIDTH,HEIGHT); 
         }
         else{
             r2->SetColor(-1);
-            r2->draw(img,getPosition().x,getPosition().y,WIDTH,HIGHT); 
+            r2->draw(img,getPosition().x,getPosition().y,WIDTH,HEIGHT); 
             render_HP_and_power(r2);
         }
     }

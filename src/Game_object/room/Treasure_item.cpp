@@ -25,11 +25,11 @@ namespace Room{
     }
 
     void Treasure_item::update(Dungeon::Dungeon_shared& dungeon_shared){
-        if(dungeon_shared.manager.current_screen_equals(Interface::ScreenType::NONE)){
+        if(dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::NONE)){
             this->hb.update();
             //open screen if the hb be clicked and the shop screen is not opening
             if(this->hb.Clicked()){
-                dungeon_shared.manager.open<Interface::ScreenType::combat_reward>(get_reward(dungeon_shared));
+                dungeon_shared.manager.open<Abstraction::ScreenType::combat_reward>(get_reward(dungeon_shared));
                 is_opened=true;
             }
         }

@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Game_object/effect/Effects.hpp"
-#include "Game_object/interface/Reusable.hpp"
+#include "Game_object/abstraction/Reusable.hpp"
 
 namespace Effect{
-class Debuff_particle_eff final:public Effects,public Interface::Reusable<Debuff_particle_eff>
+class Debuff_particle_eff final:public Effects,public Abstraction::Reusable<Debuff_particle_eff>
 {
 public:
     Debuff_particle_eff(float x, float y)noexcept(noexcept(Initial(x, y))){Initial(x, y);}

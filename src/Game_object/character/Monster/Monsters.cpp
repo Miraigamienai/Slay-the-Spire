@@ -303,6 +303,11 @@ namespace Monster
         set_move(player_powers);
     }
 
+    void Monsters::set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, const Power::Power_group &player_powers){
+        this->move=Move{move_name, INTENT_IMG(intent), intent, false, 0, 0, 0};
+        set_move(player_powers);
+    }
+
     void Monsters::refresh_intent_tip(){
         auto &TEXT_VEC=RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::AbstractMonster);
         switch(move.intent){

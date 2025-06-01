@@ -5,7 +5,7 @@
 #include "Game_object/action/Gain_block_action.hpp"
 #include "RUtil/Random.hpp"
 namespace Monster{
-    Mugger::Mugger(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth
+    Mugger::Mugger(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HEIGHT,HPBarWidth
     ,RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Thieves/Mugger-pretty.png"))
     {
         setHP(MIN_HP,MAX_HP);

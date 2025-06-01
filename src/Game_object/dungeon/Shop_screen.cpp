@@ -62,7 +62,7 @@ namespace Dungeon{
     }
 
     Shop_screen::Shop_screen()
-        :Interface::Is_screen(Interface::ScreenType::shop),
+        :Abstraction::Is_screen(Abstraction::ScreenType::shop),
         card1(nullptr),
         card2(nullptr),
         price_drawer(PRICE_FONT_SIZE),
@@ -137,7 +137,7 @@ namespace Dungeon{
             //open the purge screen
             purge_is_done=false;
             purge_is_cancelled=false;
-            dungeon_shared.manager.open<Interface::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_master_deck(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_purge_action>(), purge_is_done, purge_is_cancelled);
+            dungeon_shared.manager.open<Abstraction::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_master_deck(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_purge_action>(), purge_is_done, purge_is_cancelled);
             this->hide();
         }
         //check is something hovered
@@ -156,7 +156,7 @@ namespace Dungeon{
         }
         cancel.update();
         if(cancel.is_logically_clicked()){
-            dungeon_shared.manager.open<Interface::ScreenType::NONE>();
+            dungeon_shared.manager.open<Abstraction::ScreenType::NONE>();
             closing=true;
             cancel.hide();
         }

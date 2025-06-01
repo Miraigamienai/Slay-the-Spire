@@ -1,15 +1,14 @@
-#ifndef GAME_OBJECT_CHARACTER_MONSTER_BLUE_SLAVER_HPP
-#define GAME_OBJECT_CHARACTER_MONSTER_BLUE_SLAVER_HPP
-#include <random>
-#include "Game_object/character/Monster/Monsters.hpp"
+#pragma once
+
+#include "Game_object/abstraction/Monster_move_tracker.hpp"
+#include "RUtil/Weighted_index_picker.hpp"
 
 namespace Monster{
-    enum class BlueSlaverAction
-    {
-        Stab,
-        Rake,
-        None
-    };
+enum class BlueSlaverAction
+{
+    Stab,
+    Rake
+};
 class BlueSlaver final:public Monsters
 {
 public:
@@ -21,17 +20,12 @@ public:
 private:
     
     static constexpr int WIDTH=320.0F*Setting::SCALE,
-                         HIGHT=230.0F*Setting::SCALE;
+                         HEIGHT=230.0F*Setting::SCALE;
     static constexpr int MAX_HP=50,
                          MIN_HP=46,
                          STAB_DAMAGE=12,
                          RAKE_DAMAGE=7;
-    static constexpr int HPBarWidth=WIDTH*0.8F;
-    Monster::BlueSlaverAction currentAction=Monster::BlueSlaverAction::None,
-                               lastAction=Monster::BlueSlaverAction::None;
-    static constexpr float ActionProbability[2]={60.0F,40.0F};
-    int ActionCount=0;
-    static std::discrete_distribution<int> dist;
+    static const std::shared_ptr<Draw::ReTexture> &IMG;
+    static constexpr auto dist=RUtil::make_weighted_index_picker(std::array{60.0F,40.0F});
 };
 }
-#endif

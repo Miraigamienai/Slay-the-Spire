@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "Game_object/map/Dungeon_map.hpp"
-#include "Game_object/interface/Is_screen.hpp"
+#include "Game_object/abstraction/Is_screen.hpp"
 #include "RUtil/Scroll.hpp"
 
 //fwd decl
@@ -12,7 +12,7 @@ namespace Map{
 }
 
 namespace Dungeon{
-class Dungeon_screen final:public Interface::Is_screen
+class Dungeon_screen final:public Abstraction::Is_screen
 {
 public:
     Dungeon_screen();

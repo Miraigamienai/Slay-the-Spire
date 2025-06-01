@@ -3,7 +3,7 @@
 #include <array>
 #include <memory>
 
-#include "Game_object/interface/Is_screen.hpp"
+#include "Game_object/abstraction/Is_screen.hpp"
 #include "Game_object/room/Shop_item.hpp"
 #include "Game_object/button/Cancel_button.hpp"
 #include "Draw/NumberDrawer.hpp"
@@ -19,7 +19,7 @@ namespace Effect{
 }
 
 namespace Dungeon{
-class Shop_screen final:public Interface::Is_screen
+class Shop_screen final:public Abstraction::Is_screen
 {
 public:
     Shop_screen();

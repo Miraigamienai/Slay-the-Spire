@@ -4,7 +4,7 @@
 #include "Game_object/action/Anim_set_action.hpp"
 #include "Game_object/action/Damage_action.hpp"
 namespace Monster{
-    AcidSlimeL::AcidSlimeL(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth
+    AcidSlimeL::AcidSlimeL(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HEIGHT,HPBarWidth
         ,RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Acid Slime/Acid-slime-l-pretty.png"))
     {
         setHP(MIN_HP,MAX_HP);

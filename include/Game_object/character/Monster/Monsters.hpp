@@ -26,13 +26,12 @@ enum class Intent:int{
 class Monsters:public Character::Characters
 {
 public:
-    // Characters(CharacterType type, float x, float y, float width, float height, float hb_offset_x, float hb_offset_y, int HP);
     Monsters(float offset_x, float offset_y, float width, float height, 
         float hb_offset_x, float hb_offset_y, int HP, const std::shared_ptr<Draw::ReTexture> &img);
     
     virtual ~Monsters()=default;
     virtual void Action(Dungeon::Dungeon_shared &dungeon_shared)=0;
-    virtual void next_move(const Power::Power_group &player_powers)=0;
+    virtual void next_move(RUtil::Random &ai_rng, const Power::Power_group &player_powers)=0;
     void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void update()override;
@@ -42,6 +41,7 @@ public:
 protected:
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, int multiplier, const Power::Power_group &player_powers);
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, const Power::Power_group &player_powers);
+    void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, const Power::Power_group &player_powers);
 private:
     struct Move{
         std::shared_ptr<Draw::Text_layout> move_name;

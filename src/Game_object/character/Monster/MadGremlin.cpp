@@ -5,7 +5,7 @@
 #include "RUtil/Random.hpp"
 
 namespace Monster{
-    MadGremlin::MadGremlin(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HIGHT,HPBarWidth
+    MadGremlin::MadGremlin(float offsetX, float offsetY):Monsters(Setting::WINDOW_WIDTH*0.75F+offsetX, FLOOR_Y+offsetY, WIDTH, HEIGHT,HPBarWidth
     ,RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Gremlins/Mad-gremlin-pretty.png"))
     {
         setHP(MIN_HP,MAX_HP);

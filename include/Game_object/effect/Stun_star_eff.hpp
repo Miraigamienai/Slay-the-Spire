@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Game_object/effect/Effects.hpp"
-#include "Game_object/interface/Reusable.hpp"
+#include "Game_object/abstraction/Reusable.hpp"
 #include "RUtil/Some_Math.hpp"
 
 namespace Effect{
-class Stun_star_eff final:public Effects,public Interface::Reusable<Stun_star_eff>
+class Stun_star_eff final:public Effects,public Abstraction::Reusable<Stun_star_eff>
 {
 public:
     Stun_star_eff(float x, float y)noexcept(noexcept(Initial(x, y))){Initial(x, y);}

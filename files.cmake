@@ -85,6 +85,8 @@ set(SRC_FILES
 	Game_object/dungeon/Grid_screen_action/Render_arrow.cpp
 	Game_object/effect/Auto_release_pool_manager.cpp
 	Game_object/effect/Battle_start_eff.cpp
+	Game_object/effect/block_broken_eff.cpp
+	Game_object/effect/Buff_particle_eff.cpp
 	Game_object/effect/Camfire_bubble_effect.cpp
 	Game_object/effect/Camfire_burning_effect.cpp
 	Game_object/effect/Card_flash.cpp
@@ -92,6 +94,7 @@ set(SRC_FILES
 	Game_object/effect/Card_proof_particle.cpp
 	Game_object/effect/Card_trail_effect.cpp
 	Game_object/effect/Damage_impact_curvy_eff.cpp
+	Game_object/effect/Debuff_particle_eff.cpp
 	Game_object/effect/Effects.cpp
 	Game_object/effect/Effect_group.cpp
 	Game_object/effect/End_turn_button_glow.cpp
@@ -103,14 +106,18 @@ set(SRC_FILES
 	Game_object/effect/Flying_spike_eff.cpp
 	Game_object/effect/Hammer_effect.cpp
 	Game_object/effect/Map_circle_effect.cpp
+	Game_object/effect/Player_turn_eff.cpp
 	Game_object/effect/Power_buff_debuff_eff.cpp
 	Game_object/effect/Power_remove_text_eff.cpp
 	Game_object/effect/Purge_card_eff.cpp
 	Game_object/effect/Refresh_energy_effect.cpp
 	Game_object/effect/Rest_option_black_screen.cpp
+	Game_object/effect/Shield_particle_eff.cpp
 	Game_object/effect/Shine_particle.cpp
 	Game_object/effect/Slash_eff.cpp
 	Game_object/effect/Sleep_cover_eff.cpp
+	Game_object/effect/Stun_star_eff.cpp
+	Game_object/effect/Unknown_particle_eff.cpp
 	Game_object/effect/Vertical_aura.cpp
 	Game_object/effect_gen/Card_upgrade_eff_gen.cpp
 	Game_object/effect_gen/Effect_gen_group.cpp
@@ -195,6 +202,10 @@ set(INCLUDE_FILES
 	Game_object/Card_pos_setter.hpp
 	Game_object/Damage_info.hpp
 	Game_object/Group_template.hpp
+	Game_object/abstraction/CardPrototype.hpp
+	Game_object/abstraction/Is_screen.hpp
+	Game_object/abstraction/Monster_move_tracker.hpp
+	Game_object/abstraction/Reusable.hpp
 	Game_object/action/Actions.hpp
 	Game_object/action/Action_group.hpp
 	Game_object/action/Action_group_handler.hpp
@@ -273,6 +284,8 @@ set(INCLUDE_FILES
 	Game_object/dungeon/Grid_screen_action/Render_arrow.hpp
 	Game_object/effect/Auto_release_pool_manager.hpp
 	Game_object/effect/Battle_start_eff.hpp
+	Game_object/effect/block_broken_eff.hpp
+	Game_object/effect/Buff_particle_eff.hpp
 	Game_object/effect/Camfire_bubble_effect.hpp
 	Game_object/effect/Camfire_burning_effect.hpp
 	Game_object/effect/Card_flash.hpp
@@ -280,6 +293,7 @@ set(INCLUDE_FILES
 	Game_object/effect/Card_proof_particle.hpp
 	Game_object/effect/Card_trail_effect.hpp
 	Game_object/effect/Damage_impact_curvy_eff.hpp
+	Game_object/effect/Debuff_particle_eff.hpp
 	Game_object/effect/Effects.hpp
 	Game_object/effect/Effect_group.hpp
 	Game_object/effect/Effect_pool.hpp
@@ -295,14 +309,18 @@ set(INCLUDE_FILES
 	Game_object/effect/Flying_spike_eff.hpp
 	Game_object/effect/Hammer_effect.hpp
 	Game_object/effect/Map_circle_effect.hpp
+	Game_object/effect/Player_turn_eff.hpp
 	Game_object/effect/Power_buff_debuff_eff.hpp
 	Game_object/effect/Power_remove_text_eff.hpp
 	Game_object/effect/Purge_card_eff.hpp
 	Game_object/effect/Refresh_energy_effect.hpp
 	Game_object/effect/Rest_option_black_screen.hpp
+	Game_object/effect/Shield_particle_eff.hpp
 	Game_object/effect/Shine_particle.hpp
 	Game_object/effect/Slash_eff.hpp
 	Game_object/effect/Sleep_cover_eff.hpp
+	Game_object/effect/Stun_star_eff.hpp
+	Game_object/effect/Unknown_particle_eff.hpp
 	Game_object/effect/Vertical_aura.hpp
 	Game_object/effect_gen/Card_paticle_gen.hpp
 	Game_object/effect_gen/Card_upgrade_eff_gen.hpp
@@ -319,9 +337,6 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Vertical_aura_gen.hpp
 	Game_object/energy_orb/Energy_orb.hpp
 	Game_object/energy_orb/Red_orb.hpp
-	Game_object/interface/CardPrototype.hpp
-	Game_object/interface/Is_screen.hpp
-	Game_object/interface/Reusable.hpp
 	Game_object/map/Dungeon_map.hpp
 	Game_object/map/Legend.hpp
 	Game_object/map/Legend_item.hpp
@@ -381,6 +396,7 @@ set(INCLUDE_FILES
 	RUtil/Some_Math.hpp
 	RUtil/Text_layout_creator.hpp
 	RUtil/Text_Vector_Reader.hpp
+	RUtil/Weighted_index_picker.hpp
 )
 
 set(TEST_FILES

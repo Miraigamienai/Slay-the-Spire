@@ -1,4 +1,5 @@
 #include "Game_object/energy_orb/Red_orb.hpp"
+#include "Draw/Draw_2D.hpp"
 #include "RUtil/Game_Input.hpp"
 
 namespace EnergyOrb{

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Game_object/abstraction/Monster_move_tracker.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
 
 namespace Monster{
 enum class FatGremlinAction
@@ -13,8 +14,8 @@ public:
     FatGremlin(float offset_x, float offset_y, RUtil::Random& rng);
     ~FatGremlin()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared)override;
-    void next_move(RUtil::Random &ai_rng, const Power::Power_group &player_powers) override{
-        set_move(FatGremlinAction::Smash, nullptr, Intent::attack_debuff, SMASH_DAMAGE, player_powers);
+    void next_move(Dungeon::Dungeon_shared &dungeon_shared) override{
+        set_move(FatGremlinAction::Smash, nullptr, Intent::attack_debuff, SMASH_DAMAGE, dungeon_shared.player->get_powers());
     }
 private:
     static constexpr float WIDTH=110.0F*Setting::SCALE,

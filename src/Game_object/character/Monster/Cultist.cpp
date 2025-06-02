@@ -13,10 +13,10 @@ namespace Monster{
 
     void Cultist::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){
-            case Monster::CultistAction::Incantation:
+            case CultistAction::Incantation:
                 //Gains 3  Ritual(strength).
                 break;
-            case Monster::CultistAction::DarkStrike:
+            case CultistAction::DarkStrike:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{DARK_STRIKE_DAMAGE, shared_from_this(), AttackType::slash_horizontal}, dungeon_shared.player));
                 break;
@@ -25,7 +25,7 @@ namespace Monster{
         }
     }
 
-    void Cultist::next_move(RUtil::Random &ai_rng, const Power::Power_group &player_powers){
+    void Cultist::next_move(Dungeon::Dungeon_shared &dungeon_shared){
         auto final_next=CultistAction::DarkStrike;
         if(!first_move){
             first_move=true;
@@ -34,10 +34,10 @@ namespace Monster{
 
         switch(final_next){
             case CultistAction::Incantation:
-                set_move(CultistAction::Incantation, nullptr, Intent::buff, player_powers);
+                set_move(CultistAction::Incantation, nullptr, Intent::buff, dungeon_shared.player->get_powers());
                 break;
             case CultistAction::DarkStrike:
-                set_move(CultistAction::DarkStrike, nullptr, Intent::attack, DARK_STRIKE_DAMAGE, player_powers);
+                set_move(CultistAction::DarkStrike, nullptr, Intent::attack, DARK_STRIKE_DAMAGE, dungeon_shared.player->get_powers());
                 break;
             default:
                 break;

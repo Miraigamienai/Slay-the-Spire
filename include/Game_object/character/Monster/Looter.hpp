@@ -1,7 +1,11 @@
-#ifndef GAME_OBJECT_CHARACTER_MONSTER_LOOTER
-#define GAME_OBJECT_CHARACTER_MONSTER_LOOTER
-#include <random>
-#include "Game_object/character/Monster/Monsters.hpp"
+#pragma once
+
+#include "Game_object/abstraction/Monster_move_tracker.hpp"
+
+//fwd decl
+namespace RUtil{
+    class Random;
+}
 
 namespace Monster{
 enum class LooterAction
@@ -9,34 +13,26 @@ enum class LooterAction
     Mug,
     Lunge,
     SmokeBomb,
-    Escape,
-    None
+    Escape
 };
-class Looter final:public Monsters
+class Looter final:public Abstraction::Monster_move_tracker<1, LooterAction>
 {
 public:
-    Looter(float offsetX,float offsetY);
+    Looter(float offset_x, float offset_y, RUtil::Random& rng);
     ~Looter()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
-
-    
-    // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
-private:               
-    static constexpr int WIDTH=260.0F*Setting::SCALE,
-                         HEIGHT=170.0F*Setting::SCALE;
+    void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
+private:
+    int move_cnt;
+    static constexpr float WIDTH=200.0F*Setting::SCALE,
+                           HEIGHT=220.0F*Setting::SCALE,
+                           HB_OFFSET_X=0.0F,
+                           HB_OFFSET_Y=0.0F;
     static constexpr int MAX_HP=48,
                          MIN_HP=44,
                          MUG_DAMAGE=10,
                          LUNGE_DAMAGE=12,
                          SMOKE_BOMB_BLOCK=6;
-    static constexpr int HPBarWidth=WIDTH*0.8F;
-    bool isFirstTwoActions=true;
-    bool SmokeBombIsUsed=false;
-    Monster::LooterAction currentAction=Monster::LooterAction::None,
-                             lastAction=Monster::LooterAction::None;
-    static constexpr float ActionProbabilityAfterFirstTwoActions[2]={50.0F,50.0F};
-    int ActionCount=0;
-    static std::discrete_distribution<int> dist;
+    static const std::shared_ptr<Draw::ReTexture> &IMG;
 };
 }
-#endif

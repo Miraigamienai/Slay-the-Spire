@@ -3,7 +3,6 @@
 #include "Game_object/abstraction/Monster_move_tracker.hpp"
 #include "RUtil/Weighted_index_picker.hpp"
 
-
 namespace Monster{
 enum class RedLouseAction
 {
@@ -16,7 +15,7 @@ public:
     RedLouse(float offset_x, float offset_y, RUtil::Random& rng);
     ~RedLouse()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
-    void next_move(RUtil::Random &ai_rng, const Power::Power_group &player_powers) override;
+    void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
     const int bite_damage;
     static constexpr float WIDTH=180.0F*Setting::SCALE,

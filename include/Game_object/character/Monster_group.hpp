@@ -4,13 +4,11 @@
 #include <memory>
 
 #include "Game_object/Group_template.hpp"
+#include "Game_object/character/Monster/Monsters.hpp"
 
 //fwd decl
 namespace Draw{
     class Draw_2D;
-}
-namespace Monster{
-    class Monsters;
 }
 namespace Dungeon{
     class Dungeon_shared;
@@ -27,6 +25,16 @@ public:
     void update();
     void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared);
     void at_turn_start(Dungeon::Dungeon_shared &dungeon_shared);
-    bool IsAllDie()const;
+    bool IsAllDie()const{
+        for(const auto &it:box) 
+            if(!it->IsDie()) return false;
+        return true;
+    }
+    int AliveCount()const{
+        int cnt=0;
+        for(const auto &it:box) 
+            if(!it->IsDie()) cnt++;
+        return cnt;
+    }
 };
 }

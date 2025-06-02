@@ -14,7 +14,7 @@ namespace Action{
     void Card_use_start_action::update(Dungeon::Dungeon_shared &dungeon_shared){
         //set player move
         if(card_item.card->type==Card::Type::attack)
-            dungeon_shared.player->useFastAttackAnimation();
+            dungeon_shared.player->use_animation<Character::Animation::ATTACK_FAST>();
         
         //use card
         dungeon_shared.player->ReduceEnergy(card_item.card->GetCost(),dungeon_shared);

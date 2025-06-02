@@ -40,9 +40,9 @@ public:
     Characters(CharacterType type, float x, float y, float width, float height, float hb_offset_x, float hb_offset_y, int HP);
     virtual ~Characters()=default;
     virtual void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)=0;
-    virtual void heal(int num, Dungeon::Dungeon_shared &dungeon_shared)=0;
+    virtual void heal(int num, Dungeon::Dungeon_shared &dungeon_shared)/* =0 */{(void)num;(void)dungeon_shared;}
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2) const =0;
-    virtual void update()=0;
+    virtual void update()/* =0 */{};
     
     void AddBlock(int num);
     void ReduceBlock(int num, Dungeon::Dungeon_shared &dungeon_shared);

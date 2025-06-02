@@ -1,20 +1,19 @@
 #include "Game_object/character/Monster_group_creater.hpp"
 #include "Game_object/character/Monster_group.hpp"
 #include "Game_object/character/AllMonster.hpp"
-#include "RUtil/Random.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
 
 #include "Util/Logger.hpp"
 
 namespace Monster{
-    void Monster_group_creater::CreateGroup(Monster_group &group,GroupName group_name,RUtil::Random &rng){
+    void Monster_group_creater::CreateGroup(Dungeon::Dungeon_shared& dungeon_shared, GroupName group_name){
         switch(group_name){
-            case GroupName::Cultist:{
-                    group.AddTop(std::make_shared<Cultist>(0.0F, -10.0F));
-                }
-                return;
+            case GroupName::Cultist:
+                group.AddTop(std::make_shared<Cultist>(0.0F, -10.0F));
+                break;
             case GroupName::Jaw_Worm:
                 group.AddTop(std::make_shared<JawWorm>(0.0F, 0.0F));
-                return;
+                break;
             case GroupName::_2_Louse:
                 rng.NextInt(0,2)==0?group.AddTop(std::make_shared<RedLouse>(-200.0F, 10.0F)):group.AddTop(std::make_shared<GreenLouse>(-200.0F, 10.0F));
                 rng.NextInt(0,2)==0?group.AddTop(std::make_shared<RedLouse>(80.0F, 30.0F)):group.AddTop(std::make_shared<GreenLouse>(80.0F, 30.0F));

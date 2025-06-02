@@ -14,11 +14,11 @@ namespace Monster{
     
     void GreenLouse::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){
-            case Monster::GreenLouseAction::SpitWeb:
+            case GreenLouseAction::SpitWeb:
                 //TODO:web eff
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Weakened, 2, shared_from_this(), dungeon_shared.player));
                 break;
-            case Monster::GreenLouseAction::Bite:
+            case GreenLouseAction::Bite:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
                 Damage_info{this->bite_damage, shared_from_this(), AttackType::blunt_light}, dungeon_shared.player));
@@ -28,9 +28,9 @@ namespace Monster{
         }
     }
 
-    void GreenLouse::next_move(RUtil::Random &ai_rng, const Power::Power_group &player_powers){
+    void GreenLouse::next_move(Dungeon::Dungeon_shared &dungeon_shared){
         auto final_next=GreenLouseAction::Bite;
-        switch(static_cast<GreenLouseAction>(dist.NextIndex(ai_rng))){
+        switch(static_cast<GreenLouseAction>(dist.NextIndex(dungeon_shared.random_package.monster_ai_rng))){
             case GreenLouseAction::SpitWeb:
                 if(!is_last_two_move(GreenLouseAction::SpitWeb))
                     final_next=GreenLouseAction::SpitWeb;
@@ -45,10 +45,10 @@ namespace Monster{
 
         switch(final_next){
             case GreenLouseAction::SpitWeb:
-                set_move(GreenLouseAction::SpitWeb, nullptr, Intent::debuff, player_powers);
+                set_move(GreenLouseAction::SpitWeb, nullptr, Intent::debuff, dungeon_shared.player->get_powers());
                 break;
             case GreenLouseAction::Bite:
-                set_move(GreenLouseAction::Bite, nullptr, Intent::attack, bite_damage, player_powers);
+                set_move(GreenLouseAction::Bite, nullptr, Intent::attack, bite_damage, dungeon_shared.player->get_powers());
                 break;
             default:
                 break;

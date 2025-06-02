@@ -31,7 +31,7 @@ public:
     
     virtual ~Monsters()=default;
     virtual void Action(Dungeon::Dungeon_shared &dungeon_shared)=0;
-    virtual void next_move(RUtil::Random &ai_rng, const Power::Power_group &player_powers)=0;
+    virtual void next_move(Dungeon::Dungeon_shared &dungeon_shared)=0;
     void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void update()override;

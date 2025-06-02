@@ -15,15 +15,15 @@ namespace Monster{
     
     void JawWorm::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){
-            case Monster::JawWormAction::Chomp:
+            case JawWormAction::Chomp:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{CHOMP_DAMAGE, shared_from_this(), AttackType::NONE}, dungeon_shared.player));
                 break;
-            case Monster::JawWormAction::Thrash:
+            case JawWormAction::Thrash:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::HOP));
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{THRASH_DAMAGE, shared_from_this(), AttackType::blunt_light}, dungeon_shared.player));    
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_block_action>(shared_from_this(), THRASH_BLOCK));
                 break;
-            case Monster::JawWormAction::Bellow:            
+            case JawWormAction::Bellow:            
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, BELLOWS_STRENGTH, shared_from_this(), shared_from_this()));
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_block_action>(shared_from_this(), BELLOWS_BLOCK));
                 break;
@@ -32,25 +32,25 @@ namespace Monster{
         }
     }
 
-    void JawWorm::next_move(RUtil::Random& ai_rng, const Power::Power_group &player_powers){
+    void JawWorm::next_move(Dungeon::Dungeon_shared &dungeon_shared){
         auto final_next=JawWormAction::Chomp;
         if(!first_move){
             first_move=true;
         }else{
-            switch(static_cast<JawWormAction>(dist.NextIndex(ai_rng))){
+            switch(static_cast<JawWormAction>(dist.NextIndex(dungeon_shared.random_package.monster_ai_rng))){
                 case JawWormAction::Chomp:
                     if(is_current_move(JawWormAction::Chomp))
-                        final_next=static_cast<JawWormAction>(dist.NextIndexWithOut(static_cast<int>(JawWormAction::Chomp), ai_rng));
+                        final_next=static_cast<JawWormAction>(dist.NextIndexWithOut(static_cast<int>(JawWormAction::Chomp), dungeon_shared.random_package.monster_ai_rng));
                     break;
                 case JawWormAction::Thrash:
                     if(is_last_two_move(JawWormAction::Thrash))
-                        final_next=static_cast<JawWormAction>(dist.NextIndexWithOut(static_cast<int>(JawWormAction::Thrash), ai_rng));
+                        final_next=static_cast<JawWormAction>(dist.NextIndexWithOut(static_cast<int>(JawWormAction::Thrash), dungeon_shared.random_package.monster_ai_rng));
                     else
                         final_next=JawWormAction::Thrash;
                     break;
                 case JawWormAction::Bellow:
                     if(is_current_move(JawWormAction::Bellow))
-                        final_next=static_cast<JawWormAction>(dist.NextIndexWithOut(static_cast<int>(JawWormAction::Bellow), ai_rng));
+                        final_next=static_cast<JawWormAction>(dist.NextIndexWithOut(static_cast<int>(JawWormAction::Bellow), dungeon_shared.random_package.monster_ai_rng));
                     else
                         final_next=JawWormAction::Bellow;
                     break;
@@ -60,13 +60,13 @@ namespace Monster{
         }
         switch(final_next){
             case JawWormAction::Chomp:
-                set_move(JawWormAction::Chomp, nullptr, Intent::attack, CHOMP_DAMAGE, player_powers);
+                set_move(JawWormAction::Chomp, nullptr, Intent::attack, CHOMP_DAMAGE, dungeon_shared.player->get_powers());
                 break;
             case JawWormAction::Thrash:
-                set_move(JawWormAction::Thrash, nullptr, Intent::attack_defend, THRASH_DAMAGE, player_powers);
+                set_move(JawWormAction::Thrash, nullptr, Intent::attack_defend, THRASH_DAMAGE, dungeon_shared.player->get_powers());
                 break;
             case JawWormAction::Bellow:
-                set_move(JawWormAction::Bellow, nullptr, Intent::defend_buff, player_powers);
+                set_move(JawWormAction::Bellow, nullptr, Intent::defend_buff, dungeon_shared.player->get_powers());
                 break;
             default:
                 break;

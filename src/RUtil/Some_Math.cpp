@@ -1,5 +1,4 @@
 #include "RUtil/Some_Math.hpp"
-#include "RUtil/Game_Input.hpp"
 #include "WindowSize.hpp"
 
 namespace RUtil{

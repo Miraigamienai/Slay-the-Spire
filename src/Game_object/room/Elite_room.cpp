@@ -20,7 +20,7 @@ Elite_room::Elite_room():Rooms(Room_type::Elite),m_group_name(Monster::GroupName
     m_wait_timer=0.0F;
 }
 void Elite_room::init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 /* dungeon_fade_color */){
-    Monster::Monster_group_creater::CreateGroup(dungeon_shared.room_monsters, m_group_name,dungeon_shared.random_package.monster_type_rng);
+    // Monster::Monster_group_creater::CreateGroup(dungeon_shared.room_monsters, m_group_name,dungeon_shared.random_package.monster_type_rng);
     m_wait_timer=0.1F;
 }
 void Elite_room::render(const std::shared_ptr<Draw::Draw_2D> &/* r2 */)const{

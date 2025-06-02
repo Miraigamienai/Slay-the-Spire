@@ -20,7 +20,7 @@ class Player final :public Characters
 public:
     Player();
     virtual ~Player()=default;
-    void damage(const Damage_info& damage_info)override;
+    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     const PlayerType player_type;
 
@@ -34,15 +34,15 @@ public:
     constexpr Uint32 GetCardTrailColor()const noexcept(noexcept(RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F))){return RUtil::Math::GetColorUint32_RGB(1.0F,0.4F,0.1F);}
     constexpr Uint32 GetCardRenderColor()const noexcept{return 0xff341cff;}
 private:
-    static constexpr Uint32 fadeColor=0;
     int max_energy,current_energy;
     int gold;
-    static const std::shared_ptr<Draw::ReTexture> &img,&img_died;
-    static constexpr int WIDTH_OFFSET=-800.0F*Setting::SCALE,
-                        HEIGHT_OFFSET=-200.0F*Setting::SCALE;
-    static constexpr int WIDTH=300.0F*Setting::SCALE,   
-                        HEIGHT=200.0F*Setting::SCALE;
-    static constexpr int HPBarWidth=WIDTH*0.5F;
+    static const std::shared_ptr<Draw::ReTexture> &img, &img_died;
+    static constexpr float WIDTH=220.0F*Setting::SCALE,
+                           HEIGHT=290.0F*Setting::SCALE,
+                           HB_OFFSET_X=-4.0F*Setting::SCALE,
+                           HB_OFFSET_Y=-16.0F*Setting::SCALE;
+    static constexpr float WIDTH_OFFSET=-800.0F*Setting::SCALE,
+                           HEIGHT_OFFSET=-200.0F*Setting::SCALE;
 };
 }
 #endif

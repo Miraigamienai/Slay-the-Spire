@@ -15,7 +15,7 @@ public:
     FungiBeast(float offset_x, float offset_y, RUtil::Random& rng);
     ~FungiBeast()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
-    void next_move(RUtil::Random &ai_rng, const Power::Power_group &player_powers) override;
+    void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:                 
     static constexpr float WIDTH=260.0F*Setting::SCALE,
                            HEIGHT=170.0F*Setting::SCALE,

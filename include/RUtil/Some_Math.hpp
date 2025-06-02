@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>//std::clamp
+#include "RUtil/Game_Input.hpp"
 
 //if template not good for using,
 //it will change to float.

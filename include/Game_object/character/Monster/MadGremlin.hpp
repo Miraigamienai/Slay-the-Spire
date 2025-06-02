@@ -1,27 +1,30 @@
-#ifndef GAME_OBJECT_CHARACTER_MONSTER_MADGREMLIN_HPP
-#define GAME_OBJECT_CHARACTER_MONSTER_MADGREMLIN_HPP
-#include "Game_object/character/Monster/Monsters.hpp"
+#pragma once
+
+#include "Game_object/abstraction/Monster_move_tracker.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
 
 namespace Monster{
 enum class MadGremlinAction
 {
     Scratch
 };
-class MadGremlin final:public Monsters
+class MadGremlin final:public Abstraction::Monster_move_tracker<0, MadGremlinAction>
 {
 public:
-    MadGremlin(float offsetX,float offsetY);
+    MadGremlin(float offset_x, float offset_y, RUtil::Random& rng);
     ~MadGremlin()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
-    // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
+    void next_move(Dungeon::Dungeon_shared &dungeon_shared) override{
+        set_move(MadGremlinAction::Scratch, nullptr, Intent::attack, SCRATCH_DAMAGE, dungeon_shared.player->get_powers());
+    }
 private:
-    static constexpr float WIDTH=150.0F*Setting::SCALE,
-                        HEIGHT=200.0F*Setting::SCALE;
-    int m_damage=0;
-    static constexpr int MAX_HP=20,
-                        MIN_HP=24,
-                        SCRATCH_DAMAGE=4;
-    static constexpr float HPBarWidth=WIDTH*0.8F;
+    static constexpr float WIDTH=130.0F*Setting::SCALE,
+                           HEIGHT=194.0F*Setting::SCALE,
+                           HB_OFFSET_X=-4.0F*Setting::SCALE,
+                           HB_OFFSET_Y=12.0F*Setting::SCALE;
+    static constexpr int MAX_HP=24,
+                         MIN_HP=20,
+                         SCRATCH_DAMAGE=4;
+    static const std::shared_ptr<Draw::ReTexture> &IMG;
 };
 }
-#endif

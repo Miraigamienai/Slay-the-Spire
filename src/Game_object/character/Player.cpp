@@ -1,53 +1,50 @@
 #include "Game_object/character/Player.hpp"
-#include "RUtil/Random.hpp"
 #include "Game_object/Damage_info.hpp"
 #include "Game_object/dungeon/Dungeon_shared.hpp"
-#include "Game_object/effect/Fade_wide.hpp"
+#include "RUtil/Image_book.hpp"
+
 namespace Character{
     Player::Player()
-        :Characters(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F, WIDTH, HEIGHT,HPBarWidth),
-        player_type(PlayerType::Ironclad)
-    {
-        max_energy=3;
-        current_energy=3;
-        gold=100;
-        max_HP=80;
-        current_HP=80;
-        current_Block=0;
-        setPosition(Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET,Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET);
-        fadeTimer=2.5F;
-        fadeTime=2.5F;
-    }
+        :Characters(CharacterType::PLAYER, Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET, WIDTH, HEIGHT, 0.0F, 0.0F, 80),
+        player_type(PlayerType::Ironclad),
+        max_energy(3),
+        current_energy(max_energy),
+        gold(100){}
 
     void Player::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {
-        if(IsFadeOut){
-            r2->SetColor(fadeColor,img_color_a);
-            r2->draw(Effect::Fade_wide::white_square, 0.0F, 0.0F, Setting::WINDOW_WIDTH, Setting::WINDOW_HEIGHT);
-            r2->SetColor(-1,1);
-            r2->draw(img_died,getPosition().x,getPosition().y,WIDTH,HEIGHT); 
-        }
-        else{
-            r2->SetColor(-1);
-            r2->draw(img,getPosition().x,getPosition().y,WIDTH,HEIGHT); 
+        r2->SetColor(RUtil::WHITE, 1.0F);
+        if(IsDie()){
+            r2->draw(img_died, getAnimX()+orgX, getAnimY()+orgY, WIDTH, HEIGHT); 
+        }else{
+            r2->draw(img, getAnimX()+orgX, getAnimY()+orgY, WIDTH, HEIGHT); 
             render_HP_and_power(r2);
         }
     }
 
-    void Player::damage(const Damage_info& damage_info){
-        if(current_Block>damage_info.dmg){
-            current_Block-=damage_info.dmg;
-            return;
+    void Player::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
+        if(IsDie()) return;
+
+        int dmg = damage_info.dmg;
+        const bool had_block = GetCurrentBlock() > 0;
+        if(had_block){
+            if(damage_info.dmg > GetCurrentBlock()){
+                const auto temp=GetCurrentBlock();
+                ReduceBlock(temp, dungeon_shared);
+                dmg -= temp;
+            }else{
+                ReduceBlock(damage_info.dmg, dungeon_shared);
+                dmg = 0;
+            }
         }
-        else if (current_Block){
-            current_Block=0;
-            current_HP-=damage_info.dmg-current_Block;
-        }
-        else if(current_HP-damage_info.dmg<=0){
-            current_HP=0;
-        }
-        else{
-            current_HP-=damage_info.dmg;
+
+        //TODO: effs
+        if(dmg>0){
+            if(damage_info.src.get()!=this) use_animation<Character::Animation::STAGGER>();
+            //strike eff if hp!=0
+            current_HP-=dmg;
+            if(current_HP<0)current_HP=0;
+            health_update_event();
         }
     }
     

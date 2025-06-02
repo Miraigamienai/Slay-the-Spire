@@ -120,7 +120,11 @@ namespace Character{
             }
             //text color update
             if(block_text_color_vec != BLOCK_TEXT_COLOR_TARGET){
-                block_text_color_vec = RUtil::Math::varlerp(block_text_color_vec, BLOCK_TEXT_COLOR_TARGET, 3.0F, 0.01F);
+                block_text_color_vec = RUtil::Math::Apply(block_text_color_vec, BLOCK_TEXT_COLOR_TARGET, 3.0F*DT());
+                static constexpr float THRESHOLD=0.01F;
+                if(std::abs(block_text_color_vec.r - BLOCK_TEXT_COLOR_TARGET.r) < THRESHOLD) block_text_color_vec.r = BLOCK_TEXT_COLOR_TARGET.r;
+                if(std::abs(block_text_color_vec.g - BLOCK_TEXT_COLOR_TARGET.g) < THRESHOLD) block_text_color_vec.g = BLOCK_TEXT_COLOR_TARGET.g;
+                if(std::abs(block_text_color_vec.b - BLOCK_TEXT_COLOR_TARGET.b) < THRESHOLD) block_text_color_vec.b = BLOCK_TEXT_COLOR_TARGET.b;
                 block_text_color = RUtil::Math::GetColorUint32_RGB(block_text_color_vec.r, block_text_color_vec.g, block_text_color_vec.b);
             }
         }

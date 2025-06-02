@@ -8,7 +8,8 @@ namespace Action
     static inline constexpr float GetAnimDur(Character::Animation anim){
         switch(anim){
             case Character::Animation::ATTACK_SLOW:return 0.5F;
-            case Character::Animation::HOP:return 0.25F;
+            case Character::Animation::HOP:
+            case Character::Animation::ATTACK_FAST:return 0.25F;
             default:
                 LOG_ERROR("This anim:'{}' doesn't have setter action",static_cast<int>(anim));
                 return 1.0F;
@@ -30,6 +31,10 @@ namespace Action
                     break;
                 case Character::Animation::HOP:
                     who->use_animation<Character::Animation::HOP>();
+                    break;
+                case Character::Animation::ATTACK_FAST:
+                    who->use_animation<Character::Animation::ATTACK_FAST>();
+                    break;
                 default:
                     LOG_ERROR("This anim:'{}' doesn't have setter action",static_cast<int>(anim));
                     break;

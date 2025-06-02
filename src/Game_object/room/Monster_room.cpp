@@ -30,8 +30,8 @@ Monster_room::Monster_room()
     tip_character(nullptr),
     turn_count(0)
 {}
-void Monster_room::init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 dungeon_fade_color){
-    Monster::Monster_group_creater::CreateGroup(dungeon_shared.room_monsters, m_group_name,dungeon_shared.random_package.monster_type_rng);
+void Monster_room::init_room(Dungeon::Dungeon_shared& dungeon_shared, Uint32 dungeon_fade_color){
+    Monster::Monster_group_creater::CreateGroup(dungeon_shared, m_group_name);
     this->dungeon_fade_color=dungeon_fade_color;
     m_wait_timer=0.1F;
 }

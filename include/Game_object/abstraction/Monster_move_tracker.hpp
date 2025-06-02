@@ -23,20 +23,20 @@ public:
     ~Monster_move_tracker() override =default;
     bool is_current_move(EnumClass move_enum)const noexcept{
         if(current_n==0) return false;
-        return arr[Math::SimpleRangeChange(idx+current_n-1)]==move_enum;
+        return arr[Math::SimpleRangeChange(idx+current_n-1, N)]==move_enum;
     }
     bool is_Nth_previous_move(int n, EnumClass move_enum)const noexcept{
         if(current_n<n) return false;
-        return arr[Math::SimpleRangeChange(idx+current_n-n)]==move_enum;
+        return arr[Math::SimpleRangeChange(idx+current_n-n, N)]==move_enum;
     }
     bool is_last_two_move(EnumClass move_enum)const noexcept{
         if(current_n<2) return false;
-        return arr[Math::SimpleRangeChange(idx+current_n-2)]==move_enum && arr[Math::SimpleRangeChange(idx+current_n-1)]==move_enum;     
+        return arr[Math::SimpleRangeChange(idx+current_n-2, N)]==move_enum && arr[Math::SimpleRangeChange(idx+current_n-1, N)]==move_enum;     
     }
     bool is_last_N_move(int n, EnumClass move_enum)const noexcept{
         if(current_n<n) return false;
         for(int i=1;i<=n;i++)
-            if(arr[Math::SimpleRangeChange(idx+current_n-i)]!=move_enum) return false;
+            if(arr[Math::SimpleRangeChange(idx+current_n-i, N)]!=move_enum) return false;
         return true;
     }
     template <typename...Args>
@@ -46,7 +46,7 @@ public:
     }
     EnumClass current_move()const{
         if(current_n==0) LOG_ERROR("Getting current_move before set_move() called.");
-        return arr[Math::SimpleRangeChange(idx+current_n-1)];
+        return arr[Math::SimpleRangeChange(idx+current_n-1, N)];
     }
 private:
     std::array<EnumClass, N> arr;
@@ -69,7 +69,7 @@ public:
     template <typename...Args>
     Monster_move_tracker(Args&&...args)
         :Monster::Monsters(std::forward<Args>(args)...),
-        have_current(false){};
+        have_current(false){}
     template <typename...Args>
     void set_move(EnumClass move_enum, Args&&...args){
         have_current=true;
@@ -93,7 +93,7 @@ class Monster_move_tracker<0, EnumClass> : public Monster::Monsters
 {
 public:
     template <typename...Args>
-    Monster_move_tracker(Args&&...args):Monster::Monsters(std::forward<Args>(args)...){};
+    Monster_move_tracker(Args&&...args):Monster::Monsters(std::forward<Args>(args)...){}
     template <typename First, typename...Args>
     void set_move(First&&, Args&&...args){
         Monster::Monsters::set_move(std::forward<Args>(args)...);

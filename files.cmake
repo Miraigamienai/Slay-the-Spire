@@ -63,7 +63,6 @@ set(SRC_FILES
 	Game_object/character/Monster/Looter.cpp
 	Game_object/character/Monster/MadGremlin.cpp
 	Game_object/character/Monster/Monsters.cpp
-	Game_object/character/Monster/Mugger.cpp
 	Game_object/character/Monster/RedLouse.cpp
 	Game_object/character/Monster/RedSlaver.cpp
 	Game_object/character/Monster/ShieldGremlin.cpp
@@ -261,7 +260,6 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/Looter.hpp
 	Game_object/character/Monster/MadGremlin.hpp
 	Game_object/character/Monster/Monsters.hpp
-	Game_object/character/Monster/Mugger.hpp
 	Game_object/character/Monster/RedLouse.hpp
 	Game_object/character/Monster/RedSlaver.hpp
 	Game_object/character/Monster/ShieldGremlin.hpp

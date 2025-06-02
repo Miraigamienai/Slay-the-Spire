@@ -1,5 +1,4 @@
 #include "Game_object/character/Monster/FatGremlin.hpp"
-#include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/action/Anim_set_action.hpp"
 #include "Game_object/action/Damage_action.hpp"
 #include "Game_object/action/Apply_power_action.hpp"

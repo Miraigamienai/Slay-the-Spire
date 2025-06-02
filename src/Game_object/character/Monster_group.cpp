@@ -1,5 +1,4 @@
 #include "Game_object/character/Monster_group.hpp"
-#include "Game_object/character/Monster/Monsters.hpp"
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/power/Power_group.hpp"
 #include "Game_object/power/Powers.hpp"
@@ -22,11 +21,6 @@ namespace Monster
             box[i]->update();
             if(box[i]->IsDie()&&!box[i]->IsInDyingFade())box.erase(box.begin()+i);
         }
-    }
-    bool Monster_group::IsAllDie()const{
-        for(const auto &it:box) 
-            if(!it->IsDie()) return false;
-        return true;
     }
     
     void Monster_group::at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){

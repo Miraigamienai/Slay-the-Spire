@@ -12,10 +12,10 @@ namespace Monster{
     
     void FungiBeast::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){
-            case Monster::FungiBeastAction::Bite:
+            case FungiBeastAction::Bite:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{BITE_DAMAGE, shared_from_this(), AttackType::blunt_light}, dungeon_shared.player));
                 break;
-            case Monster::FungiBeastAction::Grow:
+            case FungiBeastAction::Grow:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, 3, shared_from_this(), shared_from_this()));
                 break;
             default:
@@ -23,11 +23,11 @@ namespace Monster{
         }
     }
 
-    void FungiBeast::next_move(RUtil::Random &ai_rng, const Power::Power_group &player_powers){
+    void FungiBeast::next_move(Dungeon::Dungeon_shared &dungeon_shared){
         auto final_next=FungiBeastAction::Bite;
-        switch(static_cast<FungiBeastAction>(dist.NextIndex(ai_rng))){
+        switch(static_cast<FungiBeastAction>(dist.NextIndex(dungeon_shared.random_package.monster_ai_rng))){
             case FungiBeastAction::Bite:
-                if(!is_last_two_move(FungiBeastAction::Bite))
+                if(is_last_two_move(FungiBeastAction::Bite))
                     final_next=FungiBeastAction::Grow;
                 break;
             case FungiBeastAction::Grow:
@@ -40,10 +40,10 @@ namespace Monster{
 
         switch(final_next){
             case FungiBeastAction::Bite:
-                set_move(FungiBeastAction::Bite, nullptr, Intent::attack, BITE_DAMAGE, player_powers);
+                set_move(FungiBeastAction::Bite, nullptr, Intent::attack, BITE_DAMAGE, dungeon_shared.player->get_powers());
                 break;
             case FungiBeastAction::Grow:
-                set_move(FungiBeastAction::Grow, nullptr, Intent::buff, player_powers);
+                set_move(FungiBeastAction::Grow, nullptr, Intent::buff, dungeon_shared.player->get_powers());
                 break;
             default:
                 break;

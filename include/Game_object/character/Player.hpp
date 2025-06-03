@@ -22,6 +22,10 @@ public:
     virtual ~Player()=default;
     void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
+    void update()override{
+        update_HP_and_power();
+        update_animation();
+    }
     const PlayerType player_type;
 
     int GetGold()const noexcept{return gold;}
@@ -41,8 +45,6 @@ private:
                            HEIGHT=290.0F*Setting::SCALE,
                            HB_OFFSET_X=-4.0F*Setting::SCALE,
                            HB_OFFSET_Y=-16.0F*Setting::SCALE;
-    static constexpr float WIDTH_OFFSET=-800.0F*Setting::SCALE,
-                           HEIGHT_OFFSET=-200.0F*Setting::SCALE;
 };
 }
 #endif

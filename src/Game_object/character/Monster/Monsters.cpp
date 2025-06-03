@@ -9,6 +9,8 @@
 #include "Game_object/effect/Unknown_particle_eff.hpp"
 #include "Game_object/effect/Stun_star_eff.hpp"
 #include "Game_object/effect/Effect_pool.hpp"
+#include "Game_object/effect_gen/Flash_intent_particle_gen.hpp"
+#include "Game_object/action/Effect_gen_capsule_action.hpp"
 #include "RUtil/Text_Vector_Reader.hpp"
 #include "RUtil/Image_book.hpp"
 #include "RUtil/Random.hpp"
@@ -20,7 +22,7 @@
 namespace Monster
 {
     static SETTING_CONSTEXPR float ORIGIN_X = Setting::WINDOW_WIDTH*0.75F,
-                                   ORIGIN_Y = Setting::WINDOW_HEIGHT*0.5F - 200.0F*Setting::SCALE;
+                                   FLOOR_Y = Setting::WINDOW_HEIGHT*0.5F - 200.0F*Setting::SCALE;
     static SETTING_CONSTEXPR float INTENT_HB_W=64.0F*Setting::SCALE;
 
     template <int N>
@@ -108,7 +110,7 @@ namespace Monster
         return IMG;
     }
 
-    static inline auto&INTENT_IMG(Intent intent){
+    static inline auto&INTENT_IMG(Intent intent, int amt=0){
         switch(intent){
             case Intent::buff:return INTENT_IMG<Intent::buff>();
             case Intent::debuff:return INTENT_IMG<Intent::debuff>();
@@ -121,6 +123,11 @@ namespace Monster
             case Intent::sleep:return INTENT_IMG<Intent::sleep>();
             case Intent::stun:return INTENT_IMG<Intent::stun>();
             case Intent::unknown:return INTENT_IMG<Intent::unknown>();
+            case Intent::attack:
+            case Intent::attack_buff:
+            case Intent::attack_debuff:
+            case Intent::attack_defend:
+                return ATK_INTENT_IMG(amt);
             default:
                 LOG_ERROR("Try to get intent_img with{}", static_cast<int>(intent));
                 return INTENT_IMG<Intent::buff>();
@@ -129,7 +136,7 @@ namespace Monster
 
     Monsters::Monsters(float offset_x, float offset_y, float width, float height, 
         float hb_offset_x, float hb_offset_y, int HP, const std::shared_ptr<Draw::ReTexture> &img)
-        :Character::Characters(Character::CharacterType::MONSTER, ORIGIN_X+offset_x, ORIGIN_Y+offset_y, width, height, hb_offset_x, hb_offset_y, HP),
+        :Character::Characters(Character::CharacterType::MONSTER, ORIGIN_X+offset_x*Setting::SCALE, FLOOR_Y+offset_y*Setting::SCALE+height/2.0F, width, height, hb_offset_x, hb_offset_y, HP),
         img(img),
         img_color_a(1.0F),
         dying_fade_timer(0.0F),
@@ -266,9 +273,9 @@ namespace Monster
     {
         //img
         r2->SetColor(RUtil::WHITE, img_color_a);
-        r2->draw(img, getAnimX()+orgX, getAnimY()+orgY, GetWidth(), GetHeight());
+        r2->draw(img, getAnimX()+orgX-GetWidth()/2.0F, getAnimY()+orgY-GetHeight()/2.0F, GetWidth(), GetHeight());
         //intent
-        if(!IsDie() && !IsInDyingFade()){
+        if(!IsDie() && !IsInDyingFade() && intent_a!=0.0F){
             //img & effs
             intent_back_effs.render(r2);
             r2->SetColor(RUtil::WHITE, intent_a);
@@ -283,6 +290,11 @@ namespace Monster
         render_HP_and_power(r2);
     }
 
+    void Monsters::flash_intent(Dungeon::Dungeon_shared &dungeon_shared){
+        intent_target_a=0.0F;
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_gen_capsule_action>(std::make_shared<EffectGen::Flash_intent_particle_gen>(intent_hb.CenterX()-static_cast<float>(move.intent_img->GetWidth())/2.0F, intent_hb.CenterY()-static_cast<float>(move.intent_img->GetHeight())/2.0F, move.intent_img), 1.5F));
+    }
+
     void Monsters::refresh_dmg_display(const Power::Power_group &player_powers){
         float dmg = static_cast<float>(move.base_damage);
         for(const auto&it:this->powers) dmg = it->calculate_damage_dealt(dmg);
@@ -294,12 +306,12 @@ namespace Monster
     }
 
     void Monsters::set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, int multiplier, const Power::Power_group &player_powers){
-        this->move=Move{move_name, INTENT_IMG(intent), intent, true, multiplier, base_damage, 0};
+        this->move=Move{move_name, INTENT_IMG(intent, base_damage*multiplier), intent, true, multiplier, base_damage, 0};
         set_move(player_powers);
     }
 
     void Monsters::set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, const Power::Power_group &player_powers){
-        this->move=Move{move_name, INTENT_IMG(intent), intent, false, 0, base_damage, 0};
+        this->move=Move{move_name, INTENT_IMG(intent, base_damage), intent, false, 0, base_damage, 0};
         set_move(player_powers);
     }
 

@@ -19,7 +19,7 @@ namespace Monster{
                 // TODO:shuffles 1 Slimed into the discard pile.
                 break;
             case AcidSlimeMAction::Lick:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Weakened, 1, shared_from_this(), dungeon_shared.player));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Weakened, 1, shared_from_this(), dungeon_shared.player, true));
                 break;
             case AcidSlimeMAction::Tackle:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{TACKLE_DAMAGE, shared_from_this(), AttackType::blunt_heavy}, dungeon_shared.player));

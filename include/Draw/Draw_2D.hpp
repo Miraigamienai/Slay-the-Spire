@@ -97,6 +97,7 @@ public:
         const float scale_x,const float scale_y,
         const bool flip_x,const bool flip_y);
 private:
+    bool check(const std::shared_ptr<ReTexture> &texture);
     void SwitchTexture(const std::shared_ptr<ReTexture> &texture);
     void flush();
     void SetCombine();

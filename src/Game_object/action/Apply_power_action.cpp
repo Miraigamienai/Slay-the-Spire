@@ -10,11 +10,12 @@
 
 namespace Action
 {
-    Apply_power_action::Apply_power_action(RUtil::Powers_Text_ID power_id,int amount, const std::shared_ptr<Character::Characters> &src, const std::shared_ptr<Character::Characters> &target)
+    Apply_power_action::Apply_power_action(RUtil::Powers_Text_ID power_id,int amount, const std::shared_ptr<Character::Characters> &src, const std::shared_ptr<Character::Characters> &target, bool skip_reduce_once)
         :power_id(power_id),
         amount(amount),
         src(src),
-        target(target)
+        target(target),
+        skip_reduce_once(skip_reduce_once)
     {
         duration=ACTION_DUR_FAST;
     }
@@ -51,6 +52,7 @@ namespace Action
             }else{
                 //not
                 power=Power::Power_creator::GetPowerByID(this->power_id);
+                if(skip_reduce_once) power->skip_reduce_once();
                 target->add_power(power);
             }
             power->add_amount(this->amount);
@@ -59,6 +61,7 @@ namespace Action
             power->flash();
             dungeon_shared.effs.AddTop(std::make_shared<Effect::Flash_power_eff>(target->GetcX(), target->GetcY(), power->region_128_id));
             dungeon_shared.refresh_display();
+            if(power->power_type==Power::PowerType::debuff) target->use_animation<Character::Animation::FAST_SHAKE>(0.5F);
         }
         TimeGo();
     }

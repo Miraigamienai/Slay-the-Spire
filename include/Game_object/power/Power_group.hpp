@@ -13,7 +13,7 @@
 //fwd decl
 namespace Draw{
     class Draw_2D;
-    class Atlas_Region;
+    class ReTexture;
 }
 
 namespace Power
@@ -25,7 +25,7 @@ public:
     ~Power_group()override=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float color_a)const;
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const;
-    void render_tip_with_other(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, const Draw::Text_box&other_box, const std::shared_ptr<Draw::Atlas_Region> &other_img)const;
+    void render_tip_with_other(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, const Draw::Text_box&other_box, const std::shared_ptr<Draw::ReTexture> &other_img)const;
     void update(){for(const auto&it:box)it->update();}
 
     //events

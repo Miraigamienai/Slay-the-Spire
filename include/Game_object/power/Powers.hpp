@@ -46,6 +46,7 @@ public:
             amount+=value;
         }
     }
+    void skip_reduce_once()noexcept{_skip_reduce_once=true;}
     void flash()noexcept{flash_a=0.5F; flash_scale=3.0F*Setting::SCALE; flash_timer=2.0F;}
     auto &get_name()const noexcept(noexcept(tip_box.get_title())){return tip_box.get_title();}
     auto &get_desc()const noexcept(noexcept(tip_box.get_body())){return tip_box.get_body();}
@@ -78,6 +79,7 @@ private:
     float font_scale;
     float color_a;
     float flash_timer, flash_scale, flash_a;
+    bool _skip_reduce_once;
     static Draw::NumberDrawer amount_drawer;
     static constexpr int FONTSIZE=22;
 public:

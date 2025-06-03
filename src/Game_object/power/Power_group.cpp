@@ -2,6 +2,7 @@
 #include "Draw/Text_layout.hpp"
 #include "Draw/Draw_2D.hpp"
 #include "Draw/Atlas_Region.hpp"
+#include "Draw/ReTexture.hpp"
 
 namespace Power{
     static constexpr float ICON_PADDING = 48.0F*Setting::SCALE;
@@ -45,13 +46,13 @@ namespace Power{
         }
     }
 
-    void Power_group::render_tip_with_other(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, const Draw::Text_box&other_box, const std::shared_ptr<Draw::Atlas_Region> &other_img)const{
+    void Power_group::render_tip_with_other(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, const Draw::Text_box&other_box, const std::shared_ptr<Draw::ReTexture> &other_img)const{
         const bool is_left = x > static_cast<float>(Setting::WINDOW_WIDTH)/2.0F;
         const float now_y = y + calculate_tip_height_with_other(other_box)/2.0F;
         float now_x = x;
         other_box.render(r2, now_x, now_y);
         r2->SetColor(RUtil::WHITE);
-        r2->draw(other_img, now_x + other_box.get_title()->GetWidth()*Setting::SCALE + Powers::POWER_ICON_OFFSET_X - (float)other_img->GetRegionWidth()/2.0F, now_y-(float)other_img->GetRegionHeight()/2.0F + Powers::POWER_ICON_OFFSET_Y, (float)other_img->GetRegionWidth(), (float)other_img->GetRegionHeight(), 0.0F, (float)other_img->GetRegionWidth()/2.0F, (float)other_img->GetRegionHeight()/2.0F, Setting::SCALE*0.75F, Setting::SCALE*0.75F);    
+        r2->draw(other_img, now_x + other_box.get_title()->GetWidth()*Setting::SCALE + Powers::POWER_ICON_OFFSET_X - (float)other_img->GetWidth()/2.0F, now_y-(float)other_img->GetHeight()/2.0F + Powers::POWER_ICON_OFFSET_Y, (float)other_img->GetWidth(), (float)other_img->GetHeight(), 0.0F, (float)other_img->GetWidth()/2.0F, (float)other_img->GetHeight()/2.0F, Setting::SCALE*0.75F, Setting::SCALE*0.75F);    
         
         float curr_h = other_box.get_body()->GetHeight()*Setting::SCALE + TIP_PADDING_Y;
         for(const auto&it:box){

@@ -8,9 +8,11 @@
 #include "Game_object/card/red/Barricade.hpp"//for test
 #include "Core/Context.hpp"
 #include "Game_object/character/Player.hpp"
-TheApp::TheApp(){
+TheApp::TheApp()
+    :current_state(State::INIT),
+    m_InitScreen(current_state)
+{
     m_dungeon=std::make_shared<Dungeon::Dungeons>(m_dungeon_shared,seed);
-    m_InitScreen=std::make_shared<InitScreen>(m_CurrentState);
     m_dungeon_shared.player=std::make_shared<Character::Player>();
     m_dungeon_shared.overlay.set_player_to_energy_panel(m_dungeon_shared.player);
     //card colors set 
@@ -32,11 +34,11 @@ TheApp::TheApp(){
         m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Barricade>());
 }
 void TheApp::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-    switch (m_CurrentState) {
-    case  AppStatus::State::INIT:
-        m_InitScreen->render(r2);
+    switch (current_state) {
+    case State::INIT:
+        m_InitScreen.render(r2);
         break;
-    case  AppStatus::State::PLAYING:
+    case State::PLAYING:
         m_dungeon->render(r2);
         break;
     default:
@@ -44,17 +46,14 @@ void TheApp::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
     }
 }
 void TheApp::update(){
-    switch (m_CurrentState) {
-    case AppStatus::State::INIT:
-        m_InitScreen->update();
-        if(m_InitScreen->GetCurrentState()!=AppStatus::State::INIT){
-            m_CurrentState=m_InitScreen->GetCurrentState();
-        }
+    switch (current_state) {
+    case State::INIT:
+        m_InitScreen.update();
         break;
-    case AppStatus::State::PLAYING:
+    case State::PLAYING:
         m_dungeon->update();
         if (m_dungeon->is_game_over()){ // there is a bug
-            m_CurrentState=AppStatus::State::INIT;
+            current_state=State::INIT;
             m_dungeon.reset();
             m_dungeon_shared.player.reset();
             m_dungeon=std::make_shared<Dungeon::Dungeons>(m_dungeon_shared,seed);
@@ -63,7 +62,7 @@ void TheApp::update(){
             
         }
         break;
-    case AppStatus::State::END:
+    case State::END:
         Core::Context::GetInstance()->SetExit(true);
         break;
     default:

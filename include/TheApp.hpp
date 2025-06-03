@@ -3,7 +3,13 @@
 #include "Game_object/dungeon/Dungeons.hpp"
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "InitScreen.hpp"
-#include "AppStatus.hpp"
+
+enum class State:int{
+    INIT,
+    PLAYING,
+    END
+};
+
 class TheApp {
 public:
     TheApp();
@@ -11,11 +17,11 @@ public:
     void update();
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
 private:
-    std::shared_ptr<InitScreen> m_InitScreen;
+    State current_state;
+    InitScreen m_InitScreen;
     Dungeon::Dungeon_shared m_dungeon_shared;
     std::shared_ptr<Dungeon::Dungeons> m_dungeon;
     unsigned long long int seed;
-    AppStatus::State m_CurrentState=AppStatus::State::INIT;
 };
 
 #endif

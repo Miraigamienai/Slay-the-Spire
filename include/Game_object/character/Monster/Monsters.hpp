@@ -35,8 +35,17 @@ public:
     void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void update()override;
-
+    void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const override{
+        if(intent_target_a!=0.0F){
+            intent_tip.get_body()->set_num_info(Draw::number_info{move.damage, 0, 0, Draw::NumStatus::blue});
+            powers.render_tip_with_other(r2, x, y, intent_tip, intent_tip_img);
+        }else{
+            powers.render_tip(r2, x, y);
+        }
+    }
+    void flash_intent(Dungeon::Dungeon_shared &dungeon_shared);
     void refresh_dmg_display(const Power::Power_group &player_powers);
+    bool TipHovered()const noexcept(noexcept(Characters::TipHovered())) override{return Characters::TipHovered()||intent_hb.Hovered();}
     bool IsInDyingFade()const noexcept{return dying_fade_timer!=0.0F;}
 protected:
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, int multiplier, const Power::Power_group &player_powers);

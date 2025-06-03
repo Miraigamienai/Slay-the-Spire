@@ -179,7 +179,6 @@ set(SRC_FILES
 )
 
 set(INCLUDE_FILES
-	AppStatus.hpp
 	Cursor.hpp
 	draw_test.hpp
 	InitScreen.hpp
@@ -303,6 +302,7 @@ set(INCLUDE_FILES
 	Game_object/effect/Exhaust_ember_eff.hpp
 	Game_object/effect/Fade_wide.hpp
 	Game_object/effect/Flash_attack_effect.hpp
+	Game_object/effect/Flash_intent_particle_eff.hpp
 	Game_object/effect/Flash_power_eff.hpp
 	Game_object/effect/Flying_spike_eff.hpp
 	Game_object/effect/Hammer_effect.hpp
@@ -327,6 +327,7 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Effect_gen_group.hpp
 	Game_object/effect_gen/Empower_circle_gen.hpp
 	Game_object/effect_gen/Exhaust_card_eff_gen.hpp
+	Game_object/effect_gen/Flash_intent_particle_gen.hpp
 	Game_object/effect_gen/Power_buff_debuff_gen.hpp
 	Game_object/effect_gen/Power_remove_text_gen.hpp
 	Game_object/effect_gen/Purge_card_eff_gen.hpp

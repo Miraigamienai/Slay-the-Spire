@@ -194,36 +194,39 @@ namespace Draw {
         flush();
         this->LastTexture=texture;
     }
+    bool Draw_2D::check(const std::shared_ptr<ReTexture> &texture){
+        if(!drawing){
+            LOG_ERROR("Please call begin() before draw()");
+            return false;
+        }
+        if(texture==nullptr){
+            throw std::invalid_argument("Try to draw a nullptr texture");
+            return false;
+        }
+        if(texture!=LastTexture) SwitchTexture(texture);
+        else if(idx==max_len) flush();
+        return true;
+    }
+    
     /*ここからはdrawの関数です*/
     
     void Draw_2D::draw(const std::shared_ptr<Image_Region> &RegionTexture,const float x,const float y){
-        draw(RegionTexture,x,y,RegionTexture->GetRegionWidth(),RegionTexture->GetRegionHeight());
+        draw(RegionTexture, x, y, RegionTexture->GetRegionWidth(), RegionTexture->GetRegionHeight());
     }
     void Draw_2D::draw(  const std::shared_ptr<Image_Region> &RegionTexture, 
-            const float x,const float y,
-            const float w,const float h){
-        if(!drawing){
-            LOG_ERROR("Please call begin() before draw()");
-        }else{
-            auto &texture=RegionTexture->GetTexture();
-            if(texture!=LastTexture)
-                SwitchTexture(texture);
-            else if(idx==max_len) 
-                flush();
-            SetVert(x,y,x+w,y+h,RegionTexture->GetU(),RegionTexture->GetV(),RegionTexture->GetU2(),RegionTexture->GetV2());
-        }               
+        const float x,const float y,
+        const float w,const float h)
+    {
+        if(check(RegionTexture->GetTexture()))
+            SetVert(x, y, x+w, y+h, RegionTexture->GetU(), RegionTexture->GetV(), RegionTexture->GetU2(), RegionTexture->GetV2());            
     }
     void Draw_2D::draw(const std::shared_ptr<Image_Region> &RegionTexture, 
-            const float x,const float y,
-            const float w,const float h,
-            const float rotate,const float origin_x,const float origin_y,
-            const float scale_x,const float scale_y){
-        if(!drawing){
-            LOG_ERROR("Please call begin() before draw()");
-        }else{
-            auto &texture=RegionTexture->GetTexture();
-            if(texture!=LastTexture) SwitchTexture(texture);
-            else if(idx==max_len) flush();
+        const float x,const float y,
+        const float w,const float h,
+        const float rotate,const float origin_x,const float origin_y,
+        const float scale_x,const float scale_y)
+    {
+        if(check(RegionTexture->GetTexture())){
             const float w_x=x+origin_x, w_y=y+origin_y;
             float v_x = -origin_x,  v_y = -origin_y,
                   v_x2= w-origin_x, v_y2= h-origin_y;
@@ -238,17 +241,13 @@ namespace Draw {
         }       
     }
     void Draw_2D::draw(const std::shared_ptr<Image_Region> &RegionTexture, 
-                const float x,const float y,
-                const float w,const float h,
-                const float rotate,const float origin_x,const float origin_y,
-                const float scale_x,const float scale_y,
-                const bool flip_x,const bool flip_y){
-        if(!drawing){
-            LOG_ERROR("Please call begin() before draw()");
-        }else{
-            auto &texture=RegionTexture->GetTexture();
-            if(texture!=LastTexture) SwitchTexture(texture);
-            else if(idx==max_len) flush();
+        const float x,const float y,
+        const float w,const float h,
+        const float rotate,const float origin_x,const float origin_y,
+        const float scale_x,const float scale_y,
+        const bool flip_x,const bool flip_y)
+    {
+        if(check(RegionTexture->GetTexture())){
             const float w_x=x+origin_x, w_y=y+origin_y;
             float v_x = -origin_x,  v_y = -origin_y,
                   v_x2= w-origin_x, v_y2= h-origin_y;
@@ -265,26 +264,37 @@ namespace Draw {
             else SetVert(v_x, v_y, v_x2, v_y2, w_x, w_y, rotate, u, v, u2, v2);
         }       
     }
-    void draw(  const std::shared_ptr<ReTexture> &texture, 
+    void Draw_2D::draw(  const std::shared_ptr<ReTexture> &texture, 
         const float x,const float y,
         const float w,const float h,
         const float rotate,const float origin_x,const float origin_y,
         const float scale_x,const float scale_y,
         const bool flip_x,const bool flip_y)
     {
-
+        if(check(texture)){
+            const float w_x=x+origin_x, w_y=y+origin_y;
+            float v_x = -origin_x,  v_y = -origin_y,
+                  v_x2= w-origin_x, v_y2= h-origin_y;
+            if (scale_x != 1.0F || scale_y != 1.0F) {
+                v_x *= scale_x;
+                v_y *= scale_y;
+                v_x2 *= scale_x;
+                v_y2 *= scale_y;
+            }
+            float u=0.0F, u2=1.0F, v=0.0F, v2=1.0F;
+            if(flip_x) std::swap(u, u2);
+            if(flip_y) std::swap(v, v2);
+            if(rotate==0.0F) SetVert(v_x+w_x, v_y+w_y, v_x2+w_x, v_y2+w_y, u, v, u2, v2);
+            else SetVert(v_x, v_y, v_x2, v_y2, w_x, w_y, rotate, u, v, u2, v2);
+        }    
     }
-    
     void Draw_2D::draw(const std::shared_ptr<ReTexture> &texture, 
-                const float x,const float y,
-                const float w,const float h,
-                const float rotate,const float origin_x,const float origin_y,
-                const float scale_x,const float scale_y){
-        if(!drawing){
-            LOG_ERROR("Please call begin() before draw()");
-        }else{
-            if(texture!=LastTexture) SwitchTexture(texture);
-            else if(idx==max_len) flush();
+        const float x,const float y,
+        const float w,const float h,
+        const float rotate,const float origin_x,const float origin_y,
+        const float scale_x,const float scale_y)
+    {
+        if(check(texture)){
             const float w_x=x+origin_x, w_y=y+origin_y;
             float v_x = -origin_x,  v_y = -origin_y,
                   v_x2= w-origin_x, v_y2= h-origin_y;
@@ -299,17 +309,14 @@ namespace Draw {
         }
     }
     void Draw_2D::draw(const std::shared_ptr<ReTexture> &texture, const float x,const float y){
-        draw(texture,x,y,texture->GetWidth(),texture->GetHeight());
+        draw(texture, x, y, texture->GetWidth(), texture->GetHeight());
     }
     void Draw_2D::draw(  const std::shared_ptr<ReTexture> &texture, 
-                const float x,const float y,
-                const float w,const float h){
-        if(!drawing){
-            LOG_ERROR("Please call begin() before draw()");
-        }else{
-            if(texture!=LastTexture) SwitchTexture(texture);
-            else if(idx==max_len) flush();
-            SetVert(x,y,x+w,y+h,0.0F,0.0F,1.0F,1.0F);
+        const float x,const float y,
+        const float w,const float h)
+    {
+        if(check(texture)){
+            SetVert(x, y, x+w, y+h, 0.0F, 0.0F, 1.0F, 1.0F);
         }
     }
     //only work to rotate==0.0F

@@ -19,7 +19,7 @@ namespace Monster{
                 //TODO: shuffles 1 Slimed into the discard pile.
                 break;
             case SpikeSlimeMAction::Lick:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Frail, 1, shared_from_this(), dungeon_shared.player));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Frail, 1, shared_from_this(), dungeon_shared.player, true));
                 break;
             default:
                 break;

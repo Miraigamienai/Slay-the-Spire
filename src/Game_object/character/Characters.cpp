@@ -132,7 +132,7 @@ namespace Character{
         if(HP_show_timer>0.0F){
             HP_show_timer-=DT();
             if(HP_show_timer<0.0F) HP_show_timer=0.0F;
-            const float hp_t=1.0F - HP_show_timer/HP_ANIM_TIME;
+            const float hp_t=1.0F - HP_show_timer/HP_SHOW_TIME;
             HP_hb_a=RUtil::Math::interpolation_fade(0.0F, 1.0F, hp_t);
             HP_offset_y=RUtil::Math::interpolation_exp10out(HP_START_OFFSET_Y, 0.0F, hp_t);
         }

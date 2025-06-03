@@ -11,8 +11,9 @@
 #include "RUtil/Game_Input.hpp"
 #include "Game_object/effect/Fade_wide.hpp"
 #include "Draw/Fonts.hpp"
+#include "TheApp.hpp"
 
-InitScreen::InitScreen(AppStatus::State &states): m_CurrentState(states) {
+InitScreen::InitScreen(State &states): m_CurrentState(states), m_NextState(State::INIT) {
     Create();
     fadeTimer=fadeTime;
 }
@@ -111,20 +112,20 @@ void InitScreen::update(){
         if( x>m_TextPos[i].x && x<m_TextPos[i].x+TextScale[i].x && 
             y>m_TextPos[i].y && y<m_TextPos[i].y+TextScale[i].y){
             if(RUtil::Game_Input::just_released()){
-                m_NextState=AppStatus::State(i+1);
+                m_NextState=State(i+1);
                 IsFadeOut=true;
             }
         }
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE)) {
-        m_CurrentState = AppStatus::State::END;
+        m_CurrentState = State::END;
     }
     if(IsFadeOut){
         fadeTimer-=RUtil::Game_Input::delta_time();
         FadeColorA = RUtil::Math::interpolation_fade(1.0F,0.0F,fadeTimer/fadeTime);
     }
-    if(m_NextState==AppStatus::State::END){
-        m_CurrentState=AppStatus::State::END;
+    if(m_NextState==State::END){
+        m_CurrentState=State::END;
     }
 
 }

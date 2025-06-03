@@ -25,7 +25,8 @@ namespace Power
     color_a(1.0F),
     flash_timer(0.0F),
     flash_scale(0.0F),
-    flash_a(0.0F)
+    flash_a(0.0F),
+    _skip_reduce_once(false)
     {}
 
     void Powers::render_img(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float color_a)const{
@@ -75,6 +76,11 @@ namespace Power
     }
 
     void Powers::at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target){
+        if(_skip_reduce_once){
+            _skip_reduce_once=false;
+            return;
+        }
+
         if(reduce_each_turn){
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Reduce_power_action>(shared_from_this(), target));
         }

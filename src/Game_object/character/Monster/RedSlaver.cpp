@@ -25,7 +25,7 @@ namespace Monster{
             case RedSlaverAction::Scrape:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{SCRAPE_DAMAGE, shared_from_this(), AttackType::slash_diagonal}, dungeon_shared.player));
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Vulnerable, 1, shared_from_this(), dungeon_shared.player));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Vulnerable, 1, shared_from_this(), dungeon_shared.player, true));
                 break;
             default:
                 break;

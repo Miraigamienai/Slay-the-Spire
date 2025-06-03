@@ -15,7 +15,7 @@ namespace Monster{
     void RedLouse::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){
             case RedLouseAction::Grow:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, 3, shared_from_this(), shared_from_this()));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, 3, shared_from_this(), shared_from_this(), true));
                 break;
             case RedLouseAction::Bite:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));

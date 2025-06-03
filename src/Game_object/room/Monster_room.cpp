@@ -39,6 +39,9 @@ void Monster_room::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
     if(tip_character!=nullptr) tip_character->render_tip(r2);
 }
 void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
+    dungeon_shared.room_monsters.update();
+    dungeon_shared.player->update();
+    
     if(ending_battle){
         if(ending_battle_timer>0.0F){
             ending_battle_timer-=RUtil::Game_Input::delta_time();
@@ -50,11 +53,9 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         return;
     }
 
-    dungeon_shared.room_monsters.update();
-    dungeon_shared.player->update();
     if(!dungeon_shared.card_group_handler.is_dragging()){
-        if(dungeon_shared.player->hovered()) tip_character=dungeon_shared.player;
-        else tip_character=dungeon_shared.room_monsters.GetHoveredMonster();
+        if(dungeon_shared.player->TipHovered()) tip_character=dungeon_shared.player;
+        else tip_character=dungeon_shared.room_monsters.GetTipHoveredMonster();
     }else{
         tip_character=nullptr;
     }
@@ -80,14 +81,20 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             dungeon_shared.action_group_handler.update(dungeon_shared);
         }
         if(m_wait_timer<=0.0F){//ready to start turn
+            //update move
+            dungeon_shared.room_monsters.next_move(dungeon_shared);
+            //update turn cnt
             ++turn_count;
-            if(turn_count==1){
+            if(turn_count==1){//at start of battle
                 dungeon_shared.overlay.show_combat_panel();
+                //show hp
+                dungeon_shared.room_monsters.ShowHP();
+                dungeon_shared.player->ShowHP();
             }else{
                 //show intent
                 dungeon_shared.top_effs.AddTop(std::make_shared<Effect::Player_turn_eff>(dungeon_fade_color, turn_count));
             }
-
+            //gain energy
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_energy_action>(dungeon_shared.player->GetMaxEnergy()));
             //temporary 5
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));
@@ -101,6 +108,8 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
     //check does battle end
     if(dungeon_shared.room_monsters.IsAllDie() && dungeon_shared.action_group_handler.is_nothing_to_do()){
         ending_battle=true;
+        tip_character=nullptr;
+        dungeon_shared.player->clear_power();
         dungeon_shared.overlay.hide_combat_panel();
         // card_group_handler.on_ending_battle();
         

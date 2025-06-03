@@ -5,11 +5,13 @@
 
 #include "Draw/Draw_2D.hpp"
 #include "Draw/ReText.hpp"
-#include "AppStatus.hpp"
+
+//fwd decl
+enum class State:int;
 
 class InitScreen {
 public:
-    InitScreen(AppStatus::State &states);
+    InitScreen(State &states);
     ~InitScreen()=default;
 
     void CreateLogo();
@@ -21,10 +23,8 @@ public:
     void Create();
     void render(const std::shared_ptr<Draw::Draw_2D> &Draw2D) const;
     void update();
-    AppStatus::State GetCurrentState() const { return m_CurrentState; }
-
 private:
-    AppStatus::State &m_CurrentState;
+    State &m_CurrentState;
     std::shared_ptr<Draw::Image_Region> LogoImg;
     glm::vec2 LogoPos,LogoSize;
     std::vector <std::shared_ptr<Draw::Image_Region>> BlackCloudImg;
@@ -63,7 +63,7 @@ private:
     bool IsFadeOut=false;
     float fadeTimer,FadeColorA;
     const float fadeColor=0.0F,fadeTime=1.5F;
-    AppStatus::State m_NextState=AppStatus::State::INIT;
+    State m_NextState;
 
 };
 

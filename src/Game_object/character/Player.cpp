@@ -5,7 +5,7 @@
 
 namespace Character{
     Player::Player()
-        :Characters(CharacterType::PLAYER, Setting::WINDOW_WIDTH*0.5F+WIDTH_OFFSET, Setting::WINDOW_HEIGHT*0.5F+HEIGHT_OFFSET, WIDTH, HEIGHT, 0.0F, 0.0F, 80),
+        :Characters(CharacterType::PLAYER, Setting::WINDOW_WIDTH*0.25F, Setting::WINDOW_HEIGHT*0.5F - 200.0F*Setting::SCALE + HEIGHT/2.0F, WIDTH, HEIGHT, 0.0F, 0.0F, 80),
         player_type(PlayerType::Ironclad),
         max_energy(3),
         current_energy(max_energy),
@@ -15,9 +15,9 @@ namespace Character{
     {
         r2->SetColor(RUtil::WHITE, 1.0F);
         if(IsDie()){
-            r2->draw(img_died, getAnimX()+orgX, getAnimY()+orgY, WIDTH, HEIGHT); 
+            r2->draw(img_died, getAnimX()+orgX-WIDTH/2.0F, getAnimY()+orgY-HEIGHT/2.0F, WIDTH, HEIGHT); 
         }else{
-            r2->draw(img, getAnimX()+orgX, getAnimY()+orgY, WIDTH, HEIGHT); 
+            r2->draw(img, getAnimX()+orgX-WIDTH/2.0F, getAnimY()+orgY-HEIGHT/2.0F, WIDTH, HEIGHT); 
             render_HP_and_power(r2);
         }
     }

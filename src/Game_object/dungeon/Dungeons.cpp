@@ -11,10 +11,16 @@
 #include "Game_object/reward_item/Card_reward_item.hpp"
 #include "Game_object/card/Card_generate.hpp"
 #include "RUtil/Random.hpp"//rng
+#include "TheApp.hpp"
 
 #include "Util/Logger.hpp"
+
 namespace Dungeon{
-    Dungeons::Dungeons(Dungeon_shared &dungeon_shared,unsigned long long int random_seed):dungeon_shared(dungeon_shared),random_seed(random_seed){
+    Dungeons::Dungeons(Dungeon_shared &dungeon_shared, unsigned long long int random_seed, State&state)
+        :dungeon_shared(dungeon_shared),
+        state(state),
+        random_seed(random_seed)
+    {
         scene=std::make_shared<Scene::Bottom_scene>();
         scene->next_room();
         m_map=Map::Map_generator::Get_Map(15,7,6,dungeon_shared.random_package.map_rng);
@@ -23,7 +29,6 @@ namespace Dungeon{
         set_next_node_oscillate_and_edge(true);
         is_fade_in=is_fade_out=false;
         fade_color_a=0.0F;
-        game_over=false;
     }
     void Dungeons::update(){
         //gen update
@@ -40,7 +45,6 @@ namespace Dungeon{
                 this->on_room_complete();
             }
         }
-        if(dungeon_shared.player->IsDie()) game_over=true;
         //card update
         dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared);
         dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.top_effs);//for test
@@ -48,6 +52,19 @@ namespace Dungeon{
         dungeon_shared.overlay.update(dungeon_shared.card_group_handler);
         //manager update
         dungeon_shared.manager.update(dungeon_shared);
+        if(dungeon_shared.manager.BackToInitScreen()){
+            state=State::GameOver;
+            dungeon_shared.effs.clear();
+            dungeon_shared.back_effs.clear();
+            dungeon_shared.top_effs.clear();
+            dungeon_shared.gen_group.clear();
+            dungeon_shared.action_group_handler.clear();
+            dungeon_shared.card_group_handler.clear<Card::GroupType::master_deck>();
+            // overlay
+            // manager
+            dungeon_shared.room_monsters.clear();
+            return;
+        }
         //check room in or room out
         if(!is_fade_in&&!is_fade_out){
             if(!next_node_is_making_circle){
@@ -71,7 +88,6 @@ namespace Dungeon{
                 }
             }
         }
-        
     }
     void Dungeons::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         //TODO:black screen control

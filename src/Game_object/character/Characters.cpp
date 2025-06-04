@@ -73,7 +73,7 @@ namespace Character{
             }
         }
     }
-    
+
     void Characters::render_reticle(const std::shared_ptr<Draw::Draw_2D> &r2, float center_x, float center_y, float width, float height, float time){
         static SETTING_CONSTEXPR auto RETICLE_OFFSET_DIST = 15.0F*Setting::SCALE;
         const float alpha = time<1.0F/3.0F ? time*3.0F : 1.0F;

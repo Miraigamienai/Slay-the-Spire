@@ -2,6 +2,7 @@ set(SRC_FILES
 	Cursor.cpp
 	draw_test.cpp
 	InitScreen.cpp
+	InitScreenBackground.cpp
 	main.cpp
 	Programs.cpp
 	TheApp.cpp
@@ -33,7 +34,9 @@ set(SRC_FILES
 	Game_object/button/Cancel_button.cpp
 	Game_object/button/Confirm_button.cpp
 	Game_object/button/End_turn_button.cpp
+	Game_object/button/Menu_button.cpp
 	Game_object/button/Proceed_button.cpp
+	Game_object/button/Return_to_start_button.cpp
 	Game_object/button/Skip_button.cpp
 	Game_object/card/Cards.cpp
 	Game_object/card/Card_generate.cpp
@@ -72,6 +75,7 @@ set(SRC_FILES
 	Game_object/character/Monster/SpikeSlimeS.cpp
 	Game_object/character/Monster/WizardGremlin.cpp
 	Game_object/dungeon/Combat_reward_screen.cpp
+	Game_object/dungeon/Death_screen.cpp
 	Game_object/dungeon/Dungeons.cpp
 	Game_object/dungeon/Dungeon_manager.cpp
 	Game_object/dungeon/Dungeon_screen.cpp
@@ -182,6 +186,7 @@ set(INCLUDE_FILES
 	Cursor.hpp
 	draw_test.hpp
 	InitScreen.hpp
+	InitScreenBackground.hpp
 	Programs.hpp
 	TheApp.hpp
 	WindowSize.hpp
@@ -227,7 +232,9 @@ set(INCLUDE_FILES
 	Game_object/button/Cancel_button.hpp
 	Game_object/button/Confirm_button.hpp
 	Game_object/button/End_turn_button.hpp
+	Game_object/button/Menu_button.hpp
 	Game_object/button/Proceed_button.hpp
+	Game_object/button/Return_to_start_button.hpp
 	Game_object/button/Skip_button.hpp
 	Game_object/card/Cards.hpp
 	Game_object/card/Card_generate.hpp
@@ -268,6 +275,7 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/SpikeSlimeS.hpp
 	Game_object/character/Monster/WizardGremlin.hpp
 	Game_object/dungeon/Combat_reward_screen.hpp
+	Game_object/dungeon/Death_screen.hpp
 	Game_object/dungeon/Dungeons.hpp
 	Game_object/dungeon/Dungeon_manager.hpp
 	Game_object/dungeon/Dungeon_screen.hpp

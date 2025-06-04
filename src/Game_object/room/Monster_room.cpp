@@ -42,6 +42,11 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
     dungeon_shared.room_monsters.update();
     dungeon_shared.player->update();
     
+    if(dungeon_shared.player->IsDie()){
+        tip_character=nullptr;
+        return;
+    }
+
     if(ending_battle){
         if(ending_battle_timer>0.0F){
             ending_battle_timer-=RUtil::Game_Input::delta_time();

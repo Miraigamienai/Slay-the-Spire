@@ -84,6 +84,10 @@ public:
         }
     }
     template <GroupType GT>
+    void clear(){
+        this->GetCards<GT>().clear();
+    }
+    template <GroupType GT>
     void erase(const std::shared_ptr<Cards> &card){
         this->GetCards<GT>().erase(card);
     }

@@ -7,7 +7,6 @@
 #include "Game_object/effect/Auto_release_pool_manager.hpp"
 
 int main(int, char**) {
-    srand(static_cast<unsigned int>(time(0)));//set the rand seed,it will affect the entire program.
     auto context = Core::Context::GetInstance();
     context->SetWindowIcon(RESOURCE_DIR"/Image/assets/icon.png");
     SDL_ShowCursor(SDL_DISABLE);

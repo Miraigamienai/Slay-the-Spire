@@ -4,17 +4,18 @@
 #include "RUtil/Weighted_index_picker.hpp"
 
 namespace Monster{
-enum class GremlinNobAction
+enum class TheGuardianAction
 {
-    Bellow,
-    Rush,
-    SkullBash
+    ChargingUp,
+    FierceBash,
+    VentSteam,
+    Whirlwind
 };
-class GremlinNob final:public Abstraction::Monster_move_tracker<2, GremlinNobAction>
+class TheGuardian final:public Abstraction::Monster_move_tracker<2, TheGuardianAction>
 {
 public:
-    GremlinNob(float offset_x, float offset_y, RUtil::Random& rng);
-    ~GremlinNob()override=default;
+    TheGuardian(float offset_x, float offset_y, RUtil::Random& rng);
+    ~TheGuardian()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
@@ -23,8 +24,8 @@ private:
                            HEIGHT=170.0F*Setting::SCALE,
                            HB_OFFSET_X=0.0F,
                            HB_OFFSET_Y=-25.0F*Setting::SCALE;
-    static constexpr int MAX_HP=86,
-                         MIN_HP=82,
+    static constexpr int MAX_HP=240,
+                         MIN_HP=240,
                          SKULL_BASH_DAMAGE=6,
                          SKULL_BASH_VULNERABLE=2,
                          RUSH_DAMAGE=14,

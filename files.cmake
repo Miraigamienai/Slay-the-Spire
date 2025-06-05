@@ -62,6 +62,7 @@ set(SRC_FILES
 	Game_object/character/Monster/FatGremlin.cpp
 	Game_object/character/Monster/FungiBeast.cpp
 	Game_object/character/Monster/GreenLouse.cpp
+	Game_object/character/Monster/GremlinNob.cpp
 	Game_object/character/Monster/JawWorm.cpp
 	Game_object/character/Monster/Looter.cpp
 	Game_object/character/Monster/MadGremlin.cpp
@@ -139,7 +140,7 @@ set(SRC_FILES
 	Game_object/panel/Energy_panel.cpp
 	Game_object/panel/Panels.cpp
 	Game_object/power/Powers.cpp
-	Game_object/power/Power_creator.cpp
+	Game_object/power/Power_creator.cpp 
 	Game_object/power/Power_group.cpp
 	Game_object/power/Weak_power.cpp
 	Game_object/reward_item/Card_reward.cpp
@@ -262,6 +263,7 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/FatGremlin.hpp
 	Game_object/character/Monster/FungiBeast.hpp
 	Game_object/character/Monster/GreenLouse.hpp
+	Game_object/character/Monster/GremlinNob.hpp
 	Game_object/character/Monster/JawWorm.hpp
 	Game_object/character/Monster/Looter.hpp
 	Game_object/character/Monster/MadGremlin.hpp

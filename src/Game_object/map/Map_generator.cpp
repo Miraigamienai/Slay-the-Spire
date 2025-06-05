@@ -101,12 +101,14 @@ void Map_generator::AssignRoom(const std::vector<std::vector<std::shared_ptr<Map
     for(size_t i=0;i<map.size();i++){
         for(size_t j=0;j<map[i].size();j++){
             if(map[i][j]==nullptr) continue;
-            if(i==0)
+            if(i==2)
                 map[i][j]->SetRoom(std::make_shared<Room::Rest_room>());
             else if(i==5)
                 map[i][j]->SetRoom(std::make_shared<Room::Shop_room>());
-            else if(i==2 || i==7 || i==11)
+            else if(i==8)
                 map[i][j]->SetRoom(std::make_shared<Room::Rest_room>());
+            else if(i==11)
+                map[i][j]->SetRoom(std::make_shared<Room::Treasure_room>());
             else
                 map[i][j]->SetRoom(std::make_shared<Room::Monster_room>());
         }

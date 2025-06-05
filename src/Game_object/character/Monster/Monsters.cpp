@@ -34,8 +34,7 @@ namespace Monster
         this->max_HP=max-int(RUtil::Random::GetRandomFloat(0.0F,max-min+1));
         this->current_HP=max_HP;
     } // namespace Monster
-    void Monsters::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
-    {
+    void Monsters::render(const std::shared_ptr<Draw::Draw_2D> &r2) const {
         if(IsFadeOut){
             r2->SetColor(-1,FadeColorA);
             r2->draw(img,getPosition().x,getPosition().y,GetWidth(),GetHeight()); 

@@ -20,10 +20,10 @@
 #include "Util/Logger.hpp"//LOG_ERROR
 
 namespace Room{
-Monster_room::Monster_room()
+Monster_room::Monster_room(Monster::GroupName group_name)
     :Rooms(Room_type::Monster),
+    m_group_name(group_name),
     m_wait_timer(0.0F),
-    m_group_name(Monster::GroupName::Jaw_Worm),
     ending_battle(false),
     ending_battle_timer(0.25F),
     dungeon_fade_color(RUtil::BLACK),

@@ -19,7 +19,7 @@ public:
     ~Dungeon_screen()=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void update(Dungeon_shared &dungeon_shared) override;
-    void set_display_map(const std::vector<std::vector<std::shared_ptr<Map::Map_node>>>&map);
+    void set_display_map(const std::vector<std::vector<std::shared_ptr<Map::Map_node>>>&map, const std::shared_ptr<Draw::ReTexture> &boss_icon, const std::shared_ptr<Draw::ReTexture> &boss_outline);
     void hide_instantly(){the_map.hide_instantly();}
     void open();
 private:

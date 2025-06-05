@@ -8,11 +8,13 @@ public:
     Dungeon_map(const float &screen_offsetY,const bool &on_top);
     ~Dungeon_map()=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
+    void render_boss_icon(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void show();
     // void hide();
     void hide_instantly();
     void update();
     float get_alpha()const{return map_a;}
+    void set_boss(const std::shared_ptr<Draw::ReTexture> &boss_icon, const std::shared_ptr<Draw::ReTexture> &boss_outline)noexcept{this->boss_icon=boss_icon;this->boss_outline=boss_outline;}
     const auto &GetLegend()const{return legend;}
 private:
     float map_a,map_offsetY,map_target_a,map_mid_pos;
@@ -20,6 +22,7 @@ private:
     RUtil::Hitbox boss_hitbox;
     bool at_boss;
     Uint32 boss_node_color_rgb;
+    std::shared_ptr<Draw::ReTexture> boss_icon=nullptr, boss_outline=nullptr;
     const float &screen_offsetY;
     const bool &on_top;
     static constexpr float H = 1020.0F * Setting::SCALE;
@@ -28,7 +31,6 @@ private:
     static constexpr float BOSS_L = 512.0F * Setting::SCALE;
     static constexpr float BOSS_OFFSET_Y = 1416.0F * Setting::SCALE;
     static const std::shared_ptr<Draw::ReTexture> &map_top,&map_mid,&map_bottom,&map_blend;
-
 };
 }
 #endif

@@ -5,17 +5,77 @@
 #include "Game_object/map/Map_node.hpp"
 #include "Game_object/map/Map_edge.hpp"
 #include "Game_object/character/Player.hpp"
+#include "Game_object/character/Monster_group_creater.hpp"
 #include "Game_object/effect/Effect_group.hpp"
 #include "Game_object/map/Map_generator.hpp"//generate map
 #include "Game_object/scene/Scenes.hpp"
 #include "Game_object/reward_item/Card_reward_item.hpp"
 #include "Game_object/card/Card_generate.hpp"
 #include "RUtil/Random.hpp"//rng
+#include "RUtil/Probability_selector.hpp"
+#include "RUtil/Image_book.hpp"
 #include "TheApp.hpp"
 
 #include "Util/Logger.hpp"
 
 namespace Dungeon{
+    static constexpr auto ROOM_PROBABILITY = RUtil::make_probability_selector(
+        std::array{
+            std::pair{Room::Room_type::Elite, 0.08F},
+            std::pair{Room::Room_type::Event, 0.22F},
+            std::pair{Room::Room_type::Rest, 0.12F},
+            std::pair{Room::Room_type::Shop, 0.05F},
+            std::pair{Room::Room_type::Monster, 0.53F}
+        }
+    );
+    static constexpr auto WEAK_MONSTER_PROBABILITY = RUtil::make_probability_selector(
+        std::array{
+            std::pair{Monster::GroupName::Cultist, 2.0F},
+            std::pair{Monster::GroupName::Jaw_Worm, 2.0F},
+            std::pair{Monster::GroupName::_2_Louse, 2.0F},
+            std::pair{Monster::GroupName::Small_Slimes, 2.0F}
+        }
+    );
+    static constexpr auto STRONG_MONSTER_PROBABILITY = RUtil::make_probability_selector(
+        std::array{
+            std::pair{Monster::GroupName::Blue_Slaver, 2.0F},
+            std::pair{Monster::GroupName::Gremlin_Gang, 1.0F},
+            std::pair{Monster::GroupName::Looter, 2.0F},
+            std::pair{Monster::GroupName::Large_Slime, 2.0F},
+            std::pair{Monster::GroupName::Lots_of_Slimes, 1.0F},
+            std::pair{Monster::GroupName::Exordium_Thugs, 1.5F},
+            std::pair{Monster::GroupName::Exordium_Wildlife, 1.5F},
+            std::pair{Monster::GroupName::Red_Slaver, 1.0F},
+            std::pair{Monster::GroupName::_3_Louse, 2.0F},
+            std::pair{Monster::GroupName::_2_Fungi_Beasts, 2.0F},
+        }
+    );
+    static constexpr auto ELITE_PROBABILITY = RUtil::make_probability_selector(
+        std::array{
+            std::pair{Monster::GroupName::Gremlin_Nob, 1.0F},
+            std::pair{Monster::GroupName::Lagavulin, 1.0F},
+            std::pair{Monster::GroupName::_3_Sentries, 1.0F}
+        }
+    );
+    static constexpr auto BOSS_PROBABILITY = RUtil::make_probability_selector(
+        std::array{
+            std::pair{Monster::GroupName::The_Guardian, 1.0F},
+            std::pair{Monster::GroupName::Hexaghost, 1.0F},
+            std::pair{Monster::GroupName::Slime_Boss, 1.0F}
+        }
+    );
+
+    static inline auto &GetBossImage(Monster::GroupName boss_name, const std::string&folder_str){
+        switch(boss_name){
+            case Monster::GroupName::The_Guardian:return RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/" + folder_str + "/guardian.png");
+            case Monster::GroupName::Hexaghost:return RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/" + folder_str + "/hexaghost.png");
+            case Monster::GroupName::Slime_Boss:return RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/" + folder_str + "/slime.png");
+            default:
+                LOG_ERROR("ERROR BOSS ENUM");
+                return RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/" + folder_str + "/slime.png");
+        }
+    }
+
     Dungeons::Dungeons(Dungeon_shared &dungeon_shared, unsigned long long int random_seed, State&state)
         :dungeon_shared(dungeon_shared),
         state(state),
@@ -24,7 +84,10 @@ namespace Dungeon{
         scene=std::make_shared<Scene::Bottom_scene>();
         scene->next_room();
         m_map=Map::Map_generator::Get_Map(15,7,6,dungeon_shared.random_package.map_rng);
-        dungeon_shared.manager.set_display_map(m_map);
+        Map::Map_generator::AssignRoom(m_map, ROOM_PROBABILITY, WEAK_MONSTER_PROBABILITY, STRONG_MONSTER_PROBABILITY, ELITE_PROBABILITY, dungeon_shared.random_package.map_rng);
+        auto boss=BOSS_PROBABILITY(dungeon_shared.random_package.map_rng);
+        dungeon_shared.manager.set_display_map(m_map, GetBossImage(boss, "boss"), GetBossImage(boss, "bossOutline"));
+        dungeon_shared.manager.open<Abstraction::ScreenType::main_dungeon>();
         m_current_node=nullptr;
         set_next_node_oscillate_and_edge(true);
         is_fade_in=is_fade_out=false;
@@ -112,11 +175,11 @@ namespace Dungeon{
                 if(it!=nullptr) it->SetReadyToConnect(value);
         }else{
             m_current_node->MarkAllEdge(value);
-            if(m_current_node->CanMoveRight())
+            if(m_current_node->HasEdge(Map::Direction::right))
                 m_map[m_current_node->y+1][m_current_node->x+1]->SetReadyToConnect(value);
-            if(m_current_node->CanMoveMiddle())
+            if(m_current_node->HasEdge(Map::Direction::middle))
                 m_map[m_current_node->y+1][m_current_node->x]->SetReadyToConnect(value);
-            if(m_current_node->CanMoveLeft())
+            if(m_current_node->HasEdge(Map::Direction::left))
                 m_map[m_current_node->y+1][m_current_node->x-1]->SetReadyToConnect(value);
         }
     }
@@ -128,13 +191,13 @@ namespace Dungeon{
                     return true;
                 }
         }else{
-            if(m_current_node->CanMoveRight() && m_map[m_current_node->y+1][m_current_node->x+1]->IsMakingCircle()){
+            if(m_current_node->HasEdge(Map::Direction::right) && m_map[m_current_node->y+1][m_current_node->x+1]->IsMakingCircle()){
                 m_next_node=m_map[m_current_node->y+1][m_current_node->x+1];
                 return true;
-            }else if(m_current_node->CanMoveMiddle() && m_map[m_current_node->y+1][m_current_node->x]->IsMakingCircle()){
+            }else if(m_current_node->HasEdge(Map::Direction::middle) && m_map[m_current_node->y+1][m_current_node->x]->IsMakingCircle()){
                 m_next_node=m_map[m_current_node->y+1][m_current_node->x];
                 return true;
-            }else if(m_current_node->CanMoveLeft() && m_map[m_current_node->y+1][m_current_node->x-1]->IsMakingCircle()){
+            }else if(m_current_node->HasEdge(Map::Direction::left) && m_map[m_current_node->y+1][m_current_node->x-1]->IsMakingCircle()){
                 m_next_node=m_map[m_current_node->y+1][m_current_node->x-1];
                 return true;
             }

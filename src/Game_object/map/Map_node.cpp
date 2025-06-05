@@ -16,7 +16,11 @@
 
 namespace Map{
 //mikannsei
-Map_node::Map_node(int x,int y):x(x),y(y),hb(64.0F*Setting::SCALE,64.0F*Setting::SCALE){
+Map_node::Map_node(int x,int y)
+    :x(x), y(y),
+    hb(64.0F*Setting::SCALE,64.0F*Setting::SCALE),
+    edges{}
+{
     this->offset_x=(float)((int)RUtil::Random::GetRandomFloat(-JITTER_X, JITTER_X));
     this->offset_y=(float)((int)RUtil::Random::GetRandomFloat(-JITTER_Y, JITTER_Y));
     color=NOT_TAKEN_COLOR;
@@ -24,7 +28,7 @@ Map_node::Map_node(int x,int y):x(x),y(y),hb(64.0F*Setting::SCALE,64.0F*Setting:
     color_a=1.0F;
     m_angle=RUtil::Random::GetRandomFloat(0.0F,360.0F);
     oscillate_timer=RUtil::Random::GetRandomFloat(0.0F,glm::two_pi<float>());
-    taken=right=left=middle=to_boss=is_ready_to_connect=highlight=making_circle=made_circle=false;
+    taken=to_boss=is_ready_to_connect=highlight=making_circle=made_circle=false;
     anim_wait_timer=0.0F;
 }
 void Map_node::update(const float screen_offset,const bool is_dungeon_now_room_complete,const bool on_top,Effect::Effect_group &top_effs){
@@ -77,7 +81,7 @@ void Map_node::oscillate(){
 }
 void Map_node::render(const std::shared_ptr<Draw::Draw_2D> &r2,const float screen_offset,const float map_a)const{
     for(const std::shared_ptr<Map_edge> &it:edges){
-        it->render(r2,screen_offset);
+        if(it!=nullptr) it->render(r2,screen_offset);
     }
     if(*legend_hovered){
         r2->SetColor(RUtil::Colors::LIGHT_GRAY,map_a);
@@ -95,20 +99,14 @@ void Map_node::render(const std::shared_ptr<Draw::Draw_2D> &r2,const float scree
 }
 std::shared_ptr<Map_edge>Map_node::GetConnectedEdge(const std::shared_ptr<Map_node> &node){
     for(const auto&it:edges){
-        if(it->to_y==node->y && it->to_x==node->x)
+        if(it!=nullptr && it->to_y==node->y && it->to_x==node->x)
             return it;
     }
     LOG_ERROR("Can't get connected edge.");
     return nullptr;
 }
 void Map_node::MarkAllEdge(const bool is_taken)const{
-    for(const auto&it:edges) it->MarkTaken(is_taken);
+    for(const auto&it:edges) if(it!=nullptr) it->MarkTaken(is_taken);
 }
-void Map_node::add_edge(const std::shared_ptr<Map_edge> &edge){edges.emplace_back(edge);}
-void Map_node::SetRight(bool x){right=x;}
-void Map_node::SetLeft(bool x){left=x;}
-void Map_node::SetMiddle(bool x){middle=x;}
-void Map_node::SetToBoss(bool x){to_boss=x;}
-void Map_node::SetRoom(const std::shared_ptr<Room::Rooms> &room){this->m_room=room;}
 const std::shared_ptr<Draw::ReTexture> &Map_node::s_circle=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/circle5.png");
 }

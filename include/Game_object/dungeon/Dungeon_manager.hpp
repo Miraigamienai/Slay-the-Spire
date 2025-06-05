@@ -20,7 +20,8 @@ namespace Dungeon{
         ~Dungeon_manager()=default;
         void update(Dungeon_shared &dungeon_shared);
         void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
-        void set_display_map(const std::vector<std::vector<std::shared_ptr<Map::Map_node>>>&map)const{m_dungeon_screen->set_display_map(map);}
+        template <typename...Args>
+        void set_display_map(Args&&...args)const{m_dungeon_screen->set_display_map(std::forward<Args>(args)...);}
         void set_current_on_top(bool value)const{current_screen->set_on_top(value);}
         void hide_dungeon_screen_instantly(){m_dungeon_screen->hide_instantly();last_screen=m_dungeon_screen;current_screen=nullptr;}
         void set_current_none()noexcept{current_screen->set_on_top(false);current_screen=nullptr;}
@@ -41,7 +42,7 @@ namespace Dungeon{
             }
         }
         void reset()noexcept{
-            current_screen=m_dungeon_screen;
+            current_screen=nullptr;
             last_screen=nullptr;
         }
     private:

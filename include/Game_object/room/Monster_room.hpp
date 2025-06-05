@@ -17,7 +17,8 @@ namespace Room{
 class Monster_room final:public Rooms
 {
 public:
-    Monster_room();
+    Monster_room(Monster::GroupName group_name);
+    ~Monster_room()override=default;
     const std::shared_ptr<Draw::ReTexture> &GetTexture()const override{return IMG;}
     const std::shared_ptr<Draw::ReTexture> &GetOutlineTexture()const override{return IMG_O;}
     void update(Dungeon::Dungeon_shared &dungeon_shared)override;
@@ -25,8 +26,8 @@ public:
     void init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 dungeon_fade_color)override;
     void set_monster_group_name(Monster::GroupName group_name)noexcept{m_group_name=group_name;}
 private:
-    float m_wait_timer;
     Monster::GroupName m_group_name;
+    float m_wait_timer;
     bool ending_battle;
     float ending_battle_timer;
     Uint32 dungeon_fade_color;

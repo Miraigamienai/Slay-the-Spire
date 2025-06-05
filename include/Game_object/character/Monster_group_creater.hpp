@@ -3,11 +3,8 @@
 #include <memory>
 
 //fwd decl 
-namespace RUtil{
-    class Random;
-}
-namespace Monster{
-    class Monster_group;
+namespace Dungeon{
+    class Dungeon_shared;
 }
 
 namespace Monster{
@@ -38,6 +35,6 @@ class Monster_group_creater
 public:
     Monster_group_creater()=delete;~Monster_group_creater()=delete;Monster_group_creater(const Monster_group_creater &) = delete;Monster_group_creater(Monster_group_creater &&) = delete;Monster_group_creater &operator=(const Monster_group_creater &) = delete;Monster_group_creater &operator=(Monster_group_creater &&) = delete;
     
-    static void CreateGroup(Monster_group &group,GroupName group_name,RUtil::Random &rng);
+    static void CreateGroup(Dungeon::Dungeon_shared& dungeon_shared, GroupName group_name);
 };
 }

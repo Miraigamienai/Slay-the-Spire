@@ -8,6 +8,8 @@ namespace Action
     static inline constexpr float GetAnimDur(Character::Animation anim){
         switch(anim){
             case Character::Animation::ATTACK_SLOW:return 0.5F;
+            case Character::Animation::HOP:
+            case Character::Animation::ATTACK_FAST:return 0.25F;
             default:
                 LOG_ERROR("This anim:'{}' doesn't have setter action",static_cast<int>(anim));
                 return 1.0F;
@@ -15,7 +17,7 @@ namespace Action
     }
 
     Anim_set_action::Anim_set_action(const std::shared_ptr<Character::Characters> &who,Character::Animation anim)
-        :who(who),anim(anim)
+        :who(who),anim(anim),anim_once(false)
     {
         this->duration=GetAnimDur(anim);
     }
@@ -25,7 +27,13 @@ namespace Action
             anim_once=true;
             switch(anim){
                 case Character::Animation::ATTACK_SLOW:
-                    who->useSlowAttackAnimation();
+                    who->use_animation<Character::Animation::ATTACK_SLOW>();
+                    break;
+                case Character::Animation::HOP:
+                    who->use_animation<Character::Animation::HOP>();
+                    break;
+                case Character::Animation::ATTACK_FAST:
+                    who->use_animation<Character::Animation::ATTACK_FAST>();
                     break;
                 default:
                     LOG_ERROR("This anim:'{}' doesn't have setter action",static_cast<int>(anim));

@@ -46,6 +46,7 @@ public:
             amount+=value;
         }
     }
+    void skip_reduce_once()noexcept{_skip_reduce_once=true;}
     void flash()noexcept{flash_a=0.5F; flash_scale=3.0F*Setting::SCALE; flash_timer=2.0F;}
     auto &get_name()const noexcept(noexcept(tip_box.get_title())){return tip_box.get_title();}
     auto &get_desc()const noexcept(noexcept(tip_box.get_body())){return tip_box.get_body();}
@@ -63,8 +64,8 @@ public:
     virtual float calculate_final_damage_dealt(float damage)const{return damage;}
     virtual float calculate_damage_receive(float damage)const{return damage;}
     virtual float calculate_final_damage_receive(float damage)const{return damage;}
-    virtual float calculate_block_dealt(float block)const{return block;}
-    virtual float calculate_final_block_dealt(float block)const{return block;}
+    virtual float calculate_block_modify(float block)const{return block;}
+    virtual float calculate_final_block_modify(float block)const{return block;}
     virtual void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target);
 protected:
     Draw::Text_box tip_box;
@@ -78,8 +79,11 @@ private:
     float font_scale;
     float color_a;
     float flash_timer, flash_scale, flash_a;
+    bool _skip_reduce_once;
     static Draw::NumberDrawer amount_drawer;
     static constexpr int FONTSIZE=22;
-    static constexpr float POWER_ICON_OFFSET=40.0F*Setting::SCALE;
+public:
+    static constexpr float POWER_ICON_OFFSET_X=40.0F*Setting::SCALE,
+                           POWER_ICON_OFFSET_Y=-6.0F*Setting::SCALE;
 };
 } // namespace Power

@@ -29,7 +29,7 @@ struct Dungeon_shared
     std::shared_ptr<Map::Map_node> current_node = nullptr;
     void refresh_display(){
         card_group_handler.hand_cards_values_refresh(player->get_powers());
+        room_monsters.RefreshDisplay(player->get_powers());
     }
-        
 };
 }

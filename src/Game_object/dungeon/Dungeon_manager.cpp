@@ -7,6 +7,7 @@ namespace Dungeon{
         combat_reward_screen=std::make_shared<Dungeon::Combat_reward_screen>();
         grid_card_screen=std::make_shared<Dungeon::Grid_card_screen>();
         shop_screen=std::make_shared<Dungeon::Shop_screen>();
+        death_screen=std::make_shared<Dungeon::Death_screen>();
         top_panel=std::make_shared<TopPanel::Top_panel>();
         current_screen=m_dungeon_screen;
     }

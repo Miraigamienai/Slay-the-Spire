@@ -15,7 +15,7 @@ namespace Room{
         card_vec.emplace_back(Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng));
         std::vector<std::shared_ptr<Reward::Reward_item>> reward_vec;
         reward_vec.emplace_back(std::make_shared<Reward::Card_reward_item>(card_vec));
-        dungeon_shared.manager.open<Interface::ScreenType::combat_reward>(reward_vec);
+        dungeon_shared.manager.open<Abstraction::ScreenType::combat_reward>(reward_vec);
         return reward_vec;
     }
 

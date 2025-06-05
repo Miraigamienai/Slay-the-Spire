@@ -12,7 +12,7 @@ namespace Dungeon
         return RUtil::Game_Input::delta_time();
     }
     Combat_reward_screen::Combat_reward_screen()
-        :Interface::Is_screen(Interface::ScreenType::combat_reward),
+        :Abstraction::Is_screen(Abstraction::ScreenType::combat_reward),
         now_reward_pos(-1),
         open_timer(OPENTIMER),
         color_rgb(0.0F)
@@ -48,7 +48,7 @@ namespace Dungeon
         if(proceed_button.is_logically_clicked()){
             proceed_button.hide();
             //change screen to main_dungoen
-            dungeon_shared.manager.open<Interface::ScreenType::main_dungeon>();
+            dungeon_shared.manager.open<Abstraction::ScreenType::main_dungeon>();
         }
 
         if(now_reward_pos==-1){

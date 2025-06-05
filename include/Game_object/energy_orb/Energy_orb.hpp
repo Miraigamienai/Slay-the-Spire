@@ -1,6 +1,7 @@
-#ifndef GAME_OBJECT_ENERGY_ORB_ENERGY_ORB
-#define GAME_OBJECT_ENERGY_ORB_ENERGY_ORB
+#pragma once
+
 #include "Game_object/character/Player.hpp"
+
 namespace EnergyOrb{
 class Energy_orb{
 public:
@@ -14,4 +15,3 @@ protected:
     static constexpr float ORB_SCALE=1.15F*Setting::SCALE;
 };
 }
-#endif

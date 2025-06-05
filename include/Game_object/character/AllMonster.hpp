@@ -27,6 +27,5 @@
 #include "Game_object/character/Monster/FungiBeast.hpp"
 
 #include "Game_object/character/Monster/Looter.hpp"
-#include "Game_object/character/Monster/Mugger.hpp"
 
 #endif

@@ -1,34 +1,34 @@
-#ifndef GAME_OBJECT_CHARACTER_MONSTER_ACIDSLIMES
-#define GAME_OBJECT_CHARACTER_MONSTER_ACIDSLIMES
-#include <random>
-#include "Game_object/character/Monster/Monsters.hpp"
+#pragma once
+
+#include "Game_object/abstraction/Monster_move_tracker.hpp"
+
+//fwd decl
+namespace RUtil{
+    class Random;
+}
 
 namespace Monster{
 enum class AcidSlimeSAction
 {
     Lick,
-    Tackle,
-    None
+    Tackle
 };
-class AcidSlimeS final:public Monsters
+class AcidSlimeS final:public Abstraction::Monster_move_tracker<1, AcidSlimeSAction>
 {
 public:
-    AcidSlimeS(float offsetX,float offsetY);
+    AcidSlimeS(float offset_x, float offset_y, RUtil::Random& rng);
     ~AcidSlimeS()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
-
-    // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
+    void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
-    
-    static constexpr int WIDTH=130.0F*Setting::SCALE,
-                         HIGHT=100.0F*Setting::SCALE;
+    bool first_move;
+    static constexpr float WIDTH=130.0F*Setting::SCALE,
+                           HEIGHT=100.0F*Setting::SCALE,
+                           HB_OFFSET_X=0.0F,
+                           HB_OFFSET_Y=-4.0F*Setting::SCALE;
     static constexpr int MAX_HP=12,
                          MIN_HP=8,
                          TACKLE_DAMAGE=3;
-    static constexpr int HPBarWidth=WIDTH*0.8F;
-    AcidSlimeSAction currentAction=Monster::AcidSlimeSAction::None;
-    static constexpr float ActionProbability[2]={50.0F,50.0F};
-    static std::discrete_distribution<int> dist;
+    static const std::shared_ptr<Draw::ReTexture> &IMG;
 };
 }
-#endif

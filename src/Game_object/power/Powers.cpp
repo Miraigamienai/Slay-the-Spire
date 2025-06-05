@@ -25,7 +25,8 @@ namespace Power
     color_a(1.0F),
     flash_timer(0.0F),
     flash_scale(0.0F),
-    flash_a(0.0F)
+    flash_a(0.0F),
+    _skip_reduce_once(false)
     {}
 
     void Powers::render_img(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float color_a)const{
@@ -47,7 +48,7 @@ namespace Power
         tip_box.render(r2, x, y);
         r2->SetColor(RUtil::WHITE);
         auto&img=All_Image::GetAtlasRegion(region_48_id);
-        r2->draw(img, x + tip_box.get_title()->GetWidth()*Setting::SCALE + POWER_ICON_OFFSET - (float)img->GetRegionWidth()/2.0F, y-(float)img->GetRegionHeight()/2.0F - 6.0F*Setting::SCALE, (float)img->GetRegionWidth(), (float)img->GetRegionHeight(), 0.0F, (float)img->GetRegionWidth()/2.0F, (float)img->GetRegionHeight()/2.0F, Setting::SCALE*0.75F, Setting::SCALE*0.75F);
+        r2->draw(img, x + tip_box.get_title()->GetWidth()*Setting::SCALE + POWER_ICON_OFFSET_X - (float)img->GetRegionWidth()/2.0F, y-(float)img->GetRegionHeight()/2.0F + POWER_ICON_OFFSET_Y, (float)img->GetRegionWidth(), (float)img->GetRegionHeight(), 0.0F, (float)img->GetRegionWidth()/2.0F, (float)img->GetRegionHeight()/2.0F, Setting::SCALE*0.75F, Setting::SCALE*0.75F);
     }
     
     void Powers::render_flash(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const{
@@ -75,6 +76,11 @@ namespace Power
     }
 
     void Powers::at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target){
+        if(_skip_reduce_once){
+            _skip_reduce_once=false;
+            return;
+        }
+
         if(reduce_each_turn){
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Reduce_power_action>(shared_from_this(), target));
         }

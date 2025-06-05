@@ -65,6 +65,7 @@ public:
     }
     void SetFontAlpha(float a)noexcept{this->font_color_alpha=a;}
     void SetFontColor(Uint32 color)noexcept{this->font_color=color;}
+    void SetFontColorAlpha(Uint32 color, float a)noexcept{this->font_color=color;this->font_color_alpha=a;}
     float GetWidth()const noexcept{return static_cast<float>(width)*font_scale;}
     float GetHeight()const noexcept{return static_cast<float>(height)*font_scale;}
 protected:

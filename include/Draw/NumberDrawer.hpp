@@ -49,11 +49,13 @@ public:
     void render_center_with_bg(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale, Uint32 c, float a)const;
     void render_center(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float center_x,const float center_y,const float angle,const float center_origin_x,const float center_origin_y,const float scale)const;
     void render_bot_right(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,const float right_x,const float y,const float scale)const;
+    void render_top_left_with_bg(const std::shared_ptr<Draw_2D> &r2,const std::string &num_str,float x,float y,float scale, Uint32 c, float a)const;
     const std::shared_ptr<Image_Region>&GetNumIMG(char c)const;
     static const std::shared_ptr<Image_Region>&GetNumIMG(char c, FontWeight fw);
 private:
     int fontsize=Setting::BIGGIST_SIZE;
     float font_scale=1.0F;
     FontWeight fw=FontWeight::regular;
+    static constexpr float BLACK_BG_W=0.08F;
 };
 }

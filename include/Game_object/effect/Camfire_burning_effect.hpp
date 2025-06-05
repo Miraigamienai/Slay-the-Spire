@@ -3,10 +3,10 @@
 #include <SDL_stdinc.h>
 
 #include "Game_object/effect/Effects.hpp"
-#include "Game_object/interface/Reusable.hpp"
+#include "Game_object/abstraction/Reusable.hpp"
 
 namespace Effect{
-class Camfire_burning_effect final:public Effects,public Interface::Reusable<Camfire_burning_effect>
+class Camfire_burning_effect final:public Effects,public Abstraction::Reusable<Camfire_burning_effect>
 {
 public:
     Camfire_burning_effect(Uint32 color_rgb)noexcept(noexcept(this->Initial(color_rgb))){this->Initial(color_rgb);}

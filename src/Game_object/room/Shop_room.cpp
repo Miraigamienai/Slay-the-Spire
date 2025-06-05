@@ -18,7 +18,7 @@ namespace Room
         }
         merchant->update(dungeon_shared);
         //check the proceed button status
-        if(!dungeon_shared.manager.current_screen_equals(Interface::ScreenType::NONE)){
+        if(!dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::NONE)){
             //already open the shop screen
             proceed_pop_timer=0.0F;
             proceed.hide();
@@ -33,7 +33,7 @@ namespace Room
         proceed.update();
         if(proceed.is_logically_clicked()){
             //to main map
-            dungeon_shared.manager.open<Interface::ScreenType::main_dungeon>();
+            dungeon_shared.manager.open<Abstraction::ScreenType::main_dungeon>();
             //hide button
             proceed.hide();
             //set phase

@@ -45,7 +45,7 @@ namespace Effect{
     }
     void Flash_attack_effect::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         auto &img=loadimg(type);
-        r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+        r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         r2->SetColor(RUtil::Colors::WHITE,color_a);
         r2->draw(img, this->x, this->y, (float)img->GetRegionWidth(), (float)img->GetRegionHeight(), this->rotation, (float)img->GetRegionWidth()/2.0F, (float)img->GetRegionHeight()/2.0F, this->scale, this->scale);
     }

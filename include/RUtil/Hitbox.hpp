@@ -40,6 +40,8 @@ public:
     float Height()const noexcept{return height;}
     float CenterX()const noexcept{return cx;}
     float CenterY()const noexcept{return cy;}
+    float X()const noexcept{return x;}
+    float Y()const noexcept{return y;}
 private:
     float x,y,width,height;
     float cx,cy;

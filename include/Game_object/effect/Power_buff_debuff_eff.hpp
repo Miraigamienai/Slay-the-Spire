@@ -55,7 +55,7 @@ private:
         this->duration = DUR;
         this->color_a=1.0F;
     }
-    static Draw::NumberDrawer s_number_drawer;
+    static const Draw::NumberDrawer s_number_drawer;
     static constexpr float START_OFFSET_Y = 60.0F * Setting::SCALE,
                            TARGET_OFFSET_Y = 100.0F * Setting::SCALE,
                            DUR = 2.0F;

@@ -20,7 +20,7 @@ namespace Dungeon{
     constexpr float DEFAULT_SCROLL_BOUND=Setting::SCALE*50.0F;
  
     Grid_card_screen::Grid_card_screen()
-        :Interface::Is_screen(Interface::ScreenType::grid_cards),
+        :Abstraction::Is_screen(Abstraction::ScreenType::grid_cards),
         hovered_card(nullptr),
         offset_y(0.0F),
         target_offset_y(0.0F),

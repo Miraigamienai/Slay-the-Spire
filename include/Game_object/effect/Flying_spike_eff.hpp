@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Game_object/effect/Effects.hpp"
-#include "Game_object/interface/Reusable.hpp"
+#include "Game_object/abstraction/Reusable.hpp"
 
 namespace Effect{
-class Flying_spike_eff final:public Effects, public Interface::Reusable<Flying_spike_eff>
+class Flying_spike_eff final:public Effects, public Abstraction::Reusable<Flying_spike_eff>
 {
 public:
     Flying_spike_eff(float x, float y, float speed_x, float speed_y, float angle, Uint32 color){

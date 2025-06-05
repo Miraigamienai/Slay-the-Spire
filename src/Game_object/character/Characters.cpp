@@ -1,335 +1,228 @@
 #include "Game_object/character/Characters.hpp"
+#include "Game_object/dungeon/Dungeon_shared.hpp"
+#include "Game_object/effect/block_broken_eff.hpp"
+#include "RUtil/ColorValuesOnly.hpp"
+#include "RUtil/Text_Vector_Reader.hpp"
+#include "RUtil/Image_book.hpp"
+#include "Draw/ReTexture.hpp"
+#include "Draw/Draw_2D.hpp"
+#include "Draw/Text_layout.hpp"
 
-#include "RUtil/Some_Math.hpp"
-#include "RUtil/Game_Input.hpp"
-#include "RUtil/Some_Math.hpp"
+#include "Util/Logger.hpp"
+
 namespace Character{
-    Characters::Characters(float x, float y, float width, float height,float HPBarWidth)
-        :boss_hitbox(x, y, width, height, false),
-        HPBar_hitbox(x, y, HPBarWidth, HEALTH_BAR_HEIGHT, false)
+    static inline auto &TEXT_VEC()noexcept(noexcept(RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::AbstractCreature))){
+        return RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::AbstractCreature);
+    }
+
+    static inline auto DT()noexcept(noexcept(RUtil::Game_Input::delta_time())){
+        return RUtil::Game_Input::delta_time();
+    }
+
+    Characters::Characters(CharacterType type, float x, float y, float width, float height, float hb_offset_x, float hb_offset_y, int HP)
+        :type(type),
+        orgX(x), orgY(y),
+        current_HP(HP),
+        escaping(false),
+        max_HP(HP),
+        current_Block(0),
+        hb_offset_x(hb_offset_x), hb_offset_y(hb_offset_y),
+        boss_hitbox(width, height),
+        HP_hb(width, HP_HIBOX_H),
+        animX(0.0F), animY(0.0F),
+        speed_y(0.0F),
+        health_width(width), health_target_width(width),
+        HP_hb_a(0.0F), shadow_a(0.0F), bg_a(0.0F), outline_a(0.0F),
+        HP_offset_y(HP_START_OFFSET_Y), block_offset(BLOCK_START_OFFSET_Y),
+        HP_hide_timer(1.0F), HP_show_timer(0.0F), HP_anim_wait_timer(0.0F), block_anim_timer(0.0F),
+        block_num_scale(1.0F),
+        block_text_color(RUtil::WHITE),
+        block_text_color_vec(BLOCK_TEXT_COLOR_TARGET),
+        animation_timer(0.0F),
+        animation(static_cast<Character::Animation>(0)),
+        shake_toggle(false)
     {
-        HPBar_hb_width=HPBarWidth;
-        HPBar_hb_a=1.0F;
- 
-        shadow_a = 1.0F;
-        bg_a = 1.0F;
-        outline_a =  1.0F;
-        block_offset = 0.0F;
-        HPDecreaseWaitTimer=1.2F;
-        health_width=HPBar_hb_width;
-        health_target_width=HPBar_hb_width;
-
-        animX=0.0F;
-        animY=0.0F;
-        shakeToggle=true;
-
-        pos={x,y};
-        orgX=x;
-        orgY=y;
-        
-        m_font.ChangeFontWeight(FontWeight::bold);
-        m_font.SetFontSize(FONTSIZE);
-        font_scale=1.0F;
-
-        fadeTimer=fadeTime;
-        IsFadeOut=false;
+        update_hb_pos();
     }
-    void Characters::updateHealthBar(){
-        health_target_width=HPBar_hb_width*(current_HP/(float)max_HP);
-        if(health_width-health_target_width!=0 && !HPDecrease){
-            HPDecreaseWaitTimer-=RUtil::Game_Input::delta_time();
-            if(HPDecreaseWaitTimer<=0){
-                HPDecreaseWaitTimer=1.2F;
-                HPDecrease=true;
+
+    void Characters::AddBlock(int num){
+        const bool not_have_block = current_Block==0;
+        current_Block+=num;
+        if(not_have_block && current_Block>0){
+            block_anim_timer = BLOCK_ANIM_TIME;
+            block_text_a = 0.0F;
+            block_icon_a = 0.0F;
+        }else{
+            block_text_color_vec=BLOCK_GAIN_TEXT_COLOR;
+            block_num_scale=5.0F;
+        }
+    }
+    
+    void Characters::ReduceBlock(int num, Dungeon::Dungeon_shared &dungeon_shared){
+        if(current_Block < num){
+            LOG_ERROR("Reducing block when current_block is {}, num is {}, type{}", current_Block, num, static_cast<int>(type));
+            return;
+        }
+        current_Block-=num;
+        if(num>0){
+            if(current_Block==0){
+                dungeon_shared.effs.AddTop(std::make_shared<Effect::block_broken_eff>(boss_hitbox.X()+BLOCK_ICON_XY, boss_hitbox.Y()+BLOCK_ICON_XY));
+            }else{
+                block_text_color_vec=BLOCK_LOST_TEXT_COLOR;
+                block_num_scale=5.0F;
             }
         }
-        else if (HPDecrease)
-        {
-            health_width=RUtil::Math::varlerp(health_width,health_target_width,9.0F,Setting::SCALE);
-        }
-        if(health_width==health_target_width){
-            HPDecrease=false;
-        }
     }
-    void Characters::update(){
-        boss_hitbox.move(orgX + animX + boss_hitbox.Width()/2.0F, orgY + animY + boss_hitbox.Height()/2.0F);
-        HPBar_hitbox.move(boss_hitbox.CenterX(), boss_hitbox.CenterY() - boss_hitbox.Height()/2.0F - HEALTH_BAR_HEIGHT*0.5F);
+
+    void Characters::render_reticle(const std::shared_ptr<Draw::Draw_2D> &r2, float center_x, float center_y, float width, float height, float time){
+        static SETTING_CONSTEXPR auto RETICLE_OFFSET_DIST = 15.0F*Setting::SCALE;
+        const float alpha = time<1.0F/3.0F ? time*3.0F : 1.0F;
+        const float offset=RUtil::Math::interpolation_elastic_out(RETICLE_OFFSET_DIST, 0.0F, (time<1.0F?time:1.0F));
+        render_reticle_corner(r2, center_x - width / 2.0F + offset, center_y + height / 2.0F - offset, false, false, alpha);
+        render_reticle_corner(r2, center_x + width / 2.0F - offset, center_y + height / 2.0F - offset, true, false, alpha);
+        render_reticle_corner(r2, center_x - width / 2.0F + offset, center_y - height / 2.0F + offset, false, true, alpha);
+        render_reticle_corner(r2, center_x + width / 2.0F - offset, center_y - height / 2.0F + offset, true, true, alpha);
+   }
+    
+    inline void Characters::render_reticle_corner(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, bool flip_x, bool flip_y, float alpha){
+        static SETTING_CONSTEXPR auto SHADOW_OFFSET=4.0F*Setting::SCALE;
+        r2->SetColor(RUtil::BLACK, alpha/4.0F);
+        r2->draw(RETICLE_CORNER, x-18.0F+SHADOW_OFFSET, y-18.0F-SHADOW_OFFSET, 36.0F, 36.0F, 0.0F, 18.0F, 18.0F, Setting::SCALE, Setting::SCALE, flip_x, flip_y);
+        r2->SetColor(RUtil::WHITE, alpha);
+        r2->draw(RETICLE_CORNER, x-18.0F, y-18.0F, 36.0F, 36.0F, 0.0F, 18.0F, 18.0F, Setting::SCALE, Setting::SCALE, flip_x, flip_y);
+    }
+
+    void Characters::update_HP_and_power(){
+        //hitbox update
+        update_hb_pos();
+        HP_hb.update();
         boss_hitbox.update();
-        HPBar_hitbox.update();
-        updateHealthBar();
-        updateAnimation();
-        pos.x=orgX+animX;
-        pos.y=orgY+animY;
-        if (KindOfCharacter==KindOfCharacter::PLAYER){
-            if(IsFadeOut){
-                fadeTimer-=RUtil::Game_Input::delta_time();
-                FadeColorA = RUtil::Math::interpolation_fade(1.0F,0.0F,fadeTimer/fadeTime);
+        //HP_hide_timer update
+        if(HP_hb.Hovered()){
+            HP_hide_timer-=DT()*4.0F;
+            if(HP_hide_timer<0.2F) HP_hide_timer=0.2F;
+        }else{
+            HP_hide_timer+=DT()*4.0F;
+            if(HP_hide_timer>1.0F) HP_hide_timer=1.0F;
+        }
+        //block anim update
+        if(current_Block>0){
+            if(block_anim_timer!=0.0F){
+                block_anim_timer-=DT();
+                if(block_anim_timer<0.0F) block_anim_timer=0.0F;
+                const float t = 1.0F - block_anim_timer/BLOCK_ANIM_TIME;
+                block_offset=RUtil::Math::interpolation_swing_out(BLOCK_START_OFFSET_Y, 0.0F, t);
+                block_num_scale=RUtil::Math::Apply(3.0F, 1.0F, std::pow(t, 3));
+                block_icon_a=RUtil::Math::interpolation_powout2(0.0F, 1.0F, t);
+                block_text_a=RUtil::Math::Apply(0.0F, 1.0F, std::pow(t, 5));
+            }else if(block_num_scale!=1.0F){
+                block_num_scale=RUtil::Math::varlerp(block_num_scale, 1.0F, 8.0F, 0.003F);
             }
-            else if(current_HP<=0){
-                IsFadeOut=true;
+            //text color update
+            if(block_text_color_vec != BLOCK_TEXT_COLOR_TARGET){
+                block_text_color_vec = RUtil::Math::Apply(block_text_color_vec, BLOCK_TEXT_COLOR_TARGET, 3.0F*DT());
+                static constexpr float THRESHOLD=0.01F;
+                if(std::abs(block_text_color_vec.r - BLOCK_TEXT_COLOR_TARGET.r) < THRESHOLD) block_text_color_vec.r = BLOCK_TEXT_COLOR_TARGET.r;
+                if(std::abs(block_text_color_vec.g - BLOCK_TEXT_COLOR_TARGET.g) < THRESHOLD) block_text_color_vec.g = BLOCK_TEXT_COLOR_TARGET.g;
+                if(std::abs(block_text_color_vec.b - BLOCK_TEXT_COLOR_TARGET.b) < THRESHOLD) block_text_color_vec.b = BLOCK_TEXT_COLOR_TARGET.b;
+                block_text_color = RUtil::Math::GetColorUint32_RGB(block_text_color_vec.r, block_text_color_vec.g, block_text_color_vec.b);
             }
         }
-        else{
-            if(IsFadeOut){
-                fadeTimer-=RUtil::Game_Input::delta_time();
-                FadeColorA = RUtil::Math::interpolation_fade(0.0F,1.0F,fadeTimer/fadeTime);
-            }
-            else if(current_HP<=0){
-                IsFadeOut=true;
-            }
+        //update show HP anim
+        if(HP_show_timer>0.0F){
+            HP_show_timer-=DT();
+            if(HP_show_timer<0.0F) HP_show_timer=0.0F;
+            const float hp_t=1.0F - HP_show_timer/HP_SHOW_TIME;
+            HP_hb_a=RUtil::Math::interpolation_fade(0.0F, 1.0F, hp_t);
+            HP_offset_y=RUtil::Math::interpolation_exp10out(HP_START_OFFSET_Y, 0.0F, hp_t);
         }
-
+        //update health display
+        if(HP_anim_wait_timer>0.0F) HP_anim_wait_timer-=DT();
+        else if(health_target_width < health_width){
+            health_width = RUtil::Math::varlerp(health_width, health_target_width, 9.0F, Setting::SCALE);
+        }
+        //HP alphas update
+        if(escaping && type==CharacterType::MONSTER){
+            HP_hb_a=RUtil::Math::fadelerp(HP_hb_a, 0.0F);
+            bg_a=HP_hb_a*0.75F;
+            shadow_a=HP_hb_a*0.5F;
+            outline_a=HP_hb_a;
+            health_target_width=0.0F;
+        }else if(health_target_width==0.0F && HP_anim_wait_timer==0.0F){
+            shadow_a=RUtil::Math::fadelerp(shadow_a, 0.0F);
+            bg_a=RUtil::Math::fadelerp(bg_a, 0.0F);
+            outline_a=RUtil::Math::fadelerp(outline_a, 0.0F);
+        }else{
+            bg_a=HP_hb_a*0.5F;
+            shadow_a=HP_hb_a*0.2F;
+            outline_a=HP_hb_a;
+        }
+        //powers update
         this->powers.update();
     }
-    void Characters::render_HP(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        const float x=HPBar_hitbox.CenterX()-HPBar_hb_width/2.0F,y=HPBar_hitbox.CenterY()-HEALTH_BAR_HEIGHT/2.0F;
 
+    void Characters::render_HP_and_power(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+        const float x=boss_hitbox.X(),
+                    y=boss_hitbox.Y() + HP_offset_y;
         //shadow
-        r2->SetColor(0,shadow_a);
+        r2->SetColor(RUtil::BLACK, shadow_a);
         r2->draw(_SHADOW_L, x-HEALTH_BAR_HEIGHT, y-HEALTH_BG_OFFSET, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
-        r2->draw(_SHADOW_B, x, y-HEALTH_BG_OFFSET, HPBar_hb_width, HEALTH_BAR_HEIGHT);
-        r2->draw(_SHADOW_R, x+HPBar_hb_width, y-HEALTH_BG_OFFSET, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
+        r2->draw(_SHADOW_B, x, y-HEALTH_BG_OFFSET, HP_hb.Width(), HEALTH_BAR_HEIGHT);
+        r2->draw(_SHADOW_R, x+HP_hb.Width(), y-HEALTH_BG_OFFSET, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
         if(current_HP!=max_HP){
-            //background
-            r2->SetColor(0,bg_a);
-            r2->draw(HEALTH_BAR_L, x-HEALTH_BAR_HEIGHT, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
-            r2->draw(HEALTH_BAR_B, x, y+HEALTH_BAR_OFFSET_Y, HPBar_hb_width, HEALTH_BAR_HEIGHT);
-            r2->draw(HEALTH_BAR_R, x+HPBar_hb_width, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
+            //empty hp render
+            r2->SetColor(RUtil::BLACK, bg_a);
+            render_HP_format(r2, x, y, HP_hb.Width());
         }
         if(health_target_width!=0.0F){
             //hp just move //orange
-            if(health_width-health_target_width!=0){
-                r2->SetColor(ORG_BAR_COLOR,HPBar_hb_a);
-                r2->draw(HEALTH_BAR_B, x+health_target_width, y+HEALTH_BAR_OFFSET_Y, health_width-health_target_width, HEALTH_BAR_HEIGHT);
-                r2->draw(HEALTH_BAR_R, x+health_width, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
-            }
+            r2->SetColor(ORG_BAR_COLOR, HP_hb_a);
+            render_HP_format(r2, x, y, health_width);
             //hp //red //if have block,blue
-            r2->SetColor(current_Block>0?BLUE_BAR_COLOR:RED_BAR_COLOR,HPBar_hb_a);
-            r2->draw(HEALTH_BAR_L, x-HEALTH_BAR_HEIGHT, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
-            r2->draw(HEALTH_BAR_B, x, y+HEALTH_BAR_OFFSET_Y, health_target_width, HEALTH_BAR_HEIGHT);
-            r2->draw(HEALTH_BAR_R, x+health_target_width, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
-
+            r2->SetColor(current_Block>0 ? BLUE_BAR_COLOR : RED_BAR_COLOR, HP_hb_a);
+            render_HP_format(r2, x, y, health_target_width, current_HP>0);
         }
-        //check HPBar_hb_a cuz outline_a != HPBar_hb_a
-        if(current_Block!=0&&HPBar_hb_a!=0.0F){
+        //check HP_hb_a cuz outline_a != HP_hb_a || block_icon_a != HP_hb_a
+        if(current_Block>0 && HP_hb_a!=0.0F){
             //reder block outline
-            r2->SetColor(BLOCK_COLOR,outline_a);
+            r2->SetColor(BLOCK_COLOR, outline_a);
             r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE);
-            r2->draw(BLOCK_BAR_L, x-HEALTH_BAR_HEIGHT, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
-            r2->draw(BLOCK_BAR_B, x, y+HEALTH_BAR_OFFSET_Y, HPBar_hb_width, HEALTH_BAR_HEIGHT);
-            r2->draw(BLOCK_BAR_R, x+HPBar_hb_width, y+HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
+            render_block_format(r2, x, y, HP_hb.Width());
             r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-        }
-        r2->SetColor(-1,1);
-        m_font.render_center(r2, std::to_string(current_HP)+"/"+std::to_string(max_HP), HPBar_hitbox.CenterX(), HPBar_hitbox.CenterY()+HEALTH_BAR_OFFSET_Y, font_scale*Setting::SCALE);
-        if(current_Block!=0&&HPBar_hb_a!=0.0F){
-            //block icon
-            r2->SetColor(BLOCK_COLOR,1);
+            //block icon and value
+            r2->SetColor(BLOCK_COLOR, block_icon_a);
             r2->draw(BLOCK_ICON, x+BLOCK_ICON_XY-32.0F, y+BLOCK_ICON_XY-32.0F+block_offset, 64.0F, 64.0F, 0.0F, 32.0F, 32.0F, Setting::SCALE, Setting::SCALE);
-            r2->SetColor(-1,1);
-            m_font.render_center(r2, std::to_string(current_Block), x+BLOCK_ICON_XY, y+BLOCK_ICON_XY+block_offset, font_scale*Setting::SCALE);
+            block_num_drawer.render_center_with_bg(r2, std::to_string(current_Block), x+BLOCK_ICON_XY, y-16.0F*Setting::SCALE, 0.0F, 0.0F, 0.0F, block_num_scale*Setting::SCALE, block_text_color, block_text_a);
+        }
+        //HP text
+        if(health_target_width!=0.0F){
+            HP_num_drawer.render_center_with_bg(r2, std::to_string(current_HP)+"/"+std::to_string(max_HP), boss_hitbox.CenterX(), y+HEALTH_BAR_OFFSET_Y+11.0F*Setting::SCALE, 0.0F, 0.0F, 0.0F, Setting::SCALE, RUtil::WHITE, outline_a*HP_hide_timer);
+        }else if(!escaping){
+            TEXT_VEC()[0]->ChangeFontWeight(FontWeight::bold);
+            TEXT_VEC()[0]->SetFontColorAlpha(RUtil::WHITE, outline_a);
+            TEXT_VEC()[0]->SetFontSize(HP_FONTSIZE);
+            TEXT_VEC()[0]->render_center(r2, boss_hitbox.CenterX(), y+HEALTH_BAR_OFFSET_Y+5.0F*Setting::SCALE, 0.0F, 0.0F, 0.0F, Setting::SCALE);
         }
         //powers
-        powers.render(r2, x, y, 1.0F);//TODO: alpha
+        powers.render(r2, x, y, outline_a);
     }
-    void Characters::setPosition(float x,float y){
-        pos={x,y};
-        boss_hitbox.move(x + boss_hitbox.Width()/2.0F, y + boss_hitbox.Height()/2.0F);
-        HPBar_hitbox.move(boss_hitbox.CenterX(), y - HEALTH_BAR_HEIGHT*0.5F);
-        orgX=x;
-        orgY=y;
-    }
-    void Characters::setHPBarWidth(float width){
-        HPBar_hb_width=width;
-    };
-    
-    void Characters::useFastAttackAnimation(){
-        animX=0.0F;
-        animY=0.0F;
-        animationTimer=0.4F;
-        animation=Animation::ATTACK_FAST;
-    }
-    void Characters::useSlowAttackAnimation(){
-        animX=0.0F;
-        animY=0.0F;
-        animationTimer=1.F;
-        animation=Animation::ATTACK_SLOW;
-    }
-    void Characters::useHopAnimation(){
-        animX=0.0F;
-        animY=0.0F;
-        vY=300.0F*Setting::SCALE;
-        animationTimer=0.7F;
-        animation=Animation::HOP;
-    }
-    void Characters::useJumpAnimation(){
-        animX=0.0F;
-        animY=0.0F;
-        vY=500.0F*Setting::SCALE;
-        animationTimer=0.7F;
-        animation=Animation::JUMP;
-    }
-    void Characters::useStaggerAnimation(){
-        if(animY==0.0F){
-            animX=0.0F;
-            animationTimer=0.3F;
-            animation=Animation::STAGGER;
-        }
-    }
-    void Characters::useFastShakeAnimation(float duration){
-        if(animY==0.0F){
-            animX=0.0F;
-            animationTimer=duration;
-            animation=Animation::STAGGER;
-        }
-    }
-    void Characters::useShakeAnimation(float duration){
-        if(animY==0.0F){
-            animX=0.0F;
-            animationTimer=duration;
-            animation=Animation::SHAKE;
-        }
-    }
-    void Characters::updateAnimation(){
-        switch (animation) {
-            case Animation::ATTACK_FAST:
-                updateFastAttackAnimation();
-                break;
-            case Animation::ATTACK_SLOW:
-                updateSlowAttackAnimation();
-                break;
-            case Animation::HOP:
-                updateHopAnimation();
-                break;
-            case Animation::JUMP:
-                updateJumpAnimation();
-                break;
-            case Animation::STAGGER:
-                updateStaggerAnimation();
-                break;
-            case Animation::FAST_SHAKE:
-                updateFastShakeAnimation();
-                break;
-            case Animation::SHAKE:
-                updateShakeAnimation();
-                break;
-            case Animation::NONE:
-                break;
-            default:
-                break;
-        }
-    }
-    void Characters::updateFastAttackAnimation(){
-        animationTimer-=RUtil::Game_Input::delta_time();
-        float targetPos=90.0F*Setting::SCALE;
-        if(!isPlayer()){
-            targetPos=-targetPos;
-        }
-        if(animationTimer>0.5F){
-            animX= targetPos*RUtil::Math::interpolation_expin(2.0F, 5.0F,(1.0F - animationTimer / 1.0F) * 2.0F);
-        }
-        else if (animationTimer<0.0F){
-            animationTimer=0.0F;
-            animX=0.0F;
-            animation=Animation::NONE;
-        }
-        else{
-            animX=RUtil::Math::interpolation_fade(0.0F, targetPos, animationTimer / 1.0F * 2.0F);
-        }
 
+    inline void Characters::render_HP_format(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float width, bool with_L){
+        if(with_L) r2->draw(HEALTH_BAR_L, x - HEALTH_BAR_HEIGHT, y + HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
+        r2->draw(HEALTH_BAR_B, x, y + HEALTH_BAR_OFFSET_Y, width, HEALTH_BAR_HEIGHT);
+        r2->draw(HEALTH_BAR_R, x + width, y + HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
     }
-    void Characters::updateSlowAttackAnimation(){
-        animationTimer-=RUtil::Game_Input::delta_time();
-        float targetPos=90.0F*Setting::SCALE;
-        if(!isPlayer()){
-            targetPos=-targetPos;
-        }
-        if(animationTimer>0.5F){
-            animX=targetPos*RUtil::Math::interpolation_expin(2.0F, 10.0F,(1.0F - animationTimer / 1.0F) * 2.0F);
-        }
-        else if (animationTimer<0.0F){
-            animationTimer=0.0F;
-            animX=0.0F;
-            animation=Animation::NONE;
-        }
-        else{
-            animX=RUtil::Math::interpolation_fade(0.0F, targetPos, animationTimer / 1.0F * 2.0F);
-        }
+
+    inline void Characters::render_block_format(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float width){
+        r2->draw(BLOCK_BAR_L, x - HEALTH_BAR_HEIGHT, y + HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
+        r2->draw(BLOCK_BAR_B, x, y + HEALTH_BAR_OFFSET_Y, width, HEALTH_BAR_HEIGHT);
+        r2->draw(BLOCK_BAR_R, x + width, y + HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
     }
-    void Characters::updateHopAnimation(){
-        vY -= 17.0F * Setting::SCALE;
-        animY += vY *RUtil::Game_Input::delta_time();
-        if (animY < 0.0F) {
-           animationTimer = 0.0F;
-           animY = 0.0F;
-           animation=Animation::NONE;
-        }
-    }
-    void Characters::updateJumpAnimation(){
-        vY -= 17.0F * Setting::SCALE;
-        animY += vY *RUtil::Game_Input::delta_time();
-        if (animY < 0.0F) {
-           animationTimer = 0.0F;
-           animY = 0.0F;
-           animation=Animation::NONE;
-        }
-    }
-    void Characters::updateStaggerAnimation(){
-        if (animationTimer != 0.0F) {
-            animationTimer -= RUtil::Game_Input::delta_time();
-            if (!isPlayer()) {
-               animX = RUtil::Math::interpolation_powout2(STAGGER_MOVE_SPEED, 0.0f, this->animationTimer / 0.3f);
-            } else {
-               animX = RUtil::Math::interpolation_powout2(-STAGGER_MOVE_SPEED, 0.0f, this->animationTimer / 0.3f);
-            }
-   
-            if (animationTimer < 0.0F) {
-               animationTimer = 0.0F;
-               animX = 0.0F;
-               vX = STAGGER_MOVE_SPEED;
-               animation=Animation::NONE;
-            }
-         }
-    }
-    void Characters::updateFastShakeAnimation(){
-        animationTimer -= RUtil::Game_Input::delta_time();
-        if (animationTimer < 0.0F) {
-           animationTimer = 0.0F;
-           animX = 0.0F;
-           animation=Animation::NONE;
-        } else if (shakeToggle) {
-           animX += SHAKE_SPEED * RUtil::Game_Input::delta_time();
-           if (animX > SHAKE_THRESHOLD / 2.0F) {
-              shakeToggle = !shakeToggle;
-           }
-        } else {
-           animX -= SHAKE_SPEED * RUtil::Game_Input::delta_time();
-           if (animX < -SHAKE_THRESHOLD / 2.0F) {
-              shakeToggle = !shakeToggle;
-           }
-        }
-    }
-    void Characters::updateShakeAnimation(){
-        animationTimer -= RUtil::Game_Input::delta_time();
-        if (animationTimer < 0.0F) {
-           animationTimer = 0.0F;
-           animX = 0.0F;
-           animation=Animation::NONE;
-        } else if (shakeToggle) {
-           animX += SHAKE_SPEED * RUtil::Game_Input::delta_time();
-           if (animX > SHAKE_THRESHOLD) {
-              shakeToggle = !shakeToggle;
-           }
-        } else {
-           animX -= SHAKE_SPEED * RUtil::Game_Input::delta_time();
-           if (animX < -SHAKE_THRESHOLD) {
-              shakeToggle = !shakeToggle;
-           }
-        }
-    }
+
+    const Draw::NumberDrawer Characters::HP_num_drawer{HP_FONTSIZE, FontWeight::bold}, Characters::block_num_drawer{BLOCK_FONTSIZE, FontWeight::bold};
     const std::shared_ptr<Draw::ReTexture>  &Characters::_SHADOW_L=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/leftBg.png"),&Characters::_SHADOW_R=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/rightBg.png"),&Characters::_SHADOW_B=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/bodyBg.png"),
                                             &Characters::HEALTH_BAR_B=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/body7.png"),&Characters::HEALTH_BAR_L=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/left7.png"),&Characters::HEALTH_BAR_R=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/right7.png"),
                                             &Characters::BLOCK_BAR_B=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/blockBody3.png"),&Characters::BLOCK_BAR_R=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/blockRight3.png"),&Characters::BLOCK_BAR_L=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/blockLeft3.png"),
                                             &Characters::BLOCK_ICON=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/block.png");
-
+    const std::shared_ptr<Draw::ReTexture>  &Characters::RETICLE_CORNER=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/combat/reticleCorner.png");
 }

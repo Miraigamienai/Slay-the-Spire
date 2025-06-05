@@ -25,6 +25,7 @@ public:
     static float GetRandomFloat(const float min,const float max);
     //[0, n)
     static int GetRandomInt(const int n){return static_cast<int>(s_gen()&0x7fffffff)%n;}
+    static auto GetRandomDefault(){return s_gen();}
 private:
     std::mt19937 m_gen;
     unsigned int counter;

@@ -53,8 +53,11 @@ namespace Action
             }
             card_queue.pop_front();
         }else if(!monster_queue.empty()){
-            monster_queue.back()->Action(dungeon_shared);
-            //TODO: intent update
+            if(!monster_queue.back()->IsDie()){
+                //TODO: show move name
+                monster_queue.back()->flash_intent(dungeon_shared);
+                monster_queue.back()->Action(dungeon_shared);
+            }
             monster_queue.pop_back();
             if(monster_queue.empty())
                 action_box.AddBot(std::make_shared<Wait_action>(1.0F));//wait after monster turn end.
@@ -63,7 +66,7 @@ namespace Action
             dungeon_shared.player->at_turn_end(dungeon_shared);
             dungeon_shared.room_monsters.at_turn_end(dungeon_shared);
             //player turn start
-            dungeon_shared.player->at_turn_start();
+            dungeon_shared.player->at_turn_start(dungeon_shared);
         }
     }
 

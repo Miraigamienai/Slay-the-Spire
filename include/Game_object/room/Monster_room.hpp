@@ -31,7 +31,7 @@ private:
     float ending_battle_timer;
     Uint32 dungeon_fade_color;
     std::shared_ptr<Character::Characters> tip_character;
- 
+    int turn_count;
     static const std::shared_ptr<Draw::ReTexture> &IMG;
     static const std::shared_ptr<Draw::ReTexture> &IMG_O;
 };

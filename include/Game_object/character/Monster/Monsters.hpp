@@ -1,49 +1,94 @@
-#ifndef GAME_OBJECT_CHARACTER_MONSTER_MONSTERS
-#define GAME_OBJECT_CHARACTER_MONSTER_MONSTERS
+#pragma once
+
 #include <memory>
 
-#include "Game_object/action/Action_group_handler.hpp"
 #include "Game_object/character/Characters.hpp"
 
-// //fwd decl
-// namespace Dungeon{
-//     struct Dungeon_shared;
-// }
-
 namespace Monster{
-enum class MonsterID{
-    None,
-    TempMonster,
-    AcidSlimeL,AcidSlimeM,AcidSlimeS,
-    Cultist,
-    FungiBeast,
-    GremlinNob,FatGremlin,MadGremlin,ShieldGremlin,SneakyGremlin,
-    GremlinWizard,
-    Hexaghost,
-    Lagavulin,
-    RedLouse,
-    GreenLouse,
-    Sentry,
-    BlueSlaver,RedSlaver,
-    SpikeSlimeL,SpikeSlimeM,SpikeSlimeS,
-    JawWorm,
-    Looter,
-    Mugger
+enum class Intent:int{
+    attack,
+    attack_buff,
+    attack_debuff,
+    attack_defend,
+    buff,
+    debuff,
+    strong_debuff,
+    defend,
+    defend_debuff,
+    defend_buff,
+    escape,
+    magic,
+    sleep,
+    stun,
+    unknown,
+    NONE
 };
 class Monsters:public Character::Characters
 {
 public:
-    Monsters(float x, float y, float width, float height,float HPBarWidth,const std::shared_ptr<Draw::ReTexture> &img);
+    Monsters(float offset_x, float offset_y, float width, float height, 
+        float hb_offset_x, float hb_offset_y, int HP, const std::shared_ptr<Draw::ReTexture> &img);
+    
     virtual ~Monsters()=default;
-    virtual void Action(Dungeon::Dungeon_shared &dungeon_shared)=0; 
-    virtual void damage(const Damage_info& damage_info)override;
-    void setHP(int min,int max);
-    void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
+    virtual void Action(Dungeon::Dungeon_shared &dungeon_shared)=0;
+    virtual void next_move(Dungeon::Dungeon_shared &dungeon_shared)=0;
+    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
+    void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
+    void update()override;
+    void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const override{
+        if(intent_target_a!=0.0F){
+            intent_tip.get_body()->set_num_info(Draw::number_info{move.damage, 0, 0, Draw::NumStatus::blue});
+            powers.render_tip_with_other(r2, x, y, intent_tip, intent_tip_img);
+        }else{
+            powers.render_tip(r2, x, y);
+        }
+    }
+    void flash_intent(Dungeon::Dungeon_shared &dungeon_shared);
+    void refresh_dmg_display(const Power::Power_group &player_powers);
+    bool TipHovered()const noexcept(noexcept(Characters::TipHovered())) override{return Characters::TipHovered()||intent_hb.Hovered();}
+    bool IsInDyingFade()const noexcept{return dying_fade_timer!=0.0F;}
 protected:
-
-    static constexpr int FLOOR_Y=Setting::WINDOW_HEIGHT*0.5F-200.0F*Setting::SCALE;
+    void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, int multiplier, const Power::Power_group &player_powers);
+    void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, const Power::Power_group &player_powers);
+    void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, const Power::Power_group &player_powers);
 private:
+    struct Move{
+        std::shared_ptr<Draw::Text_layout> move_name;
+        std::shared_ptr<Draw::ReTexture> intent_img;
+        Intent intent;
+        bool is_multi_dmg;
+        int multiplier;
+        int base_damage;
+        int damage;
+    };
     const std::shared_ptr<Draw::ReTexture> &img;
+    float img_color_a;
+    float dying_fade_timer;
+    //intent
+    Move move;
+    Effect::Effect_group intent_effs, intent_back_effs;
+    Draw::Text_box intent_tip;
+    std::shared_ptr<Draw::ReTexture> intent_tip_img;
+    RUtil::Hitbox intent_hb;
+    float intent_a, intent_target_a;
+    float intent_offset_y;
+    float intent_offset_timer;
+    float intent_angle;
+    float intent_particle_timer;
+
+    void update_intent_vfx();
+    void refresh_intent_tip();
+    void set_move(const Power::Power_group &player_powers){
+        intent_particle_timer=0.5F;
+        intent_a=0.0F;
+        intent_target_a=1.0F;
+        refresh_dmg_display(player_powers);
+        refresh_intent_tip();
+    }
+
+    static const Draw::NumberDrawer s_intent_num_drawer;
+
+    static constexpr int INTENT_FONTSIZE=26;
+    static constexpr float FADE_TIME = 1.0F;
 };
 }
-#endif

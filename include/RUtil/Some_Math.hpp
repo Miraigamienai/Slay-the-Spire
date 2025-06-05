@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>//std::clamp
+#include "RUtil/Game_Input.hpp"
 
 //if template not good for using,
 //it will change to float.
@@ -36,16 +37,30 @@ public:
         const float m=(float)std::pow((double)v,(double)(-p));
         return 1.0F - ((float)std::pow((double)v,(double)(-a*p))-m)/(1.0F-m);
     }
-    static float interpolation_powout(int p, float a);
+    static float interpolation_pow(int p, float a){
+        return a<=0.5F ? ((float)std::pow(a*2.0F, p)/2.0F) : ((float)std::pow((a-1.0F)*2.0F, p) / (bool(p&1) ? 2.0F : -2.0F) + 1.0F);
+    }
+    static float interpolation_powout(int p, float a){
+        return (float)std::pow(a-1.0F, p) * (bool(p&1) ? 1.0F : -1.0F) + 1.0F;
+    }
     static float fadelerp(float start,float target);
     static float scrolllerp(float start,float target);
-    static float varlerp(float start,const float target,const float speed,const float threshold);
+    template <typename T>
+    static T varlerp(T start,const T target,const float speed,const float threshold){
+        if(start!=target){
+            start=Apply(start,target,RUtil::Game_Input::delta_time()*speed);
+            if(std::abs(start-target)<threshold) start=target;
+        }
+        return start;
+    }
     static Uint32 color_lerp_rgb(Uint32 start,Uint32 target,float t);
     static float interpolation_exp10(float start,float target,float a);
     static float interpolation_exp10in(float start,float target,float a){return Apply(start,target,interpolation_expin(2.0F,10.0F,a));}
     static float interpolation_exp10out(float start,float target,float a){return Apply(start,target,interpolation_expout(2.0F,10.0F,a));}
     static float interpolation_exp5in(float start,float target,float a){return Apply(start,target,interpolation_expin(2.0F,5.0F,a));}
     static float interpolation_exp5out(float start,float target,float a){return Apply(start,target,interpolation_expout(2.0F,5.0F,a));}
+    static float interpolation_pow2(float start,float target,float a){return Apply(start, target, interpolation_pow(2, a));}
+    static float interpolation_powout2(float start,float target,float a){return Apply(start, target, interpolation_powout(2, a));}
     template <typename T>
     static constexpr T interpolation_fade(T start,T target,float a){
         //from gdx
@@ -67,15 +82,39 @@ public:
         --a;
         return Apply(start, target, a * a * (3.0F * a + 2.0F) + 1.0F);
     }
-    static float interpolation_powout2(float start,float target,float a);
+    template <typename T>
+    static T interpolation_circle_out(T start,T target,float a){
+        //from gdx
+        //circle: r=1, center=(1,0), upper half circle
+        --a;
+        return Apply(start, target, std::sqrt(1.0F-a*a));
+    }
     static constexpr float interpolation_elastic_out(float a){
         return 1.0F-std::pow(2.0F,-10.0F*a)*std::sin(glm::two_pi<float>()*a*-10.0F);
     }
+    template <typename T>
+    static constexpr T interpolation_elastic_out(T start,T target,float a){
+        return Apply(start, target, interpolation_elastic_out(a));
+    }
     static int StrToInt(const std::string &str);
     static float GetRadian(const glm::vec2 &v){return atan2f(v.y,v.x);}
-    static constexpr float GetDegress(const glm::vec2 &v){return glm::degrees(atan2f(v.y,v.x));}
-    static float BounceOut(float t);
-    static float BounceIn(float t);
+    static float GetDegress(const glm::vec2 &v){return glm::degrees(atan2f(v.y,v.x));}
+    static constexpr float BounceOut(float t)noexcept{
+        if (t < 0.36363637F) {
+            return 7.5625F * t * t;
+        } else if (t < 0.72727275F) {
+            t -= 0.54545456F;
+            return 7.5625F * t * t + 0.75F;
+        } else if (t < 0.90909094F) {
+            t -= 0.8181818F;
+            return 7.5625F * t * t + 0.9375F;
+        } else {
+            t -= 0.95454544F;
+            return 7.5625F * t * t + 0.984375F;
+        }
+    }
+    static float BounceIn(float t)noexcept(noexcept(BounceOut(t))){return 1.0F-BounceOut(t);}
+
     static glm::vec2 BezierQuadratic(const glm::vec2 p0,const glm::vec2 p1,const glm::vec2 p2,const float t);
     static glm::vec2 CatmullRomSpline(const std::vector<glm::vec2> &controls,float t,const int len,const int vec_start_pos=0);
     static constexpr int GetIntLength(const int x)noexcept{

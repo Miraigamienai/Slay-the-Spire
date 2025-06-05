@@ -1,28 +1,28 @@
-#ifndef GAME_OBJECT_CHARACTER_MONSTER_JaWWORM
-#define GAME_OBJECT_CHARACTER_MONSTER_JAWWORM
-#include <random>
-#include "Game_object/character/Monster/Monsters.hpp"
+#pragma once
+
+#include "Game_object/abstraction/Monster_move_tracker.hpp"
+#include "RUtil/Weighted_index_picker.hpp"
 
 namespace Monster{
 enum class JawWormAction
 {
     Chomp,
     Thrash,
-    Bellow,
-    None
+    Bellow
 };
-class JawWorm final:public Monsters
+class JawWorm final:public Abstraction::Monster_move_tracker<2, JawWormAction>
 {
 public:
-    JawWorm(float offsetX,float offsetY);
+    JawWorm(float offset_x, float offset_y, RUtil::Random& rng);
     ~JawWorm()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
-
-    
-    // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
-private:                 
-    static constexpr int WIDTH=260.0F*Setting::SCALE,
-                         HIGHT=170.0F*Setting::SCALE;
+    void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
+private:
+    bool first_move;
+    static constexpr float WIDTH=260.0F*Setting::SCALE,
+                           HEIGHT=170.0F*Setting::SCALE,
+                           HB_OFFSET_X=0.0F,
+                           HB_OFFSET_Y=-25.0F*Setting::SCALE;
     static constexpr int MAX_HP=44,
                          MIN_HP=40,
                          CHOMP_DAMAGE=11,
@@ -30,13 +30,7 @@ private:
                          THRASH_BLOCK=5,
                          BELLOWS_STRENGTH=3,
                          BELLOWS_BLOCK=6;
-                         
-    static constexpr int HPBarWidth=WIDTH*0.8F;
-    Monster::JawWormAction currentAction=Monster::JawWormAction::None,
-                           lastAction=Monster::JawWormAction::None;
-    static constexpr float ActionProbability[3]={25.0F,30.0F,45.0F};
-    int ActionCount=0;
-    static std::discrete_distribution<int> dist;
+    static const std::shared_ptr<Draw::ReTexture> &IMG;
+    static constexpr auto dist=RUtil::make_weighted_index_picker(std::array{25.0F,30.0F,45.0F});
 };
 }
-#endif

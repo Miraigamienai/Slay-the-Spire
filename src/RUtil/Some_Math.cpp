@@ -1,5 +1,4 @@
 #include "RUtil/Some_Math.hpp"
-#include "RUtil/Game_Input.hpp"
 #include "WindowSize.hpp"
 
 namespace RUtil{
@@ -8,20 +7,10 @@ namespace RUtil{
         const float s=1.0F/(1.0F-m);
         return a <= 0.5F ? ((float)std::pow((double)v, (double)(p * (a * 2.0F - 1.0F))) - m) * s / 2.0F : (2.0F - ((float)std::pow((double)v, (double)(-p * (a * 2.0F - 1.0F))) - m) * s) / 2.0F;
     }
-    inline float Math::interpolation_powout(int p, float a){
-        return (float)std::pow(a-1,p)*(bool(p&1)?1:-1)+1;
-    }
     float Math::fadelerp(float start,float target){
         if(start!=target){
             start=Apply(start,target,RUtil::Game_Input::delta_time()*12.0F);
             if(std::abs(start-target)<0.01F) start=target;
-        }
-        return start;
-    }
-    float Math::varlerp(float start,const float target,const float speed,const float threshold){
-        if(start!=target){
-            start=Apply(start,target,RUtil::Game_Input::delta_time()*speed);
-            if(std::abs(start-target)<threshold) start=target;
         }
         return start;
     }
@@ -34,9 +23,6 @@ namespace RUtil{
     }
     float Math::interpolation_exp10(float start,float target,float a){
         return start+(target-start)*interpolation_exp(2.0F,10.0F,a);
-    }
-    float Math::interpolation_powout2(float start,float target,float a){
-        return start+(target-start)*interpolation_powout(2,a);
     }
     //t is[0,1)
     glm::vec2 Math::CatmullRomSpline(const std::vector<glm::vec2> &controls,const float t,const int len,const int vec_start_pos){
@@ -64,21 +50,6 @@ namespace RUtil{
             }
         return re;
     }
-    float Math::BounceOut(float t){
-        if (t < 0.36363637F) {
-            return 7.5625F * t * t;
-        } else if (t < 0.72727275F) {
-            t -= 0.54545456F;
-            return 7.5625F * t * t + 0.75F;
-        } else if (t < 0.90909094F) {
-            t -= 0.8181818F;
-            return 7.5625F * t * t + 0.9375F;
-        } else {
-            t -= 0.95454544F;
-            return 7.5625F * t * t + 0.984375F;
-        }
-    }
-    float Math::BounceIn(float t){return 1.0F-BounceOut(t);}
     Uint32 Math::color_lerp_rgb(Uint32 start,Uint32 target,float t){
         Uint32 re=0;
         for(int i=1;i<4;i++)

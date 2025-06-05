@@ -34,7 +34,7 @@ namespace Option{
     }
 
     void Smith_option::take_reward(Dungeon::Dungeon_shared &dungeon_shared){
-        if(!dungeon_shared.manager.current_screen_equals(Interface::ScreenType::grid_cards)){
+        if(!dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::grid_cards)){
             if(skip_one_frame){
                 skip_one_frame=false;
             }else{
@@ -42,7 +42,7 @@ namespace Option{
                 is_cancelled=false;
                 is_done=false;
                 //open grid_cards screen
-                dungeon_shared.manager.open<Interface::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_upgradeable_card_group(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_upgrade_action>(), is_done, is_cancelled);
+                dungeon_shared.manager.open<Abstraction::ScreenType::grid_cards>(dungeon_shared.card_group_handler.get_upgradeable_card_group(), std::make_shared<Dungeon::GridScreenAction::Grid_screen_upgrade_action>(), is_done, is_cancelled);
             }
         }
     }

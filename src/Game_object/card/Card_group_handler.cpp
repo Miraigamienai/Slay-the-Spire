@@ -281,7 +281,7 @@ namespace Card{
         //single_target -> drop zone -> drag -> hover -> check drag start
         if(single_target){
             bool last_has_not=hovered_monster==nullptr;
-            hovered_monster=dungeon_shared.room_monsters.GetHoveredMonster();
+            hovered_monster=dungeon_shared.room_monsters.GetBodyHoveredMonster();
             if(last_has_not && hovered_monster!=nullptr){
                 hovered_card->RefreshDisplay(dungeon_shared.player->get_powers(), hovered_monster->get_powers());
             }else if(!last_has_not && hovered_monster==nullptr){

@@ -17,10 +17,12 @@ namespace Scene
 // }
 // void Bottom_scene::update(){}
 void Bottom_scene::render_bg(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+    r2->SetColor(RUtil::WHITE);
     render_combat_room_bg(r2);
 }
 
 void Bottom_scene::render_fg(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+    r2->SetColor(RUtil::WHITE);
     render_format(r2,fg);
 }
 

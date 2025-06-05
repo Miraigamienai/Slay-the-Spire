@@ -1,5 +1,8 @@
 #include "Game_object/energy_orb/Red_orb.hpp"
 #include "RUtil/Game_Input.hpp"
+#include "RUtil/Image_book.hpp"
+#include "Draw/ReTexture.hpp"
+#include "Draw/Draw_2D.hpp"
 
 namespace EnergyOrb{
     void Red_orb::update(){

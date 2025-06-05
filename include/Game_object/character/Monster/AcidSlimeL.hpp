@@ -1,8 +1,7 @@
-#ifndef GAME_OBJECT_CHARACTER_MONSTER_ACIDSLIMEL
-#define GAME_OBJECT_CHARACTER_MONSTER_ACIDSLIMEL
-#include <random>
+#pragma once
 
-#include "Game_object/character/Monster/Monsters.hpp"
+#include "Game_object/abstraction/Monster_move_tracker.hpp"
+#include "RUtil/Weighted_index_picker.hpp"
 
 namespace Monster{
 enum class AcidSlimeLAction
@@ -10,28 +9,25 @@ enum class AcidSlimeLAction
     CorrosiveSpit,
     Lick,
     Tackle,
-    Split,
-    None
+    Split
 };
-class AcidSlimeL final:public Monsters
+class AcidSlimeL final:public Abstraction::Monster_move_tracker<2, AcidSlimeLAction>
 {
 public:
-    AcidSlimeL(float offsetX,float offsetY);
+    AcidSlimeL(float offset_x, float offset_y, RUtil::Random& rng);
     ~AcidSlimeL()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
-    
-    // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
+    void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
-    static constexpr int WIDTH=300.0F*Setting::SCALE,
-                         HIGHT=180.0F*Setting::SCALE;
+    static constexpr float WIDTH=300.0F*Setting::SCALE,
+                           HEIGHT=180.0F*Setting::SCALE,
+                           HB_OFFSET_X=0.0F,
+                           HB_OFFSET_Y=0.0F;
     static constexpr int MAX_HP=69,
                          MIN_HP=65,
-                         TACKLE_DAMAGE=16,
-                         CORROSIVE_SPIT_DAMAGE=11;
-    static constexpr int HPBarWidth=WIDTH*0.8F;
-    Monster::AcidSlimeLAction currentAction=Monster::AcidSlimeLAction::None;
-    static constexpr float ActionProbability[3]={30.0F,40.0F,30.0F};
-    static std::discrete_distribution<int> dist;
+                         CORROSIVE_SPIT_DAMAGE=11,
+                         TACKLE_DAMAGE=16;
+    static const std::shared_ptr<Draw::ReTexture> &IMG;
+    static constexpr auto dist=RUtil::make_weighted_index_picker(std::array{30.0F, 30.0F, 40.0F});
 };
 }
-#endif

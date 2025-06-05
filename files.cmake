@@ -2,6 +2,7 @@ set(SRC_FILES
 	Cursor.cpp
 	draw_test.cpp
 	InitScreen.cpp
+	InitScreenBackground.cpp
 	main.cpp
 	Programs.cpp
 	TheApp.cpp
@@ -33,7 +34,9 @@ set(SRC_FILES
 	Game_object/button/Cancel_button.cpp
 	Game_object/button/Confirm_button.cpp
 	Game_object/button/End_turn_button.cpp
+	Game_object/button/Menu_button.cpp
 	Game_object/button/Proceed_button.cpp
+	Game_object/button/Return_to_start_button.cpp
 	Game_object/button/Skip_button.cpp
 	Game_object/card/Cards.cpp
 	Game_object/card/Card_generate.cpp
@@ -63,7 +66,6 @@ set(SRC_FILES
 	Game_object/character/Monster/Looter.cpp
 	Game_object/character/Monster/MadGremlin.cpp
 	Game_object/character/Monster/Monsters.cpp
-	Game_object/character/Monster/Mugger.cpp
 	Game_object/character/Monster/RedLouse.cpp
 	Game_object/character/Monster/RedSlaver.cpp
 	Game_object/character/Monster/ShieldGremlin.cpp
@@ -73,6 +75,7 @@ set(SRC_FILES
 	Game_object/character/Monster/SpikeSlimeS.cpp
 	Game_object/character/Monster/WizardGremlin.cpp
 	Game_object/dungeon/Combat_reward_screen.cpp
+	Game_object/dungeon/Death_screen.cpp
 	Game_object/dungeon/Dungeons.cpp
 	Game_object/dungeon/Dungeon_manager.cpp
 	Game_object/dungeon/Dungeon_screen.cpp
@@ -85,6 +88,8 @@ set(SRC_FILES
 	Game_object/dungeon/Grid_screen_action/Render_arrow.cpp
 	Game_object/effect/Auto_release_pool_manager.cpp
 	Game_object/effect/Battle_start_eff.cpp
+	Game_object/effect/block_broken_eff.cpp
+	Game_object/effect/Buff_particle_eff.cpp
 	Game_object/effect/Camfire_bubble_effect.cpp
 	Game_object/effect/Camfire_burning_effect.cpp
 	Game_object/effect/Card_flash.cpp
@@ -92,6 +97,7 @@ set(SRC_FILES
 	Game_object/effect/Card_proof_particle.cpp
 	Game_object/effect/Card_trail_effect.cpp
 	Game_object/effect/Damage_impact_curvy_eff.cpp
+	Game_object/effect/Debuff_particle_eff.cpp
 	Game_object/effect/Effects.cpp
 	Game_object/effect/Effect_group.cpp
 	Game_object/effect/End_turn_button_glow.cpp
@@ -103,14 +109,18 @@ set(SRC_FILES
 	Game_object/effect/Flying_spike_eff.cpp
 	Game_object/effect/Hammer_effect.cpp
 	Game_object/effect/Map_circle_effect.cpp
+	Game_object/effect/Player_turn_eff.cpp
 	Game_object/effect/Power_buff_debuff_eff.cpp
 	Game_object/effect/Power_remove_text_eff.cpp
 	Game_object/effect/Purge_card_eff.cpp
 	Game_object/effect/Refresh_energy_effect.cpp
 	Game_object/effect/Rest_option_black_screen.cpp
+	Game_object/effect/Shield_particle_eff.cpp
 	Game_object/effect/Shine_particle.cpp
 	Game_object/effect/Slash_eff.cpp
 	Game_object/effect/Sleep_cover_eff.cpp
+	Game_object/effect/Stun_star_eff.cpp
+	Game_object/effect/Unknown_particle_eff.cpp
 	Game_object/effect/Vertical_aura.cpp
 	Game_object/effect_gen/Card_upgrade_eff_gen.cpp
 	Game_object/effect_gen/Effect_gen_group.cpp
@@ -173,10 +183,10 @@ set(SRC_FILES
 )
 
 set(INCLUDE_FILES
-	AppStatus.hpp
 	Cursor.hpp
 	draw_test.hpp
 	InitScreen.hpp
+	InitScreenBackground.hpp
 	Programs.hpp
 	TheApp.hpp
 	WindowSize.hpp
@@ -195,6 +205,10 @@ set(INCLUDE_FILES
 	Game_object/Card_pos_setter.hpp
 	Game_object/Damage_info.hpp
 	Game_object/Group_template.hpp
+	Game_object/abstraction/CardPrototype.hpp
+	Game_object/abstraction/Is_screen.hpp
+	Game_object/abstraction/Monster_move_tracker.hpp
+	Game_object/abstraction/Reusable.hpp
 	Game_object/action/Actions.hpp
 	Game_object/action/Action_group.hpp
 	Game_object/action/Action_group_handler.hpp
@@ -218,7 +232,9 @@ set(INCLUDE_FILES
 	Game_object/button/Cancel_button.hpp
 	Game_object/button/Confirm_button.hpp
 	Game_object/button/End_turn_button.hpp
+	Game_object/button/Menu_button.hpp
 	Game_object/button/Proceed_button.hpp
+	Game_object/button/Return_to_start_button.hpp
 	Game_object/button/Skip_button.hpp
 	Game_object/card/Cards.hpp
 	Game_object/card/Card_generate.hpp
@@ -250,7 +266,6 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/Looter.hpp
 	Game_object/character/Monster/MadGremlin.hpp
 	Game_object/character/Monster/Monsters.hpp
-	Game_object/character/Monster/Mugger.hpp
 	Game_object/character/Monster/RedLouse.hpp
 	Game_object/character/Monster/RedSlaver.hpp
 	Game_object/character/Monster/ShieldGremlin.hpp
@@ -260,6 +275,7 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/SpikeSlimeS.hpp
 	Game_object/character/Monster/WizardGremlin.hpp
 	Game_object/dungeon/Combat_reward_screen.hpp
+	Game_object/dungeon/Death_screen.hpp
 	Game_object/dungeon/Dungeons.hpp
 	Game_object/dungeon/Dungeon_manager.hpp
 	Game_object/dungeon/Dungeon_screen.hpp
@@ -273,6 +289,8 @@ set(INCLUDE_FILES
 	Game_object/dungeon/Grid_screen_action/Render_arrow.hpp
 	Game_object/effect/Auto_release_pool_manager.hpp
 	Game_object/effect/Battle_start_eff.hpp
+	Game_object/effect/block_broken_eff.hpp
+	Game_object/effect/Buff_particle_eff.hpp
 	Game_object/effect/Camfire_bubble_effect.hpp
 	Game_object/effect/Camfire_burning_effect.hpp
 	Game_object/effect/Card_flash.hpp
@@ -280,6 +298,7 @@ set(INCLUDE_FILES
 	Game_object/effect/Card_proof_particle.hpp
 	Game_object/effect/Card_trail_effect.hpp
 	Game_object/effect/Damage_impact_curvy_eff.hpp
+	Game_object/effect/Debuff_particle_eff.hpp
 	Game_object/effect/Effects.hpp
 	Game_object/effect/Effect_group.hpp
 	Game_object/effect/Effect_pool.hpp
@@ -291,18 +310,23 @@ set(INCLUDE_FILES
 	Game_object/effect/Exhaust_ember_eff.hpp
 	Game_object/effect/Fade_wide.hpp
 	Game_object/effect/Flash_attack_effect.hpp
+	Game_object/effect/Flash_intent_particle_eff.hpp
 	Game_object/effect/Flash_power_eff.hpp
 	Game_object/effect/Flying_spike_eff.hpp
 	Game_object/effect/Hammer_effect.hpp
 	Game_object/effect/Map_circle_effect.hpp
+	Game_object/effect/Player_turn_eff.hpp
 	Game_object/effect/Power_buff_debuff_eff.hpp
 	Game_object/effect/Power_remove_text_eff.hpp
 	Game_object/effect/Purge_card_eff.hpp
 	Game_object/effect/Refresh_energy_effect.hpp
 	Game_object/effect/Rest_option_black_screen.hpp
+	Game_object/effect/Shield_particle_eff.hpp
 	Game_object/effect/Shine_particle.hpp
 	Game_object/effect/Slash_eff.hpp
 	Game_object/effect/Sleep_cover_eff.hpp
+	Game_object/effect/Stun_star_eff.hpp
+	Game_object/effect/Unknown_particle_eff.hpp
 	Game_object/effect/Vertical_aura.hpp
 	Game_object/effect_gen/Card_paticle_gen.hpp
 	Game_object/effect_gen/Card_upgrade_eff_gen.hpp
@@ -311,6 +335,7 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Effect_gen_group.hpp
 	Game_object/effect_gen/Empower_circle_gen.hpp
 	Game_object/effect_gen/Exhaust_card_eff_gen.hpp
+	Game_object/effect_gen/Flash_intent_particle_gen.hpp
 	Game_object/effect_gen/Power_buff_debuff_gen.hpp
 	Game_object/effect_gen/Power_remove_text_gen.hpp
 	Game_object/effect_gen/Purge_card_eff_gen.hpp
@@ -319,9 +344,6 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Vertical_aura_gen.hpp
 	Game_object/energy_orb/Energy_orb.hpp
 	Game_object/energy_orb/Red_orb.hpp
-	Game_object/interface/CardPrototype.hpp
-	Game_object/interface/Is_screen.hpp
-	Game_object/interface/Reusable.hpp
 	Game_object/map/Dungeon_map.hpp
 	Game_object/map/Legend.hpp
 	Game_object/map/Legend_item.hpp
@@ -381,6 +403,7 @@ set(INCLUDE_FILES
 	RUtil/Some_Math.hpp
 	RUtil/Text_layout_creator.hpp
 	RUtil/Text_Vector_Reader.hpp
+	RUtil/Weighted_index_picker.hpp
 )
 
 set(TEST_FILES

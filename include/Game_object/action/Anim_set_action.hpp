@@ -19,7 +19,7 @@ public:
     void update(Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
     std::shared_ptr<Character::Characters> who;
-    Character::Animation anim;   
-    bool anim_once=false;
+    Character::Animation anim;
+    bool anim_once;
 };
 }

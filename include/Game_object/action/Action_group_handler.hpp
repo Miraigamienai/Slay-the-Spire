@@ -40,7 +40,15 @@ public:
         }
         is_endding_turn=true;
     }
-
+    void clear()noexcept{
+        action_box.clear();
+        pre_action_box.clear();
+        card_queue.clear();
+        monster_queue.clear();
+        current_action=nullptr;
+        is_wating_player=false;
+        is_endding_turn=false;
+    }
     void AddActionTop(std::shared_ptr<Actions>&&action){action_box.AddTop(std::move(action));}
     void AddActionBot(std::shared_ptr<Actions>&&action){action_box.AddBot(std::move(action));}
     void AddActionTop(const std::shared_ptr<Actions>&action){action_box.AddTop(action);}

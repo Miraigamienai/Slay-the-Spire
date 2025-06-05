@@ -22,7 +22,7 @@ namespace Action{
         TimeGo();
         if(is_done){
             //damage the target 
-            target->damage(this->damage_info);
+            target->damage(this->damage_info, dungeon_shared);
             dungeon_shared.action_group_handler.AddActionTop(std::make_shared<Action::Wait_action>(0.1F));
         }
     }

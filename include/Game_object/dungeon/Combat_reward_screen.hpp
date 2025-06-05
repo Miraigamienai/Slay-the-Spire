@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 
-#include "Game_object/interface/Is_screen.hpp"
+#include "Game_object/abstraction/Is_screen.hpp"
 #include "Game_object/button/Proceed_button.hpp"
 
 //fwd decl
@@ -15,7 +15,7 @@ namespace Reward{
 }
 
 namespace Dungeon{
-class Combat_reward_screen final:public Interface::Is_screen
+class Combat_reward_screen final:public Abstraction::Is_screen
 {
 public:
     Combat_reward_screen();

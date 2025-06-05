@@ -1,32 +1,34 @@
-#ifndef GAME_OBJECT_CHARACTER_MONSTER_SHIELDGREMLIN_HPP
-#define GAME_OBJECT_CHARACTER_MONSTER_SHIELDGREMLIN_HPP
-#include "Game_object/character/Monster/Monsters.hpp"
+#pragma once
+
+#include "Game_object/abstraction/Monster_move_tracker.hpp"
+
+//fwd decl
+namespace RUtil{
+    class Random;
+}
 
 namespace Monster{
 enum class ShieldGremlinAction
 {
     Protect,
-    ShieldBash,
-    None
+    ShieldBash
 };
-class ShieldGremlin final:public Monsters
+class ShieldGremlin final:public Abstraction::Monster_move_tracker<1, ShieldGremlinAction>
 {
 public:
-    ShieldGremlin(float offsetX,float offsetY);
+    ShieldGremlin(float offset_x, float offset_y, RUtil::Random& rng);
     ~ShieldGremlin()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
-
-    
-    
-    // void apply(const std::shared_ptr<Action::Action_group> &action_group)const override;
+    void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
-    static constexpr float WIDTH=150.0F*Setting::SCALE,
-                        HIGHT=200.0F*Setting::SCALE;
+    static constexpr float WIDTH=120.0F*Setting::SCALE,
+                           HEIGHT=200.0F*Setting::SCALE,
+                           HB_OFFSET_X=0.0F,
+                           HB_OFFSET_Y=0.0F;
     static constexpr int MAX_HP=15,
-                        MIN_HP=12,
-                        PROTECT_BLOCK=7,
-                        SHIELD_BASH_DAMAGE=6;
-    static constexpr float HPBarWidth=WIDTH*0.8F;
+                         MIN_HP=12,
+                         PROTECT_BLOCK=7,
+                         SHIELD_BASH_DAMAGE=6;
+    static const std::shared_ptr<Draw::ReTexture> &IMG;
 };
 }
-#endif

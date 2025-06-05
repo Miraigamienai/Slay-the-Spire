@@ -14,7 +14,7 @@ struct Random_package
     
     Random card_get_rng;//Used for generating temporacy battle-only cards.
     Random card_shuffle_rng;//Used for shuffling the cards.
-    Random monster_hp_rng;//Used for randomizing the monster HP.
+    Random monster_status_rng;//Used for randomizing the monster status.
     Random monster_ai_rng;//Used for randomizing the monster AI.
     Random monster_type_rng;//Used for randomizing the monster type.
     Random_package()=default;
@@ -25,14 +25,14 @@ struct Random_package
         card_reward_rng.SetNewSeed(seed);
         card_get_rng.SetNewSeed(seed);
         card_shuffle_rng.SetNewSeed(seed);
-        monster_hp_rng.SetNewSeed(seed);
+        monster_status_rng.SetNewSeed(seed);
         monster_ai_rng.SetNewSeed(seed);
         misc_rng.SetNewSeed(seed);
     }
     void ResetRoomRNGs(unsigned long long int seed){
         card_get_rng.SetNewSeed(seed);
         card_shuffle_rng.SetNewSeed(seed);
-        monster_hp_rng.SetNewSeed(seed);
+        monster_status_rng.SetNewSeed(seed);
         monster_ai_rng.SetNewSeed(seed);
         monster_type_rng.SetNewSeed(seed);
     }

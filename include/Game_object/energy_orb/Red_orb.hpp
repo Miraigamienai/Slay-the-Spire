@@ -1,6 +1,7 @@
-#ifndef GAME_OBJECT_ENERGY_ORB_RED_ORB
-#define GAME_OBJECT_ENERGY_ORB_RED_ORB
+#pragma once
+
 #include "Game_object/energy_orb/Energy_orb.hpp"
+
 namespace EnergyOrb{
 class Red_orb final:public Energy_orb
 {
@@ -18,4 +19,3 @@ private:
                                                   &layer6;
 };
 }
-#endif

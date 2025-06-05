@@ -5,6 +5,7 @@
 #include <SDL_stdinc.h>
 
 //fwd decl
+enum class State:int;
 namespace Dungeon{
     struct Dungeon_shared;
 }
@@ -22,22 +23,22 @@ namespace Dungeon{
 class Dungeons
 {
 public:
-    Dungeons(Dungeon_shared &dungeon_shared,unsigned long long int random_seed);
+    Dungeons(Dungeon_shared &dungeon_shared, unsigned long long int random_seed, State&state);
     virtual ~Dungeons()=default;
     void update();
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
-    bool is_game_over()const{return game_over;}
 protected:
     Uint32 fade_color=0x1e0f0aff;
 private:
     Dungeon_shared &dungeon_shared;
+    State &state;
+    const unsigned long long int random_seed;
 
     std::shared_ptr<Scene::Scenes> scene;
     std::vector<std::vector<std::shared_ptr<Map::Map_node>>> m_map;
     std::shared_ptr<Map::Map_node> m_current_node,m_next_node=nullptr;
     float fade_timer,fade_color_a;
-    bool next_node_is_making_circle,is_fade_in,is_fade_out,game_over;
-    const unsigned long long int random_seed;
+    bool next_node_is_making_circle,is_fade_in,is_fade_out;
 
     void set_next_node_oscillate_and_edge(const bool value)const;
     bool check_and_set_next_node_making_circle();

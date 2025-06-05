@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Game_object/effect/Effects.hpp"
-#include "Game_object/interface/Reusable.hpp"
+#include "Game_object/abstraction/Reusable.hpp"
 
 enum class AttackType:int;
 
 namespace Effect{
-class Flash_attack_effect final:public Effects,public Interface::Reusable<Flash_attack_effect>
+class Flash_attack_effect final:public Effects,public Abstraction::Reusable<Flash_attack_effect>
 {
 public:
     Flash_attack_effect(const float x,const float y,const AttackType type)noexcept(noexcept(this->Initial(x,y,type))){this->Initial(x,y,type);}

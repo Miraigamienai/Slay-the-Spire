@@ -51,5 +51,5 @@ private:
         return CloudCreater(move_right, id_arr, std::make_index_sequence<N>{});
     }
 
-    static inline void render_format(const std::shared_ptr<Draw::Draw_2D> &r2, RUtil::AtlasRegionID id, float x, float y);
+    static void render_format(const std::shared_ptr<Draw::Draw_2D> &r2, RUtil::AtlasRegionID id, float x, float y);
 };

@@ -4,6 +4,7 @@
 #include <SDL_stdinc.h>//uint
 
 #include "Game_object/map/Map_dot.hpp"
+#include "Game_object/map/Map_node.hpp"
 #include "WindowSize.hpp"
 
 //fwd decl
@@ -19,8 +20,8 @@ public:
             float to_offset_x,float to_offset_y,bool is_boss);
     ~Map_edge()=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2,float screen_offset)const;
-    void MarkTaken(const bool is_taken);
-    const int from_x,from_y,to_x,to_y; 
+    void MarkTaken(const bool is_taken)noexcept{color=is_taken?Map_node::AVAILABLE_COLOR:Map_node::NOT_TAKEN_COLOR;}
+    const int from_x,from_y,to_x,to_y;
 private:
     std::vector<Map_dot> dots;
     Uint32 color;

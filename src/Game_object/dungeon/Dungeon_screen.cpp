@@ -28,6 +28,7 @@ namespace Dungeon
             }else{
                 LOG_ERROR("Forget to set the dispaly_map.");
             }
+            the_map.render_boss_icon(r2);
         }
     }
 
@@ -37,7 +38,7 @@ namespace Dungeon
     }
 
     void Dungeon_screen::update(Dungeon_shared &dungeon_shared){
-        the_map.update();
+        the_map.update(dungeon_shared.current_node!=nullptr&&dungeon_shared.current_node->y==14);
         bool pause_offset_y_update=false;
         if(display_map!=nullptr){
             for(const auto&it:*display_map)
@@ -63,10 +64,11 @@ namespace Dungeon
         }
     }
     
-    void Dungeon_screen::set_display_map(const std::vector<std::vector<std::shared_ptr<Map::Map_node>>>&map){
+    void Dungeon_screen::set_display_map(const std::vector<std::vector<std::shared_ptr<Map::Map_node>>>&map, const std::shared_ptr<Draw::ReTexture> &boss_icon, const std::shared_ptr<Draw::ReTexture> &boss_outline){
         for(const auto&it:map)
             for(const auto&it2:it)
                 if(it2!=nullptr)it2->BindLegend(this->the_map.GetLegend());
         display_map=&map;
+        the_map.set_boss(boss_icon, boss_outline);
     }
 } // namespace Dungeon

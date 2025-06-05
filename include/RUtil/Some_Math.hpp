@@ -19,11 +19,6 @@ public:
     ~Math() = delete;
     Math &operator=(const Math &) = delete;
     Math &operator=(Math&&)=delete;
-    template <typename... Args>
-    static void Normalize(Args&... args){
-        const auto Sum=(args+...);
-        ((args/=static_cast<float>(Sum)),...);
-    }
     template <typename T>
     static constexpr T Apply(const T start,const T target,const float t)noexcept(noexcept(start+(target-start)*t)){return start+(target-start)*t;}
     static float interpolation_exp(float v, float p, float a);

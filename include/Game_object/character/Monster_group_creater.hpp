@@ -15,6 +15,7 @@ enum class GroupName:int{
     Jaw_Worm,
     _2_Louse,
     Small_Slimes,
+
     //strong
     Blue_Slaver,
     Gremlin_Gang,
@@ -27,6 +28,16 @@ enum class GroupName:int{
     _3_Louse,
     _2_Fungi_Beasts,
 
+    //elite
+    Gremlin_Nob,
+    Lagavulin,
+    _3_Sentries,
+
+    //boss
+    The_Guardian,
+    Hexaghost,
+    Slime_Boss,
+    
     None
 };
 

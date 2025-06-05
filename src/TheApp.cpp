@@ -16,7 +16,6 @@ TheApp::TheApp()
     m_InitScreen(current_state),
     seed(0ULL),
     fading(false),
-    is_fade_to_black(false),
     fade_a(0.0F){}
 
 void TheApp::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
@@ -37,20 +36,10 @@ void TheApp::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
 
 void TheApp::update(){
     if(fading){
-        if(is_fade_to_black) fade_a = RUtil::Math::interpolation_fade(0.0F, 1.0F, 1.0F-fade_timer/FADE_TIME);
-        else fade_a = RUtil::Math::interpolation_fade(1.0F, 0.0F, 1.0F-fade_timer/FADE_TIME);
-        
+        fade_a = RUtil::Math::interpolation_fade(1.0F, 0.0F, 1.0F-fade_timer/FADE_TIME);
         fade_timer-=RUtil::Game_Input::delta_time();
-        if(fade_timer<0.0F){
-            if(is_fade_to_black){
-                is_fade_to_black=false;
-                fade_timer=FADE_TIME;
-                current_state=next_state;
-            }else{
-                fading=false;
-            }
-        }
-        if(is_fade_to_black || fade_a>0.5F) return;
+        if(fade_timer<0.0F) fading=false;
+        if(fade_a>0.75F) return;
     }
 
     switch (current_state) {
@@ -66,6 +55,7 @@ void TheApp::update(){
             break;
         case State::GameOver:
             to_init_prepare();
+            current_state=State::INIT;
             break;
         case State::END:
             Core::Context::GetInstance()->SetExit(true);
@@ -82,6 +72,7 @@ void TheApp::prepare(){
     Card::Card_soul::SetTrailColor(m_dungeon_shared.player->GetCardTrailColor());
     Card::Cards::SetRenderColor(m_dungeon_shared.player->GetCardRenderColor());
     m_dungeon_shared.manager.reset();
+    m_dungeon_shared.current_node = m_dungeon_shared.next_node = nullptr;
     m_dungeon=std::make_shared<Dungeon::Dungeons>(m_dungeon_shared, seed, current_state);
     //card colors set 
     for(int i=0;i<2;i++)//for test
@@ -99,17 +90,11 @@ void TheApp::prepare(){
     for(int i=0;i<1;i++)
         m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Barricade>());
     
-    fading=true;
-    is_fade_to_black=false;
-    fade_timer=FADE_TIME;
-    fade_a=1.0F;
+    fade();
 }
 
 void TheApp::to_init_prepare(){
     m_InitScreen.reset();
-    next_state=State::INIT;
     fade_timer=FADE_TIME;
-    is_fade_to_black=true;
-    fading=true;
-    fade_a=0.0F;
+    fade();
 }

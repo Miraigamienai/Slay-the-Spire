@@ -41,8 +41,8 @@ private:
     int max_energy,current_energy;
     int gold;
     static const std::shared_ptr<Draw::ReTexture> &img, &img_died;
-    static constexpr float WIDTH=350.0F*Setting::SCALE,
-                           HEIGHT=290.0F*Setting::SCALE,
+    static constexpr float WIDTH=290.0F*Setting::SCALE,
+                           HEIGHT=240.0F*Setting::SCALE,
                            HB_OFFSET_X=-4.0F*Setting::SCALE,
                            HB_OFFSET_Y=-16.0F*Setting::SCALE;
 };

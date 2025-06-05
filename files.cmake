@@ -70,10 +70,12 @@ set(SRC_FILES
 	Game_object/character/Monster/RedLouse.cpp
 	Game_object/character/Monster/RedSlaver.cpp
 	Game_object/character/Monster/ShieldGremlin.cpp
+	Game_object/character/Monster/SlimeBoss.cpp
 	Game_object/character/Monster/SneakyGremlin.cpp
 	Game_object/character/Monster/SpikeSlimeL.cpp
 	Game_object/character/Monster/SpikeSlimeM.cpp
 	Game_object/character/Monster/SpikeSlimeS.cpp
+	Game_object/character/Monster/TheGuardian.cpp
 	Game_object/character/Monster/WizardGremlin.cpp
 	Game_object/dungeon/Combat_reward_screen.cpp
 	Game_object/dungeon/Death_screen.cpp
@@ -271,10 +273,12 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/RedLouse.hpp
 	Game_object/character/Monster/RedSlaver.hpp
 	Game_object/character/Monster/ShieldGremlin.hpp
+	Game_object/character/Monster/SlimeBoss.hpp
 	Game_object/character/Monster/SneakyGremlin.hpp
 	Game_object/character/Monster/SpikeSlimeL.hpp
 	Game_object/character/Monster/SpikeSlimeM.hpp
 	Game_object/character/Monster/SpikeSlimeS.hpp
+	Game_object/character/Monster/TheGuardian.hpp
 	Game_object/character/Monster/WizardGremlin.hpp
 	Game_object/dungeon/Combat_reward_screen.hpp
 	Game_object/dungeon/Death_screen.hpp
@@ -399,6 +403,7 @@ set(INCLUDE_FILES
 	RUtil/Hitbox.hpp
 	RUtil/Image_book.hpp
 	RUtil/Powers_Text_Reader.hpp
+	RUtil/Probability_selector.hpp
 	RUtil/Random.hpp
 	RUtil/Random_package.hpp
 	RUtil/Scroll.hpp

@@ -13,9 +13,9 @@ namespace Action
     Apply_power_action::Apply_power_action(RUtil::Powers_Text_ID power_id,int amount, const std::shared_ptr<Character::Characters> &src, const std::shared_ptr<Character::Characters> &target, bool skip_reduce_once)
         :power_id(power_id),
         amount(amount),
+        skip_reduce_once(skip_reduce_once),
         src(src),
-        target(target),
-        skip_reduce_once(skip_reduce_once)
+        target(target)
     {
         duration=ACTION_DUR_FAST;
     }

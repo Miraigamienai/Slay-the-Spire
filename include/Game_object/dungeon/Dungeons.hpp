@@ -36,7 +36,6 @@ private:
 
     std::shared_ptr<Scene::Scenes> scene;
     std::vector<std::vector<std::shared_ptr<Map::Map_node>>> m_map;
-    std::shared_ptr<Map::Map_node> m_current_node,m_next_node=nullptr;
     float fade_timer,fade_color_a;
     bool next_node_is_making_circle,is_fade_in,is_fade_out;
 

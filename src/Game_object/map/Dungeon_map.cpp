@@ -48,14 +48,12 @@ namespace Map{
         map_target_a=map_a=0.0F;
         legend.hide_instantly();
     }
-    void Dungeon_map::update(){
+    void Dungeon_map::update(bool at_boss){
         this->legend.update(map_a,on_top);
         map_a=RUtil::Math::fadelerp(map_a,map_target_a);
         if(on_top){//check boos hitbox
             boss_hitbox.move((float)Setting::WINDOW_WIDTH/2.0F, screen_offsetY + map_offsetY + BOSS_OFFSET_Y + BOSS_L/2.0F);
             boss_hitbox.update();
-            // if(boss_hitbox.ClickStarted())
-
         }
         if(on_top&&(boss_hitbox.Hovered()||at_boss)){
             boss_node_color_rgb=Map_node::AVAILABLE_COLOR;

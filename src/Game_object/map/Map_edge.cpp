@@ -12,7 +12,7 @@ Map_edge::Map_edge(int from_x,int from_y,int to_x,int to_y,
         float to_offset_x,float to_offset_y,bool is_boss)
         :from_x(from_x),from_y(from_y),to_x(to_x),to_y(to_y){
     color=DISABLED_COLOR;
-    float src_x=(float)from_x * SPACE_X + Map_node::OFFSET_X +from_offset_x,
+    const float src_x=(float)from_x * SPACE_X + Map_node::OFFSET_X +from_offset_x,
             dst_x=(float)to_x   * SPACE_X + Map_node::OFFSET_X +to_offset_x,
             src_y=(float)from_y * Map_node::MAP_DST_Y + from_offset_y,
             dst_y=(float)to_y   * Map_node::MAP_DST_Y + to_offset_y;
@@ -36,5 +36,4 @@ void Map_edge::render(const std::shared_ptr<Draw::Draw_2D> &r2,float screen_offs
         it.render(r2,screen_offset);
     }
 }
-void Map_edge::MarkTaken(const bool is_taken){this->color=is_taken?Map_node::AVAILABLE_COLOR:Map_node::NOT_TAKEN_COLOR;}
 }

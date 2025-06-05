@@ -12,15 +12,15 @@ public:
     void show();
     // void hide();
     void hide_instantly();
-    void update();
+    void update(bool at_boss);
     float get_alpha()const{return map_a;}
     void set_boss(const std::shared_ptr<Draw::ReTexture> &boss_icon, const std::shared_ptr<Draw::ReTexture> &boss_outline)noexcept{this->boss_icon=boss_icon;this->boss_outline=boss_outline;}
     const auto &GetLegend()const{return legend;}
+    bool boss_click()const noexcept(noexcept(boss_hitbox.ClickStarted())){return boss_hitbox.ClickStarted();}
 private:
     float map_a,map_offsetY,map_target_a,map_mid_pos;
     Legend legend;
     RUtil::Hitbox boss_hitbox;
-    bool at_boss;
     Uint32 boss_node_color_rgb;
     std::shared_ptr<Draw::ReTexture> boss_icon=nullptr, boss_outline=nullptr;
     const float &screen_offsetY;

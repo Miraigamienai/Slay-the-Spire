@@ -72,6 +72,7 @@ void TheApp::prepare(){
     Card::Card_soul::SetTrailColor(m_dungeon_shared.player->GetCardTrailColor());
     Card::Cards::SetRenderColor(m_dungeon_shared.player->GetCardRenderColor());
     m_dungeon_shared.manager.reset();
+    m_dungeon_shared.current_node = m_dungeon_shared.next_node = nullptr;
     m_dungeon=std::make_shared<Dungeon::Dungeons>(m_dungeon_shared, seed, current_state);
     //card colors set 
     for(int i=0;i<2;i++)//for test

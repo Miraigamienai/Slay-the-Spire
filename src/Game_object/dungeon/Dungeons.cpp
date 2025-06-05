@@ -88,7 +88,6 @@ namespace Dungeon{
         auto boss=BOSS_PROBABILITY(dungeon_shared.random_package.map_rng);
         dungeon_shared.manager.set_display_map(m_map, GetBossImage(boss, "boss"), GetBossImage(boss, "bossOutline"));
         dungeon_shared.manager.open<Abstraction::ScreenType::main_dungeon>();
-        m_current_node=nullptr;
         set_next_node_oscillate_and_edge(true);
         is_fade_in=is_fade_out=false;
         fade_color_a=0.0F;
@@ -101,9 +100,9 @@ namespace Dungeon{
         dungeon_shared.top_effs.update();
         dungeon_shared.back_effs.update();
         //room update
-        if(m_current_node!=nullptr){
-            m_current_node->GetRoom()->update(dungeon_shared);
-            if(m_current_node->GetRoom()->get_phase()==Room::Room_phase::just_complete){
+        if(dungeon_shared.current_node!=nullptr){
+            dungeon_shared.current_node->GetRoom()->update(dungeon_shared);
+            if(dungeon_shared.current_node->GetRoom()->get_phase()==Room::Room_phase::just_complete){
                 //room complete
                 this->on_room_complete();
             }
@@ -159,7 +158,7 @@ namespace Dungeon{
         dungeon_shared.player->render(r2);//temporary here
         dungeon_shared.room_monsters.render(r2);//temporary here
         scene->render_fg(r2);
-        if(m_current_node!=nullptr)m_current_node->GetRoom()->render(r2);
+        if(dungeon_shared.current_node!=nullptr)dungeon_shared.current_node->GetRoom()->render(r2);
         dungeon_shared.overlay.render(r2);
         dungeon_shared.card_group_handler.render_hand(r2);//flying card also render inside it.
         dungeon_shared.card_group_handler.render_force_cards(r2);
@@ -170,35 +169,37 @@ namespace Dungeon{
         r2->draw(Effect::Fade_wide::white_square, 0.0F, 0.0F, Setting::WINDOW_WIDTH, Setting::WINDOW_HEIGHT);
     }
     void Dungeons::set_next_node_oscillate_and_edge(const bool value)const{
-        if(m_current_node==nullptr){
+        if(dungeon_shared.current_node==nullptr){
             for(const auto&it:m_map[0])
                 if(it!=nullptr) it->SetReadyToConnect(value);
         }else{
-            m_current_node->MarkAllEdge(value);
-            if(m_current_node->HasEdge(Map::Direction::right))
-                m_map[m_current_node->y+1][m_current_node->x+1]->SetReadyToConnect(value);
-            if(m_current_node->HasEdge(Map::Direction::middle))
-                m_map[m_current_node->y+1][m_current_node->x]->SetReadyToConnect(value);
-            if(m_current_node->HasEdge(Map::Direction::left))
-                m_map[m_current_node->y+1][m_current_node->x-1]->SetReadyToConnect(value);
+            dungeon_shared.current_node->MarkAllEdge(value);
+            if(dungeon_shared.current_node->HasEdge(Map::Direction::right))
+                m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x+1]->SetReadyToConnect(value);
+            if(dungeon_shared.current_node->HasEdge(Map::Direction::middle))
+                m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x]->SetReadyToConnect(value);
+            if(dungeon_shared.current_node->HasEdge(Map::Direction::left))
+                m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x-1]->SetReadyToConnect(value);
         }
     }
     bool Dungeons::check_and_set_next_node_making_circle(){
-        if(m_current_node==nullptr){
+        if(dungeon_shared.current_node==nullptr){
             for(const auto&it:m_map[0])
                 if(it!=nullptr&&it->IsMakingCircle()){
-                    m_next_node=it;
+                    dungeon_shared.next_node=it;
                     return true;
                 }
+        }else if(dungeon_shared.current_node->y==14){
+            // dungeon_shared
         }else{
-            if(m_current_node->HasEdge(Map::Direction::right) && m_map[m_current_node->y+1][m_current_node->x+1]->IsMakingCircle()){
-                m_next_node=m_map[m_current_node->y+1][m_current_node->x+1];
+            if(dungeon_shared.current_node->HasEdge(Map::Direction::right) && m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x+1]->IsMakingCircle()){
+                dungeon_shared.next_node=m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x+1];
                 return true;
-            }else if(m_current_node->HasEdge(Map::Direction::middle) && m_map[m_current_node->y+1][m_current_node->x]->IsMakingCircle()){
-                m_next_node=m_map[m_current_node->y+1][m_current_node->x];
+            }else if(dungeon_shared.current_node->HasEdge(Map::Direction::middle) && m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x]->IsMakingCircle()){
+                dungeon_shared.next_node=m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x];
                 return true;
-            }else if(m_current_node->HasEdge(Map::Direction::left) && m_map[m_current_node->y+1][m_current_node->x-1]->IsMakingCircle()){
-                m_next_node=m_map[m_current_node->y+1][m_current_node->x-1];
+            }else if(dungeon_shared.current_node->HasEdge(Map::Direction::left) && m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x-1]->IsMakingCircle()){
+                dungeon_shared.next_node=m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x-1];
                 return true;
             }
         }
@@ -233,17 +234,17 @@ namespace Dungeon{
         }else LOG_ERROR("Not fading but the update_fading() be called.");
     }
     void Dungeons::change_current_node_to_next(){
-        if(m_next_node==nullptr){
+        if(dungeon_shared.next_node==nullptr){
             LOG_ERROR("Error when change current node.");
             return;
         }
-        if(m_current_node!=nullptr){
-            m_current_node->GetConnectedEdge(m_next_node)->MarkTaken(true);
+        if(dungeon_shared.current_node!=nullptr){
+            dungeon_shared.current_node->GetConnectedEdge(dungeon_shared.next_node)->MarkTaken(true);
         }
-        m_current_node=m_next_node;
-        m_current_node->MarkTaken();
-        m_next_node=nullptr;
-        dungeon_shared.current_node=m_current_node;
+        dungeon_shared.current_node=dungeon_shared.next_node;
+        dungeon_shared.current_node->MarkTaken();
+        dungeon_shared.next_node=nullptr;
+        dungeon_shared.current_node=dungeon_shared.current_node;
 
     }
     void Dungeons::entering_next_room(){
@@ -253,8 +254,8 @@ namespace Dungeon{
         fade_in();
         dungeon_shared.effs.clear();
         dungeon_shared.top_effs.clear();
-        m_current_node->GetRoom()->init_room(dungeon_shared, fade_color);
-        dungeon_shared.random_package.ResetRoomRNGs(this->random_seed+m_current_node->y);
+        dungeon_shared.current_node->GetRoom()->init_room(dungeon_shared, fade_color);
+        dungeon_shared.random_package.ResetRoomRNGs(this->random_seed+dungeon_shared.current_node->y);
         dungeon_shared.manager.hide_dungeon_screen_instantly();
         dungeon_shared.card_group_handler.prepare_for_battle(dungeon_shared.random_package.card_shuffle_rng);
         dungeon_shared.action_group_handler.prepare_for_battle();
@@ -262,7 +263,7 @@ namespace Dungeon{
 
     }
     void Dungeons::on_room_complete(){
-        if(m_current_node->GetRoom()->room_type==Room::Room_type::Monster || m_current_node->GetRoom()->room_type==Room::Room_type::Elite){
+        if(dungeon_shared.current_node->GetRoom()->room_type==Room::Room_type::Monster || dungeon_shared.current_node->GetRoom()->room_type==Room::Room_type::Elite){
             //random 3 cards
             std::vector<std::shared_ptr<Card::Cards>> card_vec;
             for(int i=0;i<3;i++) card_vec.emplace_back(Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng));

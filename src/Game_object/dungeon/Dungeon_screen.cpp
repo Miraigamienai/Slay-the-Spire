@@ -38,7 +38,7 @@ namespace Dungeon
     }
 
     void Dungeon_screen::update(Dungeon_shared &dungeon_shared){
-        the_map.update();
+        the_map.update(dungeon_shared.current_node!=nullptr&&dungeon_shared.current_node->y==14);
         bool pause_offset_y_update=false;
         if(display_map!=nullptr){
             for(const auto&it:*display_map)

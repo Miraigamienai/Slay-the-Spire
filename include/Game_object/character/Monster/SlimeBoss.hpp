@@ -18,21 +18,6 @@ public:
     ~SlimeBoss()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
-    void SlimeBoss::next_move(Dungeon::Dungeon_shared &dungeon_shared){
-        switch(pattern[move_cnt]){
-            case SlimeBossAction::GoopSpray:
-                set_move(SlimeBossAction::GoopSpray, nullptr, Intent::strong_debuff, dungeon_shared.player->get_powers());
-                break;
-            case SlimeBossAction::Preparing:
-                set_move(SlimeBossAction::Preparing, nullptr, Intent::unknown, dungeon_shared.player->get_powers());
-                break;
-            case SlimeBossAction::Slam:
-                set_move(SlimeBossAction::Slam, nullptr, Intent::attack, SLAM_DAMAGE, dungeon_shared.player->get_powers());
-                break;
-            default:
-                break;
-        }
-    }
     void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
     int move_cnt;

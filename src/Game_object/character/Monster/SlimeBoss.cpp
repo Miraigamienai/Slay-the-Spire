@@ -50,6 +50,22 @@ namespace Monster{
         if(move_cnt>=3) move_cnt=0;
     }
 
+    void SlimeBoss::next_move(Dungeon::Dungeon_shared &dungeon_shared){
+        switch(pattern[move_cnt]){
+            case SlimeBossAction::GoopSpray:
+                set_move(SlimeBossAction::GoopSpray, nullptr, Intent::strong_debuff, dungeon_shared.player->get_powers());
+                break;
+            case SlimeBossAction::Preparing:
+                set_move(SlimeBossAction::Preparing, nullptr, Intent::unknown, dungeon_shared.player->get_powers());
+                break;
+            case SlimeBossAction::Slam:
+                set_move(SlimeBossAction::Slam, nullptr, Intent::attack, SLAM_DAMAGE, dungeon_shared.player->get_powers());
+                break;
+            default:
+                break;
+        }
+    }
+
     void SlimeBoss::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
         Monsters::damage(damage_info, dungeon_shared);
         if(current_HP<=HP/2 && move_cnt!=SPLIT_CNT){

@@ -14,6 +14,7 @@ class SpikeSlimeL final:public Abstraction::Monster_move_tracker<2, SpikeSlimeLA
 {
 public:
     SpikeSlimeL(float offset_x, float offset_y, RUtil::Random& rng);
+    SpikeSlimeL(float offset_x, float offset_y, int HP);
     ~SpikeSlimeL()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;

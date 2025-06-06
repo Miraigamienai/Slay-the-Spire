@@ -15,7 +15,10 @@
 
 namespace Monster{
     SpikeSlimeL::SpikeSlimeL(float offset_x, float offset_y, RUtil::Random& rng)
-        :Abstraction::Monster_move_tracker<2, SpikeSlimeLAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, rng.NextInt(MIN_HP, MAX_HP+1), IMG),
+        :SpikeSlimeL(offset_x, offset_y, rng.NextInt(MIN_HP, MAX_HP+1)){};
+    
+    SpikeSlimeL::SpikeSlimeL(float offset_x, float offset_y, int HP)
+        :Abstraction::Monster_move_tracker<2, SpikeSlimeLAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG),
         offset_x(offset_x),
         offset_y(offset_y){}
     

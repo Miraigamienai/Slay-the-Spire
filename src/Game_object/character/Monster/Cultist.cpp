@@ -2,6 +2,7 @@
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/action/Anim_set_action.hpp"
 #include "Game_object/action/Damage_action.hpp"
+#include "Game_object/action/Apply_power_action.hpp"
 #include "RUtil/Image_book.hpp"
 #include "RUtil/Random.hpp"
 #include "Draw/ReTexture.hpp"
@@ -14,11 +15,11 @@ namespace Monster{
     void Cultist::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){
             case CultistAction::Incantation:
-                //Gains 3  Ritual(strength).
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Ritual, 3, shared_from_this(), shared_from_this(), true));
                 break;
             case CultistAction::DarkStrike:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{DARK_STRIKE_DAMAGE, shared_from_this(), AttackType::slash_horizontal}, dungeon_shared.player));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::slash_horizontal}, dungeon_shared.player));
                 break;
             default:
                 break;

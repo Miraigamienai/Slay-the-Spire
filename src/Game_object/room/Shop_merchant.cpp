@@ -13,11 +13,11 @@ namespace Room{
     {
         //TODO: card random probability need to be set
         for(auto &it:card1){
-            it.card=Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng);
+            it.card=Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.reward_rng);
             it.price=80 + RUtil::Random::GetRandomInt(40);
         }
         for(auto &it:card2){
-            it.card=Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng);
+            it.card=Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.reward_rng);
             it.price=80 + RUtil::Random::GetRandomInt(40);
         }
     }

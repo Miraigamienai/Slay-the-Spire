@@ -32,7 +32,7 @@ public:
     virtual ~Monsters()=default;
     virtual void Action(Dungeon::Dungeon_shared &dungeon_shared)=0;
     virtual void next_move(Dungeon::Dungeon_shared &dungeon_shared)=0;
-    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
+    virtual void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void update()override;
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const override{
@@ -46,11 +46,14 @@ public:
     void flash_intent(Dungeon::Dungeon_shared &dungeon_shared);
     void refresh_dmg_display(const Power::Power_group &player_powers);
     bool TipHovered()const noexcept(noexcept(Characters::TipHovered())) override{return Characters::TipHovered()||intent_hb.Hovered();}
+    void ForceDie(){Character::Characters::ForceDie(); dying_fade_timer = FADE_TIME;}
+    auto GetIntent()const noexcept{return move.intent;}
     bool IsInDyingFade()const noexcept{return dying_fade_timer!=0.0F;}
 protected:
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, int multiplier, const Power::Power_group &player_powers);
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, const Power::Power_group &player_powers);
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, const Power::Power_group &player_powers);
+    int current_damage()const noexcept{return move.damage;}
 private:
     struct Move{
         std::shared_ptr<Draw::Text_layout> move_name;

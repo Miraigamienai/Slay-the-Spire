@@ -17,7 +17,7 @@ public:
     ~Show_card_to_discard_action()override=default;
     void update(Dungeon::Dungeon_shared &dungeon_shared)override{
         if(duration==DUR){
-            for(int i=0;i<num;i++) dungeon_shared.gen_group.AddTop(std::make_shared<EffectGen::Show_card_to_discard>(card));
+            for(int i=0;i<num;i++) dungeon_shared.gen_group.AddTop(std::make_shared<EffectGen::Show_card_to_discard>(i==num-1 ? card : card->Clone()));
         }
         TimeGo();
     }

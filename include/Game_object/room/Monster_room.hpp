@@ -14,7 +14,7 @@ namespace Character{
 
 namespace Room{
 //need:Monster Player Cards 
-class Monster_room final:public Rooms
+class Monster_room:public Rooms
 {
 public:
     Monster_room(Monster::GroupName group_name);
@@ -25,8 +25,11 @@ public:
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 dungeon_fade_color)override;
     void set_monster_group_name(Monster::GroupName group_name)noexcept{m_group_name=group_name;}
-private:
     Monster::GroupName m_group_name;
+protected:
+    Monster_room(Monster::GroupName group_name, Room_type type);
+    virtual void to_get_reward(Dungeon::Dungeon_shared &dungeon_shared)const;
+private:
     float m_wait_timer;
     bool ending_battle;
     float ending_battle_timer;

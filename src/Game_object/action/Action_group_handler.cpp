@@ -63,8 +63,8 @@ namespace Action
                 action_box.AddBot(std::make_shared<Wait_action>(1.0F));//wait after monster turn end.
         }else if(is_endding_turn){
             is_endding_turn=false;
-            dungeon_shared.player->at_turn_end(dungeon_shared);
-            dungeon_shared.room_monsters.at_turn_end(dungeon_shared);
+            dungeon_shared.player->at_round_end(dungeon_shared);
+            dungeon_shared.room_monsters.at_round_end(dungeon_shared);
             //player turn start
             dungeon_shared.player->at_turn_start(dungeon_shared);
         }

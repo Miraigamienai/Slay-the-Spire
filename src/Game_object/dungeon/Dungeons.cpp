@@ -9,9 +9,6 @@
 #include "Game_object/effect/Effect_group.hpp"
 #include "Game_object/map/Map_generator.hpp"//generate map
 #include "Game_object/scene/Scenes.hpp"
-#include "Game_object/reward_item/Card_reward_item.hpp"
-#include "Game_object/card/Card_generate.hpp"
-#include "RUtil/Random.hpp"//rng
 #include "RUtil/Probability_selector.hpp"
 #include "RUtil/Image_book.hpp"
 #include "TheApp.hpp"
@@ -79,14 +76,16 @@ namespace Dungeon{
     Dungeons::Dungeons(Dungeon_shared &dungeon_shared, unsigned long long int random_seed, State&state)
         :dungeon_shared(dungeon_shared),
         state(state),
-        random_seed(random_seed)
+        random_seed(random_seed),
+        boss_room(std::make_shared<Room::Monster_room>(BOSS_PROBABILITY(dungeon_shared.random_package.map_rng))),
+        fighting_boss(false),
+        boss_timer(0.0F)
     {
         scene=std::make_shared<Scene::Bottom_scene>();
         scene->next_room();
         m_map=Map::Map_generator::Get_Map(15,7,6,dungeon_shared.random_package.map_rng);
         Map::Map_generator::AssignRoom(m_map, ROOM_PROBABILITY, WEAK_MONSTER_PROBABILITY, STRONG_MONSTER_PROBABILITY, ELITE_PROBABILITY, dungeon_shared.random_package.map_rng);
-        auto boss=BOSS_PROBABILITY(dungeon_shared.random_package.map_rng);
-        dungeon_shared.manager.set_display_map(m_map, GetBossImage(boss, "boss"), GetBossImage(boss, "bossOutline"));
+        dungeon_shared.manager.set_display_map(m_map, GetBossImage(boss_room->m_group_name, "boss"), GetBossImage(boss_room->m_group_name, "bossOutline"));
         dungeon_shared.manager.open<Abstraction::ScreenType::main_dungeon>();
         set_next_node_oscillate_and_edge(true);
         is_fade_in=is_fade_out=false;
@@ -100,12 +99,10 @@ namespace Dungeon{
         dungeon_shared.top_effs.update();
         dungeon_shared.back_effs.update();
         //room update
-        if(dungeon_shared.current_node!=nullptr){
+        if(fighting_boss&&boss_timer==0.0F){
+            boss_room->update(dungeon_shared);
+        }else if(dungeon_shared.current_node!=nullptr){
             dungeon_shared.current_node->GetRoom()->update(dungeon_shared);
-            if(dungeon_shared.current_node->GetRoom()->get_phase()==Room::Room_phase::just_complete){
-                //room complete
-                this->on_room_complete();
-            }
         }
         //card update
         dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared);
@@ -114,7 +111,7 @@ namespace Dungeon{
         dungeon_shared.overlay.update(dungeon_shared.card_group_handler);
         //manager update
         dungeon_shared.manager.update(dungeon_shared);
-        if(dungeon_shared.manager.BackToInitScreen()){
+        if(dungeon_shared.manager.BackToInitScreen() || boss_room->get_phase()==Room::Room_phase::just_complete){
             state=State::GameOver;
             dungeon_shared.effs.clear();
             dungeon_shared.back_effs.clear();
@@ -190,7 +187,17 @@ namespace Dungeon{
                     return true;
                 }
         }else if(dungeon_shared.current_node->y==14){
-            // dungeon_shared
+            if(dungeon_shared.manager.boss_click()){
+                if(boss_timer==0.0F && !fighting_boss){
+                    boss_timer=0.75F;
+                    fighting_boss=true;
+                    return true;
+                }else if(boss_timer>0.0F){
+                    boss_timer-=RUtil::Game_Input::delta_time();
+                    if(boss_timer<0.0F) boss_timer=0.0F;
+                    return true;
+                }
+            }
         }else{
             if(dungeon_shared.current_node->HasEdge(Map::Direction::right) && m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x+1]->IsMakingCircle()){
                 dungeon_shared.next_node=m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x+1];
@@ -234,18 +241,22 @@ namespace Dungeon{
         }else LOG_ERROR("Not fading but the update_fading() be called.");
     }
     void Dungeons::change_current_node_to_next(){
-        if(dungeon_shared.next_node==nullptr){
+        if(dungeon_shared.next_node==nullptr && !fighting_boss){
             LOG_ERROR("Error when change current node.");
             return;
         }
-        if(dungeon_shared.current_node!=nullptr){
+        if(fighting_boss){
+            dungeon_shared.current_node->MarkAllEdge(true);
+        }else if(dungeon_shared.current_node!=nullptr){
             dungeon_shared.current_node->GetConnectedEdge(dungeon_shared.next_node)->MarkTaken(true);
         }
-        dungeon_shared.current_node=dungeon_shared.next_node;
-        dungeon_shared.current_node->MarkTaken();
-        dungeon_shared.next_node=nullptr;
-        dungeon_shared.current_node=dungeon_shared.current_node;
 
+        if(fighting_boss) dungeon_shared.current_node->MarkTaken();
+        else{
+            dungeon_shared.current_node=dungeon_shared.next_node;
+            dungeon_shared.current_node->MarkTaken();
+            dungeon_shared.next_node=nullptr;
+        }
     }
     void Dungeons::entering_next_room(){
         set_next_node_oscillate_and_edge(false);
@@ -260,17 +271,5 @@ namespace Dungeon{
         dungeon_shared.card_group_handler.prepare_for_battle(dungeon_shared.random_package.card_shuffle_rng);
         dungeon_shared.action_group_handler.prepare_for_battle();
         scene->next_room();
-
-    }
-    void Dungeons::on_room_complete(){
-        if(dungeon_shared.current_node->GetRoom()->room_type==Room::Room_type::Monster || dungeon_shared.current_node->GetRoom()->room_type==Room::Room_type::Elite){
-            //random 3 cards
-            std::vector<std::shared_ptr<Card::Cards>> card_vec;
-            for(int i=0;i<3;i++) card_vec.emplace_back(Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.card_reward_rng));
-            std::vector<std::shared_ptr<Reward::Reward_item>> reward_vec;
-            reward_vec.emplace_back(std::make_shared<Reward::Card_reward_item>(card_vec));
-            dungeon_shared.manager.open<Abstraction::ScreenType::combat_reward>(reward_vec);
-        }
-        
     }
 }

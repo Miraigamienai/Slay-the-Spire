@@ -19,10 +19,10 @@ namespace Monster
         }
     }
     
-    void Monster_group::at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){
+    void Monster_group::at_round_end(Dungeon::Dungeon_shared &dungeon_shared){
         for(const auto&it:box){
             if(!it->IsDie()){
-                it->at_turn_end(dungeon_shared);
+                it->at_round_end(dungeon_shared);
             }
         }
     }

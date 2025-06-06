@@ -16,11 +16,11 @@ namespace Monster{
     void JawWorm::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){
             case JawWormAction::Chomp:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{CHOMP_DAMAGE, shared_from_this(), AttackType::NONE}, dungeon_shared.player));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::NONE}, dungeon_shared.player));
                 break;
             case JawWormAction::Thrash:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::HOP));
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{THRASH_DAMAGE, shared_from_this(), AttackType::blunt_light}, dungeon_shared.player));    
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::blunt_light}, dungeon_shared.player));    
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_block_action>(shared_from_this(), THRASH_BLOCK));
                 break;
             case JawWormAction::Bellow:            

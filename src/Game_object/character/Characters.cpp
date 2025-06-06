@@ -40,7 +40,8 @@ namespace Character{
         block_text_color_vec(BLOCK_TEXT_COLOR_TARGET),
         animation_timer(0.0F),
         animation(static_cast<Character::Animation>(0)),
-        shake_toggle(false)
+        shake_toggle(false),
+        death_lock(false)
     {
         update_hb_pos();
     }

@@ -15,10 +15,10 @@ namespace Monster{
         dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
         switch(current_move()){
             case BlueSlaverAction::Stab:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{STAB_DAMAGE, shared_from_this(), AttackType::slash_horizontal}, dungeon_shared.player));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::slash_horizontal}, dungeon_shared.player));
                 break;
             case BlueSlaverAction::Rake:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{RAKE_DAMAGE, shared_from_this(), AttackType::slash_diagonal}, dungeon_shared.player));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::slash_diagonal}, dungeon_shared.player));
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Weakened, 1, shared_from_this(), dungeon_shared.player, true));
                 break;
             default:

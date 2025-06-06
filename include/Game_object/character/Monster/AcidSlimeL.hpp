@@ -18,7 +18,9 @@ public:
     ~AcidSlimeL()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
+    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
+    const float offset_x, offset_y;
     static constexpr float WIDTH=300.0F*Setting::SCALE,
                            HEIGHT=180.0F*Setting::SCALE,
                            HB_OFFSET_X=0.0F,

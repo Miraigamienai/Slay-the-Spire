@@ -13,6 +13,7 @@ class SpikeSlimeM final:public Abstraction::Monster_move_tracker<2, SpikeSlimeMA
 {
 public:
     SpikeSlimeM(float offset_x, float offset_y, RUtil::Random& rng);
+    SpikeSlimeM(float offset_x, float offset_y, int HP);
     ~SpikeSlimeM()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;

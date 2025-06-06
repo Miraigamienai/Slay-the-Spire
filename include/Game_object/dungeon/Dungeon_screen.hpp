@@ -22,7 +22,7 @@ public:
     void set_display_map(const std::vector<std::vector<std::shared_ptr<Map::Map_node>>>&map, const std::shared_ptr<Draw::ReTexture> &boss_icon, const std::shared_ptr<Draw::ReTexture> &boss_outline);
     void hide_instantly(){the_map.hide_instantly();}
     void open();
-    auto boss_click()const noexcept(noexcept(the_map.boss_click())){return the_map.boss_click();}
+    auto boss_click()const noexcept(noexcept(the_map.boss_click())){return the_map.boss_click()&&on_top;}
 private:
     const std::vector<std::vector<std::shared_ptr<Map::Map_node>>> *display_map=nullptr;
     Map::Dungeon_map the_map;

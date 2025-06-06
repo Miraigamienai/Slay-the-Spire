@@ -28,6 +28,7 @@ namespace Dungeon{
         void back_to_last_screen()noexcept{current_screen->set_on_top(false);std::swap(current_screen,last_screen);if(current_screen!=nullptr)current_screen->set_on_top(true);}
         bool current_screen_equals(Abstraction::ScreenType ST)const noexcept{return ST==Abstraction::ScreenType::NONE ? current_screen==nullptr : current_screen!=nullptr&&current_screen->type==ST;}
         bool BackToInitScreen()const noexcept(noexcept(death_screen->BackToInitScreen())){return current_screen!=nullptr&&current_screen->type==Abstraction::ScreenType::death && death_screen->BackToInitScreen();}
+        bool boss_click()const noexcept(noexcept(m_dungeon_screen->boss_click())){return m_dungeon_screen->boss_click();}
         template <Abstraction::ScreenType ST, typename ...Args>
         void open(Args&&...args){
             if(current_screen!=nullptr) current_screen->set_on_top(false);

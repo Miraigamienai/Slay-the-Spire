@@ -22,7 +22,7 @@ public:
     ~Monster_group()=default;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update();
-    void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared);
+    void at_round_end(Dungeon::Dungeon_shared &dungeon_shared);
     void at_turn_start(Dungeon::Dungeon_shared &dungeon_shared);
     
     std::shared_ptr<Monsters> GetTipHoveredMonster()const{

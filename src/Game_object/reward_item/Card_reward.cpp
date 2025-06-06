@@ -38,6 +38,9 @@ namespace Reward{
             it->update(dungeon_shared.top_effs);
             if(it->HitboxHovered()){
                 this->hovered_card=it;
+                it->Hover();
+            }else{
+                it->Unhover();
             }
         }
         if(hovered_card!=nullptr&&hovered_card->HitboxClicked()){

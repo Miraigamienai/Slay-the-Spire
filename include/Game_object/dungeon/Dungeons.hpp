@@ -18,6 +18,9 @@ namespace Draw{
 namespace Map{
     class Map_node;
 }
+namespace Room{
+    class Monster_room;
+}
 
 namespace Dungeon{
 class Dungeons
@@ -38,6 +41,9 @@ private:
     std::vector<std::vector<std::shared_ptr<Map::Map_node>>> m_map;
     float fade_timer,fade_color_a;
     bool next_node_is_making_circle,is_fade_in,is_fade_out;
+    std::shared_ptr<Room::Monster_room> boss_room;
+    bool fighting_boss;
+    float boss_timer;
 
     void set_next_node_oscillate_and_edge(const bool value)const;
     bool check_and_set_next_node_making_circle();
@@ -46,7 +52,6 @@ private:
     void fade_out();
     void update_fading();
     void entering_next_room();
-    void on_room_complete();
 };
 }
 #endif

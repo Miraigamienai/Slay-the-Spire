@@ -21,12 +21,12 @@ namespace Power
     can_negative(can_negative),
     tip_box(RUtil::Powers_Text_Reader::GetName(power_id)),
     amount(0),
+    _skip_reduce_once(false),
     font_scale(Setting::SCALE),
     color_a(1.0F),
     flash_timer(0.0F),
     flash_scale(0.0F),
-    flash_a(0.0F),
-    _skip_reduce_once(false)
+    flash_a(0.0F)
     {}
 
     void Powers::render_img(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float color_a)const{
@@ -73,9 +73,11 @@ namespace Power
             flash_timer-=RUtil::Game_Input::delta_time();
             if(flash_timer<0.0F) flash_timer=0.0F;
         }
+        //tip_box update
+        desc_update();
     }
 
-    void Powers::at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target){
+    void Powers::at_round_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target){
         if(_skip_reduce_once){
             _skip_reduce_once=false;
             return;

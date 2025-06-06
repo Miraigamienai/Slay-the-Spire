@@ -1012,7 +1012,7 @@
   "RewardItem": {
     "TEXT": [
       " Gold (Stolen Back)",
-      " Gold",
+      "!M! Gold",
       "Add a card to your deck",
       "",
       "Choose a Card",

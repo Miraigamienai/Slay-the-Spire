@@ -14,6 +14,7 @@ class AcidSlimeM final:public Abstraction::Monster_move_tracker<2, AcidSlimeMAct
 {
 public:
     AcidSlimeM(float offset_x, float offset_y, RUtil::Random& rng);
+    AcidSlimeM(float offset_x, float offset_y, int HP);
     ~AcidSlimeM()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;

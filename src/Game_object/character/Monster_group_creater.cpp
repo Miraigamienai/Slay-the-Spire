@@ -147,6 +147,19 @@ namespace Monster{
             case GroupName::Looter:
                 w.AT<Looter>(0.0F, 0.0F);
                 break;
+            case GroupName::Gremlin_Nob:
+                w.AT<GremlinNob>(0.0F, 0.0F);
+                break;
+            case GroupName::Lagavulin:
+                // w.AT<Lagavulin>(0.0F, 0.0F);
+                break;
+            case GroupName::_3_Sentries:
+                {
+                    static constexpr float pos[3][2]={{-300.0F, 30.0F}, {-100.0F, 10.0F}, {100.0F, 30.0F}};
+                    for(int i=0;i<3;i++)
+                        w.AT<Sentry>(pos[i][0], pos[i][1]);
+                    break;
+                }
             case GroupName::None:
                 //for test
                 w.AT<FatGremlin>(0.0F, 0.0F);

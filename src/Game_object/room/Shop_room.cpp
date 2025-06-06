@@ -3,6 +3,7 @@
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "RUtil/Image_book.hpp"
 #include "Draw/ReTexture.hpp"
+#include "RUtil/Text_Vector_Reader.hpp"
 
 namespace Room
 {
@@ -22,12 +23,18 @@ namespace Room
             //already open the shop screen
             proceed_pop_timer=0.0F;
             proceed.hide();
+            has_visited_shop = true;
+            
+            // 更新按鈕文字為「前進」
+            auto proceed_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::AbstractDungeon)[0];
+            proceed.set_text(proceed_text);
         }else{
             //not open
             if(proceed_pop_timer>0.0F)
                 proceed_pop_timer-=RUtil::Game_Input::delta_time();
-            else
+            else {
                 proceed.show();
+            }
         }
         //update the proceed button
         proceed.update();
@@ -43,7 +50,11 @@ namespace Room
 
     void Shop_room::init_room(Dungeon::Dungeon_shared& dungeon_shared,Uint32 /* dungeon_fade_color */){
         room_phase=Room_phase::just_complete;
-        merchant=std::make_shared<Shop_merchant>(dungeon_shared);   
+        merchant=std::make_shared<Shop_merchant>(dungeon_shared);  
+        has_visited_shop = false; // 重置訪問標記
+        // 初始設定為「略過商人」
+        auto proceed_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::ShopRoom)[0];
+        proceed.set_text(proceed_text);
     }
 
     const std::shared_ptr<Draw::ReTexture> &Shop_room::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/shop.png"),

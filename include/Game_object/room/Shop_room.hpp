@@ -23,6 +23,7 @@ private:
     std::shared_ptr<Shop_merchant> merchant;
     Button::Proceed_button proceed;
     float proceed_pop_timer;
+    bool has_visited_shop; // 追蹤是否已訪問商店
 
     static const std::shared_ptr<Draw::ReTexture> &IMG;
     static const std::shared_ptr<Draw::ReTexture> &IMG_O;

@@ -5,6 +5,7 @@
 #include "Game_object/card/Cards.hpp"
 #include "Game_object/character/Player.hpp"
 #include "RUtil/Random.hpp"
+#include "RUtil/Text_Vector_Reader.hpp"
 #include "WindowSize.hpp"
 
 #include "Util/Logger.hpp"
@@ -31,7 +32,9 @@ namespace Dungeon{
         out_is_cancelled(nullptr),
         closing(false)
     {
-        
+        // 設定取消按鈕的文字
+        auto cancel_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::GridCardSelectScreen)[1];
+        cancel.set_text(cancel_text);
     }
 
     void Grid_card_screen::update(Dungeon::Dungeon_shared &dungeon_shared){

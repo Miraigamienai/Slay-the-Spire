@@ -8,6 +8,7 @@
 #include "RUtil/Some_Math.hpp"
 #include "RUtil/Image_book.hpp"
 #include "RUtil/All_Image.hpp"
+#include "RUtil/Text_Vector_Reader.hpp"
 #include "Draw/ReTexture.hpp"
 #include "Draw/Atlas_Region.hpp"
 #include "Draw/Draw_2D.hpp"
@@ -90,7 +91,10 @@ namespace Dungeon{
         purge_hb(220.0F*Setting::SCALE, 300.0F*Setting::SCALE),
         closing(false)
     {
-
+        // 設定取消按鈕的文字
+        auto cancel_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::ShopRoom)[1];
+        cancel.set_text(cancel_text);
+        
     }
     
     void Shop_screen::update(Dungeon::Dungeon_shared &dungeon_shared){

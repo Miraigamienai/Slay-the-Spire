@@ -3,6 +3,7 @@
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "RUtil/Game_Input.hpp"
 #include "RUtil/Image_book.hpp"
+#include "RUtil/Text_Vector_Reader.hpp"
 #include "Draw/ReTexture.hpp"
 #include "Draw/Draw_2D.hpp"
 
@@ -15,9 +16,12 @@ namespace Dungeon
         :Abstraction::Is_screen(Abstraction::ScreenType::combat_reward),
         now_reward_pos(-1),
         open_timer(OPENTIMER),
-        color_rgb(0.0F)
+        color_rgb(0.0F),
+        took_all(false)
     {
-
+        // 初始設定為"略過獎勵"文字
+        auto skip_rewards_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::CombatRewardScreen)[5];
+        proceed_button.set_text(skip_rewards_text);
     }
     
     void Combat_reward_screen::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
@@ -77,12 +81,40 @@ namespace Dungeon
             }
         }
 
-        this->took_all=reward_items.empty();
+        // 檢查是否所有獎勵都已經領取
+        bool new_took_all = reward_items.empty();
+        
+        // 如果獎勵領取狀態改變，更新按鈕文字
+        if(new_took_all != took_all) {
+            took_all = new_took_all;
+            
+            // 根據獎勵領取狀態設定不同文字
+            if(took_all) {
+                // 如果所有獎勵都領完了，顯示"前進"
+                auto proceed_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::AbstractDungeon)[0];
+                proceed_button.set_text(proceed_text);
+            } else {
+                // 否則顯示"略過獎勵"
+                auto skip_rewards_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::CombatRewardScreen)[5];
+                proceed_button.set_text(skip_rewards_text);
+            }
+        }
     }
 
     void Combat_reward_screen::open(const std::vector<std::shared_ptr<Reward::Reward_item>> &reward_items){
         open_timer=OPENTIMER;
         this->reward_items=reward_items;
+        took_all = reward_items.empty();
+        
+        // 設定初始按鈕文字
+        if(took_all) {
+            auto proceed_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::AbstractDungeon)[0];
+            proceed_button.set_text(proceed_text);
+        } else {
+            auto skip_rewards_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::CombatRewardScreen)[5];
+            proceed_button.set_text(skip_rewards_text);
+        }
+        
         proceed_button.show();
     }
     

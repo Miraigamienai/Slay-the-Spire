@@ -3,6 +3,7 @@
 #include "Game_object/effect_gen/Show_card_briefly.hpp"
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/card/Cards.hpp"
+#include "RUtil/Text_Vector_Reader.hpp"
 
 namespace Dungeon{
 namespace GridScreenAction{
@@ -16,6 +17,13 @@ namespace GridScreenAction{
         this->upgraded_card->SetDrawScale(1.0F, true);
         confirm.show();
         cancel.show();
+        // 設定取消按鈕的文字
+        auto cancel_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::GridCardSelectScreen)[1];
+        cancel.set_text(cancel_text);
+        
+        // 設定確認按鈕的文字
+        auto confirm_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::GridCardSelectScreen)[0];
+        confirm.set_text(confirm_text);
     }
     
     void Grid_screen_upgrade_action::update(Dungeon::Dungeon_shared &dungeon_shared){

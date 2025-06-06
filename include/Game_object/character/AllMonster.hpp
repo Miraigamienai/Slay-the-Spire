@@ -28,4 +28,9 @@
 
 #include "Game_object/character/Monster/Looter.hpp"
 
+// #include "Game_object/character/Monster/Lagavulin.hpp"
+#include "Game_object/character/Monster/GremlinNob.hpp"
+
+#include "Game_object/character/Monster/Sentry.hpp"
+
 #endif

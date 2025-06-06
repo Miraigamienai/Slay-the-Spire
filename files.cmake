@@ -65,11 +65,13 @@ set(SRC_FILES
 	Game_object/character/Monster/GreenLouse.cpp
 	Game_object/character/Monster/GremlinNob.cpp
 	Game_object/character/Monster/JawWorm.cpp
+	Game_object/character/Monster/Lagavulin.cpp
 	Game_object/character/Monster/Looter.cpp
 	Game_object/character/Monster/MadGremlin.cpp
 	Game_object/character/Monster/Monsters.cpp
 	Game_object/character/Monster/RedLouse.cpp
 	Game_object/character/Monster/RedSlaver.cpp
+	Game_object/character/Monster/Sentry.cpp
 	Game_object/character/Monster/ShieldGremlin.cpp
 	Game_object/character/Monster/SlimeBoss.cpp
 	Game_object/character/Monster/SneakyGremlin.cpp
@@ -140,10 +142,10 @@ set(SRC_FILES
 	Game_object/map/Map_edge.cpp
 	Game_object/map/Map_generator.cpp
 	Game_object/map/Map_node.cpp
-	Game_object/panel/Energy_panel.cpp
+	Game_object/panel/Energy_panel.cpp 
 	Game_object/panel/Panels.cpp
-	Game_object/power/Powers.cpp
-	Game_object/power/Power_creator.cpp 
+	Game_object/power/Powers.cpp 
+	Game_object/power/Power_creator.cpp
 	Game_object/power/Power_group.cpp
 	Game_object/power/Weak_power.cpp
 	Game_object/reward_item/Card_reward.cpp
@@ -274,11 +276,13 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/GreenLouse.hpp
 	Game_object/character/Monster/GremlinNob.hpp
 	Game_object/character/Monster/JawWorm.hpp
+	Game_object/character/Monster/Lagavulin.hpp
 	Game_object/character/Monster/Looter.hpp
 	Game_object/character/Monster/MadGremlin.hpp
 	Game_object/character/Monster/Monsters.hpp
 	Game_object/character/Monster/RedLouse.hpp
 	Game_object/character/Monster/RedSlaver.hpp
+	Game_object/character/Monster/Sentry.hpp
 	Game_object/character/Monster/ShieldGremlin.hpp
 	Game_object/character/Monster/SlimeBoss.hpp
 	Game_object/character/Monster/SneakyGremlin.hpp

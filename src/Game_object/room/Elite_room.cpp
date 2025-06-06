@@ -20,5 +20,5 @@ void Elite_room::to_get_reward(Dungeon::Dungeon_shared &dungeon_shared)const{
 }
 
 const std::shared_ptr<Draw::ReTexture> &Elite_room::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/elite.png"),
-                                       &Elite_room::IMG_O=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/elite.png");
+                                       &Elite_room::IMG_O=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/eliteOutline.png");
 }

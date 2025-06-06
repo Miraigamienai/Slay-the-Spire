@@ -30,13 +30,18 @@ namespace Button
 
     void Skip_button::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         if(!is_hidden){
-            text_vec[0]->SetFontSize(32);
-            if(text_vec[0]->GetWidth()*Setting::SCALE>200.0F)
-                text_vec[0]->render_center(r2, this->current_x, SHOW_Y, 0.0F, 0.0F, 0.0F, Setting::SCALE*0.8F);
-            else
-                text_vec[0]->render_center(r2, this->current_x, SHOW_Y, 0.0F, 0.0F, 0.0F, Setting::SCALE);
+            // 先渲染背景
             r2->SetColor(RUtil::WHITE,this->color_a);
             r2->draw(IMG, this->current_x-256.0F, SHOW_Y-128.0f, 512.0F, 256.0F, 0.0F, 256.0F, 128.0F, Setting::SCALE, Setting::SCALE);
+            
+            // 渲染文字（以End_turn_button的風格）
+            const auto &text = text_vec[0]; // 使用"略過"文字
+            text->ChangeFontWeight(FontWeight::bold);
+            text->SetFontSize(35);
+            text->SetFontColorAlpha(RUtil::WHITE, 1.0F);
+            text->render_center(r2, this->current_x, SHOW_Y, 0.0F, 0.0F, 0.0F, 0.8F * Setting::SCALE);
+            
+            // 原有的點擊效果保持不變
             if(this->hb.ClickStarted()){
                 r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
                 r2->SetColor(RUtil::WHITE,0.3F);

@@ -64,6 +64,6 @@ namespace Room
     }
     std::discrete_distribution<int> Treasure_room::dist{Probability,Probability+3};
     const std::shared_ptr<Draw::ReTexture> &Treasure_room::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/chest.png"),
-                                            &Treasure_room::IMG_O=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/chest.png");
+                                            &Treasure_room::IMG_O=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/chestOutline.png");
 
 } // namespace Room

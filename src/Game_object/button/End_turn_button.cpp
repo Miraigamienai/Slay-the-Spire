@@ -9,7 +9,10 @@
 #include "RUtil/Image_book.hpp"//for loading img
 #include "Draw/ReTexture.hpp"//button img
 #include "Draw/Draw_2D.hpp"//for rendering
+#include "Draw/Text_layout.hpp" // 文字布局
 #include "Programs.hpp"//grayscale
+#include "RUtil/Text_Vector_Reader.hpp"
+#include "RUtil/ColorValuesOnly.hpp"
 
 namespace Button
 {
@@ -50,32 +53,6 @@ namespace Button
         glow_list.update();
     }
     void End_turn_button::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        //here is font color
-        // if(!is_enabled){
-        //     //敵のターン
-            
-        // }else if(is_disabled){
-        //     //自分のターンだが、カードをドラッグ中または使用中。
-            
-        // }else{
-        //     //自分のターン(操作可能)
-        //     if(hb.Hovered()){
-        //         if(is_glowing){
-        //             //no card can use
-        //         }else{
-        //             //there are card can use
-        //         }
-        //     }else if(is_glowing){
-        //         //no card can use and not hoverd
-        //     }else{
-
-        //     }
-        // }
-        // if(!this->is_hidden){
-        //     if(this->hb.ClickStarted())
-        //     else if
-        // }
-            
         if(!is_enabled)
             r2->SwitchProgram(Programs::GrayScaleProgram());
         else if(is_disabled)
@@ -90,6 +67,14 @@ namespace Button
         if(hb.Hovered()&&!is_disabled)
             r2->draw(HOVER_BUTTON, this->current_x-128.0F, adj_y-128.0F, 256.0F, 256.0F, 0.0F, 128.0F, 128.0F, Setting::SCALE, Setting::SCALE);
         r2->draw(img, this->current_x-128.0F, adj_y-128.0F, 256.0F, 256.0F, 0.0F, 128.0F, 128.0F, Setting::SCALE, Setting::SCALE);
+        
+        // 渲染文字
+        const auto &text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::End_Turn_Button)[is_enabled ? 0 : 1];
+        // text->ChangeFontWeight(FontWeight::bold);
+        text->SetFontSize(30);
+        text->SetFontColor(RUtil::CREAM_COLOR);
+        // 繪製文字
+        text->render_center(r2, current_x, adj_y, 0.0F, 0.0F, 0.0F, 0.8F * Setting::SCALE);
         
         if(!is_enabled)
             r2->SwitchProgram(Programs::DefaultProgram());

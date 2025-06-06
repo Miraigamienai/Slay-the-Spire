@@ -6,6 +6,7 @@
 #include "RUtil/Game_Input.hpp"
 #include "RUtil/Some_Math.hpp"
 #include "RUtil/Random.hpp"
+#include "RUtil/Text_Vector_Reader.hpp"
 #include "Draw/ReTexture.hpp"
 #include "Draw/Draw_2D.hpp"
 #include "Game_object/dungeon/Dungeon_shared.hpp"
@@ -86,6 +87,10 @@ namespace Room
         room_phase=Room_phase::just_complete;
         this->dungeon_fade_color=dungeon_fade_color;
         this->option_handler=std::make_shared<Option::Option_handler>(dungeon_shared, dungeon_fade_color);
+        
+        // 設定前進按鈕的文字
+        auto proceed_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::AbstractDungeon)[0];
+        proceed.set_text(proceed_text);
     }
 
     const std::shared_ptr<Draw::ReTexture> &Rest_room::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/rest.png"),

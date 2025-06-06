@@ -36,12 +36,17 @@ namespace Button{
             r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         }
         if(this->text!=nullptr){
-            this->text->SetFontSize(32);
+            this->text->ChangeFontWeight(FontWeight::bold);
+            this->text->SetFontSize(35);
+            
+            // 保持原有顏色邏輯
             if(this->hb.ClickStarted()){
                 text->SetFontColor(RUtil::ToRGBA(RUtil::Colors::LIGHT_GRAY));
             }else{
                 text->SetFontColor(RUtil::ToRGBA(RUtil::Colors::LEMON_CHIFFON));
             }
+            
+            // 使用原有的座標和縮放
             text->render_center(r2, this->current_x+TEXT_OFFSET_X, SHOW_Y+TEXT_OFFSET_Y, 0.0F, 0.0F, 0.0F, Setting::SCALE);
         }
     }

@@ -20,7 +20,7 @@ public:
 private:
     bool first_move;
     bool used_entangle;
-    static constexpr float WIDTH=170.0F*Setting::SCALE,
+    static constexpr float WIDTH=260.0F*Setting::SCALE,
                            HEIGHT=230.0F*Setting::SCALE,
                            HB_OFFSET_X=0.0F,
                            HB_OFFSET_Y=0.0F;

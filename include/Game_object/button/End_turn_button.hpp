@@ -14,6 +14,7 @@ namespace Card{
 namespace Draw{
     class ReTexture;
     class Draw_2D;
+    class Text_layout;
 }
 
 namespace Button{

@@ -68,6 +68,6 @@ namespace Monster{
         }
     }
 
-    const std::shared_ptr<Draw::ReTexture> &SlimeBoss::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Slime Boss/Hexaghust.png");
+    const std::shared_ptr<Draw::ReTexture> &SlimeBoss::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Slime Boss/SlimeBoss.png");
 }
 

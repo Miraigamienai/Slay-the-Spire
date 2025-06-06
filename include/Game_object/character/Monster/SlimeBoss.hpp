@@ -11,24 +11,39 @@ enum class SlimeBossAction
     Slam,
     Split
 };
-class SlimeBoss final:public Abstraction::Monster_move_tracker<2, SlimeBossAction>
+class SlimeBoss final:public Abstraction::Monster_move_tracker<0, SlimeBossAction>
 {
 public:
-    SlimeBoss(float offset_x, float offset_y, RUtil::Random& rng);
+    SlimeBoss(float offset_x, float offset_y);
     ~SlimeBoss()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
+    void SlimeBoss::next_move(Dungeon::Dungeon_shared &dungeon_shared){
+        switch(pattern[move_cnt]){
+            case SlimeBossAction::GoopSpray:
+                set_move(SlimeBossAction::GoopSpray, nullptr, Intent::strong_debuff, dungeon_shared.player->get_powers());
+                break;
+            case SlimeBossAction::Preparing:
+                set_move(SlimeBossAction::Preparing, nullptr, Intent::unknown, dungeon_shared.player->get_powers());
+                break;
+            case SlimeBossAction::Slam:
+                set_move(SlimeBossAction::Slam, nullptr, Intent::attack, SLAM_DAMAGE, dungeon_shared.player->get_powers());
+                break;
+            default:
+                break;
+        }
+    }
+    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
-    bool first_move;
-    static constexpr float WIDTH=260.0F*Setting::SCALE,
-                           HEIGHT=170.0F*Setting::SCALE,
+    int move_cnt;
+    static constexpr std::array<Monster::SlimeBossAction, 3> pattern=std::array{SlimeBossAction::GoopSpray, SlimeBossAction::Preparing, SlimeBossAction::Slam};
+    static constexpr float WIDTH=400.0F*Setting::SCALE,
+                           HEIGHT=350.0F*Setting::SCALE,
                            HB_OFFSET_X=0.0F,
-                           HB_OFFSET_Y=-25.0F*Setting::SCALE;
-    static constexpr int MAX_HP=140,
-                         MIN_HP=140,
-                         GOOP_SPRAY_CARDNUM=3,
-                         SLAM_DAMAGE=35;
+                           HB_OFFSET_Y=-30.0F*Setting::SCALE;
+    static constexpr int HP=140,
+                         SLAM_DAMAGE=35,
+                         SPLIT_CNT=-1;
     static const std::shared_ptr<Draw::ReTexture> &IMG;
-    static constexpr auto dist=RUtil::make_weighted_index_picker(std::array{0.0F,33.0F,67.0F});
 };
 }

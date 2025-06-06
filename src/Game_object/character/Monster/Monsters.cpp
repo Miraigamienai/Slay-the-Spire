@@ -155,7 +155,7 @@ namespace Monster
     
 
     void Monsters::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
-        if(IsDie() || escaping) return;
+        if(current_HP<=0 || escaping) return;
 
         int dmg = damage_info.dmg;
         const bool had_block = GetCurrentBlock() > 0;
@@ -186,7 +186,7 @@ namespace Monster
             }
         }
 
-        if(IsDie()){
+        if(current_HP<=0){
             dying_fade_timer = FADE_TIME;
         }
     }
@@ -196,7 +196,7 @@ namespace Monster
         update_HP_and_power();
         update_animation();
         //fade update
-        if(IsDie() && dying_fade_timer!=0.0F){
+        if(current_HP<=0 && dying_fade_timer!=0.0F){
             dying_fade_timer-=RUtil::Game_Input::delta_time();
             if(dying_fade_timer<0.0F) dying_fade_timer=0.0F;
             img_color_a = RUtil::Math::varlerp(img_color_a, 0.0F, 3.0F, 0.005F);
@@ -215,7 +215,7 @@ namespace Monster
         //intent vfx
         intent_effs.update();
         intent_back_effs.update();
-        if(!IsDie() && intent_a>0.0F) update_intent_vfx();
+        if(!current_HP<=0 && intent_a>0.0F) update_intent_vfx();
         //intent hb
         intent_hb.move(GetcX(), GetcY() + GetHeight()/2.0F + INTENT_HB_W/2.0F);
         intent_hb.update();
@@ -275,7 +275,7 @@ namespace Monster
         r2->SetColor(RUtil::WHITE, img_color_a);
         r2->draw(img, getAnimX()+orgX-GetWidth()/2.0F, getAnimY()+orgY-GetHeight()/2.0F, GetWidth(), GetHeight());
         //intent
-        if(!IsDie() && !IsInDyingFade() && intent_a!=0.0F){
+        if(!current_HP<=0 && !IsInDyingFade() && intent_a!=0.0F){
             //img & effs
             intent_back_effs.render(r2);
             r2->SetColor(RUtil::WHITE, intent_a);
@@ -303,6 +303,7 @@ namespace Monster
         for(const auto&it:player_powers) dmg = it->calculate_final_damage_receive(dmg);
         move.damage = static_cast<int>(dmg);
         if(move.damage < 0) move.damage = 0;
+        move.intent_img=INTENT_IMG(move.intent, (move.is_multi_dmg ? move.damage*move.multiplier : move.damage));
     }
 
     void Monsters::set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, int multiplier, const Power::Power_group &player_powers){

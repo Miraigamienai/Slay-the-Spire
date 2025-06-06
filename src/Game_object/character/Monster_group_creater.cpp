@@ -11,6 +11,10 @@ namespace Monster{
     class Wrapper{
         public:
             Wrapper(Dungeon::Dungeon_shared& dungeon_shared):_dungeon_shared(dungeon_shared){}
+            template <typename...Args>
+            void AT(Args&&...args){
+                _dungeon_shared.room_monsters.AddTop(std::make_shared<T>(std::forward<Args>(args)...));
+            }
             template <typename T>
             void AT(float offset_x, float offset_y){
                 _dungeon_shared.room_monsters.AddTop(std::make_shared<T>(offset_x, offset_y, _dungeon_shared.random_package.monster_status_rng));

@@ -1,5 +1,8 @@
 #include "Game_object/room/Monster_room.hpp"//the hpp
 #include "Game_object/card/Card_group_handler.hpp"//for update
+#include "Game_object/card/Card_generate.hpp"
+#include "Game_object/reward_item/Card_reward_item.hpp"
+#include "Game_object/reward_item/Gold_reward_item.hpp"
 #include "Game_object/action/Action_group_handler.hpp"//for update
 #include "Game_object/action/Draw_card_action.hpp"//draw card
 #include "Game_object/action/Discard_all_action.hpp"//end turn discard
@@ -12,7 +15,6 @@
 #include "Game_object/character/Monster_group_creater.hpp"//create monsters & group_name
 #include "Game_object/character/Monster/Monsters.hpp"//render tip
 #include "RUtil/Image_book.hpp"//for Retexture loading
-#include "RUtil/Random_package.hpp"//for passing rng to create monsters
 #include "RUtil/Game_Input.hpp"//delta time
 #include "Draw/ReTexture.hpp"//IMG Retexture
 #include "Draw/Draw_2D.hpp"//for rendering
@@ -21,15 +23,18 @@
 
 namespace Room{
 Monster_room::Monster_room(Monster::GroupName group_name)
-    :Rooms(Room_type::Monster),
+    :Monster_room(group_name, Room_type::Monster){}
+
+Monster_room::Monster_room(Monster::GroupName group_name, Room_type type)
+    :Rooms(type),
     m_group_name(group_name),
     m_wait_timer(0.0F),
     ending_battle(false),
     ending_battle_timer(0.25F),
     dungeon_fade_color(RUtil::BLACK),
     tip_character(nullptr),
-    turn_count(0)
-{}
+    turn_count(0){}
+
 void Monster_room::init_room(Dungeon::Dungeon_shared& dungeon_shared, Uint32 dungeon_fade_color){
     Monster::Monster_group_creater::CreateGroup(dungeon_shared, m_group_name);
     this->dungeon_fade_color=dungeon_fade_color;
@@ -52,6 +57,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             ending_battle_timer-=RUtil::Game_Input::delta_time();
         }else if(this->room_phase==Room_phase::incomplete){
             this->room_phase=Room_phase::just_complete;
+            to_get_reward(dungeon_shared);
         }else{
             this->room_phase=Room_phase::complete;
         }
@@ -119,6 +125,17 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         // card_group_handler.on_ending_battle();
         
     }
+}
+
+void Monster_room::to_get_reward(Dungeon::Dungeon_shared &dungeon_shared)const{
+    std::vector<std::shared_ptr<Reward::Reward_item>> reward_vec;
+    //random golds
+    reward_vec.emplace_back(std::make_shared<Reward::Gold_reward_item>(dungeon_shared.random_package.reward_rng.NextInt(10, 21)));
+    //random 3 cards
+    std::vector<std::shared_ptr<Card::Cards>> cards;
+    for(int i=0;i<3;i++) cards.emplace_back(Card::Card_generate::GetRandomRedCard(dungeon_shared.random_package.reward_rng));
+    reward_vec.emplace_back(std::make_shared<Reward::Card_reward_item>(cards));
+    dungeon_shared.manager.open<Abstraction::ScreenType::combat_reward>(reward_vec);
 }
 
 const std::shared_ptr<Draw::ReTexture> &Monster_room::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/monster.png"),

@@ -40,10 +40,11 @@ public:
     Characters(CharacterType type, float x, float y, float width, float height, float hb_offset_x, float hb_offset_y, int HP);
     virtual ~Characters()=default;
     virtual void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)=0;
-    virtual void heal(int num, Dungeon::Dungeon_shared &dungeon_shared)/* =0 */{(void)num;(void)dungeon_shared;}
+    virtual void heal(int num, Dungeon::Dungeon_shared &dungeon_shared)/* =0 */{current_HP+=num;if(current_HP>max_HP)current_HP=max_HP;(void)dungeon_shared;}
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2) const =0;
     virtual void update()=0;
     virtual bool TipHovered()const noexcept(noexcept(HP_hb.Hovered())){return boss_hitbox.Hovered()||HP_hb.Hovered();}
+    virtual void ForceDie(){current_HP=0;health_update_event();}
     
     void AddBlock(int num);
     void ReduceBlock(int num, Dungeon::Dungeon_shared &dungeon_shared);
@@ -95,7 +96,7 @@ public:
     template <typename T>
     void erase_power(const T&item){powers.erase(item);}
     void clear_power()noexcept(noexcept(powers.clear())){powers.clear();}
-    void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){powers.at_turn_end(dungeon_shared, shared_from_this());}
+    void at_round_end(Dungeon::Dungeon_shared &dungeon_shared){powers.at_round_end(dungeon_shared, shared_from_this());}
     void at_turn_start(Dungeon::Dungeon_shared &dungeon_shared){if(!powers.no_lose_block()) this->ReduceBlock(current_Block, dungeon_shared);}
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         const float temp_pos=boss_hitbox.CenterX() + boss_hitbox.Width() / 2.0F;
@@ -106,9 +107,11 @@ public:
         }
     }
 
+    void DeathLock(bool lock)noexcept{death_lock=lock;}
+    void HideHP()noexcept{HP_hb_a=0.0F;}
     void ShowHP()noexcept{HP_show_timer=HP_SHOW_TIME;}
     bool BodyHovered()const noexcept(noexcept(boss_hitbox.Hovered())){return boss_hitbox.Hovered();}
-    bool IsDie()const noexcept{return current_HP<=0;}
+    bool IsDie()const noexcept{return current_HP<=0&&!death_lock;}
     auto GetCurrentBlock()const noexcept{return current_Block;}
     auto GetMaxHP()const noexcept{return max_HP;}
     auto GetCurrentHP()const noexcept{return current_HP;}
@@ -128,7 +131,6 @@ protected:
     int current_HP;
     bool escaping;
     Power::Power_group powers;
-
     void render_HP_and_power(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update_HP_and_power();
     void update_animation(){
@@ -193,7 +195,8 @@ private:
     float animation_timer;
     Animation animation;
     bool shake_toggle;
-
+    bool death_lock;
+    
     //functions
     void updateFastAttackAnimation(float target_x){
         if(animation_timer>0.5F) animX=RUtil::Math::interpolation_exp5in(0.0F, target_x, (1.0F-animation_timer)*2.0F);

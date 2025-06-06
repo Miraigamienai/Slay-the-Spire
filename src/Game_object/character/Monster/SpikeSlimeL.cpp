@@ -1,29 +1,42 @@
 #include "Game_object/character/Monster/SpikeSlimeL.hpp"
+#include "Game_object/character/Monster/SpikeSlimeM.hpp"
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/action/Anim_set_action.hpp"
 #include "Game_object/action/Damage_action.hpp"
 #include "Game_object/action/Apply_power_action.hpp"
+#include "Game_object/action/Show_card_to_discard_action.hpp"
+#include "Game_object/action/Death_lock_action.hpp"
+#include "Game_object/action/Suicide_action.hpp"
+#include "Game_object/action/Spawn_monster_action.hpp"
+#include "Game_object/card/status/Slimed.hpp"
 #include "RUtil/Random.hpp"
 #include "RUtil/Image_book.hpp"
 #include "Draw/ReTexture.hpp"
 
 namespace Monster{
     SpikeSlimeL::SpikeSlimeL(float offset_x, float offset_y, RUtil::Random& rng)
-        :Abstraction::Monster_move_tracker<2, SpikeSlimeLAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, rng.NextInt(MIN_HP, MAX_HP+1), IMG){}
+        :Abstraction::Monster_move_tracker<2, SpikeSlimeLAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, rng.NextInt(MIN_HP, MAX_HP+1), IMG),
+        offset_x(offset_x),
+        offset_y(offset_y){}
     
     void SpikeSlimeL::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){
             case SpikeSlimeLAction::FlameTackle:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{FLAME_TACKLE_DAMAGE, shared_from_this(), AttackType::blunt_heavy}, dungeon_shared.player));
-                //TODO: shuffles 2 Slimed into the discard pile.
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::blunt_heavy}, dungeon_shared.player));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Show_card_to_discard_action>(std::make_shared<Card::Status::Slimed>(), 2));
                 break;
             case SpikeSlimeLAction::Lick:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Frail, 2, shared_from_this(), dungeon_shared.player, true));
                 break;
             case SpikeSlimeLAction::Split:
-                //TODO: spawn 2 Spike Slime M.
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Death_lock_action>(shared_from_this(), true));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::SHAKE, 1.0F, 0.1F));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Suicide_action>(shared_from_this()));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Spawn_monster_action>(std::make_shared<Monster::SpikeSlimeM>(offset_x-134.0F, offset_y+RUtil::Random::GetRandomFloat(-4.0F, 4.0F), current_HP)));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Spawn_monster_action>(std::make_shared<Monster::SpikeSlimeM>(offset_x+134.0F, offset_y+RUtil::Random::GetRandomFloat(-4.0F, 4.0F), current_HP)));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Death_lock_action>(shared_from_this(), false));
                 break;
             default:
                 break;
@@ -54,6 +67,14 @@ namespace Monster{
                 break;
             default:
                 break;
+        }
+    }
+
+    void SpikeSlimeL::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
+        Monsters::damage(damage_info, dungeon_shared);
+        if(current_HP<=MAX_HP/2 && !is_current_move(SpikeSlimeLAction::Split)){
+            set_move(SpikeSlimeLAction::Split, nullptr, Intent::unknown, dungeon_shared.player->get_powers());
+            //TODO: interrupted text
         }
     }
 

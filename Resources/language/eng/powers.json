@@ -569,9 +569,8 @@
   "Frail": {
     "NAME": "Frail",
     "DESCRIPTIONS": [
-      "Gain #b25% less #yBlock from cards for #b",
-      " turn.",
-      " turns."
+      "Gain #b25% less #yBlock from cards for !M! turn.",
+      "Gain #b25% less #yBlock from cards for !M! turns."
     ]
   },
   "FreeAttackPower": {
@@ -1036,9 +1035,8 @@
   "Ritual": {
     "NAME": "Ritual",
     "DESCRIPTIONS": [
-      "At the end of its turn, gains #b",
-      " #yStrength.",
-      "At the end of your turn, gain #b"
+      "At the end of its turn, gains !D! #yStrength.",
+      "At the end of your turn, gain !D! #yStrength."
     ]
   },
   "Rupture": {
@@ -1150,9 +1148,8 @@
   "Strength": {
     "NAME": "Strength",
     "DESCRIPTIONS": [
-      "Increases attack damage by #b",
-      "Decreases attack damage by #b",
-      "."
+      "Increases attack damage by !D!.,
+      "Decreases attack damage by !D!."
     ]
   },
   "StrikeUp": {

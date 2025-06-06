@@ -29,6 +29,7 @@ set(SRC_FILES
 	Game_object/action/Effect_gen_capsule_action.cpp
 	Game_object/action/Empty_shuffle_action.cpp
 	Game_object/action/Gain_block_action.cpp
+	Game_object/action/Random_monster_gain_block.cpp
 	Game_object/action/Reduce_power_action.cpp
 	Game_object/action/Remove_power_action.cpp
 	Game_object/button/Cancel_button.cpp
@@ -149,6 +150,7 @@ set(SRC_FILES
 	Game_object/power/Weak_power.cpp
 	Game_object/reward_item/Card_reward.cpp
 	Game_object/reward_item/Card_reward_item.cpp
+	Game_object/reward_item/Gold_reward_item.cpp
 	Game_object/reward_item/Reward_item.cpp
 	Game_object/room/Elite_room.cpp
 	Game_object/room/Monster_room.cpp
@@ -222,6 +224,7 @@ set(INCLUDE_FILES
 	Game_object/action/Card_use_end_action.hpp
 	Game_object/action/Card_use_start_action.hpp
 	Game_object/action/Damage_action.hpp
+	Game_object/action/Death_lock_action.hpp
 	Game_object/action/Discard_all_action.hpp
 	Game_object/action/Draw_card_action.hpp
 	Game_object/action/Effect_capsule_action.hpp
@@ -230,9 +233,12 @@ set(INCLUDE_FILES
 	Game_object/action/Enable_end_button_action.hpp
 	Game_object/action/Gain_block_action.hpp
 	Game_object/action/Gain_energy_action.hpp
+	Game_object/action/Random_monster_gain_block.hpp
 	Game_object/action/Reduce_power_action.hpp
 	Game_object/action/Remove_power_action.hpp
 	Game_object/action/Show_card_to_discard_action.hpp
+	Game_object/action/Spawn_monster_action.hpp
+	Game_object/action/Suicide_action.hpp
 	Game_object/action/Wait_action.hpp
 	Game_object/button/Cancel_button.hpp
 	Game_object/button/Confirm_button.hpp
@@ -254,6 +260,7 @@ set(INCLUDE_FILES
 	Game_object/card/red/Defend.hpp
 	Game_object/card/red/Shockwave.hpp
 	Game_object/card/red/Strike_red.hpp
+	Game_object/card/status/Slimed.hpp
 	Game_object/character/AllMonster.hpp
 	Game_object/character/Characters.hpp
 	Game_object/character/Monster_group.hpp
@@ -364,13 +371,17 @@ set(INCLUDE_FILES
 	Game_object/panel/Energy_panel.hpp
 	Game_object/panel/Panels.hpp
 	Game_object/power/Barricade_power.hpp
+	Game_object/power/Frail_power.hpp
 	Game_object/power/Powers.hpp
 	Game_object/power/Power_creator.hpp
 	Game_object/power/Power_group.hpp
+	Game_object/power/Ritual_power.hpp
+	Game_object/power/Strength_power.hpp
 	Game_object/power/Vulnerable_power.hpp
 	Game_object/power/Weak_power.hpp
 	Game_object/reward_item/Card_reward.hpp
 	Game_object/reward_item/Card_reward_item.hpp
+	Game_object/reward_item/Gold_reward_item.hpp
 	Game_object/reward_item/Reward_item.hpp
 	Game_object/room/Elite_room.hpp
 	Game_object/room/Monster_room.hpp

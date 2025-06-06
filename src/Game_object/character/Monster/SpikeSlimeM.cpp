@@ -3,20 +3,25 @@
 #include "Game_object/action/Anim_set_action.hpp"
 #include "Game_object/action/Damage_action.hpp"
 #include "Game_object/action/Apply_power_action.hpp"
+#include "Game_object/action/Show_card_to_discard_action.hpp"
+#include "Game_object/card/status/Slimed.hpp"
 #include "RUtil/Random.hpp"
 #include "RUtil/Image_book.hpp"
 #include "Draw/ReTexture.hpp"
 
 namespace Monster{
     SpikeSlimeM::SpikeSlimeM(float offset_x, float offset_y, RUtil::Random& rng)
-        :Abstraction::Monster_move_tracker<2, SpikeSlimeMAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, rng.NextInt(MIN_HP, MAX_HP+1), IMG){}
+        :SpikeSlimeM(offset_x, offset_y, rng.NextInt(MIN_HP, MAX_HP+1)){}
+    
+    SpikeSlimeM::SpikeSlimeM(float offset_x, float offset_y, int HP)
+        :Abstraction::Monster_move_tracker<2, SpikeSlimeMAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG){}
     
     void SpikeSlimeM::Action(Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
         switch (current_move()){
             case SpikeSlimeMAction::FlameTackle:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{FLAME_TACKLE_DAMAGE, shared_from_this(), AttackType::blunt_heavy}, dungeon_shared.player));
-                //TODO: shuffles 1 Slimed into the discard pile.
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::blunt_heavy}, dungeon_shared.player));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Show_card_to_discard_action>(std::make_shared<Card::Status::Slimed>(), 1));
                 break;
             case SpikeSlimeMAction::Lick:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Frail, 1, shared_from_this(), dungeon_shared.player, true));

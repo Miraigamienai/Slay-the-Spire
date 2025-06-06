@@ -13,7 +13,7 @@ namespace Monster{
     void WizardGremlin::Action(Dungeon::Dungeon_shared &dungeon_shared){
         if(charging_cnt==3){
             charging_cnt=0;
-            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{ULTIMATE_BLAST, shared_from_this(), AttackType::fire}, dungeon_shared.player));
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::fire}, dungeon_shared.player));
         }else{
             ++charging_cnt;
             //TODO: talk

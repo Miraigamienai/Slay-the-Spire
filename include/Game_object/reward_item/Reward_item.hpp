@@ -41,6 +41,7 @@ protected:
     bool took_reward=false;
     static constexpr float ITEM_X = (float)Setting::WINDOW_WIDTH * 0.41F,
                            TEXT_X = (float)Setting::WINDOW_WIDTH * 0.434F;
+    static constexpr int FONTSIZE=24;
 private:
     float flash_timer;
     RUtil::Hitbox hb;

@@ -17,7 +17,7 @@ namespace Monster{
             case LooterAction::Mug:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
-                    Damage_info{MUG_DAMAGE, shared_from_this(), AttackType::blunt_light},
+                    Damage_info{current_damage(), shared_from_this(), AttackType::blunt_light},
                     dungeon_shared.player
                 ));
 
@@ -26,7 +26,7 @@ namespace Monster{
             case LooterAction::Lunge:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(
-                    Damage_info{LUNGE_DAMAGE, shared_from_this(), AttackType::blunt_light},
+                    Damage_info{current_damage(), shared_from_this(), AttackType::blunt_light},
                     dungeon_shared.player
                 ));
 

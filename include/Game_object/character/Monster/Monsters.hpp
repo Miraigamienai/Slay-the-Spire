@@ -33,8 +33,8 @@ public:
     virtual void Action(Dungeon::Dungeon_shared &dungeon_shared)=0;
     virtual void next_move(Dungeon::Dungeon_shared &dungeon_shared)=0;
     virtual void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
-    void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
-    void update()override;
+    virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
+    virtual void update()override;
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const override{
         if(intent_target_a!=0.0F){
             intent_tip.get_body()->set_num_info(Draw::number_info{move.damage, 0, 0, Draw::NumStatus::blue});
@@ -50,6 +50,7 @@ public:
     auto GetIntent()const noexcept{return move.intent;}
     bool IsInDyingFade()const noexcept{return dying_fade_timer!=0.0F;}
 protected:
+    float img_color_a;
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, int multiplier, const Power::Power_group &player_powers);
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, const Power::Power_group &player_powers);
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, const Power::Power_group &player_powers);
@@ -65,7 +66,6 @@ private:
         int damage;
     };
     const std::shared_ptr<Draw::ReTexture> &img;
-    float img_color_a;
     float dying_fade_timer;
     //intent
     Move move;

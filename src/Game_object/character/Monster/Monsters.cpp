@@ -137,8 +137,8 @@ namespace Monster
     Monsters::Monsters(float offset_x, float offset_y, float width, float height, 
         float hb_offset_x, float hb_offset_y, int HP, const std::shared_ptr<Draw::ReTexture> &img)
         :Character::Characters(Character::CharacterType::MONSTER, ORIGIN_X+offset_x*Setting::SCALE, FLOOR_Y+offset_y*Setting::SCALE+height/2.0F, width, height, hb_offset_x, hb_offset_y, HP),
-        img(img),
         img_color_a(1.0F),
+        img(img),
         dying_fade_timer(0.0F),
         move(),
         intent_tip_img(nullptr),
@@ -272,8 +272,10 @@ namespace Monster
     void Monsters::render(const std::shared_ptr<Draw::Draw_2D> &r2) const 
     {
         //img
-        r2->SetColor(RUtil::WHITE, img_color_a);
-        r2->draw(img, getAnimX()+orgX-GetWidth()/2.0F, getAnimY()+orgY-GetHeight()/2.0F, GetWidth(), GetHeight());
+        if(img!=nullptr){
+            r2->SetColor(RUtil::WHITE, img_color_a);
+            r2->draw(img, getAnimX()+orgX-GetWidth()/2.0F, getAnimY()+orgY-GetHeight()/2.0F, GetWidth(), GetHeight());
+        }
         //intent
         if(!current_HP<=0 && !IsInDyingFade() && intent_a!=0.0F){
             //img & effs

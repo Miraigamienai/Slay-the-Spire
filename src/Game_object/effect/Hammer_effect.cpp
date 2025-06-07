@@ -25,7 +25,7 @@ namespace Effect
 
     void Hammer_effect::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         using namespace RUtil;
-        r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE);
+        r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
         r2->SetColor(RUtil::WHITE, this->color_a);
         r2->draw(IMG(), this->x + Random::GetRandomFloat(-2.0F, 2.0F)*Setting::SCALE, this->y + Random::GetRandomFloat(-2.0F, 2.0F)*Setting::SCALE, static_cast<float>(IMG()->GetRegionWidth()), static_cast<float>(IMG()->GetRegionHeight()), this->angle, static_cast<float>(IMG()->GetRegionWidth())/2.0F, static_cast<float>(IMG()->GetRegionHeight())/2.0F, this->scale, this->scale);
         r2->SetColor(RUtil::WHITE, this->color_a/10.0F);

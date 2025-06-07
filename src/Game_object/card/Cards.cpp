@@ -296,10 +296,12 @@ namespace Card{
         desc->SetFontAlpha(m_color_a);
         desc->SetFontColor(RUtil::CREAM_COLOR);
         desc->render_center(r2, current_x, current_y - 100.0F, this->m_angle, 0.0F, 100.0F, m_draw_scale*Setting::SCALE);
-        //energy
-        this->format_render(r2, RUtil::All_Image::GetAtlasRegion(energy_id_convert[static_cast<int>(this->color)]), current_x, current_y);
-        //energy number
-        s_energy_drawer.render_center_with_bg(r2, std::to_string(cost), current_x - 132.0F, current_y + 192.0F, this->m_angle, 132.0F, -192.0F, m_draw_scale*Setting::SCALE, energy_num_color, m_color_a);
+        if(base_cost>=0){
+            //energy
+            this->format_render(r2, RUtil::All_Image::GetAtlasRegion(energy_id_convert[static_cast<int>(this->color)]), current_x, current_y);
+            //energy number
+            s_energy_drawer.render_center_with_bg(r2, std::to_string(cost), current_x - 132.0F, current_y + 192.0F, this->m_angle, 132.0F, -192.0F, m_draw_scale*Setting::SCALE, energy_num_color, m_color_a);
+        }
         //tint
         r2->SetColor(TINT_COLOR,this->m_tint_a);
         this->format_render(r2, RUtil::All_Image::GetAtlasRegion(bg_silhouette_id_convert[static_cast<int>(type)]), this->current_x, this->current_y);

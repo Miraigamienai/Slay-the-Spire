@@ -10,6 +10,7 @@
 #include "Game_object/dungeon/Death_screen.hpp"
 #include "Game_object/map/Map_node.hpp"
 #include "Game_object/top_panel/Top_panel.hpp"
+#include "Game_object/dungeon/Complete_screen.hpp"
 
 namespace Dungeon{
     //This class will auto change where need to update or render.
@@ -54,6 +55,7 @@ namespace Dungeon{
         std::shared_ptr<Dungeon::Shop_screen> shop_screen;
         std::shared_ptr<Dungeon::Death_screen> death_screen;
         std::shared_ptr<TopPanel::Top_panel> top_panel;
+        std::shared_ptr<Dungeon::Complete_screen> complete_screen;
         
         template <Abstraction::ScreenType ST>
         const auto &GetScreen()const{
@@ -62,6 +64,7 @@ namespace Dungeon{
             else if constexpr(ST==Abstraction::ScreenType::grid_cards) return grid_card_screen;
             else if constexpr(ST==Abstraction::ScreenType::shop) return shop_screen;
             else if constexpr(ST==Abstraction::ScreenType::death) return death_screen;
+            else if constexpr(ST==Abstraction::ScreenType::complete) return complete_screen;
         }
     };
 }

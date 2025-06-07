@@ -9,7 +9,7 @@ namespace Status{
 class Slimed final:public Abstraction::CardPrototype<Slimed>
 {
 public:
-    Slimed():Abstraction::CardPrototype<Slimed>(RUtil::AtlasRegionID::_status_slimed, RUtil::Cards_Text_ID::Slimed, Rarity::common, Type::status, Color::colorless, Target::self, 1, 0, 0, 0){}
+    Slimed():Abstraction::CardPrototype<Slimed>(RUtil::AtlasRegionID::_status_slimed, RUtil::Cards_Text_ID::Slimed, Rarity::common, Type::status, Color::colorless, Target::self, 1, 0, 0, 0){this->exhaust=true;}
     ~Slimed()override=default;
     void Use(Dungeon::Dungeon_shared &/* dungeon_shared */, const std::shared_ptr<Monster::Monsters> &/* target_monster */)override{};
     void Upgrade(bool /* for_preview */)override{}

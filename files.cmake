@@ -19,10 +19,10 @@ set(SRC_FILES
 	Draw/Text_layout_color.cpp
 	Draw/Text_layout_normal.cpp
 	Game_object/action/Actions.cpp
-	Game_object/action/Action_group_handler.cpp 
+	Game_object/action/Action_group_handler.cpp
 	Game_object/action/Anim_set_action.cpp
 	Game_object/action/Apply_power_action.cpp
-	Game_object/action/Card_use_end_action.cpp
+	Game_object/action/Card_use_end_action.cpp 
 	Game_object/action/Card_use_start_action.cpp
 	Game_object/action/Damage_action.cpp
 	Game_object/action/Draw_card_action.cpp
@@ -81,7 +81,6 @@ set(SRC_FILES
 	Game_object/character/Monster/TheGuardian.cpp
 	Game_object/character/Monster/WizardGremlin.cpp
 	Game_object/dungeon/Combat_reward_screen.cpp
-	Game_object/dungeon/Complete_screen.cpp
 	Game_object/dungeon/Death_screen.cpp
 	Game_object/dungeon/Dungeons.cpp
 	Game_object/dungeon/Dungeon_manager.cpp
@@ -89,6 +88,7 @@ set(SRC_FILES
 	Game_object/dungeon/Grid_card_screen.cpp
 	Game_object/dungeon/Overlay.cpp
 	Game_object/dungeon/Shop_screen.cpp
+	Game_object/dungeon/Victory_screen.cpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_action.cpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_purge_action.cpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_upgrade_action.cpp
@@ -295,7 +295,6 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/TheGuardian.hpp
 	Game_object/character/Monster/WizardGremlin.hpp
 	Game_object/dungeon/Combat_reward_screen.hpp
-	Game_object/dungeon/Complete_screen.hpp
 	Game_object/dungeon/Death_screen.hpp
 	Game_object/dungeon/Dungeons.hpp
 	Game_object/dungeon/Dungeon_manager.hpp
@@ -304,6 +303,7 @@ set(INCLUDE_FILES
 	Game_object/dungeon/Grid_card_screen.hpp
 	Game_object/dungeon/Overlay.hpp
 	Game_object/dungeon/Shop_screen.hpp
+	Game_object/dungeon/Victory_screen.hpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_action.hpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_purge_action.hpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_upgrade_action.hpp

@@ -46,7 +46,6 @@ namespace Character{
             if(current_HP<0)current_HP=0;
             health_update_event();
         }
-        dungeon_shared.manager.open<Abstraction::ScreenType::complete>(dungeon_shared.player, dungeon_shared.room_monsters);
         if(IsDie()){
             dungeon_shared.manager.open<Abstraction::ScreenType::death>(dungeon_shared.player, dungeon_shared.room_monsters);
         }

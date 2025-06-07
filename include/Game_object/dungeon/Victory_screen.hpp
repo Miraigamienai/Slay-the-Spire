@@ -10,11 +10,11 @@ namespace Character{
 }
 
 namespace Dungeon{
-class Complete_screen final:public Abstraction::Is_screen
+class Victory_screen final:public Abstraction::Is_screen
 {
 public:
-    Complete_screen();
-    ~Complete_screen()override=default;
+    Victory_screen();
+    ~Victory_screen()override=default;
     void update(Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     bool BackToInitScreen()noexcept(noexcept(return_button.Clicked())){return return_button.Clicked();}

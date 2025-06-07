@@ -78,4 +78,14 @@ namespace Panel
                 break;
         }
     }
+    void Energy_panel::reset() {
+        // 重置視覺效果相關變數
+        vfx_angle = 0.0F;
+        vfx_scale = Setting::SCALE;
+        vfx_color_a = 0.0F;
+        vfx_timer = 0.0F;
+        font_scale = 1.0F;
+        hide();
+
+    }
 } // namespace Panel

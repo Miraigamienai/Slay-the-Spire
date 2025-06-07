@@ -9,7 +9,7 @@ namespace Dungeon{
         shop_screen=std::make_shared<Dungeon::Shop_screen>();
         death_screen=std::make_shared<Dungeon::Death_screen>();
         top_panel=std::make_shared<TopPanel::Top_panel>();
-        complete_screen=std::make_shared<Dungeon::Complete_screen>();
+        victory_screen=std::make_shared<Dungeon::Victory_screen>();
     }
     void Dungeon_manager::update(Dungeon_shared &dungeon_shared){
         if(last_screen!=nullptr) last_screen->update(dungeon_shared);
@@ -21,4 +21,5 @@ namespace Dungeon{
         if(current_screen!=nullptr)current_screen->render(r2);
         top_panel->render(r2);
     }
+    
 }

@@ -17,7 +17,7 @@ enum class ScreenType{
     grid_cards,
     shop,
     death,
-    complete,
+    victory,
     NONE
 };
 

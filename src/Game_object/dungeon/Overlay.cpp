@@ -36,4 +36,11 @@ namespace Dungeon{
             }
         }
     }
-}
+        void Overlay::reset() {
+        // 重置所有成員到初始狀態
+        energy_panel.reset();
+        end_turn_button = Button::End_turn_button();
+        black_screen_a = 0.0F;
+        black_screen_target_a = 0.0F;
+    }
+    }

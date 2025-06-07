@@ -32,6 +32,7 @@ public:
     
     void render_black_screen(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void set_black_screen_a(float value)noexcept{black_screen_target_a=value;}
+    void reset();
 private:
     Panel::Energy_panel energy_panel;
     Button::End_turn_button end_turn_button;

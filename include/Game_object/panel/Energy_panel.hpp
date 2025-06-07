@@ -28,6 +28,7 @@ public:
     void on_add_energy(Effect::Effect_group &effs);
     void on_use_energy();
     void set_player(const std::shared_ptr<Character::Player> &player);
+    void reset();
 private:
     const int *current_energy,*max_energy;
     float vfx_angle,vfx_scale,vfx_color_a,vfx_timer,font_scale;

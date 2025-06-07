@@ -111,7 +111,7 @@ namespace Dungeon{
         dungeon_shared.overlay.update(dungeon_shared.card_group_handler);
         //manager update
         dungeon_shared.manager.update(dungeon_shared);
-        if(dungeon_shared.manager.BackToInitScreen() || boss_room->get_phase()==Room::Room_phase::just_complete){
+        if(dungeon_shared.manager.DeathBackToInitScreen() || dungeon_shared.manager.VictoryBackToInitScreen()){
             state=State::GameOver;
             dungeon_shared.effs.clear();
             dungeon_shared.back_effs.clear();
@@ -119,7 +119,8 @@ namespace Dungeon{
             dungeon_shared.gen_group.clear();
             dungeon_shared.action_group_handler.clear();
             dungeon_shared.card_group_handler.clear<Card::GroupType::master_deck>();
-            // overlay
+            dungeon_shared.overlay.reset();//reset overlay
+            dungeon_shared.manager.reset();//reset manager
             // manager
             dungeon_shared.room_monsters.clear();
             return;
@@ -173,7 +174,7 @@ namespace Dungeon{
             dungeon_shared.current_node->MarkAllEdge(value);
             if(dungeon_shared.current_node->HasEdge(Map::Direction::right))
                 m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x+1]->SetReadyToConnect(value);
-            if(dungeon_shared.current_node->HasEdge(Map::Direction::middle))
+            if(dungeon_shared.current_node->HasEdge(Map::Direction::middle) && dungeon_shared.current_node->y!=static_cast<int>(m_map.size())-1)
                 m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x]->SetReadyToConnect(value);
             if(dungeon_shared.current_node->HasEdge(Map::Direction::left))
                 m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x-1]->SetReadyToConnect(value);

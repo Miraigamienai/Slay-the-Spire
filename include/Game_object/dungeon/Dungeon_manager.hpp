@@ -10,7 +10,7 @@
 #include "Game_object/dungeon/Death_screen.hpp"
 #include "Game_object/map/Map_node.hpp"
 #include "Game_object/top_panel/Top_panel.hpp"
-#include "Game_object/dungeon/Complete_screen.hpp"
+#include "Game_object/dungeon/Victory_screen.hpp"
 
 namespace Dungeon{
     //This class will auto change where need to update or render.
@@ -28,7 +28,8 @@ namespace Dungeon{
         void set_current_none()noexcept{current_screen->set_on_top(false);current_screen=nullptr;}
         void back_to_last_screen()noexcept{current_screen->set_on_top(false);std::swap(current_screen,last_screen);if(current_screen!=nullptr)current_screen->set_on_top(true);}
         bool current_screen_equals(Abstraction::ScreenType ST)const noexcept{return ST==Abstraction::ScreenType::NONE ? current_screen==nullptr : current_screen!=nullptr&&current_screen->type==ST;}
-        bool BackToInitScreen()const noexcept(noexcept(death_screen->BackToInitScreen())){return current_screen!=nullptr&&current_screen->type==Abstraction::ScreenType::death && death_screen->BackToInitScreen();}
+        bool DeathBackToInitScreen()const noexcept(noexcept(death_screen->BackToInitScreen())){return current_screen!=nullptr&&current_screen->type==Abstraction::ScreenType::death && death_screen->BackToInitScreen();}
+        bool VictoryBackToInitScreen()const noexcept(noexcept(victory_screen->BackToInitScreen())){return current_screen!=nullptr&&current_screen->type==Abstraction::ScreenType::victory && victory_screen->BackToInitScreen();}
         bool boss_click()const noexcept(noexcept(m_dungeon_screen->boss_click())){return m_dungeon_screen->boss_click();}
         template <Abstraction::ScreenType ST, typename ...Args>
         void open(Args&&...args){
@@ -55,7 +56,7 @@ namespace Dungeon{
         std::shared_ptr<Dungeon::Shop_screen> shop_screen;
         std::shared_ptr<Dungeon::Death_screen> death_screen;
         std::shared_ptr<TopPanel::Top_panel> top_panel;
-        std::shared_ptr<Dungeon::Complete_screen> complete_screen;
+        std::shared_ptr<Dungeon::Victory_screen> victory_screen;
         
         template <Abstraction::ScreenType ST>
         const auto &GetScreen()const{
@@ -64,7 +65,7 @@ namespace Dungeon{
             else if constexpr(ST==Abstraction::ScreenType::grid_cards) return grid_card_screen;
             else if constexpr(ST==Abstraction::ScreenType::shop) return shop_screen;
             else if constexpr(ST==Abstraction::ScreenType::death) return death_screen;
-            else if constexpr(ST==Abstraction::ScreenType::complete) return complete_screen;
+            else if constexpr(ST==Abstraction::ScreenType::victory) return victory_screen;
         }
     };
 }

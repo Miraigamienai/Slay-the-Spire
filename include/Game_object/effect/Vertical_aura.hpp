@@ -6,7 +6,7 @@
 #include "Game_object/abstraction/Reusable.hpp"
 
 namespace Effect{
-class Vertical_aura:public Effects,public Abstraction::Reusable<Vertical_aura>
+class Vertical_aura final:public Effects,public Abstraction::Reusable<Vertical_aura>
 {
 public:
     Vertical_aura(Uint32 color, float x, float y){Initial(color,x,y);}

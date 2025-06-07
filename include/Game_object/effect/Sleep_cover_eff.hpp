@@ -3,7 +3,7 @@
 #include "Game_object/effect/Effects.hpp"
 
 namespace Effect{
-class Sleep_cover_eff:public Effects
+class Sleep_cover_eff final:public Effects
 {
 public:
     Sleep_cover_eff();

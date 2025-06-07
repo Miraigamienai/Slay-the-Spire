@@ -13,7 +13,7 @@ namespace Draw{
 }
 
 namespace Effect{
-class Slash_eff:public Effects,public Abstraction::Reusable<Slash_eff>
+class Slash_eff final:public Effects,public Abstraction::Reusable<Slash_eff>
 {
 public:
     Slash_eff(glm::vec2 pos, glm::vec2 distant, float angle, float target_scale, Uint32 color1, Uint32 color2){

@@ -96,6 +96,7 @@ set(SRC_FILES
 	Game_object/effect/Auto_release_pool_manager.cpp
 	Game_object/effect/Battle_start_eff.cpp
 	Game_object/effect/block_broken_eff.cpp
+	Game_object/effect/Border_flash_eff.cpp
 	Game_object/effect/Buff_particle_eff.cpp
 	Game_object/effect/Camfire_bubble_effect.cpp
 	Game_object/effect/Camfire_burning_effect.cpp
@@ -129,6 +130,7 @@ set(SRC_FILES
 	Game_object/effect/Stun_star_eff.cpp
 	Game_object/effect/Unknown_particle_eff.cpp
 	Game_object/effect/Vertical_aura.cpp
+	Game_object/effect/Weighty_impact_eff.cpp
 	Game_object/effect_gen/Card_upgrade_eff_gen.cpp
 	Game_object/effect_gen/Effect_gen_group.cpp
 	Game_object/effect_gen/Exhaust_card_eff_gen.cpp
@@ -309,6 +311,7 @@ set(INCLUDE_FILES
 	Game_object/effect/Auto_release_pool_manager.hpp
 	Game_object/effect/Battle_start_eff.hpp
 	Game_object/effect/block_broken_eff.hpp
+	Game_object/effect/Border_flash_eff.hpp
 	Game_object/effect/Buff_particle_eff.hpp
 	Game_object/effect/Camfire_bubble_effect.hpp
 	Game_object/effect/Camfire_burning_effect.hpp
@@ -347,6 +350,7 @@ set(INCLUDE_FILES
 	Game_object/effect/Stun_star_eff.hpp
 	Game_object/effect/Unknown_particle_eff.hpp
 	Game_object/effect/Vertical_aura.hpp
+	Game_object/effect/Weighty_impact_eff.hpp
 	Game_object/effect_gen/Card_paticle_gen.hpp
 	Game_object/effect_gen/Card_upgrade_eff_gen.hpp
 	Game_object/effect_gen/Clash_eff_gen.hpp
@@ -361,6 +365,7 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Show_card_briefly.hpp
 	Game_object/effect_gen/Show_card_to_discard.hpp
 	Game_object/effect_gen/Vertical_aura_gen.hpp
+	Game_object/effect_gen/Weighty_impact_gen.hpp
 	Game_object/energy_orb/Energy_orb.hpp
 	Game_object/energy_orb/Red_orb.hpp
 	Game_object/map/Dungeon_map.hpp

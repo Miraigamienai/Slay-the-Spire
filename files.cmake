@@ -14,7 +14,7 @@ set(SRC_FILES
 	Draw/ReText.cpp
 	Draw/ReTexture.cpp
 	Draw/Text_box.cpp
-	Draw/Text_layout.cpp 
+	Draw/Text_layout.cpp
 	Draw/Text_layout_all.cpp
 	Draw/Text_layout_color.cpp
 	Draw/Text_layout_normal.cpp
@@ -46,14 +46,21 @@ set(SRC_FILES
 	Game_object/card/Card_soul.cpp
 	Game_object/card/red/Anger.cpp
 	Game_object/card/red/Barricade.cpp
+	Game_object/card/red/Bludgeon.cpp
 	Game_object/card/red/Body_slam.cpp
 	Game_object/card/red/Clash.cpp
 	Game_object/card/red/Clothesline.cpp
 	Game_object/card/red/Defend.cpp
+	Game_object/card/red/Entrench.cpp
 	Game_object/card/red/Flex.cpp
+	Game_object/card/red/Inflame.cpp
 	Game_object/card/red/Iron_wave.cpp
+	Game_object/card/red/Pommel_strike.cpp
 	Game_object/card/red/Shockwave.cpp
+	Game_object/card/red/Shrug_it_off.cpp
 	Game_object/card/red/Strike_red.cpp
+	Game_object/card/red/Twin_strike.cpp
+	Game_object/card/red/Wild_strike.cpp
 	Game_object/character/Characters.cpp
 	Game_object/character/Monster_group.cpp
 	Game_object/character/Monster_group_creater.cpp
@@ -140,6 +147,7 @@ set(SRC_FILES
 	Game_object/effect_gen/Purge_card_eff_gen.cpp
 	Game_object/effect_gen/Show_card_briefly.cpp
 	Game_object/effect_gen/Show_card_to_discard.cpp
+	Game_object/effect_gen/Show_card_to_draw_pile.cpp
 	Game_object/energy_orb/Red_orb.cpp
 	Game_object/map/Dungeon_map.cpp
 	Game_object/map/Legend.cpp
@@ -243,6 +251,7 @@ set(INCLUDE_FILES
 	Game_object/action/Reduce_power_action.hpp
 	Game_object/action/Remove_power_action.hpp
 	Game_object/action/Show_card_to_discard_action.hpp
+	Game_object/action/Show_card_to_draw_pile_action.hpp
 	Game_object/action/Spawn_monster_action.hpp
 	Game_object/action/Suicide_action.hpp
 	Game_object/action/Wait_action.hpp
@@ -261,15 +270,23 @@ set(INCLUDE_FILES
 	Game_object/card/Card_soul.hpp
 	Game_object/card/red/Anger.hpp
 	Game_object/card/red/Barricade.hpp
+	Game_object/card/red/Bludgeon.hpp
 	Game_object/card/red/Body_slam.hpp
 	Game_object/card/red/Clash.hpp
 	Game_object/card/red/Clothesline.hpp
 	Game_object/card/red/Defend.hpp
+	Game_object/card/red/Entrench.hpp
 	Game_object/card/red/Flex.hpp
+	Game_object/card/red/Inflame.hpp
 	Game_object/card/red/Iron_wave.hpp
+	Game_object/card/red/Pommel_strike.hpp
 	Game_object/card/red/Shockwave.hpp
+	Game_object/card/red/Shrug_it_off.hpp
 	Game_object/card/red/Strike_red.hpp
+	Game_object/card/red/Twin_strike.hpp
+	Game_object/card/red/Wild_strike.hpp
 	Game_object/card/status/Slimed.hpp
+	Game_object/card/status/Wound.hpp
 	Game_object/character/AllMonster.hpp
 	Game_object/character/Characters.hpp
 	Game_object/character/Monster_group.hpp
@@ -288,7 +305,7 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/Lagavulin.hpp
 	Game_object/character/Monster/Looter.hpp
 	Game_object/character/Monster/MadGremlin.hpp
-	Game_object/character/Monster/Monsters.hpp
+	Game_object/character/Monster/Monsters.hpp 
 	Game_object/character/Monster/RedLouse.hpp
 	Game_object/character/Monster/RedSlaver.hpp
 	Game_object/character/Monster/Sentry.hpp
@@ -370,6 +387,7 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Purge_card_eff_gen.hpp
 	Game_object/effect_gen/Show_card_briefly.hpp
 	Game_object/effect_gen/Show_card_to_discard.hpp
+	Game_object/effect_gen/Show_card_to_draw_pile.hpp
 	Game_object/effect_gen/Vertical_aura_gen.hpp
 	Game_object/effect_gen/Weighty_impact_gen.hpp
 	Game_object/energy_orb/Energy_orb.hpp

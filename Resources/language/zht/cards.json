@@ -1830,7 +1830,7 @@
   },
   "Wild_Strike": {
     "NAME": "狂野打擊",
-    "DESCRIPTION": "造成 !D! 點傷害$n將1張 *傷口 放入抽牌堆"
+    "DESCRIPTION": "造成 !D! 點傷害$n將1張 #y傷口 放入抽牌堆"
   },
   "WindmillStrike": {
     "NAME": "旋轉打擊",

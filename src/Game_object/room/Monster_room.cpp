@@ -18,6 +18,7 @@
 #include "RUtil/Game_Input.hpp"//delta time
 #include "Draw/ReTexture.hpp"//IMG Retexture
 #include "Draw/Draw_2D.hpp"//for rendering
+#include "Cursor.hpp"
 
 #include "Util/Logger.hpp"//LOG_ERROR
 
@@ -79,6 +80,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             //ending turn
             //TODO:end logic need to be check.
             dungeon_shared.overlay.disable_end_turn_button();
+            dungeon_shared.card_group_handler.on_end_of_turn(dungeon_shared);
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Discard_all_action>());
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_capsule_action>(std::make_shared<Effect::Enemy_turn_eff>(dungeon_fade_color), 1.2F, Action::Effect_capsule_action::Layer::top));
             dungeon_shared.action_group_handler.ending_turn(dungeon_shared.room_monsters);
@@ -123,7 +125,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.player->clear_power();
         dungeon_shared.overlay.hide_combat_panel();
         // card_group_handler.on_ending_battle();
-        
+        Cursor::SetVisible(true);
     }
 }
 

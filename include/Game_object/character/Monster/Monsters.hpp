@@ -37,7 +37,7 @@ public:
     virtual void update()override;
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const override{
         if(intent_target_a!=0.0F){
-            intent_tip.get_body()->set_num_info(Draw::number_info{move.damage, 0, 0, Draw::NumStatus::blue});
+            intent_tip.get_body()->set_num_info(Draw::number_info{move.damage, 0, move.multiplier, Draw::NumStatus::blue});
             powers.render_tip_with_other(r2, x, y, intent_tip, intent_tip_img);
         }else{
             powers.render_tip(r2, x, y);

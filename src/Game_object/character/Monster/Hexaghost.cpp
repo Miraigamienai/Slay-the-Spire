@@ -4,9 +4,19 @@
 #include "Game_object/action/Effect_gen_capsule_action.hpp"
 #include "Game_object/action/Damage_action.hpp"
 #include "Game_object/action/Show_card_to_discard_action.hpp"
+#include "Game_object/action/Effect_capsule_action.hpp"
+#include "Game_object/action/Anim_set_action.hpp"
+#include "Game_object/action/Apply_power_action.hpp"
+#include "Game_object/action/Gain_block_action.hpp"
+#include "Game_object/action/Burn_plus_action.hpp"
+#include "Game_object/action/Wait_action.hpp"
 #include "Game_object/effect/Ghostly_fire_eff.hpp"
+#include "Game_object/effect/Border_flash_eff.hpp"
 #include "Game_object/effect_gen/Ghost_ignite_gen.hpp"
 #include "Game_object/effect_gen/Fire_ball_gen.hpp"
+#include "Game_object/effect_gen/Inflame_eff_gen.hpp"
+#include "Game_object/effect_gen/Screen_on_fire_gen.hpp"
+#include "Game_object/card/status/Burn.hpp"
 #include "RUtil/Image_book.hpp"
 #include "RUtil/Game_Input.hpp"
 #include "RUtil/Random.hpp"
@@ -15,8 +25,8 @@
 
 namespace Monster
 {
-    Hexaghost::Hexaghost(float offset_x, float offset_y)
-        :Abstraction::Monster_move_tracker<1, HexaghostAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG),
+    Hexaghost::Hexaghost()
+        :Abstraction::Monster_move_tracker<1, HexaghostAction>(0.0F, 0.0F, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG),
         body_angle(),
         body_angle_speed(1.0F),
         body_target_angle_speed(30.0F),
@@ -34,27 +44,51 @@ namespace Monster
     void Hexaghost::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch(current_move()){
             case HexaghostAction::Activate:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Call_action<Hexaghost, CallType>>(shared_from_this(), CallType::Activate));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Call_action<Hexaghost, CallType>>(std::static_pointer_cast<Hexaghost>(shared_from_this()), CallType::Activate));
                 break;
             case HexaghostAction::Divider:
                 for(int i=0;i<DIVIDER_HITS;i++){
                     dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_gen_capsule_action>(std::make_shared<EffectGen::Ghost_ignite_gen>(dungeon_shared.player->GetcX()+RUtil::Random::GetRandomFloat(-120.0F, 120.0F)*Setting::SCALE, dungeon_shared.player->GetcY()+RUtil::Random::GetRandomFloat(-120.0F, 120.0F)*Setting::SCALE), 0.05F));
                     dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::blunt_heavy}, dungeon_shared.player));    
                 }
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Call_action<Hexaghost, CallType>>(shared_from_this(), CallType::Deactivate));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Call_action<Hexaghost, CallType>>(std::static_pointer_cast<Hexaghost>(shared_from_this()), CallType::Deactivate));
                 break;
             case HexaghostAction::Inferno:
+                {
+                    burn_plus=true;
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_gen_capsule_action>(std::make_shared<EffectGen::Screen_on_fire_gen>(), 1.0F));
+                    for(int i=0;i<INFERNO_HITS;i++)
+                        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::fire}, dungeon_shared.player));
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Burn_plus_action>());
+                    auto burn_card=std::make_shared<Card::Status::Burn>();
+                    burn_card->CallUpgrade();
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Show_card_to_discard_action>(burn_card, 3));
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Wait_action>(1.0F));
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Call_action<Hexaghost, CallType>>(std::static_pointer_cast<Hexaghost>(shared_from_this()), CallType::Deactivate));
+                }
                 break;
             case HexaghostAction::Sear:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_gen_capsule_action>(std::make_shared<EffectGen::Fire_ball_gen>(GetcX(), GetcY(), dungeon_shared.player->GetcX(), dungeon_shared.player->GetcY()), 0.5F));
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::fire}, dungeon_shared.player));
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Show_card_to_discard_action>(std::make_shared<Card::Status::Slimed>(), 1));
-             
-                
+                {
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_gen_capsule_action>(std::make_shared<EffectGen::Fire_ball_gen>(GetcX(), GetcY(), dungeon_shared.player->GetcX(), dungeon_shared.player->GetcY()), 0.5F));
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::fire}, dungeon_shared.player));
+                    auto burn_card=std::make_shared<Card::Status::Burn>();
+                    if(burn_plus) burn_card->CallUpgrade();
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Show_card_to_discard_action>(burn_card, 1));
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Call_action<Hexaghost, CallType>>(std::static_pointer_cast<Hexaghost>(shared_from_this()), CallType::ActivateOrb));
+                }
                 break;
             case HexaghostAction::Tackle:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_capsule_action>(std::make_shared<Effect::Border_flash_eff>(RUtil::ToRGBA(RUtil::Colors::CHARTREUSE)), 0.0F, Action::Effect_capsule_action::Layer::normal));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                for(int i=0;i<TACKLE_HITS;i++)
+                    dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::fire}, dungeon_shared.player));    
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Call_action<Hexaghost, CallType>>(std::static_pointer_cast<Hexaghost>(shared_from_this()), CallType::ActivateOrb));
                 break;
             case HexaghostAction::Inflame:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_gen_capsule_action>(std::make_shared<EffectGen::Inflame_eff_gen>(GetcX(), GetcY()), 0.5F));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_block_action>(shared_from_this(), 12));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, 2, shared_from_this(), shared_from_this(), true));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Call_action<Hexaghost, CallType>>(std::static_pointer_cast<Hexaghost>(shared_from_this()), CallType::ActivateOrb));
                 break;
             default:
                 break;
@@ -100,7 +134,7 @@ namespace Monster
                     break;
             }
             ++current_orb_cnt;
-            if(current_orb_cnt>=PATTERN.size())current_orb_cnt=0;
+            if(current_orb_cnt>=static_cast<int>(PATTERN.size()))current_orb_cnt=0;
         }
     }
 
@@ -118,6 +152,7 @@ namespace Monster
         r2->draw(BODY_IMG<1>(), getAnimX()+orgX - 256.0F+6.0F*Setting::SCALE, getAnimY()+orgY - 256.0F+body_y, 512.0F, 512.0F, body_angle[1], 256.0F, 256.0F, Setting::SCALE, Setting::SCALE);
         r2->draw(BODY_IMG<0>(), getAnimX()+orgX - 256.0F, getAnimY()+orgY - 256.0F+body_y*0.5F, 512.0F, 512.0F, body_angle[0], 256.0F, 256.0F, Setting::SCALE, Setting::SCALE);
         r2->draw(BODY_IMG<3>(), getAnimX()+orgX - 256.0F+12.0F*Setting::SCALE, getAnimY()+orgY - 256.0F+body_y*0.25F-15.0F*Setting::SCALE, 512.0F, 512.0F, 0.0F, 256.0F, 256.0F, Setting::SCALE, Setting::SCALE);
+        Monster::Monsters::render(r2);
     }
 
     void Hexaghost::update(){
@@ -129,6 +164,7 @@ namespace Monster
         body_float_speed = body_angle_speed * RUtil::Game_Input::delta_time();
         body_y_timer += body_float_speed * RUtil::Game_Input::delta_time();
         body_y = std::sin(body_y_timer)*5.0F*Setting::SCALE;
+        Monster::Monsters::update();
     }
 
     Hexaghost::Orb::Orb(float x, float y, int index)

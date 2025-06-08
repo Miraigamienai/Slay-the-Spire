@@ -14,7 +14,7 @@ enum class SlimeBossAction
 class SlimeBoss final:public Abstraction::Monster_move_tracker<0, SlimeBossAction>
 {
 public:
-    SlimeBoss(float offset_x, float offset_y);
+    SlimeBoss();
     ~SlimeBoss()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;

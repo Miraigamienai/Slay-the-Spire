@@ -18,7 +18,7 @@ namespace Dungeon{
         return_button.set_text(TEXT_VEC()[34]);
     }
 
-    void Death_screen::update(Dungeon::Dungeon_shared &dungeon_shared){
+    void Death_screen::update(Dungeon::Dungeon_shared &/* dungeon_shared */){
         return_button.update();
     }
 

@@ -23,11 +23,10 @@ enum class HexaghostAction
 class Hexaghost final:public Abstraction::Monster_move_tracker<1, HexaghostAction>
 {
 public:
-    Hexaghost(float offset_x, float offset_y);
+    Hexaghost();
     ~Hexaghost()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
-    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     void update()override;
     void Call(CallType val);

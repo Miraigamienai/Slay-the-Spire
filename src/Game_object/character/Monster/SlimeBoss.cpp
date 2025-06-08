@@ -16,8 +16,8 @@
 #include "RUtil/Random.hpp"
 
 namespace Monster{
-    SlimeBoss::SlimeBoss(float offset_x, float offset_y)
-        :Abstraction::Monster_move_tracker<0, SlimeBossAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG),
+    SlimeBoss::SlimeBoss()
+        :Abstraction::Monster_move_tracker<0, SlimeBossAction>(0.0F, 28.0F, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG),
         move_cnt(0){}
     
     void SlimeBoss::Action(Dungeon::Dungeon_shared &dungeon_shared){

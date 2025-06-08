@@ -62,6 +62,7 @@ public:
     void obtain(const std::shared_ptr<Cards> &card);
     void exhaust(const std::shared_ptr<Cards> &card);
     void empower(const std::shared_ptr<Cards> &card, float target_center_x, float target_center_y);
+    void on_end_of_turn(Dungeon::Dungeon_shared &dungeon_shared){for(const auto&it:hand_cards) it->OnEndOfTurn(dungeon_shared);}
     Card_group get_upgradeable_card_group()const;
     Card_group get_master_deck()const{return master_deck;}
 
@@ -133,6 +134,17 @@ public:
     bool is_someone_flying()const noexcept{return !flying_cards.empty();}
     void discard_pile_shuffle_with_rng(RUtil::Random &rng){m_discard.ShuffleWithRng(rng);}
     void hand_cards_values_refresh(const Power::Power_group &player_powers)const{for(const auto&it:hand_cards) it->RefreshDisplay(player_powers);}
+    
+    template <GroupType GT>
+    auto& GetCardsGroup()const noexcept{
+        if constexpr(GT==GroupType::hand_cards) return hand_cards;
+        else if constexpr(GT==GroupType::m_discard) return m_discard;
+        else if constexpr(GT==GroupType::draw_pile) return draw_pile;
+        else if constexpr(GT==GroupType::master_deck) return master_deck;
+        else if constexpr(GT==GroupType::exhaust_pile) return exhaust_pile;
+        else if constexpr(GT==GroupType::force_render_cards) return force_render_cards;
+        else if constexpr(GT==GroupType::force_update_cards) return force_update_cards;
+    }
 private:
     static const int &input_x,&input_y;
     static const bool &just_r,&just_l;

@@ -158,8 +158,14 @@ namespace Monster{
                     static constexpr float pos[3][2]={{-300.0F, 30.0F}, {-100.0F, 10.0F}, {100.0F, 30.0F}};
                     for(int i=0;i<3;i++)
                         w.AT<Sentry>(pos[i][0], pos[i][1]);
-                    break;
                 }
+                break;
+            case GroupName::Slime_Boss:
+                w.AT<SlimeBoss>();
+                break;
+            case GroupName::Hexaghost:
+                w.AT<Hexaghost>();
+                break;
             case GroupName::None:
                 //for test
                 w.AT<FatGremlin>(0.0F, 0.0F);

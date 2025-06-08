@@ -11,8 +11,10 @@ namespace Effect
         return RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::_borderGlow2);
     }
 
-    Border_flash_eff::Border_flash_eff(Uint32 color){
-        duration=DUR;
+    Border_flash_eff::Border_flash_eff(Uint32 color, length len)
+        :start_duration(len==length::Long ? DUR*2.0F : DUR)
+    {
+        duration= start_duration;
         color_a=0.0F;
         this->color=color;
     }
@@ -24,8 +26,8 @@ namespace Effect
     }
 
     void Border_flash_eff::update(){
-        if(DUR-duration<0.1F) color_a=RUtil::Math::interpolation_fade(0.0F, 1.0F, (DUR-duration)/0.1F);
-        else color_a=RUtil::Math::interpolation_powout2(0.0F, 1.0F, duration);
+        if(start_duration - duration < start_duration/10.0F) color_a=RUtil::Math::interpolation_fade(0.0F, 1.0F, (start_duration-duration)/(start_duration/10.0F));
+        else color_a=RUtil::Math::interpolation_powout2(0.0F, 1.0F, duration/start_duration);
         TimeGo();
     }
 } // namespace Effect

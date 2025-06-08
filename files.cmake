@@ -51,6 +51,7 @@ set(SRC_FILES
 	Game_object/card/red/Defend.cpp
 	Game_object/card/red/Shockwave.cpp
 	Game_object/card/red/Strike_red.cpp
+	Game_object/card/status/Burn.cpp
 	Game_object/character/Characters.cpp
 	Game_object/character/Monster_group.cpp
 	Game_object/character/Monster_group_creater.cpp
@@ -64,6 +65,7 @@ set(SRC_FILES
 	Game_object/character/Monster/FungiBeast.cpp
 	Game_object/character/Monster/GreenLouse.cpp
 	Game_object/character/Monster/GremlinNob.cpp
+	Game_object/character/Monster/Hexaghost.cpp
 	Game_object/character/Monster/JawWorm.cpp
 	Game_object/character/Monster/Lagavulin.cpp
 	Game_object/character/Monster/Looter.cpp
@@ -112,9 +114,14 @@ set(SRC_FILES
 	Game_object/effect/Exhaust_blur_eff.cpp
 	Game_object/effect/Exhaust_ember_eff.cpp
 	Game_object/effect/Fade_wide.cpp
+	Game_object/effect/Fire_burst_particle_eff.cpp
+	Game_object/effect/Flame_particle_eff.cpp
 	Game_object/effect/Flash_attack_effect.cpp
 	Game_object/effect/Flying_spike_eff.cpp
+	Game_object/effect/Ghostly_fire_eff.cpp
+	Game_object/effect/Giant_fire_eff.cpp
 	Game_object/effect/Hammer_effect.cpp
+	Game_object/effect/Light_flare_particle_eff.cpp
 	Game_object/effect/Map_circle_effect.cpp
 	Game_object/effect/Player_turn_eff.cpp
 	Game_object/effect/Power_buff_debuff_eff.cpp
@@ -133,6 +140,7 @@ set(SRC_FILES
 	Game_object/effect_gen/Card_upgrade_eff_gen.cpp
 	Game_object/effect_gen/Effect_gen_group.cpp
 	Game_object/effect_gen/Exhaust_card_eff_gen.cpp
+	Game_object/effect_gen/Fire_ball_gen.cpp
 	Game_object/effect_gen/Purge_card_eff_gen.cpp
 	Game_object/effect_gen/Show_card_briefly.cpp
 	Game_object/effect_gen/Show_card_to_discard.cpp
@@ -223,6 +231,8 @@ set(INCLUDE_FILES
 	Game_object/action/Action_group_handler.hpp
 	Game_object/action/Anim_set_action.hpp
 	Game_object/action/Apply_power_action.hpp
+	Game_object/action/Burn_plus_action.hpp
+	Game_object/action/Call_action.hpp
 	Game_object/action/Card_use_end_action.hpp
 	Game_object/action/Card_use_start_action.hpp
 	Game_object/action/Damage_action.hpp
@@ -262,6 +272,7 @@ set(INCLUDE_FILES
 	Game_object/card/red/Defend.hpp
 	Game_object/card/red/Shockwave.hpp
 	Game_object/card/red/Strike_red.hpp
+	Game_object/card/status/Burn.hpp
 	Game_object/card/status/Slimed.hpp
 	Game_object/character/AllMonster.hpp
 	Game_object/character/Characters.hpp
@@ -277,6 +288,7 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/FungiBeast.hpp
 	Game_object/character/Monster/GreenLouse.hpp
 	Game_object/character/Monster/GremlinNob.hpp
+	Game_object/character/Monster/Hexaghost.hpp
 	Game_object/character/Monster/JawWorm.hpp
 	Game_object/character/Monster/Lagavulin.hpp
 	Game_object/character/Monster/Looter.hpp
@@ -329,11 +341,16 @@ set(INCLUDE_FILES
 	Game_object/effect/Exhaust_blur_eff.hpp
 	Game_object/effect/Exhaust_ember_eff.hpp
 	Game_object/effect/Fade_wide.hpp
+	Game_object/effect/Fire_burst_particle_eff.hpp
+	Game_object/effect/Flame_particle_eff.hpp
 	Game_object/effect/Flash_attack_effect.hpp
 	Game_object/effect/Flash_intent_particle_eff.hpp
 	Game_object/effect/Flash_power_eff.hpp
 	Game_object/effect/Flying_spike_eff.hpp
+	Game_object/effect/Ghostly_fire_eff.hpp
+	Game_object/effect/Giant_fire_eff.hpp
 	Game_object/effect/Hammer_effect.hpp
+	Game_object/effect/Light_flare_particle_eff.hpp
 	Game_object/effect/Map_circle_effect.hpp
 	Game_object/effect/Player_turn_eff.hpp
 	Game_object/effect/Power_buff_debuff_eff.hpp
@@ -356,10 +373,14 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Effect_gen_group.hpp
 	Game_object/effect_gen/Empower_circle_gen.hpp
 	Game_object/effect_gen/Exhaust_card_eff_gen.hpp
+	Game_object/effect_gen/Fire_ball_gen.hpp
 	Game_object/effect_gen/Flash_intent_particle_gen.hpp
+	Game_object/effect_gen/Ghost_ignite_gen.hpp
+	Game_object/effect_gen/Inflame_eff_gen.hpp
 	Game_object/effect_gen/Power_buff_debuff_gen.hpp
 	Game_object/effect_gen/Power_remove_text_gen.hpp
 	Game_object/effect_gen/Purge_card_eff_gen.hpp
+	Game_object/effect_gen/Screen_on_fire_gen.hpp
 	Game_object/effect_gen/Show_card_briefly.hpp
 	Game_object/effect_gen/Show_card_to_discard.hpp
 	Game_object/effect_gen/Vertical_aura_gen.hpp

@@ -65,7 +65,7 @@ enum class Target{
 };
 //control render logic
 //and normal move
-class Cards:public Card_soul{
+class Cards:public Card_soul, public std::enable_shared_from_this<Cards>{
 public:
     Cards(RUtil::AtlasRegionID card_name, RUtil::Cards_Text_ID card_text_id, Rarity rarity, Type type, Color color, Target target,
         const int base_cost, const int base_damage, const int base_block, const int base_magic_num);
@@ -94,12 +94,10 @@ public:
 
     //virtual function
     
-    //Check if it is usable based on the current situation.
-    virtual bool CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const;
     virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const std::shared_ptr<Monster::Monsters> &target_monster)=0;
     virtual std::shared_ptr<Cards> Clone()const=0;
-    virtual void Upgrade(bool for_preview)=0;
-    
+    virtual void OnEndOfTurn(Dungeon::Dungeon_shared &/* dungeon_shared */){}
+
     //inline function
     
     void CallUpgrade(bool for_preview=false){
@@ -164,6 +162,9 @@ protected:
     virtual void RefreshDamage(const Power::Power_group &player_powers){CommonRefreshDamage(player_powers);}
     virtual void RefreshDamage(const Power::Power_group &player_powers, const Power::Power_group &monster_powers){CommonRefreshDamage(player_powers, monster_powers);}
     virtual void RefreshBlock(const Power::Power_group &player_powers){CommonRefreshBlock(player_powers);}
+    //Check if it is usable based on the current situation.
+    virtual bool CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const;
+    virtual void Upgrade(bool for_preview)=0;
     
     void CommonRefreshDamage(const Power::Power_group &player_powers);
     void CommonRefreshDamage(const Power::Power_group &player_powers, const Power::Power_group &monster_powers);

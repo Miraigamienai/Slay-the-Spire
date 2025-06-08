@@ -62,8 +62,8 @@
   },
   "Armaments": {
     "NAME": "武裝",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n在本場戰鬥中 升級 1張手牌",
-    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋$n在本場戰鬥中 升級 所有手牌"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n在本場戰鬥中 升級 1張手牌",
+    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋 $n在本場戰鬥中 升級 所有手牌"
   },
   "AscendersBane": {
     "NAME": "進階之災",
@@ -83,7 +83,7 @@
   },
   "Backflip": {
     "NAME": "後空翻",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n抽2張牌"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n抽2張牌"
   },
   "Backstab": {
     "NAME": "背刺",
@@ -199,16 +199,16 @@
   },
   "Blur": {
     "NAME": "殘影",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n下回合開始時 #y格擋 不會移除"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n下回合開始時 #y格擋 不會移除"
   },
   "Body_Slam": {
     "NAME": "泰山壓頂",
-    "DESCRIPTION": "造成你當前 #y格擋 值的傷害",
+    "DESCRIPTION": "造成你當前 #y格擋 值$n的傷害",
     "UPGRADE_DESCRIPTION": "$n（造成 !D! 點傷害）"
   },
   "BootSequence": {
     "NAME": "啟動流程",
-    "DESCRIPTION": " 固有$n獲得 !B! 點 #y格擋$n#y消耗 "
+    "DESCRIPTION": " 固有$n獲得 !B! 點 #y格擋 $n#y消耗 "
   },
   "Bouncing_Flask": {
     "NAME": "彈跳藥瓶",
@@ -340,8 +340,8 @@
   },
   "Cloak_And_Dagger": {
     "NAME": "斗篷與匕首",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n增加 !M! 張 *小刀 到手牌",
-    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋$n增加 !M! 張 *小刀 到手牌"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n增加 !M! 張 *小刀 到手牌",
+    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋 $n增加 !M! 張 *小刀 到手牌"
   },
   "Clothesline": {
     "NAME": "金剛臂",
@@ -387,7 +387,7 @@
   },
   "Conserve_Battery": {
     "NAME": "充電",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n下回合獲得 [B]"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n下回合獲得 [B]"
   },
   "Consume": {
     "NAME": "耗盡",
@@ -465,7 +465,7 @@
   },
   "Dash": {
     "NAME": "衝刺",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n造成 !D! 點傷害"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n造成 !D! 點傷害"
   },
   "Dazed": {
     "NAME": "暈眩",
@@ -481,8 +481,8 @@
   },
   "DeceiveReality": {
     "NAME": "欺瞞現實",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n將一張 *平安 加入手牌",
-    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋$n將一張 *平安+ 加入手牌"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n將一張 *平安 加入手牌",
+    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋 $n將一張 *平安+ 加入手牌"
   },
   "Deep_Breath": {
     "NAME": "深呼吸",
@@ -553,7 +553,7 @@
   },
   "Dodge_and_Roll": {
     "NAME": "閃躲翻滾",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n在下回合獲得 !B! 點 #y格擋 "
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n在下回合獲得 !B! 點 #y格擋 "
   },
   "Doom_and_Gloom": {
     "NAME": "愁雲慘淡",
@@ -607,7 +607,7 @@
   },
   "EmptyBody": {
     "NAME": "化體為空",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n退出當前 姿態 "
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n退出當前 姿態 "
   },
   "EmptyFist": {
     "NAME": "化拳為空",
@@ -656,8 +656,8 @@
   },
   "Evaluate": {
     "NAME": "評估",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n在抽牌堆中加入1張 *洞見",
-    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋$n在抽牌堆中加入1張 *洞見+ "
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n在抽牌堆中加入1張 *洞見",
+    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋 $n在抽牌堆中加入1張 *洞見+ "
   },
   "Eviscerate": {
     "NAME": "開膛破肚",
@@ -728,7 +728,7 @@
   },
   "Finesse": {
     "NAME": "妙計",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n抽1張牌"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n抽1張牌"
   },
   "Finisher": {
     "NAME": "終結技",
@@ -754,7 +754,7 @@
   },
   "Flame_Barrier": {
     "NAME": "火焰護盾",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n本回合你每受到1次攻擊，都對攻擊者造成 !M! 點傷害"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n本回合你每受到1次攻擊，都對攻擊者造成 !M! 點傷害"
   },
   "Flare": {
     "NAME": "DEPRECATED Flare",
@@ -775,7 +775,7 @@
   },
   "Flex": {
     "NAME": "活動肌肉",
-    "DESCRIPTION": "獲得 !M! 點 力量$n你的回合結束時，失去 !M! 點 力量 "
+    "DESCRIPTION": "獲得 !M! 點 力量$n你的回合結束時，$n失去 !M! 點 力量 "
   },
   "Flick": {
     "NAME": "DEPRECATED 輕彈",
@@ -846,7 +846,7 @@
   },
   "Genetic_Algorithm": {
     "NAME": "遺傳演算法",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n每打出1次，這張牌的#y格擋值永久增加 !M! 點$n#y消耗 "
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n每打出1次，這張牌的#y格擋值永久增加 !M! 點$n#y消耗 "
   },
   "Ghostly": {
     "NAME": "靈體",
@@ -859,8 +859,8 @@
   },
   "Glacier": {
     "NAME": "冰川",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n生成 !M! 個 冰霜 充能球",
-    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋$n生成 !M! 個 冰霜 充能球"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n生成 !M! 個 冰霜 充能球",
+    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋 $n生成 !M! 個 冰霜 充能球"
   },
   "Glass_Knife": {
     "NAME": "玻璃刀刃",
@@ -881,7 +881,7 @@
   },
   "Halt": {
     "NAME": "停頓",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n憤怒：額外獲得 !M! 點#y格擋"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n憤怒：額外獲得 !M! 點#y格擋"
   },
   "HandOfGreed": {
     "NAME": "貪婪之手",
@@ -924,8 +924,8 @@
   },
   "Hologram": {
     "NAME": "全像投影",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n將棄牌堆中的1張牌放入手牌$n#y消耗 ",
-    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋$n將棄牌堆中的1張牌放入手牌"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n將棄牌堆中的1張牌放入手牌$n#y消耗 ",
+    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋 $n將棄牌堆中的1張牌放入手牌"
   },
   "Hyperbeam": {
     "NAME": "超能光束",
@@ -941,7 +941,7 @@
   },
   "Impervious": {
     "NAME": "巋然不動",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n#y消耗 "
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n#y消耗 "
   },
   "Indignation": {
     "NAME": "義憤填膺",
@@ -979,7 +979,7 @@
   },
   "Iron_Wave": {
     "NAME": "鐵斬波",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n造成 !D! 點傷害"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n造成 !D! 點傷害"
   },
   "J.A.X.": {
     "NAME": "J.A.X.",
@@ -1003,7 +1003,7 @@
   },
   "JustLucky": {
     "NAME": "幸運一擊",
-    "DESCRIPTION": "預見 !M!$n獲得 !B! 點 #y格擋$n造成 !D! 點傷害"
+    "DESCRIPTION": "預見 !M!$n獲得 !B! 點 #y格擋 $n造成 !D! 點傷害"
   },
   "Leap": {
     "NAME": "飛躍",
@@ -1204,7 +1204,7 @@
   },
   "PanicButton": {
     "NAME": "應急按鈕",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n在接下來 !M! 回合內無法再從卡牌中獲得#y格擋$n#y消耗 "
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n在接下來 !M! 回合內無法再從卡牌中獲得#y格擋 $n#y消耗 "
   },
   "Parasite": {
     "NAME": "寄生",
@@ -1231,7 +1231,7 @@
   },
   "Perseverance": {
     "NAME": "堅韌",
-    "DESCRIPTION": " 保留$n獲得 !B! 點 #y格擋$n每當這張牌被 保留 時，在本場戰鬥中將其#y格擋增加 !M! 點"
+    "DESCRIPTION": " 保留$n獲得 !B! 點 #y格擋 $n每當這張牌被 保留 時，在本場戰鬥中將其#y格擋增加 !M! 點"
   },
   "Phantasmal_Killer": {
     "NAME": "幻影殺手",
@@ -1404,11 +1404,11 @@
   },
   "Safety": {
     "NAME": "平安",
-    "DESCRIPTION": " 保留$n獲得 !B! 點 #y格擋$n#y消耗 "
+    "DESCRIPTION": " 保留$n獲得 !B! 點 #y格擋 $n#y消耗 "
   },
   "Sanctity": {
     "NAME": "聖潔",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n若本場戰鬥中打出的上1張牌是技能牌，抽 !M! 張牌"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n若本場戰鬥中打出的上1張牌是技能牌，抽 !M! 張牌"
   },
   "SandsOfTime": {
     "NAME": "時之沙",
@@ -1466,8 +1466,8 @@
   },
   "Sentinel": {
     "NAME": "哨衛",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n這張牌被 #y消耗 時，$n獲得 [R] [R] ",
-    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋$n這張牌被 #y消耗 時，$n獲得 [R] [R] [R] "
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n這張牌被 #y消耗 時，$n獲得 [R] [R] ",
+    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋 $n這張牌被 #y消耗 時，$n獲得 [R] [R] [R] "
   },
   "Serenity": {
     "NAME": "寧靜",
@@ -1487,7 +1487,7 @@
   },
   "Shield": {
     "NAME": "DEPRECATED Shield",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n保留$n#y消耗 "
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n保留$n#y消耗 "
   },
   "Shiv": {
     "NAME": "小刀",
@@ -1499,7 +1499,7 @@
   },
   "Shrug_It_Off": {
     "NAME": "聳肩無視",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n抽1張牌"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n抽1張牌"
   },
   "SignatureMove": {
     "NAME": "招牌技",
@@ -1555,7 +1555,7 @@
   },
   "Steam": {
     "NAME": "蒸汽護壁",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n這張牌每打出1次，在本場戰鬥中的其基礎 #y格擋 下降1點"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n這張牌每打出1次，在本場戰鬥中的其基礎 #y格擋 下降1點"
   },
   "Steam_Power": {
     "NAME": "超頻",
@@ -1563,7 +1563,7 @@
   },
   "StepAndStrike": {
     "NAME": "跨步打擊",
-    "DESCRIPTION": "本回合每轉換一次 姿態 ，這張牌在本回合的耗能減少1$n獲得 !B! 點 #y格擋$n造成 !D! 點傷害"
+    "DESCRIPTION": "本回合每轉換一次 姿態 ，這張牌在本回合的耗能減少1$n獲得 !B! 點 #y格擋 $n造成 !D! 點傷害"
   },
   "Storm": {
     "NAME": "雷暴",
@@ -1613,11 +1613,11 @@
   },
   "Survey": {
     "NAME": "DEPRECATED Survey",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$nGain !M! Vigor."
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $nGain !M! Vigor."
   },
   "Survivor": {
     "NAME": "生存者",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n丟棄1張牌"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n丟棄1張牌"
   },
   "Sweeping_Beam": {
     "NAME": "掃蕩射線",
@@ -1633,7 +1633,7 @@
   },
   "Swivel": {
     "NAME": "旋身",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n你打出的下一張攻擊牌耗能變為0"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n你打出的下一張攻擊牌耗能變為0"
   },
   "Sword_Boomerang": {
     "NAME": "飛劍迴旋鏢",
@@ -1649,7 +1649,7 @@
   },
   "TalkToTheHand": {
     "NAME": "以手拒之",
-    "DESCRIPTION": "造成 !D! 點傷害$n每當目標敵人受到攻擊時，你獲得 !M! 點#y格擋$n#y消耗 "
+    "DESCRIPTION": "造成 !D! 點傷害$n每當目標敵人受到攻擊時，你獲得 !M! 點#y格擋 $n#y消耗 "
   },
   "Tantrum": {
     "NAME": "發洩",
@@ -1675,7 +1675,7 @@
   },
   "ThirdEye": {
     "NAME": "天眼",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n預見 !M! "
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n預見 !M! "
   },
   "ThroughViolence": {
     "NAME": "以暴易暴",
@@ -1720,8 +1720,8 @@
   },
   "True_Grit": {
     "NAME": "堅毅",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n#y消耗 1張隨機手牌",
-    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋$n#y消耗 1張手牌"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n#y消耗 1張隨機手牌",
+    "UPGRADE_DESCRIPTION": "獲得 !B! 點 #y格擋 $n#y消耗 1張手牌"
   },
   "Truth": {
     "NAME": "真知",
@@ -1746,7 +1746,7 @@
   },
   "Undo": {
     "NAME": "均衡",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n保留 本回合的手牌"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n保留 本回合的手牌"
   },
   "Unload": {
     "NAME": "乾坤一擲",
@@ -1774,7 +1774,7 @@
   },
   "Vigilance": {
     "NAME": "警惕",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$n進入 平靜 ",
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $n進入 平靜 ",
     "UPGRADE_DESCRIPTION": "DEPRECATED"
   },
   "Violence": {
@@ -1796,7 +1796,7 @@
   },
   "WardAura": {
     "NAME": "DEPRECATED Ward Aura",
-    "DESCRIPTION": "獲得 !B! 點 #y格擋$nAt the start of your turn, gain !M! Block.$n保留"
+    "DESCRIPTION": "獲得 !B! 點 #y格擋 $nAt the start of your turn, gain !M! Block.$n保留"
   },
   "WaveOfTheHand": {
     "NAME": "擺手",

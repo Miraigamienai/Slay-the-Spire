@@ -6,6 +6,9 @@
 #include "Game_object/card/red/Clothesline.hpp"//for test
 #include "Game_object/card/red/Shockwave.hpp"//for test
 #include "Game_object/card/red/Barricade.hpp"//for test
+#include "Game_object/card/red/Body_slam.hpp"//for test
+#include "Game_object/card/red/Flex.hpp"//for test
+#include "Game_object/card/red/Iron_wave.hpp"//for test
 #include "Game_object/effect/Fade_wide.hpp"
 #include "RUtil/Random.hpp"
 
@@ -81,7 +84,7 @@ void TheApp::prepare(){
         // m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Anger>());
     for(int i=0;i<1;i++)
         // m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Defend>());
-    for(int i=0;i<20;i++)
+    for(int i=0;i<2;i++)
         m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Clash>());
     for(int i=0;i<1;i++)
         // m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Clothesline>());
@@ -89,7 +92,11 @@ void TheApp::prepare(){
         // m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Shockwave>());
     for(int i=0;i<1;i++)
         // m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Barricade>());
-    
+    // m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Body_slam>());
+    // for(int i=0;i<1;i++)
+    //     m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Flex>());
+    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Flex>());
+    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Iron_wave>());
     fade();
 }
 

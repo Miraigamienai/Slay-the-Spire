@@ -14,7 +14,7 @@ set(SRC_FILES
 	Draw/ReText.cpp
 	Draw/ReTexture.cpp
 	Draw/Text_box.cpp
-	Draw/Text_layout.cpp
+	Draw/Text_layout.cpp 
 	Draw/Text_layout_all.cpp
 	Draw/Text_layout_color.cpp
 	Draw/Text_layout_normal.cpp
@@ -22,7 +22,7 @@ set(SRC_FILES
 	Game_object/action/Action_group_handler.cpp
 	Game_object/action/Anim_set_action.cpp
 	Game_object/action/Apply_power_action.cpp
-	Game_object/action/Card_use_end_action.cpp 
+	Game_object/action/Card_use_end_action.cpp
 	Game_object/action/Card_use_start_action.cpp
 	Game_object/action/Damage_action.cpp
 	Game_object/action/Draw_card_action.cpp
@@ -46,9 +46,12 @@ set(SRC_FILES
 	Game_object/card/Card_soul.cpp
 	Game_object/card/red/Anger.cpp
 	Game_object/card/red/Barricade.cpp
+	Game_object/card/red/Body_slam.cpp
 	Game_object/card/red/Clash.cpp
 	Game_object/card/red/Clothesline.cpp
 	Game_object/card/red/Defend.cpp
+	Game_object/card/red/Flex.cpp
+	Game_object/card/red/Iron_wave.cpp
 	Game_object/card/red/Shockwave.cpp
 	Game_object/card/red/Strike_red.cpp
 	Game_object/character/Characters.cpp
@@ -258,9 +261,12 @@ set(INCLUDE_FILES
 	Game_object/card/Card_soul.hpp
 	Game_object/card/red/Anger.hpp
 	Game_object/card/red/Barricade.hpp
+	Game_object/card/red/Body_slam.hpp
 	Game_object/card/red/Clash.hpp
 	Game_object/card/red/Clothesline.hpp
 	Game_object/card/red/Defend.hpp
+	Game_object/card/red/Flex.hpp
+	Game_object/card/red/Iron_wave.hpp
 	Game_object/card/red/Shockwave.hpp
 	Game_object/card/red/Strike_red.hpp
 	Game_object/card/status/Slimed.hpp

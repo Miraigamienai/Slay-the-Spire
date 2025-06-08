@@ -14,7 +14,8 @@ public:
     ~Iron_wave()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade(bool for_preview)override{
-        SetDamage(9, for_preview);
+        SetDamage(7, for_preview);
+        SetBlock(7, for_preview);
     }
 private:
 

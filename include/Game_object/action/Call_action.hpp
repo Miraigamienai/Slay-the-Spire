@@ -19,4 +19,17 @@ private:
     const std::shared_ptr<T> ptr;
     const Val_Type val;
 };
+template <typename T>
+class Call_action<T, void> final:public Actions
+{
+public:
+    Call_action(const std::shared_ptr<T>&ptr):ptr(ptr){};
+    ~Call_action() override=default;
+    void update(Dungeon::Dungeon_shared &/* dungeon_shared */)override{
+        ptr->Call();
+        is_done=true;
+    }
+private:
+    const std::shared_ptr<T> ptr;
+};
 }

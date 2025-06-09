@@ -437,6 +437,7 @@ set(INCLUDE_FILES
 	Game_object/panel/Panels.hpp
 	Game_object/power/Anger_power.hpp
 	Game_object/power/Barricade_power.hpp
+	Game_object/power/Dexterity_power.hpp
 	Game_object/power/Frail_power.hpp
 	Game_object/power/Metallicize_power.hpp
 	Game_object/power/Powers.hpp

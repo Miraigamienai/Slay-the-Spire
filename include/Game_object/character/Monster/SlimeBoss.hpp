@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Game_object/abstraction/Monster_move_tracker.hpp"
-#include "RUtil/Weighted_index_picker.hpp"
 
 namespace Monster{
 enum class SlimeBossAction
@@ -21,7 +20,7 @@ public:
     void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
     int move_cnt;
-    static constexpr std::array<Monster::SlimeBossAction, 3> pattern=std::array{SlimeBossAction::GoopSpray, SlimeBossAction::Preparing, SlimeBossAction::Slam};
+    static constexpr std::array<SlimeBossAction, 3> pattern=std::array{SlimeBossAction::GoopSpray, SlimeBossAction::Preparing, SlimeBossAction::Slam};
     static constexpr float WIDTH=400.0F*Setting::SCALE,
                            HEIGHT=350.0F*Setting::SCALE,
                            HB_OFFSET_X=0.0F,

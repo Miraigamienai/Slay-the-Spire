@@ -322,9 +322,8 @@
   "Dexterity": {
     "NAME": "敏捷",
     "DESCRIPTIONS": [
-      "從卡牌獲得的 #y格擋 增加 #b",
-      "從卡牌獲得的 #y格擋 減少 #b",
-      ""
+      "從卡牌獲得的 #y格擋 增加 !M!",
+      "從卡牌獲得的 #y格擋 減少 !M!"
     ]
   },
   "DisciplinePower": {
@@ -568,7 +567,7 @@
   "Frail": {
     "NAME": "脆弱",
     "DESCRIPTIONS": [
-      "在 !M! 個回合內，從卡牌中$n獲得的 #y格擋 減少 #b25% "
+      "在 !M! 個回合內，從卡牌中獲得的 #y格擋 減少 #b25% "
     ]
   },
   "FreeAttackPower": {
@@ -1031,8 +1030,8 @@
   "Ritual": {
     "NAME": "儀式",
     "DESCRIPTIONS": [
-      "在其回合結束時，$n獲得 !D! 點 #y力量 ",
-      "在你的回合結束時，$n獲得 !D! 點 #y力量 "
+      "在其回合結束時，獲得 !D! 點 #y力量 ",
+      "在你的回合結束時，獲得 !D! 點 #y力量 "
     ]
   },
   "Rupture": {
@@ -1258,7 +1257,7 @@
   "Vulnerable": {
     "NAME": "易傷",
     "DESCRIPTIONS": [
-      "從 #y攻擊 受到的傷害$n增加 !D!#b% $n持續時間 !M! 回合"
+      "從 #y攻擊 受到的傷害增加 !D!#b% 。$n持續時間 !M! 回合"
     ]
   },
   "WaveOfTheHandPower": {
@@ -1278,7 +1277,7 @@
   "Weakened": {
     "NAME": "虛弱",
     "DESCRIPTIONS": [
-      "#y攻擊 造成的傷害減少 !D!#b% $n持續時間 !M! 回合"
+      "#y攻擊 造成的傷害減少 !D!#b% 。$n持續時間 !M! 回合"
     ]
   },
   "WireheadingPower": {

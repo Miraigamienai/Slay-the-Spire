@@ -322,9 +322,8 @@
   "Dexterity": {
     "NAME": "Dexterity",
     "DESCRIPTIONS": [
-      "Increases #yBlock gained from cards by #b",
-      "Decreases #yBlock gained from cards by #b",
-      "."
+      "Increases #yBlock gained from cards by !M! .",
+      "Decreases #yBlock gained from cards by !M! ."
     ]
   },
   "DisciplinePower": {

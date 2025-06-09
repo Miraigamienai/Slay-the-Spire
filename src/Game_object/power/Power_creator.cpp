@@ -9,6 +9,7 @@
 #include "Game_object/power/Weak_power.hpp"
 #include "Game_object/power/Anger_power.hpp"
 #include "Game_object/power/Metallicize_power.hpp"
+#include "Game_object/power/Dexterity_power.hpp"
 
 #include "Util/Logger.hpp"
 
@@ -24,6 +25,7 @@ namespace Power
             case RUtil::Powers_Text_ID::Weakened: return std::make_shared<Weak_power>(owner_type);
             case RUtil::Powers_Text_ID::Anger: return std::make_shared<Anger_power>(owner_type);
             case RUtil::Powers_Text_ID::Metallicize: return std::make_shared<Metallicize_power>(owner_type);
+            case RUtil::Powers_Text_ID::Dexterity: return std::make_shared<Dexterity_power>(owner_type);
             default:
                 LOG_ERROR("The power id:{} has not been implemented yet.", static_cast<int>(power_id));
                 return std::make_shared<Weak_power>(owner_type);

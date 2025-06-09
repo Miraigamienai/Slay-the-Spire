@@ -3,7 +3,6 @@
 #include <utility>
 
 #include "Game_object/abstraction/Monster_move_tracker.hpp"
-#include "RUtil/Weighted_index_picker.hpp"
 
 namespace Monster{
 enum class CallType{

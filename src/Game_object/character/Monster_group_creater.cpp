@@ -151,7 +151,7 @@ namespace Monster{
                 w.AT<GremlinNob>(0.0F, 0.0F);
                 break;
             case GroupName::Lagavulin:
-                // w.AT<Lagavulin>(0.0F, 0.0F);
+                w.AT<Lagavulin>(dungeon_shared.random_package.monster_status_rng);
                 break;
             case GroupName::_3_Sentries:
                 {

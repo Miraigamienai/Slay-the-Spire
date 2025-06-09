@@ -45,13 +45,17 @@ public:
     }
 
     virtual void at_combat_start(Dungeon::Dungeon_shared &/* dungeon_shared */){}
-    
+
     void flash_intent(Dungeon::Dungeon_shared &dungeon_shared);
     void refresh_dmg_display(const Power::Power_group &player_powers);
     bool TipHovered()const noexcept(noexcept(Characters::TipHovered())) override{return Characters::TipHovered()||intent_hb.Hovered();}
     void ForceDie(){Character::Characters::ForceDie(); dying_fade_timer = FADE_TIME;}
     auto GetIntent()const noexcept{return move.intent;}
     bool IsInDyingFade()const noexcept{return dying_fade_timer!=0.0F;}
+    void update_hb_pos()noexcept(noexcept(Character::Characters::update_hb_pos()))override{
+        Character::Characters::update_hb_pos();
+        intent_hb.move(GetcX(), GetcY() + GetHeight()/2.0F + INTENT_HB_W/2.0F);
+    }
 protected:
     float img_color_a;
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, int multiplier, const Power::Power_group &player_powers);
@@ -95,6 +99,7 @@ private:
 
     static const Draw::NumberDrawer s_intent_num_drawer;
 
+    static constexpr float INTENT_HB_W=64.0F*Setting::SCALE;
     static constexpr int INTENT_FONTSIZE=26;
     static constexpr float FADE_TIME = 1.0F;
 };

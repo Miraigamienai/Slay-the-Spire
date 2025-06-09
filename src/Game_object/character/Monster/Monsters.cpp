@@ -215,7 +215,7 @@ namespace Monster
         //intent vfx
         intent_effs.update();
         intent_back_effs.update();
-        if(!current_HP<=0 && intent_a>0.0F) update_intent_vfx();
+        if(!(current_HP<=0) && intent_a>0.0F) update_intent_vfx();
         //intent hb
         intent_hb.move(GetcX(), GetcY() + GetHeight()/2.0F + INTENT_HB_W/2.0F);
         intent_hb.update();
@@ -277,7 +277,7 @@ namespace Monster
             r2->draw(img, getAnimX()+orgX-GetWidth()/2.0F, getAnimY()+orgY-GetHeight()/2.0F, GetWidth(), GetHeight());
         }
         //intent
-        if(!current_HP<=0 && !IsInDyingFade() && intent_a!=0.0F){
+        if(!(current_HP<=0) && !IsInDyingFade() && intent_a!=0.0F){
             //img & effs
             intent_back_effs.render(r2);
             r2->SetColor(RUtil::WHITE, intent_a);

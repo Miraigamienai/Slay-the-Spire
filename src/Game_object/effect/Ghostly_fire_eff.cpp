@@ -25,11 +25,12 @@ namespace Effect{
     {
         duration=1.0F;
         scale=Setting::SCALE*RUtil::Random::GetRandomFloat((is_weak?2.0F:5.0F), (is_weak?3.0F:6.0F));
+        color=is_weak?RUtil::ToRGBA(RUtil::Colors::SKY_BLUE):RUtil::ToRGBA(RUtil::Colors::CHARTREUSE);
     }
 
     void Ghostly_fire_eff::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
-        r2->SetColor(RUtil::ToRGBA(RUtil::Colors::CHARTREUSE), duration*0.5F);
+        r2->SetColor(color, duration*0.5F);
         auto&img=IMG(img_type);
         r2->draw(img, x, y, static_cast<float>(img->GetRegionWidth()), static_cast<float>(img->GetRegionHeight()), 0.0F, static_cast<float>(img->GetRegionWidth())/2.0F, static_cast<float>(img->GetRegionHeight())/2.0F, this->scale*(weak?1.0F:RUtil::Random::GetRandomFloat(0.95F, 1.05F)), this->scale*(weak?1.0F:RUtil::Random::GetRandomFloat(0.95F, 1.05F)));
     }

@@ -8,7 +8,7 @@ namespace Power{
 class Barricade_power final : public Powers
 {
 public:
-    Barricade_power():Powers(RUtil::Powers_Text_ID::Barricade, RUtil::AtlasRegionID::_48_barricade, RUtil::AtlasRegionID::_128_barricade, PowerType::buff, false, false){
+    Barricade_power(Character::CharacterType owner_type):Powers(RUtil::Powers_Text_ID::Barricade, RUtil::AtlasRegionID::_48_barricade, RUtil::AtlasRegionID::_128_barricade, PowerType::buff, false, false, owner_type){
         this->amount=NO_DISPLAY_AMOUNT;
     }
     ~Barricade_power()override=default;

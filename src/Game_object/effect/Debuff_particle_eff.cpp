@@ -13,7 +13,7 @@ namespace Effect
 
     template <int N>
     static inline auto &IMG(){
-        static auto&IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/intent/buffVFX" + std::to_string(N) + ".png");
+        static auto&IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/intent/debuffVFX" + std::to_string(N) + ".png");
         return IMG;
     }
 

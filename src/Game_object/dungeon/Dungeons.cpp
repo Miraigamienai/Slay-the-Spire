@@ -160,6 +160,7 @@ namespace Dungeon{
         dungeon_shared.card_group_handler.render_hand(r2);//flying card also render inside it.
         dungeon_shared.card_group_handler.render_force_cards(r2);
         dungeon_shared.effs.render(r2);
+        if(dungeon_shared.current_node!=nullptr)dungeon_shared.current_node->GetRoom()->render_higher(r2);
         dungeon_shared.manager.render(r2);
         dungeon_shared.top_effs.render(r2);
         r2->SetColor(fade_color,fade_color_a);
@@ -265,11 +266,11 @@ namespace Dungeon{
         fade_in();
         dungeon_shared.effs.clear();
         dungeon_shared.top_effs.clear();
-        dungeon_shared.current_node->GetRoom()->init_room(dungeon_shared, fade_color);
         dungeon_shared.random_package.ResetRoomRNGs(this->random_seed+dungeon_shared.current_node->y);
         dungeon_shared.manager.hide_dungeon_screen_instantly();
         dungeon_shared.card_group_handler.prepare_for_battle(dungeon_shared.random_package.card_shuffle_rng);
         dungeon_shared.action_group_handler.prepare_for_battle();
+        dungeon_shared.current_node->GetRoom()->init_room(dungeon_shared, fade_color);
         scene->next_room();
     }
 }

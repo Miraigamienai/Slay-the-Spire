@@ -43,6 +43,9 @@ public:
             powers.render_tip(r2, x, y);
         }
     }
+
+    virtual void at_combat_start(Dungeon::Dungeon_shared &/* dungeon_shared */){}
+    
     void flash_intent(Dungeon::Dungeon_shared &dungeon_shared);
     void refresh_dmg_display(const Power::Power_group &player_powers);
     bool TipHovered()const noexcept(noexcept(Characters::TipHovered())) override{return Characters::TipHovered()||intent_hb.Hovered();}
@@ -55,6 +58,7 @@ protected:
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, int base_damage, const Power::Power_group &player_powers);
     void set_move(const std::shared_ptr<Draw::Text_layout> &move_name, Intent intent, const Power::Power_group &player_powers);
     int current_damage()const noexcept{return move.damage;}
+    void set_img(const std::shared_ptr<Draw::ReTexture> &img)noexcept{this->img=img;}
 private:
     struct Move{
         std::shared_ptr<Draw::Text_layout> move_name;
@@ -65,7 +69,7 @@ private:
         int base_damage;
         int damage;
     };
-    const std::shared_ptr<Draw::ReTexture> &img;
+    std::shared_ptr<Draw::ReTexture> img;
     float dying_fade_timer;
     //intent
     Move move;

@@ -20,6 +20,12 @@ namespace Action{
         dungeon_shared.player->ReduceEnergy(card_item.card->GetCost(),dungeon_shared);
         card_item.card->Use(dungeon_shared, card_item.monster);
         
+        //check power
+        for(const auto&it:dungeon_shared.player->get_powers()) it->on_use_card(dungeon_shared, card_item.card, dungeon_shared.player);
+        for(const auto&it1:dungeon_shared.room_monsters)
+            for(const auto&it2:it1->get_powers())
+                it2->on_use_card(dungeon_shared, card_item.card, it1);
+        
         //add end to bot
         dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Card_use_end_action>(card_item));
         

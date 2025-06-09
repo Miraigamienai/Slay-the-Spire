@@ -12,13 +12,14 @@
 
 namespace Power
 {
-    Powers::Powers(RUtil::Powers_Text_ID power_id, RUtil::AtlasRegionID region_48_id, RUtil::AtlasRegionID region_128_id, PowerType power_type, bool reduce_each_turn, bool can_negative)
+    Powers::Powers(RUtil::Powers_Text_ID power_id, RUtil::AtlasRegionID region_48_id, RUtil::AtlasRegionID region_128_id, PowerType power_type, bool reduce_each_turn, bool can_negative, Character::CharacterType owner_type)
     :power_id(power_id),
     region_48_id(region_48_id),
     region_128_id(region_128_id),
     power_type(power_type),
     reduce_each_turn(reduce_each_turn),
     can_negative(can_negative),
+    owner_type(owner_type),
     tip_box(RUtil::Powers_Text_Reader::GetName(power_id)),
     amount(0),
     _skip_reduce_once(false),

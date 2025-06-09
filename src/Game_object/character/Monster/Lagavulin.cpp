@@ -2,14 +2,14 @@
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/action/Damage_action.hpp"
 #include "Game_object/action/Gain_block_action.hpp"
-#include "Game_object/action/Anim_set_action.hpp"
+// #include "Game_object/action/Anim_set_action.hpp"
 #include "Game_object/action/Apply_power_action.hpp"
 #include "RUtil/Image_book.hpp"
 #include "RUtil/Random.hpp"
 
 namespace Monster{
     Lagavulin::Lagavulin(float offset_x, float offset_y, RUtil::Random& rng)
-        :Abstraction::Monster_move_tracker<2, LagavulinAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, rng.NextInt(MIN_HP, MAX_HP+1), IMG),
+        :Abstraction::Monster_move_tracker<2, LagavulinAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, rng.NextInt(MIN_HP, MAX_HP+1), SLEEP_IMG),
         first_move(false)
         {}
     
@@ -20,7 +20,7 @@ namespace Monster{
                 break;
             case LagavulinAction::SiphonSoul:
                 //Inflicts -1  Dexterity,
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, SIPHONSOUL_STRENGTH, shared_from_this(), dungeon_shared.player, true));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, SIPHONSOUL_DEBUFF_NUM, shared_from_this(), dungeon_shared.player, true));
             default:
                 break;
         }
@@ -61,7 +61,11 @@ namespace Monster{
         }
     }
 
-    const std::shared_ptr<Draw::ReTexture> &Lagavulin::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Lagavulin/Lagavulin-awake-pretty.png");
-}
+    void Lagavulin::at_combat_start(Dungeon::Dungeon_shared &dungeon_shared){
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_block_action>(shared_from_this(), METALLICIZE_BLOCK));
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Metallicize, METALLICIZE_BLOCK, shared_from_this(), shared_from_this()));
+    }
 
-//         break;
+    const std::shared_ptr<Draw::ReTexture> &Lagavulin::AWAKE_IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Lagavulin/Lagavulin-awake-pretty.png");
+    const std::shared_ptr<Draw::ReTexture> &Lagavulin::SLEEP_IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Lagavulin/Lagavulin-zzz-pretty.png");
+}

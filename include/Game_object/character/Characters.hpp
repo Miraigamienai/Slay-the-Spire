@@ -29,7 +29,7 @@ enum class Animation:int
     FAST_SHAKE,
     SHAKE
 };
-enum class CharacterType
+enum class CharacterType:int
 {
     PLAYER,
     MONSTER

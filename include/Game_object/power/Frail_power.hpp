@@ -8,7 +8,7 @@ namespace Power{
 class Frail_power final : public Powers
 {
 public:
-    Frail_power():Powers(RUtil::Powers_Text_ID::Frail, RUtil::AtlasRegionID::_48_frail, RUtil::AtlasRegionID::_128_frail, PowerType::debuff, true, false){}
+    Frail_power(Character::CharacterType owner_type):Powers(RUtil::Powers_Text_ID::Frail, RUtil::AtlasRegionID::_48_frail, RUtil::AtlasRegionID::_128_frail, PowerType::debuff, true, false, owner_type){}
     ~Frail_power()override=default;
 
     float calculate_block_modify(float block)const override{

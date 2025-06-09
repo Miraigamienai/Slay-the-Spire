@@ -10,20 +10,21 @@
 namespace Monster{
     GremlinNob::GremlinNob(float offset_x, float offset_y, RUtil::Random& rng)
         :Abstraction::Monster_move_tracker<2, GremlinNobAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, rng.NextInt(MIN_HP, MAX_HP+1), IMG),
-        first_move(false)
-        {}
+        first_move(false){}
     
     void GremlinNob::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){
-            case GremlinNobAction::Bellow:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, BELLOWS_STRENGTH, shared_from_this(), shared_from_this(), true));
-                break;
             case GremlinNobAction::Rush:
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{RUSH_DAMAGE, shared_from_this(), AttackType::blunt_light}, dungeon_shared.player));    
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::blunt_heavy}, dungeon_shared.player));    
                 break;
             case GremlinNobAction::SkullBash:            
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{RUSH_DAMAGE, shared_from_this(), AttackType::blunt_light}, dungeon_shared.player)); 
-                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Vulnerable,SKULL_BASH_VULNERABLE, shared_from_this(), dungeon_shared.player , true));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::blunt_heavy}, dungeon_shared.player)); 
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Vulnerable, SKULL_BASH_VULNERABLE, shared_from_this(), dungeon_shared.player , true));
+                break;
+            case GremlinNobAction::Bellow:
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Anger, BELLOWS_NUMS, shared_from_this(), shared_from_this(), true));
                 break;
             default:
                 break;
@@ -31,19 +32,18 @@ namespace Monster{
     }
 
     void GremlinNob::next_move(Dungeon::Dungeon_shared &dungeon_shared){
-        auto final_next=GremlinNobAction::Bellow;
+        auto final_next=GremlinNobAction::Rush;
         if(!first_move){
+            final_next=GremlinNobAction::Bellow;
             first_move=true;
         }else{
             switch(static_cast<GremlinNobAction>(dist.NextIndex(dungeon_shared.random_package.monster_ai_rng))){
                 case GremlinNobAction::Rush:
                     if(is_last_two_move(GremlinNobAction::Rush))
-                        final_next=static_cast<GremlinNobAction>(dist.NextIndexWithOut(static_cast<int>(GremlinNobAction::Rush), dungeon_shared.random_package.monster_ai_rng));
-                    else
-                        final_next=GremlinNobAction::Rush;
+                        final_next=GremlinNobAction::SkullBash;
                     break;
                 case GremlinNobAction::SkullBash:
-                    final_next=static_cast<GremlinNobAction>(dist.NextIndexWithOut(static_cast<int>(GremlinNobAction::Bellow), dungeon_shared.random_package.monster_ai_rng));
+                    final_next=GremlinNobAction::SkullBash;
                     break;
                 default:
                     break;
@@ -51,7 +51,7 @@ namespace Monster{
         }
         switch(final_next){
             case GremlinNobAction::Bellow:
-                set_move(GremlinNobAction::Bellow, nullptr, Intent::buff, BELLOWS_STRENGTH, dungeon_shared.player->get_powers());
+                set_move(GremlinNobAction::Bellow, nullptr, Intent::buff, dungeon_shared.player->get_powers());
                 break;
             case GremlinNobAction::Rush:
                 set_move(GremlinNobAction::Rush, nullptr, Intent::attack, RUSH_DAMAGE, dungeon_shared.player->get_powers());

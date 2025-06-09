@@ -51,7 +51,7 @@ namespace Action
                 }
             }else{
                 //not
-                power=Power::Power_creator::GetPowerByID(this->power_id);
+                power=Power::Power_creator::GetPowerByID(this->power_id, target->type);
                 if(skip_reduce_once) power->skip_reduce_once();
                 target->add_power(power);
             }

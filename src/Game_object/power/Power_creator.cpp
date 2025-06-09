@@ -7,22 +7,26 @@
 #include "Game_object/power/Strength_power.hpp"
 #include "Game_object/power/Vulnerable_power.hpp"
 #include "Game_object/power/Weak_power.hpp"
+#include "Game_object/power/Anger_power.hpp"
+#include "Game_object/power/Metallicize_power.hpp"
 
 #include "Util/Logger.hpp"
 
 namespace Power
 {
-    std::shared_ptr<Power::Powers> Power_creator::GetPowerByID(RUtil::Powers_Text_ID power_id){
+    std::shared_ptr<Power::Powers> Power_creator::GetPowerByID(RUtil::Powers_Text_ID power_id, Character::CharacterType owner_type){
         switch(power_id){
-            case RUtil::Powers_Text_ID::Barricade: return std::make_shared<Barricade_power>();
-            case RUtil::Powers_Text_ID::Frail: return std::make_shared<Frail_power>();
-            case RUtil::Powers_Text_ID::Ritual: return std::make_shared<Ritual_power>();
-            case RUtil::Powers_Text_ID::Strength: return std::make_shared<Strength_power>();
-            case RUtil::Powers_Text_ID::Vulnerable: return std::make_shared<Vulnerable_power>();
-            case RUtil::Powers_Text_ID::Weakened: return std::make_shared<Weak_power>();
+            case RUtil::Powers_Text_ID::Barricade: return std::make_shared<Barricade_power>(owner_type);
+            case RUtil::Powers_Text_ID::Frail: return std::make_shared<Frail_power>(owner_type);
+            case RUtil::Powers_Text_ID::Ritual: return std::make_shared<Ritual_power>(owner_type);
+            case RUtil::Powers_Text_ID::Strength: return std::make_shared<Strength_power>(owner_type);
+            case RUtil::Powers_Text_ID::Vulnerable: return std::make_shared<Vulnerable_power>(owner_type);
+            case RUtil::Powers_Text_ID::Weakened: return std::make_shared<Weak_power>(owner_type);
+            case RUtil::Powers_Text_ID::Anger: return std::make_shared<Anger_power>(owner_type);
+            case RUtil::Powers_Text_ID::Metallicize: return std::make_shared<Metallicize_power>(owner_type);
             default:
                 LOG_ERROR("The power id:{} has not been implemented yet.", static_cast<int>(power_id));
-                return std::make_shared<Weak_power>();
+                return std::make_shared<Weak_power>(owner_type);
         }
     }
 } // namespace Power

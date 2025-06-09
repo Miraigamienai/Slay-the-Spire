@@ -43,6 +43,7 @@ public:
             target_x=HIDE_X;
         }
     }
+    bool is_disable()const noexcept{return !is_enabled;}
 private:
     float current_x,current_y,target_x;//only move x
     bool is_hidden,is_glowing;

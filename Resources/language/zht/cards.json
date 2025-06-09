@@ -246,8 +246,8 @@
   },
   "Burn": {
     "NAME": "灼傷",
-    "DESCRIPTION": " 無法打出$n在你的回合結束時，受到2點傷害",
-    "UPGRADE_DESCRIPTION": " 無法打出$n在你的回合結束時，受到4點傷害"
+    "DESCRIPTION": " #y無法打出 $n在你的回合結束時，$n受到2點傷害",
+    "UPGRADE_DESCRIPTION": " #y無法打出 $n在你的回合結束時，$n受到4點傷害"
   },
   "Burning_Pact": {
     "NAME": "燃燒契約",

@@ -164,7 +164,7 @@ namespace Monster{
                 w.AT<SlimeBoss>();
                 break;
             case GroupName::Hexaghost:
-                w.AT<Hexaghost>();
+                w.AT<Hexaghost>(dungeon_shared);
                 break;
             case GroupName::None:
                 //for test

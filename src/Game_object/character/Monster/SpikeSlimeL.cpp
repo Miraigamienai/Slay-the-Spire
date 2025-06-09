@@ -20,7 +20,8 @@ namespace Monster{
     SpikeSlimeL::SpikeSlimeL(float offset_x, float offset_y, int HP)
         :Abstraction::Monster_move_tracker<2, SpikeSlimeLAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG),
         offset_x(offset_x),
-        offset_y(offset_y){}
+        offset_y(offset_y),
+        current_max_hp(HP){}
     
     void SpikeSlimeL::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){
@@ -75,7 +76,7 @@ namespace Monster{
 
     void SpikeSlimeL::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
         Monsters::damage(damage_info, dungeon_shared);
-        if(current_HP<=MAX_HP/2 && !is_current_move(SpikeSlimeLAction::Split)){
+        if(current_HP<=current_max_hp/2 && !is_current_move(SpikeSlimeLAction::Split)){
             set_move(SpikeSlimeLAction::Split, nullptr, Intent::unknown, dungeon_shared.player->get_powers());
             //TODO: interrupted text
         }

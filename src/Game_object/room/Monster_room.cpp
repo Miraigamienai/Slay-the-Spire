@@ -39,14 +39,19 @@ Monster_room::Monster_room(Monster::GroupName group_name, Room_type type)
 void Monster_room::init_room(Dungeon::Dungeon_shared& dungeon_shared, Uint32 dungeon_fade_color){
     Monster::Monster_group_creater::CreateGroup(dungeon_shared, m_group_name);
     this->dungeon_fade_color=dungeon_fade_color;
+    for(const auto&it:dungeon_shared.room_monsters) it->at_combat_start(dungeon_shared);
     m_wait_timer=0.1F;
 }
 void Monster_room::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+    end_turn_button.render(r2);
+}
+void Monster_room::render_higher(const std::shared_ptr<Draw::Draw_2D> &r2)const{
     if(tip_character!=nullptr) tip_character->render_tip(r2);
 }
 void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
     dungeon_shared.room_monsters.update();
     dungeon_shared.player->update();
+    end_turn_button.update(dungeon_shared.card_group_handler);
     
     if(dungeon_shared.player->IsDie()){
         tip_character=nullptr;
@@ -76,11 +81,12 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.action_group_handler.update(dungeon_shared);
         dungeon_shared.card_group_handler.update(dungeon_shared);
         
-        if(dungeon_shared.overlay.end_turn_button_clicked()){
+        if(end_turn_button.is_logically_clicked()){
             //ending turn
             //TODO:end logic need to be check.
-            dungeon_shared.overlay.disable_end_turn_button();
+            end_turn_button.disable();
             dungeon_shared.card_group_handler.on_end_of_turn(dungeon_shared);
+        }else if(end_turn_button.is_disable() && dungeon_shared.action_group_handler.is_nothing_to_do()){
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Discard_all_action>());
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_capsule_action>(std::make_shared<Effect::Enemy_turn_eff>(dungeon_fade_color), 1.2F, Action::Effect_capsule_action::Layer::top));
             dungeon_shared.action_group_handler.ending_turn(dungeon_shared.room_monsters);
@@ -100,6 +106,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             ++turn_count;
             if(turn_count==1){//at start of battle
                 dungeon_shared.overlay.show_combat_panel();
+                end_turn_button.show();
                 //show hp
                 dungeon_shared.room_monsters.ShowHP();
                 dungeon_shared.player->ShowHP();
@@ -113,7 +120,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(5));
             
             //Ensure that enable action will be triggered after the card are drawn.
-            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Enable_end_button_action>());
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Enable_end_button_action>(end_turn_button));
             
         }
     }
@@ -124,6 +131,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         tip_character=nullptr;
         dungeon_shared.player->clear_power();
         dungeon_shared.overlay.hide_combat_panel();
+        end_turn_button.hide();
         // card_group_handler.on_ending_battle();
         Cursor::SetVisible(true);
     }

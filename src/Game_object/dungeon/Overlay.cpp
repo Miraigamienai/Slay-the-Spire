@@ -6,20 +6,16 @@
 namespace Dungeon{
     void Overlay::update(const Card::Card_group_handler &card_group_handler){
         energy_panel.update();
-        end_turn_button.update(card_group_handler);
         update_black_screen_a();
     }
     void Overlay::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         energy_panel.render(r2);
-        end_turn_button.render(r2);
     }
     void Overlay::hide_combat_panel(){
         energy_panel.hide();
-        end_turn_button.hide();
     }
     void Overlay::show_combat_panel(){
         energy_panel.show();
-        end_turn_button.show();
     }
     void Overlay::render_black_screen(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         r2->SetColor(RUtil::BLACK, black_screen_a);

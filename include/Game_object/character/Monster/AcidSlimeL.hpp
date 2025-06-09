@@ -22,6 +22,7 @@ public:
     void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
     const float offset_x, offset_y;
+    const int current_max_hp;
     static constexpr float WIDTH=300.0F*Setting::SCALE,
                            HEIGHT=180.0F*Setting::SCALE,
                            HB_OFFSET_X=0.0F,

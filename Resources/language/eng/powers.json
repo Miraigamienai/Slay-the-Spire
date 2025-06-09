@@ -45,8 +45,7 @@
   "Anger": {
     "NAME": "Enrage",
     "DESCRIPTIONS": [
-      "Whenever you play a #ySkill, gains #b",
-      " #yStrength."
+      "Whenever you play a #ySkill, gains !M! #yStrength."
     ]
   },
   "Angry": {
@@ -792,10 +791,8 @@
   "Metallicize": {
     "NAME": "Metallicize",
     "DESCRIPTIONS": [
-      "At the end of your turn, gain #b",
-      " #yBlock.",
-      "At the end of its turn, gains #b",
-      " #yBlock."
+      "At the end of your turn, gain !M! #yBlock."
+      "At the end of its turn, gains !M! #yBlock."
     ]
   },
   "Minion": {

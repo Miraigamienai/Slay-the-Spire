@@ -7,7 +7,7 @@ namespace Power{
 class Strength_power final : public Powers
 {
 public:
-    Strength_power():Powers(RUtil::Powers_Text_ID::Strength, RUtil::AtlasRegionID::_48_strength, RUtil::AtlasRegionID::_128_strength, PowerType::neutral, false, true){}
+    Strength_power(Character::CharacterType owner_type):Powers(RUtil::Powers_Text_ID::Strength, RUtil::AtlasRegionID::_48_strength, RUtil::AtlasRegionID::_128_strength, PowerType::neutral, false, true, owner_type){}
     ~Strength_power()override=default;
 
     float calculate_final_damage_dealt(float damage)const override{

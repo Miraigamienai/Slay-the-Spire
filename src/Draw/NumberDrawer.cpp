@@ -19,7 +19,7 @@ namespace Draw{
 
     static void NumsLoader(FontWeight fw,std::vector<std::shared_ptr<Image_Region>>& vec){
         auto &font=Fonts::GetFont(fw);
-        constexpr char data[]="01234\n56789\n/-+ ";
+        constexpr char data[]="01234\n56789\n/-+ x";
         std::shared_ptr<ReText> nums_text=std::make_shared<ReText>(font,data);
         int now_y=0,now_x=0;
         int img_w=0,img_h=0;
@@ -60,6 +60,7 @@ namespace Draw{
         if(c=='-') return GetNums(fw)[11];
         if(c=='+') return GetNums(fw)[12];
         if(c==' ') return GetNums(fw)[13];
+        if(c=='x') return GetNums(fw)[14];
         LOG_ERROR("NumberDrawer can't draw '{}'",c);
         return GetNums(fw)[0];
     }
@@ -70,6 +71,7 @@ namespace Draw{
         if(c=='-') return GetNums(fw)[11];
         if(c=='+') return GetNums(fw)[12];
         if(c==' ') return GetNums(fw)[13];
+        if(c=='x') return GetNums(fw)[14];
         LOG_ERROR("NumberDrawer can't draw '{}'",c);
         return GetNums(this->fw)[0];
     }

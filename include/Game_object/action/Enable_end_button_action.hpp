@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Game_object/action/Actions.hpp"
-#include "Game_object/dungeon/Dungeon_shared.hpp"
-#include "Game_object/dungeon/Overlay.hpp"
+#include "Game_object/button/End_turn_button.hpp"
 
 namespace Action{
 //this class only enables the end button. It does nothing else.
@@ -10,13 +9,15 @@ namespace Action{
 class Enable_end_button_action final:public Actions
 {
 public:
-    Enable_end_button_action()=default;
+    Enable_end_button_action(Button::End_turn_button &button):button(button){};
     ~Enable_end_button_action()override=default;
-    void update(Dungeon::Dungeon_shared &dungeon_shared)
-        noexcept(noexcept(dungeon_shared.overlay.enable_end_turn_button())) override
+    void update(Dungeon::Dungeon_shared &/* dungeon_shared */)
+        noexcept(noexcept(button.enable())) override
     {
         is_done=true;
-        dungeon_shared.overlay.enable_end_turn_button();
+        button.enable();
     }
+private:
+    Button::End_turn_button &button;
 };
 }

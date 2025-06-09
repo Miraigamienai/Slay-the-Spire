@@ -25,8 +25,9 @@
 
 namespace Monster
 {
-    Hexaghost::Hexaghost()
+    Hexaghost::Hexaghost(Dungeon::Dungeon_shared &dungeon_shared)
         :Abstraction::Monster_move_tracker<1, HexaghostAction>(0.0F, 0.0F, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG),
+        dungeon_shared(dungeon_shared),
         body_angle(),
         body_angle_speed(1.0F),
         body_target_angle_speed(30.0F),
@@ -164,6 +165,8 @@ namespace Monster
         body_float_speed = body_angle_speed * RUtil::Game_Input::delta_time();
         body_y_timer += body_float_speed * RUtil::Game_Input::delta_time();
         body_y = std::sin(body_y_timer)*5.0F*Setting::SCALE;
+        //orbs
+        for(auto&it:orbs)it.update(GetFixedOriginX(), GetFixedOriginY(), dungeon_shared);
         Monster::Monsters::update();
     }
 
@@ -175,19 +178,32 @@ namespace Monster
         activate_timer(static_cast<float>(index)*0.3F),
         is_activate(false),
         ignite(false),
-        particle_timer(0.0F){}
+        particle_timer(0.0F),
+        hide(true){}
     
     void Hexaghost::Orb::update(float x, float y, Dungeon::Dungeon_shared &dungeon_shared){
+        if(hide) return;
         offset_timer += (is_activate ? 4.0F : 2.0F) * RUtil::Game_Input::delta_time();
         offset = std::sin(offset_timer)*5.0F*Setting::SCALE;
-        if(ignite){
-            ignite=false;
-            dungeon_shared.gen_group.AddTop(std::make_shared<EffectGen::Ghost_ignite_gen>(x+_x, y+_y));
-        }
         particle_timer -= RUtil::Game_Input::delta_time();
-        if(particle_timer<0.0F){
-            particle_timer=0.06F;
-            dungeon_shared.effs.AddTop(std::make_shared<Effect::Ghostly_fire_eff>(x+_x+offset, y+_y+offset, !is_activate));
+        if(is_activate){
+            if(activate_timer<0.0F){
+                if(ignite){
+                    ignite=false;
+                    dungeon_shared.gen_group.AddTop(std::make_shared<EffectGen::Ghost_ignite_gen>(x+_x, y+_y));
+                }
+                if(particle_timer<0.0F){
+                    particle_timer=0.06F;
+                    dungeon_shared.effs.AddTop(std::make_shared<Effect::Ghostly_fire_eff>(x+_x+offset, y+_y+offset, false));
+                }
+            }else{
+                activate_timer -= RUtil::Game_Input::delta_time();
+            }
+        }else{
+            if(particle_timer<0.0F){
+                particle_timer=0.06F;
+                dungeon_shared.effs.AddTop(std::make_shared<Effect::Ghostly_fire_eff>(x+_x+offset, y+_y+offset, true));
+            }
         }
     }
 

@@ -17,9 +17,13 @@ namespace Draw{
 }
 namespace Character{
     class Characters;
+    enum class CharacterType:int;
 }
 namespace Dungeon{
     class Dungeon_shared;
+}
+namespace Card{
+    class Cards;
 }
 
 namespace Power
@@ -32,7 +36,7 @@ enum class PowerType{
 class Powers : public std::enable_shared_from_this<Powers>
 {
 public:
-    Powers(RUtil::Powers_Text_ID power_id, RUtil::AtlasRegionID region_48_id, RUtil::AtlasRegionID region_128_id, PowerType power_type, bool reduce_each_turn, bool can_negative=false);
+    Powers(RUtil::Powers_Text_ID power_id, RUtil::AtlasRegionID region_48_id, RUtil::AtlasRegionID region_128_id, PowerType power_type, bool reduce_each_turn, bool can_negative, Character::CharacterType owner_type);
     virtual ~Powers()=default;
     void render_img(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float color_a)const;
     void render_amount(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y, float color_a)const;
@@ -57,7 +61,7 @@ public:
     const PowerType power_type;
     const bool reduce_each_turn;
     const bool can_negative;
-
+    const Character::CharacterType owner_type;
     //virtual functions
     virtual void desc_update(){tip_box.change_body(get_amount_based_desc());}
     virtual float calculate_damage_dealt(float damage)const{return damage;}
@@ -67,6 +71,7 @@ public:
     virtual float calculate_block_modify(float block)const{return block;}
     virtual float calculate_final_block_modify(float block)const{return block;}
     virtual void at_round_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target);
+    virtual void on_use_card(Dungeon::Dungeon_shared &/* dungeon_shared */, const std::shared_ptr<Card::Cards> &/* use_card */, const std::shared_ptr<Character::Characters> &/* target */){};
 protected:
     Draw::Text_box tip_box;
     int amount;

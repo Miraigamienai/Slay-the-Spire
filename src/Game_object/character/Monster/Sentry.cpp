@@ -41,8 +41,10 @@ namespace Monster{
             switch(static_cast<SentryAction>(dist.NextIndex(dungeon_shared.random_package.monster_ai_rng))){
                 case SentryAction::Bolt:
                     final_next=SentryAction::Beam;
+                    break;
                 case SentryAction::Beam:
                     final_next=SentryAction::Bolt;
+                    break;
                 default:
                     break;
             }

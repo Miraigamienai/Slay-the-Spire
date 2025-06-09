@@ -6,9 +6,9 @@
 namespace Monster{
 enum class GremlinNobAction
 {
-    Bellow,
     Rush,
-    SkullBash
+    SkullBash,
+    Bellow
 };
 class GremlinNob final:public Abstraction::Monster_move_tracker<2, GremlinNobAction>
 {
@@ -19,17 +19,17 @@ public:
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
     bool first_move;
-    static constexpr float WIDTH=340.0F*Setting::SCALE,
-                           HEIGHT=390.0F*Setting::SCALE,
-                           HB_OFFSET_X=0.0F,
-                           HB_OFFSET_Y=-25.0F*Setting::SCALE;
+    static constexpr float WIDTH=270.0F*Setting::SCALE,
+                           HEIGHT=380.0F*Setting::SCALE,
+                           HB_OFFSET_X=-70.0F*Setting::SCALE,
+                           HB_OFFSET_Y=-10.0F*Setting::SCALE;
     static constexpr int MAX_HP=86,
                          MIN_HP=82,
                          SKULL_BASH_DAMAGE=6,
                          SKULL_BASH_VULNERABLE=2,
                          RUSH_DAMAGE=14,
-                         BELLOWS_STRENGTH=2;
+                         BELLOWS_NUMS=2;
     static const std::shared_ptr<Draw::ReTexture> &IMG;
-    static constexpr auto dist=RUtil::make_weighted_index_picker(std::array{0.0F,33.0F,67.0F});
+    static constexpr auto dist=RUtil::make_weighted_index_picker(std::array{67.0F, 33.0F});
 };
 }

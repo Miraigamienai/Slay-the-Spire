@@ -8,7 +8,7 @@ namespace Power{
 class Vulnerable_power final : public Powers
 {
 public:
-    Vulnerable_power():Powers(RUtil::Powers_Text_ID::Vulnerable, RUtil::AtlasRegionID::_48_vulnerable, RUtil::AtlasRegionID::_128_vulnerable, PowerType::debuff, true, false){}
+    Vulnerable_power(Character::CharacterType owner_type):Powers(RUtil::Powers_Text_ID::Vulnerable, RUtil::AtlasRegionID::_48_vulnerable, RUtil::AtlasRegionID::_128_vulnerable, PowerType::debuff, true, false, owner_type){}
     ~Vulnerable_power()override=default;
 
     float calculate_damage_receive(float damage)const override{

@@ -38,6 +38,7 @@ namespace Effect
 
     void Giant_fire_eff::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
+        r2->SetColor(color, color_a);
         auto &img=IMG(img_type);
         r2->draw(img, x, y, static_cast<float>(img->GetRegionWidth()), static_cast<float>(img->GetRegionHeight()), angle, static_cast<float>(img->GetRegionWidth())/2.0F, static_cast<float>(img->GetRegionHeight())/2.0F, this->scale*Setting::SCALE, this->scale*Setting::SCALE);
     }

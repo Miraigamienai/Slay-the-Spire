@@ -4,7 +4,7 @@
 #include "RUtil/Game_Input.hpp"
 
 namespace Dungeon{
-    void Overlay::update(const Card::Card_group_handler &card_group_handler){
+    void Overlay::update(){
         energy_panel.update();
         update_black_screen_a();
     }

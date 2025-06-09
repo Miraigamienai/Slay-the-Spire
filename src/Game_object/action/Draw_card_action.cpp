@@ -13,7 +13,7 @@ namespace Action
             return;
         }
         if(dungeon_shared.card_group_handler.is_someone_flying())
-            return;
+            return; 
         if(first_time){
             first_time=false;
             if(amount+dungeon_shared.card_group_handler.size<Card::GroupType::hand_cards>()>10){

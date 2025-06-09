@@ -17,7 +17,7 @@ public:
     Overlay()=default;
     ~Overlay()=default;
 
-    void update(const Card::Card_group_handler &card_group_handler);
+    void update();
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void hide_combat_panel();
     void show_combat_panel();

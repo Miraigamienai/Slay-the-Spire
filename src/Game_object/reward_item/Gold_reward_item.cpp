@@ -20,7 +20,7 @@ namespace Reward
     };
     
     void Gold_reward_item::child_render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        r2->SetColor(RUtil::WHITE);
+        r2->SetColor(RUtil::Colors::WHITE);
         r2->draw(IMG, ITEM_X-32.0F, this->y-32.0F - 2.0F*Setting::SCALE, 64.0F, 64.0F, 0.0F, 32.0F, 32.0F, Setting::SCALE, Setting::SCALE);
     }
 

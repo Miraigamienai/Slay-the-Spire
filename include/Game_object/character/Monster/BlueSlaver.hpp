@@ -17,7 +17,7 @@ public:
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
-    static constexpr float WIDTH=260.0F*Setting::SCALE,
+    static constexpr float WIDTH=300.0F*Setting::SCALE,
                            HEIGHT=230.0F*Setting::SCALE,
                            HB_OFFSET_X=0.0F,
                            HB_OFFSET_Y=0.0F;

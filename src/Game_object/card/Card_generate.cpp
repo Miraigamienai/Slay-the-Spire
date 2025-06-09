@@ -16,6 +16,11 @@
 #include "Game_object/card/red/Pommel_strike.hpp"
 #include "Game_object/card/red/Wild_strike.hpp"
 #include "Game_object/card/red/Entrench.hpp"
+// #include "Game_object/card/red/Thunderclap.hpp"
+#include "Game_object/card/red/Bloodletting.hpp"
+#include "Game_object/card/red/Hemokinesis.hpp"
+#include "Game_object/card/red/Power_through.hpp"
+#include "Game_object/card/red/Uppercut.hpp"
 #include "Game_object/card/status/Wound.hpp"
 
 
@@ -25,7 +30,8 @@ namespace Card
 {
     enum class RedCardName{
         Anger, Clash, Defend, Strike_red, Body_slam, Flex, Iron_wave, Twin_strike, Inflame, Bludgeon, Shrug_it_off, Pommel_strike, 
-        Entrench, Wild_strike, SIZE
+        Entrench, Wild_strike,
+        Thunderclap, Bloodletting, Hemokinesis, Power_through, Uppercut , SIZE
     };
 
     static inline std::shared_ptr<Card::Cards> MakeRedCardFactory(RedCardName name) {
@@ -59,6 +65,16 @@ namespace Card
                 return std::make_shared<Entrench>();
             case RedCardName::Wild_strike:
                 return std::make_shared<Wild_strike>();
+            // case RedCardName::Thunderclap:
+            //     return std::make_shared<Thunderclap>();
+            case RedCardName::Bloodletting:
+                return std::make_shared<Bloodletting>();
+            case RedCardName::Hemokinesis:
+                return std::make_shared<Hemokinesis>();
+            case RedCardName::Power_through:
+                return std::make_shared<Power_through>();
+            case RedCardName::Uppercut:
+                return std::make_shared<Uppercut>();
             default:
                 LOG_ERROR("Unknown RedCardName");
                 return std::make_shared<Strike_red>();

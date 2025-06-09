@@ -68,7 +68,7 @@ namespace Draw
                     }
                 }else if(it2.is_orb){
                     r2->SetColor(RUtil::WHITE, this->font_color_alpha);
-                    const float orb_scale=static_cast<float>(num_draw.PureHeight()) / static_cast<float>(it2.img->GetRegionHeight()) * static_cast<float>(it2.img->GetRegionWidth());
+                    const float orb_scale=static_cast<float>(num_draw.PureHeight()) / static_cast<float>(it2.img->GetRegionHeight());
                     r2->draw(it2.img, x+now_x, y+offset_y, (float)it2.img->GetRegionWidth()*orb_scale, (float)num_draw.PureHeight(), 0.0F, -now_x, -offset_y, font_scale*scale, font_scale*scale);
                     now_x+=(float)it2.img->GetRegionWidth()*orb_scale;
                 }else{
@@ -116,8 +116,8 @@ namespace Draw
                 }else if(it2.is_orb){
                     //draw orb
                     r2->SetColor(RUtil::WHITE, this->font_color_alpha);
-                    const float orb_scale=static_cast<float>(num_draw.PureHeight()) / static_cast<float>(it2.img->GetRegionHeight()) * static_cast<float>(it2.img->GetRegionWidth());
-                    r2->draw(it2.img, center_x+offset_x, center_y+offset_y, (float)it2.img->GetRegionWidth()*font_scale, (float)num_draw.PureHeight()*orb_scale*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
+                    const float orb_scale=static_cast<float>(num_draw.PureHeight()) / static_cast<float>(it2.img->GetRegionHeight());
+                    r2->draw(it2.img, center_x+offset_x, center_y+offset_y, (float)it2.img->GetRegionWidth()*orb_scale*font_scale, (float)num_draw.PureHeight()*font_scale, angle, -offset_x+center_origin_x, -offset_y+center_origin_y, scale, scale);
                     now_x+=(float)it2.img->GetRegionWidth()*orb_scale;
                 }else{
                     //normal text or colored text
@@ -225,7 +225,7 @@ namespace Draw
                 if(it2.is_num){
                     now_w += static_cast<float>(num_draw.PureWidth(GetNum(it2.c, num_info)));
                 }else if(it2.is_orb){
-                    const float orb_scale=static_cast<float>(num_draw.PureHeight()) / static_cast<float>(it2.img->GetRegionHeight()) * static_cast<float>(it2.img->GetRegionWidth());
+                    const float orb_scale=static_cast<float>(num_draw.PureHeight()) / static_cast<float>(it2.img->GetRegionHeight());
                     now_w += (float)it2.img->GetRegionWidth()*orb_scale;
                 }else{
                     now_w += (float)it2.img->GetRegionWidth();

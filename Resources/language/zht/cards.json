@@ -1256,7 +1256,7 @@
   },
   "Power_Through": {
     "NAME": "硬撐",
-    "DESCRIPTION": "增加2張 *傷口 到手牌$n獲得 !B! 點 #y格擋 "
+    "DESCRIPTION": "增加2張 #y傷口 到手牌$n獲得 !B! 點 #y格擋 "
   },
   "Pray": {
     "NAME": "祈禱",
@@ -1758,7 +1758,7 @@
   },
   "Uppercut": {
     "NAME": "上勾拳",
-    "DESCRIPTION": "造成 !D! 點傷害$n給予 !M! 層 #y虛弱$n給予 !M! 層 #y易傷 "
+    "DESCRIPTION": "造成 !D! 點傷害 $n給予 !M! 層 #y虛弱 $n給予 !M! 層 #y易傷 "
   },
   "Vault": {
     "NAME": "騰躍",

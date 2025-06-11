@@ -30,9 +30,10 @@
 
 #include "Game_object/character/Monster/Lagavulin.hpp"
 #include "Game_object/character/Monster/GremlinNob.hpp"
-
 #include "Game_object/character/Monster/Sentry.hpp"
+
 #include "Game_object/character/Monster/SlimeBoss.hpp"
 #include "Game_object/character/Monster/Hexaghost.hpp"
+#include "Game_object/character/Monster/TheGuardian.hpp"
 
 #endif

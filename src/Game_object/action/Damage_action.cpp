@@ -4,6 +4,7 @@
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/character/Characters.hpp"//target
 #include "Game_object/action/Wait_action.hpp"//wait 0.1F
+#include "Game_object/Damage_info.hpp"
 
 namespace Action{
     Damage_action::Damage_action(const Damage_info&damage_info,const std::shared_ptr<Character::Characters> &target)
@@ -15,7 +16,7 @@ namespace Action{
         //remember do thorn
         if(this->duration==ACTION_DUR_XFAST){
             if(target->IsDie()) this->is_done=true;
-            else{
+            else if(damage_info.attack_type != AttackType::NONE){
                 dungeon_shared.effs.AddTop(Effect::Effect_pool<Effect::Flash_attack_effect>::GetEffect(target->GetcX(),target->GetcY(),damage_info.attack_type));
             }
         }

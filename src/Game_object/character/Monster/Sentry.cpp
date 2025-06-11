@@ -1,32 +1,37 @@
 #include "Game_object/character/Monster/Sentry.hpp"
 #include "Game_object/dungeon/Dungeon_shared.hpp"
+#include "Game_object/card/status/Dazed.hpp"
 #include "Game_object/action/Damage_action.hpp"
-// #include "Game_object/action/Gain_block_action.hpp"
-// #include "Game_object/action/Anim_set_action.hpp"
-// #include "Game_object/action/Apply_power_action.hpp"
+#include "Game_object/action/Anim_set_action.hpp"
+#include "Game_object/action/Effect_capsule_action.hpp"
+#include "Game_object/action/Apply_power_action.hpp"
+#include "Game_object/action/Show_card_to_discard_action.hpp"
 #include "Game_object/action/Effect_gen_capsule_action.hpp"
+#include "Game_object/effect/Border_flash_eff.hpp"
 #include "Game_object/effect_gen/Shockwave_gen.hpp"
+#include "Game_object/effect/Small_laser_eff.hpp"
 #include "RUtil/Image_book.hpp"
 
 namespace Monster{
-    Sentry::Sentry(float offset_x, float offset_y, RUtil::Random& rng)
-        :Abstraction::Monster_move_tracker<2, SentryAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, rng.NextInt(MIN_HP, MAX_HP+1), IMG),
-        first_move(false)
-        {
-            counter++;
-            if(counter%3%2==0)
-                is_second=true;
-        }
+    Sentry::Sentry(float offset_x, float offset_y, RUtil::Random& rng, bool start_with_bolt)
+        :Abstraction::Monster_move_tracker<0, SentryAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, rng.NextInt(MIN_HP, MAX_HP+1), IMG),
+        is_current_bolt(start_with_bolt){}
     
     void Sentry::Action(Dungeon::Dungeon_shared &dungeon_shared){
         if(is_current_bolt){
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_gen_capsule_action>(std::make_shared<EffectGen::Shockwave_gen>(GetcX(), GetcY(), RUtil::ToRGBA(RUtil::Colors::ROYAL_BLUE)), 0.5F));
-            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Show_card_to_discard_action>(std::make_shared<Card::Status::Dazed>(), 2));
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::FAST_SHAKE, 0.6F, 0.2F));
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Show_card_to_discard_action>(std::make_shared<Card::Status::Dazed>(), BOLT_SHUFFLENUM));
         }else{
-
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_capsule_action>(std::make_shared<Effect::Border_flash_eff>(RUtil::ToRGBA(RUtil::Colors::SKY_BLUE)), 0.0F, Action::Effect_capsule_action::Layer::normal));
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_capsule_action>(std::make_shared<Effect::Small_laser_eff>(glm::vec2{dungeon_shared.player->GetcX(), dungeon_shared.player->GetcY()}, glm::vec2{GetcX(), GetcY()}), 0.3F, Action::Effect_capsule_action::Layer::normal));
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::NONE}, dungeon_shared.player));    
         }
-    
         is_current_bolt=!is_current_bolt;
+    }
+
+    void Sentry::at_combat_start(Dungeon::Dungeon_shared &dungeon_shared){
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Artifact, 1, shared_from_this(), shared_from_this()));     
     }
 
     void Sentry::next_move(Dungeon::Dungeon_shared &dungeon_shared){

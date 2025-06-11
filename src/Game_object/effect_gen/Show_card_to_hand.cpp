@@ -26,7 +26,6 @@ namespace EffectGen{
         TimeGo();
         this->card->update(dungeon_shared.top_effs);
         if(this->is_done){
-            --s_cnt;
             // dungeon_shared.card_group_handler.discard(card,true);
             // dungeon_shared.card_group_handler.shuffle(false);//visual only
             // dungeon_shared.card_group_handler.erase<Card::GroupType::force_render_cards>(card);//remove from force render

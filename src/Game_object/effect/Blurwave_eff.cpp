@@ -41,8 +41,8 @@ namespace Effect
             wait_timer-=DT;
         }else{
             speed = Math::interpolation_fade(speed_start, speed_target, 1.0F-duration/DUR);
-            x += std::cos(glm::radians(angle)) * speed;
-            y += std::sin(glm::radians(angle)) * speed;
+            x += std::cos(glm::radians(angle)) * speed * DT;
+            y += std::sin(glm::radians(angle)) * speed * DT;
             scale *= 1.0F+DT*2.0F;
             if(duration>1.5F) color_a=Math::interpolation_fade(0.0F, 0.7F, (2.0F-duration)*2.0F);
             else if(duration<0.5F) color_a=Math::interpolation_fade(0.0F, 0.7F, duration*2.0F);

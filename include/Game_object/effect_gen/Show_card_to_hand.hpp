@@ -14,7 +14,7 @@ class Show_card_to_hand final:public Effect_gen
 {
 public:
     Show_card_to_hand(const std::shared_ptr<Card::Cards> &card);
-    ~Show_card_to_hand()override=default;
+    ~Show_card_to_hand()override{--s_cnt;}
     void update(Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
     std::shared_ptr<Card::Cards> card;

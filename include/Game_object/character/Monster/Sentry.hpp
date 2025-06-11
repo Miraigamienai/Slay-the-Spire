@@ -1,7 +1,11 @@
 #pragma once
 
 #include "Game_object/abstraction/Monster_move_tracker.hpp"
-#include "RUtil/Weighted_index_picker.hpp"
+
+//fwd decl
+namespace RUtil{
+    class Random;
+}
 
 namespace Monster{
 enum class SentryAction
@@ -16,6 +20,7 @@ public:
     ~Sentry()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
+    void at_combat_start(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
     bool is_current_bolt;
     static constexpr float WIDTH=180.0F*Setting::SCALE,

@@ -4,6 +4,11 @@
 
 #include "Game_object/abstraction/Monster_move_tracker.hpp"
 
+//fwd decl
+namespace RUtil{
+    class Random;
+}
+
 namespace Monster{
 enum class LagavulinAction
 {

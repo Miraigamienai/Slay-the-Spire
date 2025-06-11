@@ -14,7 +14,7 @@ class Show_card_briefly final:public Effect_gen
 {
 public:
     Show_card_briefly(const std::shared_ptr<Card::Cards> &card);
-    ~Show_card_briefly()override=default;
+    ~Show_card_briefly()override{--s_cnt;}
     void update(Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
     std::shared_ptr<Card::Cards> card;

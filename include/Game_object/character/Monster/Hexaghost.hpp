@@ -5,11 +5,6 @@
 #include "Game_object/abstraction/Monster_move_tracker.hpp"
 
 namespace Monster{
-enum class CallType{
-    Activate,
-    ActivateOrb,
-    Deactivate
-};
 enum class HexaghostAction
 {
     Activate,
@@ -22,6 +17,11 @@ enum class HexaghostAction
 class Hexaghost final:public Abstraction::Monster_move_tracker<1, HexaghostAction>
 {
 public:
+    enum class CallType{
+        Activate,
+        ActivateOrb,
+        Deactivate
+    };
     Hexaghost(Dungeon::Dungeon_shared &dungeon_shared);
     ~Hexaghost()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;

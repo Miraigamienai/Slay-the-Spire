@@ -113,6 +113,7 @@ set(SRC_FILES
 	Game_object/effect/Auto_release_pool_manager.cpp
 	Game_object/effect/Battle_start_eff.cpp
 	Game_object/effect/block_broken_eff.cpp
+	Game_object/effect/Blurwave_eff.cpp
 	Game_object/effect/Border_flash_eff.cpp
 	Game_object/effect/Buff_particle_eff.cpp
 	Game_object/effect/Camfire_bubble_effect.cpp
@@ -121,6 +122,7 @@ set(SRC_FILES
 	Game_object/effect/Card_glow_border.cpp
 	Game_object/effect/Card_proof_particle.cpp
 	Game_object/effect/Card_trail_effect.cpp
+	Game_object/effect/Cleave_eff.cpp
 	Game_object/effect/Damage_impact_curvy_eff.cpp
 	Game_object/effect/Debuff_particle_eff.cpp
 	Game_object/effect/Effects.cpp
@@ -137,6 +139,7 @@ set(SRC_FILES
 	Game_object/effect/Ghostly_fire_eff.cpp
 	Game_object/effect/Giant_fire_eff.cpp
 	Game_object/effect/Hammer_effect.cpp
+	Game_object/effect/Intense_zoom_particle.cpp
 	Game_object/effect/Light_flare_particle_eff.cpp
 	Game_object/effect/Map_circle_effect.cpp
 	Game_object/effect/Player_turn_eff.cpp
@@ -149,6 +152,7 @@ set(SRC_FILES
 	Game_object/effect/Shine_particle.cpp
 	Game_object/effect/Slash_eff.cpp
 	Game_object/effect/Sleep_cover_eff.cpp
+	Game_object/effect/Small_laser_eff.cpp
 	Game_object/effect/Stun_star_eff.cpp
 	Game_object/effect/Unknown_particle_eff.cpp
 	Game_object/effect/Vertical_aura.cpp
@@ -308,6 +312,7 @@ set(INCLUDE_FILES
 	Game_object/card/red/Uppercut.hpp
 	Game_object/card/red/Wild_strike.hpp
 	Game_object/card/status/Burn.hpp
+	Game_object/card/status/Dazed.hpp
 	Game_object/card/status/Slimed.hpp
 	Game_object/card/status/Wound.hpp
 	Game_object/character/AllMonster.hpp
@@ -358,6 +363,7 @@ set(INCLUDE_FILES
 	Game_object/effect/Auto_release_pool_manager.hpp
 	Game_object/effect/Battle_start_eff.hpp
 	Game_object/effect/block_broken_eff.hpp
+	Game_object/effect/Blurwave_eff.hpp
 	Game_object/effect/Border_flash_eff.hpp
 	Game_object/effect/Buff_particle_eff.hpp
 	Game_object/effect/Camfire_bubble_effect.hpp
@@ -366,6 +372,7 @@ set(INCLUDE_FILES
 	Game_object/effect/Card_glow_border.hpp
 	Game_object/effect/Card_proof_particle.hpp
 	Game_object/effect/Card_trail_effect.hpp
+	Game_object/effect/Cleave_eff.hpp
 	Game_object/effect/Damage_impact_curvy_eff.hpp
 	Game_object/effect/Debuff_particle_eff.hpp
 	Game_object/effect/Effects.hpp
@@ -387,6 +394,7 @@ set(INCLUDE_FILES
 	Game_object/effect/Ghostly_fire_eff.hpp
 	Game_object/effect/Giant_fire_eff.hpp
 	Game_object/effect/Hammer_effect.hpp
+	Game_object/effect/Intense_zoom_particle.hpp
 	Game_object/effect/Light_flare_particle_eff.hpp
 	Game_object/effect/Map_circle_effect.hpp
 	Game_object/effect/Player_turn_eff.hpp
@@ -399,6 +407,7 @@ set(INCLUDE_FILES
 	Game_object/effect/Shine_particle.hpp
 	Game_object/effect/Slash_eff.hpp
 	Game_object/effect/Sleep_cover_eff.hpp
+	Game_object/effect/Small_laser_eff.hpp
 	Game_object/effect/Stun_star_eff.hpp
 	Game_object/effect/Unknown_particle_eff.hpp
 	Game_object/effect/Vertical_aura.hpp
@@ -414,10 +423,12 @@ set(INCLUDE_FILES
 	Game_object/effect_gen/Flash_intent_particle_gen.hpp
 	Game_object/effect_gen/Ghost_ignite_gen.hpp
 	Game_object/effect_gen/Inflame_eff_gen.hpp
+	Game_object/effect_gen/Intense_zoom_gen.hpp
 	Game_object/effect_gen/Power_buff_debuff_gen.hpp
 	Game_object/effect_gen/Power_remove_text_gen.hpp
 	Game_object/effect_gen/Purge_card_eff_gen.hpp
 	Game_object/effect_gen/Screen_on_fire_gen.hpp
+	Game_object/effect_gen/Shockwave_gen.hpp
 	Game_object/effect_gen/Show_card_briefly.hpp
 	Game_object/effect_gen/Show_card_to_discard.hpp
 	Game_object/effect_gen/Show_card_to_draw_pile.hpp
@@ -436,14 +447,17 @@ set(INCLUDE_FILES
 	Game_object/panel/Energy_panel.hpp
 	Game_object/panel/Panels.hpp
 	Game_object/power/Anger_power.hpp
+	Game_object/power/Artifact_power.hpp
 	Game_object/power/Barricade_power.hpp
 	Game_object/power/Dexterity_power.hpp
 	Game_object/power/Frail_power.hpp
 	Game_object/power/Metallicize_power.hpp
+	Game_object/power/Mode_shift_power.hpp
 	Game_object/power/Powers.hpp
 	Game_object/power/Power_creator.hpp
 	Game_object/power/Power_group.hpp
 	Game_object/power/Ritual_power.hpp
+	Game_object/power/Sharp_hide_power.hpp
 	Game_object/power/Strength_power.hpp
 	Game_object/power/Vulnerable_power.hpp
 	Game_object/power/Weak_power.hpp

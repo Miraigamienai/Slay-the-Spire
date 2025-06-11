@@ -59,9 +59,8 @@
   "Artifact": {
     "NAME": "Artifact",
     "DESCRIPTIONS": [
-      "Negates #b",
-      " debuff.",
-      " debuffs."
+      "Negates !M! debuff.",
+      "Negates !M! debuffs."
     ]
   },
   "Attack_Burn": {
@@ -803,8 +802,7 @@
   "Mode_Shift": {
     "NAME": "Mode Shift",
     "DESCRIPTIONS": [
-      "After receiving #b",
-      " damage, changes to a defensive mode."
+      "After receiving !M! damage, changes to a defensive mode."
     ]
   },
   "Next_Turn_Block": {
@@ -1071,8 +1069,7 @@
   "Sharp_Hide": {
     "NAME": "Sharp Hide",
     "DESCRIPTIONS": [
-      "Whenever you play an #yAttack, take #b",
-      " damage."
+      "Whenever you play an #yAttack, take !M! damage."
     ]
   },
   "Shifting": {

@@ -25,7 +25,6 @@ namespace EffectGen
         this->card->update(dungeon_shared.top_effs);
         TimeGo();
         if(this->is_done){
-            --s_cnt;
             this->card->SetColorAlpha(1.0F,true);
             dungeon_shared.card_group_handler.erase<Card::GroupType::force_render_cards>(card);//remove from force render
         }

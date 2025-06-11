@@ -53,11 +53,13 @@ namespace Character{
     
 
     void Player::ReduceEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared){
+        if(value<0) return;
         dungeon_shared.overlay.on_use_energy();
         current_energy-=value;
     }
     
     void Player::AddEnergy(int value, Dungeon::Dungeon_shared &dungeon_shared){
+        if(value<0) return;
         dungeon_shared.overlay.on_add_energy(dungeon_shared.effs);
         current_energy+=value;
     }

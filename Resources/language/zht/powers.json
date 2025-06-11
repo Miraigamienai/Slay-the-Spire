@@ -59,9 +59,7 @@
   "Artifact": {
     "NAME": "人工製品",
     "DESCRIPTIONS": [
-      "免疫 #b",
-      " 次負面效果",
-      " 次負面效果"
+      "免疫 !M! 次負面效果"
     ]
   },
   "Attack_Burn": {
@@ -802,8 +800,7 @@
   "Mode_Shift": {
     "NAME": "形態轉換",
     "DESCRIPTIONS": [
-      "受到 #b",
-      " 點傷害後，會變成防禦形態"
+      "受到 !M! 點傷害後，會$n變成防禦形態"
     ]
   },
   "Next_Turn_Block": {
@@ -1070,8 +1067,7 @@
   "Sharp_Hide": {
     "NAME": "鋒利外殼",
     "DESCRIPTIONS": [
-      "每打出1張 #y攻擊牌 ，受到 #b",
-      " 點傷害"
+      "每打出1張 #y攻擊牌 $n，受到 !M! 點傷害"
     ]
   },
   "Shifting": {

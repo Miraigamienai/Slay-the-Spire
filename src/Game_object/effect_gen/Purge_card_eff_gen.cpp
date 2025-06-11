@@ -48,7 +48,6 @@ namespace EffectGen{
         this->card->update(dungeon_shared.top_effs);
         TimeGo();
         if(this->is_done){
-            --s_cnt;
             this->card->SetColorAlpha(1.0F,true);
         }
     }

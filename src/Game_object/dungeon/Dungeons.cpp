@@ -119,9 +119,10 @@ namespace Dungeon{
             dungeon_shared.gen_group.clear();
             dungeon_shared.action_group_handler.clear();
             dungeon_shared.card_group_handler.clear<Card::GroupType::master_deck>();
+            dungeon_shared.card_group_handler.clear<Card::GroupType::force_render_cards>();
+            dungeon_shared.card_group_handler.clear<Card::GroupType::force_update_cards>();
             dungeon_shared.overlay.hide_combat_panel();
             dungeon_shared.manager.reset();//reset manager
-            // manager
             dungeon_shared.room_monsters.clear();
             return;
         }

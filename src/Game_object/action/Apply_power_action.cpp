@@ -52,6 +52,15 @@ namespace Action
             }else{
                 //not
                 power=Power::Power_creator::GetPowerByID(this->power_id, target->type);
+            }
+            //check if it is cancelled
+            for(const auto&it:powers){
+                if(it->on_power_applied(dungeon_shared, power, target)){
+                    is_done=true;
+                    return;
+                }
+            }
+            if(!already_have){
                 if(skip_reduce_once) power->skip_reduce_once();
                 target->add_power(power);
             }

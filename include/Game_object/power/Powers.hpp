@@ -72,6 +72,8 @@ public:
     virtual float calculate_final_block_modify(float block)const{return block;}
     virtual void at_round_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target);
     virtual void on_use_card(Dungeon::Dungeon_shared &/* dungeon_shared */, const std::shared_ptr<Card::Cards> &/* use_card */, const std::shared_ptr<Character::Characters> &/* target */){};
+    //return true if the applied_power has been cancelled. 
+    virtual bool on_power_applied(Dungeon::Dungeon_shared &/* dungeon_shared */, const std::shared_ptr<Powers> &/* applied_power */, const std::shared_ptr<Character::Characters> &/* target */){return false;}
 protected:
     Draw::Text_box tip_box;
     int amount;

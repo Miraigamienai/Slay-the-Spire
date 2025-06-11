@@ -151,13 +151,13 @@ namespace Monster{
                 w.AT<GremlinNob>(0.0F, 0.0F);
                 break;
             case GroupName::Lagavulin:
-                // w.AT<Lagavulin>(0.0F, 0.0F);
+                w.AT<Lagavulin>(dungeon_shared.random_package.monster_status_rng);
                 break;
             case GroupName::_3_Sentries:
                 {
-                    static constexpr float pos[3][2]={{-300.0F, 30.0F}, {-100.0F, 10.0F}, {100.0F, 30.0F}};
+                    static constexpr float pos[3][2]={{-330.0F, 25.0F}, {-85.0F, 10.0F}, {140.0F, 30.0F}};
                     for(int i=0;i<3;i++)
-                        w.AT<Sentry>(pos[i][0], pos[i][1]);
+                        w.AT<Sentry>(pos[i][0], pos[i][1], dungeon_shared.random_package.monster_status_rng, !static_cast<bool>(i&1));
                 }
                 break;
             case GroupName::Slime_Boss:
@@ -166,9 +166,11 @@ namespace Monster{
             case GroupName::Hexaghost:
                 w.AT<Hexaghost>(dungeon_shared);
                 break;
+            case GroupName::The_Guardian:
+                w.AT<TheGuardian>();
+                break;
             case GroupName::None:
-                //for test
-                w.AT<FatGremlin>(0.0F, 0.0F);
+                LOG_DEBUG("Creating NONE monster group");
                 break;
             default:
                 LOG_ERROR("The Group:{} is has not be set yet",static_cast<int>(group_name));

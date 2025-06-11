@@ -176,11 +176,21 @@ protected:
         if(health_target_width > health_width) health_width=health_target_width;
     }
     virtual void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const{powers.render_tip(r2, x, y);}
+    void resize_hb(float hb_offset_x, float hb_offset_y, float width, float height){
+        boss_hitbox.resize(width, height);
+        this->hb_offset_x=hb_offset_x;
+        this->hb_offset_y=hb_offset_y;
+        update_hb_pos();
+    }
+    virtual void update_hb_pos()noexcept(noexcept(HP_hb.move(0.0F, 0.0F)) && noexcept(HP_hb.CenterX()) && noexcept(HP_hb.CenterY()) && noexcept(HP_hb.Height())){
+        boss_hitbox.move(orgX + animX + hb_offset_x, orgY + hb_offset_y);
+        HP_hb.move(boss_hitbox.CenterX(), boss_hitbox.CenterY()-boss_hitbox.Height()/2.0F-HP_hb.Height()/2.0F);
+    }
 private:
     //members
     int max_HP;
     int current_Block;
-    const float hb_offset_x, hb_offset_y;
+    float hb_offset_x, hb_offset_y;
     RUtil::Hitbox boss_hitbox;
     RUtil::Hitbox HP_hb;
     float animX, animY;
@@ -234,10 +244,6 @@ private:
             animX-=SHAKE_SPEED*RUtil::Game_Input::delta_time();
             if(animX < -SHAKE_THRESHOLD) shake_toggle=true;
         }
-    }
-    void update_hb_pos()noexcept(noexcept(HP_hb.move(0.0F, 0.0F)) && noexcept(HP_hb.CenterX()) && noexcept(HP_hb.CenterY()) && noexcept(HP_hb.Height())){
-        boss_hitbox.move(orgX + animX + hb_offset_x, orgY + hb_offset_y);
-        HP_hb.move(boss_hitbox.CenterX(), boss_hitbox.CenterY()-boss_hitbox.Height()/2.0F-HP_hb.Height()/2.0F);
     }
     //static members
     static const Draw::NumberDrawer HP_num_drawer, block_num_drawer;

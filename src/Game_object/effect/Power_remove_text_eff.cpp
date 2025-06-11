@@ -19,7 +19,7 @@ namespace Effect{
         r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
         r2->SetColor(RUtil::WHITE, color_a);
         auto&img=RUtil::All_Image::GetAtlasRegion(power_128_id);
-        r2->draw(img, this->x - static_cast<float>(img->GetRegionWidth())/2.0F - 64.0F*Setting::SCALE, this->y + this->offset_y, static_cast<float>(img->GetRegionWidth()), static_cast<float>(img->GetRegionHeight()), 0.0F, static_cast<float>(img->GetRegionWidth())/2.0F, static_cast<float>(img->GetRegionHeight())/2.0F, this->scale, this->scale);
+        r2->draw(img, this->x - static_cast<float>(img->GetRegionWidth())/2.0F - 64.0F*Setting::SCALE, this->y + this->offset_y - static_cast<float>(img->GetRegionHeight())/2.0F - 40.0F*Setting::SCALE, static_cast<float>(img->GetRegionWidth()), static_cast<float>(img->GetRegionHeight()), 0.0F, static_cast<float>(img->GetRegionWidth())/2.0F, static_cast<float>(img->GetRegionHeight())/2.0F, this->scale, this->scale);
     }
     
     void Power_remove_text_eff::update(){

@@ -46,6 +46,9 @@ namespace Action
                 case Character::Animation::SHAKE:
                     who->use_animation<Character::Animation::SHAKE>(anim_dur);
                     break;
+                case Character::Animation::FAST_SHAKE:
+                    who->use_animation<Character::Animation::FAST_SHAKE>(anim_dur);
+                    break;
                 default:
                     LOG_ERROR("This anim:'{}' doesn't have setter action",static_cast<int>(anim));
                     break;

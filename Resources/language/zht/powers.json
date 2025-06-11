@@ -59,9 +59,7 @@
   "Artifact": {
     "NAME": "人工製品",
     "DESCRIPTIONS": [
-      "免疫 #b",
-      " 次負面效果",
-      " 次負面效果"
+      "免疫 !M! 次負面效果"
     ]
   },
   "Attack_Burn": {
@@ -322,9 +320,8 @@
   "Dexterity": {
     "NAME": "敏捷",
     "DESCRIPTIONS": [
-      "從卡牌獲得的 #y格擋 增加 #b",
-      "從卡牌獲得的 #y格擋 減少 #b",
-      ""
+      "從卡牌獲得的 #y格擋 增加 !M!",
+      "從卡牌獲得的 #y格擋 減少 !M!"
     ]
   },
   "DisciplinePower": {
@@ -568,7 +565,7 @@
   "Frail": {
     "NAME": "脆弱",
     "DESCRIPTIONS": [
-      "在 !M! 個回合內，從卡牌中$n獲得的 #y格擋 減少 #b25% "
+      "在 !M! 個回合內，從卡牌中獲得的 #y格擋 減少 #b25% "
     ]
   },
   "FreeAttackPower": {
@@ -803,8 +800,7 @@
   "Mode_Shift": {
     "NAME": "形態轉換",
     "DESCRIPTIONS": [
-      "受到 #b",
-      " 點傷害後，會變成防禦形態"
+      "受到 !M! 點傷害後，會$n變成防禦形態"
     ]
   },
   "Next_Turn_Block": {
@@ -1031,8 +1027,8 @@
   "Ritual": {
     "NAME": "儀式",
     "DESCRIPTIONS": [
-      "在其回合結束時，$n獲得 !D! 點 #y力量 ",
-      "在你的回合結束時，$n獲得 !D! 點 #y力量 "
+      "在其回合結束時，獲得 !D! 點 #y力量 ",
+      "在你的回合結束時，獲得 !D! 點 #y力量 "
     ]
   },
   "Rupture": {
@@ -1071,8 +1067,7 @@
   "Sharp_Hide": {
     "NAME": "鋒利外殼",
     "DESCRIPTIONS": [
-      "每打出1張 #y攻擊牌 ，受到 #b",
-      " 點傷害"
+      "每打出1張 #y攻擊牌 $n，受到 !M! 點傷害"
     ]
   },
   "Shifting": {
@@ -1258,7 +1253,7 @@
   "Vulnerable": {
     "NAME": "易傷",
     "DESCRIPTIONS": [
-      "從 #y攻擊 受到的傷害$n增加 !D!#b% $n持續時間 !M! 回合"
+      "從 #y攻擊 受到的傷害增加 !D!#b% 。$n持續時間 !M! 回合"
     ]
   },
   "WaveOfTheHandPower": {
@@ -1278,7 +1273,7 @@
   "Weakened": {
     "NAME": "虛弱",
     "DESCRIPTIONS": [
-      "#y攻擊 造成的傷害減少 !D!#b% $n持續時間 !M! 回合"
+      "#y攻擊 造成的傷害減少 !D!#b% 。$n持續時間 !M! 回合"
     ]
   },
   "WireheadingPower": {

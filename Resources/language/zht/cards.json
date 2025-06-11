@@ -469,7 +469,7 @@
   },
   "Dazed": {
     "NAME": "暈眩",
-    "DESCRIPTION": " 無法打出$n虛無 "
+    "DESCRIPTION": " #y無法打出 $n#y虛無 "
   },
   "Deadly_Poison": {
     "NAME": "致命毒藥",

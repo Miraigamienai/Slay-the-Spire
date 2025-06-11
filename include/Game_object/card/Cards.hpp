@@ -96,7 +96,7 @@ public:
     
     virtual void Use(Dungeon::Dungeon_shared &dungeon_shared,const std::shared_ptr<Monster::Monsters> &target_monster)=0;
     virtual std::shared_ptr<Cards> Clone()const=0;
-    virtual void OnEndOfTurn(Dungeon::Dungeon_shared &/* dungeon_shared */){}
+    virtual void OnEndOfTurn(Dungeon::Dungeon_shared &dungeon_shared);
 
     //inline function
     
@@ -119,7 +119,7 @@ public:
     void SuperFlash()noexcept{m_card_flash.change_color(GLOWCOLOR,true);}
     //Simply return the current status, dosen't do any actual checking.
     bool IsUpgraded()const noexcept{return upgraded;}
-    bool IsExhaust()const noexcept{return exhaust;}
+    bool IsExhaust()const noexcept{return exhaust || ethereal;}
     bool CanUse()const noexcept{return can_use;}
     int GetCost()const noexcept{return cost;}
     float GetX()const noexcept{return current_x;}
@@ -192,6 +192,7 @@ protected:
     }
     bool upgraded=false;
     bool exhaust=false;
+    bool ethereal=false;
     int base_damage, base_block, base_magic_num, base_cost;
     int damage,      block,      magic_num,      cost;
 private:

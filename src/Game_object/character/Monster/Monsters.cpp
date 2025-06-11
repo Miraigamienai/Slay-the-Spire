@@ -23,8 +23,7 @@ namespace Monster
 {
     static SETTING_CONSTEXPR float ORIGIN_X = Setting::WINDOW_WIDTH*0.75F,
                                    FLOOR_Y = Setting::WINDOW_HEIGHT*0.5F - 200.0F*Setting::SCALE;
-    static SETTING_CONSTEXPR float INTENT_HB_W=64.0F*Setting::SCALE;
-
+    
     template <int N>
     static inline auto &ATK_TIP_IMG(){
         static auto&IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/intent/tip/" + std::to_string(N) + ".png");
@@ -150,7 +149,7 @@ namespace Monster
         intent_angle(0.0F),
         intent_particle_timer(0.0F)
     {
-        intent_hb.move(GetcX(), GetcY() + GetHeight()/2.0F + INTENT_HB_W/2.0F);
+        update_hb_pos();
     }
     
 

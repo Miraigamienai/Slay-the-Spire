@@ -383,6 +383,14 @@ namespace Card{
         if(this->damage < 0) this->damage = 0;
     }
 
+    void Cards::OnEndOfTurn(Dungeon::Dungeon_shared &dungeon_shared){
+        if(ethereal){
+            SetCanHoverInHand(false);
+            Unhover();
+            dungeon_shared.action_group_handler.AddCardQueue(Card_item{shared_from_this(), nullptr});
+        }
+    }
+
     void Cards::SetHoverTimer(const float value){m_hover_timer=value;}
     void Cards::MoveTargetY(const float value){target_y+=value;}
     void Cards::MoveTargetX(const float value){target_x+=value;}

@@ -14,7 +14,7 @@ namespace Effect{
         text->SetFontAlpha(this->color_a);
         text->SetFontColor(this->color);
         if(with_number){
-            std::string msg="+" + std::to_string(number) + " ";
+            std::string msg=(number >= 0 ? ("+" + std::to_string(number) + " ") : (std::to_string(number) + " "));
             //w=4 mid=2
             //w=1,3 mid=0.5,2.5 = mid-3/2,mid+1/2
             r2->SetColor(this->color, this->color_a);

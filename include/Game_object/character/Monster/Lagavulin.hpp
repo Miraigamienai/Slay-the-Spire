@@ -1,26 +1,36 @@
 #pragma once
 
+#include <array>
+
 #include "Game_object/abstraction/Monster_move_tracker.hpp"
-#include "RUtil/Weighted_index_picker.hpp"
+
+//fwd decl
+namespace RUtil{
+    class Random;
+}
 
 namespace Monster{
 enum class LagavulinAction
 {
     Attack,
     SiphonSoul,
-    METALLICIZE
+    Sleep,
+    Stun
 };
-class Lagavulin final:public Abstraction::Monster_move_tracker<2, LagavulinAction>
+class Lagavulin final:public Abstraction::Monster_move_tracker<0, LagavulinAction>
 {
 public:
-    Lagavulin(float offset_x, float offset_y, RUtil::Random& rng);
+    Lagavulin(RUtil::Random& rng);
     ~Lagavulin()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
     void at_combat_start(Dungeon::Dungeon_shared &dungeon_shared) override;
+    void Call(Dungeon::Dungeon_shared &dungeon_shared);
+    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
 private:
-    bool first_move;
+    int sleep_cnt;
     bool is_awake;
+    int move_cnt;
     static constexpr float WIDTH=320.0F*Setting::SCALE,
                            HEIGHT=220.0F*Setting::SCALE,
                            HB_OFFSET_X=0.0F,
@@ -30,7 +40,7 @@ private:
                          ATTACK_DAMAGE=18,
                          SIPHONSOUL_DEBUFF_NUM=-1,
                          METALLICIZE_BLOCK=8;
+    static constexpr auto PATTERN=std::array{LagavulinAction::Attack, LagavulinAction::Attack, LagavulinAction::SiphonSoul};
     static const std::shared_ptr<Draw::ReTexture> &AWAKE_IMG, &SLEEP_IMG;
-    static constexpr auto dist=RUtil::make_weighted_index_picker(std::array{0.0F,33.0F,67.0F});
 };
 }

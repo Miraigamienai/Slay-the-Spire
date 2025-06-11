@@ -8,6 +8,8 @@
 #include "Draw/Draw_2D.hpp"//for rendering
 #include "WindowSize.hpp"//Setting::SCALE
 
+#include "Util/Logger.hpp"
+
 namespace Effect{
     static inline auto& loadimg(const AttackType type){
         switch(type){
@@ -25,6 +27,7 @@ namespace Effect{
     }
 
     void Flash_attack_effect::Initial(const float x,const float y,const AttackType type){
+        if(type==AttackType::NONE) LOG_ERROR("Try to draw NONE AttackType");
         auto&img=loadimg(type);
         this->x = x - (float)img->GetRegionWidth() / 2.0F;
         this->y = y - (float)img->GetRegionHeight() / 2.0F;

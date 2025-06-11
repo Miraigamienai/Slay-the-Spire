@@ -11,8 +11,9 @@ namespace Effect
         return RUtil::All_Image::GetAtlasRegion(RUtil::AtlasRegionID::_borderGlow2);
     }
 
-    Border_flash_eff::Border_flash_eff(Uint32 color, length len)
-        :start_duration(len==length::Long ? DUR*2.0F : DUR)
+    Border_flash_eff::Border_flash_eff(Uint32 color, length len, bool addtive)
+        :addtive(addtive),
+        start_duration(len==length::Long ? DUR*2.0F : DUR)
     {
         duration= start_duration;
         color_a=0.0F;
@@ -20,7 +21,8 @@ namespace Effect
     }
 
     void Border_flash_eff::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
+        if(addtive) r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
+        else r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         r2->SetColor(color, color_a);
         r2->draw(IMG(), 0.0F, 0.0F, static_cast<float>(Setting::WINDOW_WIDTH), static_cast<float>(Setting::WINDOW_HEIGHT));
     }

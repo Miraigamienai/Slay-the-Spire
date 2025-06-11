@@ -36,7 +36,7 @@ namespace Effect
     }
 
     void Sleep_cover_eff::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
-        r2->SetBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+        r2->SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         r2->SetColor(this->color,this->color_a);
         auto &img=GetIMG(img_type);
         r2->draw(img, this->x, this->y, static_cast<float>(img->GetRegionWidth()), static_cast<float>(img->GetRegionHeight()), this->angel, static_cast<float>(img->GetRegionWidth())/2.0F, static_cast<float>(img->GetRegionHeight())/2.0F, this->scale, this->scale, this->flip_x, this->flip_y);

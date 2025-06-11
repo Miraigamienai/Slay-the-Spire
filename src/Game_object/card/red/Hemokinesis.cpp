@@ -16,12 +16,9 @@ namespace Red{
                     target_monster
                 )
             );
-            dungeon_shared.action_group_handler.AddActionBot(
-                std::make_shared<Action::Damage_action>
-                (
-                    Damage_info{this->magic_num, dungeon_shared.player, AttackType::slash_diagonal},
-                    dungeon_shared.player->shared_from_this()
-                )
+            dungeon_shared.player->damage(
+                Damage_info{this->magic_num, dungeon_shared.player, AttackType::slash_diagonal},
+                dungeon_shared,true
             );
     }
 }

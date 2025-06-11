@@ -6,18 +6,18 @@
 
 namespace Card{
 namespace Red{
-class Flex final:public Abstraction::CardPrototype<Flex>
+class Bash final:public Abstraction::CardPrototype<Bash>
 {
 public:
-    Flex():Abstraction::CardPrototype<Flex>(RUtil::AtlasRegionID::_red_skill_flex,RUtil::Cards_Text_ID::Flex,Rarity::basic,Type::skill,Color::red,Target::self,0,0,0,2){}
-
-    ~Flex()override=default;
+    Bash():Abstraction::CardPrototype<Bash>(RUtil::AtlasRegionID::_red_attack_bash,RUtil::Cards_Text_ID::Bash,Rarity::basic,Type::attack,Color::red,Target::enemy,2,8,0,2){
+        this->exhaust=true;
+    }
+    ~Bash()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade(bool for_preview)override{
-        SetMagicNum(4, for_preview);
+        SetDamage(10, for_preview);
+        SetMagicNum(3, for_preview);
     }
-private:
-
 };   
 }
 } // namespace Card

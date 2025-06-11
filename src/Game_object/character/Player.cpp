@@ -21,23 +21,23 @@ namespace Character{
             render_HP_and_power(r2);
         }
     }
-
-    void Player::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
+    void Player::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared,bool Deduct_block){
         if(IsDie()) return;
 
         int dmg = damage_info.dmg;
-        const bool had_block = GetCurrentBlock() > 0;
-        if(had_block){
-            if(damage_info.dmg > GetCurrentBlock()){
-                const auto temp=GetCurrentBlock();
-                ReduceBlock(temp, dungeon_shared);
-                dmg -= temp;
-            }else{
-                ReduceBlock(damage_info.dmg, dungeon_shared);
-                dmg = 0;
+        if(Deduct_block){
+            const bool had_block = GetCurrentBlock() > 0;
+            if(had_block){
+                if(damage_info.dmg > GetCurrentBlock()){
+                    const auto temp=GetCurrentBlock();
+                    ReduceBlock(temp, dungeon_shared);
+                    dmg -= temp;
+                }else{
+                    ReduceBlock(damage_info.dmg, dungeon_shared);
+                    dmg = 0;
+                }
             }
         }
-
         //TODO: effs
         if(dmg>0){
             if(damage_info.src.get()!=this) use_animation<Character::Animation::STAGGER>();

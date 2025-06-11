@@ -8,15 +8,10 @@
 namespace Card{
 namespace Red{
     void Bloodletting::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster){
-           //damage the monster
-            dungeon_shared.action_group_handler.AddActionBot(
-                std::make_shared<Action::Damage_action>
-                (
-                    Damage_info{this->damage, dungeon_shared.player, AttackType::slash_diagonal},
-                    dungeon_shared.player->shared_from_this(
-                    )//pass the player to the damage action
-                )
-            );
+        
+            dungeon_shared.player->damage(
+                Damage_info{this->damage, dungeon_shared.player, AttackType::slash_diagonal},
+                dungeon_shared, true);
             dungeon_shared.overlay.on_add_energy(dungeon_shared.effs);
             dungeon_shared.player->AddEnergy(this->magic_num, dungeon_shared);
     }

@@ -19,8 +19,7 @@ public:
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
     bool first_move;
-    static constexpr float WIDTH=34
-    0.0F*Setting::SCALE,
+    static constexpr float WIDTH=340.0F*Setting::SCALE,
                            HEIGHT=380.0F*Setting::SCALE,
                            HB_OFFSET_X=-70.0F*Setting::SCALE,
                            HB_OFFSET_Y=-10.0F*Setting::SCALE;

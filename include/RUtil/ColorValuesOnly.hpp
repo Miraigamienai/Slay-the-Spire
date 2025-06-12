@@ -160,5 +160,6 @@ constexpr Uint32 PURPLE_COLOR = -293409025;
 constexpr Uint32 WHITE=-1;
 constexpr Uint32 BLACK=0;
 constexpr Uint32 SCARLET=0xff341cff;
+constexpr Uint32 DISCARD_COLOR=0x8a769bff;
 constexpr Uint32 CREAM_COLOR=ToRGBA(Colors::LIGHT_YELLOW);
 }

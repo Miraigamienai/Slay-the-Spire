@@ -52,7 +52,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
     dungeon_shared.room_monsters.update();
     dungeon_shared.player->update();
     end_turn_button.update(dungeon_shared.card_group_handler);
-    
+
     if(dungeon_shared.player->IsDie()){
         tip_character=nullptr;
         return;
@@ -81,7 +81,16 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.action_group_handler.update(dungeon_shared);
         dungeon_shared.card_group_handler.update(dungeon_shared);
         
-        if(end_turn_button.is_logically_clicked()){
+        if(dungeon_shared.discard_panel.is_logically_clicked() && !dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::discard_pile)){
+            dungeon_shared.discard_panel.SetClickTimer();
+            dungeon_shared.manager.open<Abstraction::ScreenType::discard_pile>(dungeon_shared);
+        }
+        if(dungeon_shared.draw_panel.is_logically_clicked() && !dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::draw_pile)){
+            dungeon_shared.draw_panel.SetClickTimer();
+            dungeon_shared.manager.open<Abstraction::ScreenType::draw_pile>(dungeon_shared);
+        }
+
+        if(end_turn_button.is_logically_clicked() && dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::NONE)){
             //ending turn
             //TODO:end logic need to be check.
             end_turn_button.disable();
@@ -105,7 +114,9 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             //update turn cnt
             ++turn_count;
             if(turn_count==1){//at start of battle
-                dungeon_shared.overlay.show_combat_panel();
+                dungeon_shared.energy_panel.show();
+                dungeon_shared.discard_panel.show();
+                dungeon_shared.draw_panel.show();
                 end_turn_button.show();
                 //show hp
                 dungeon_shared.room_monsters.ShowHP();
@@ -130,7 +141,9 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         ending_battle=true;
         tip_character=nullptr;
         dungeon_shared.player->clear_power();
-        dungeon_shared.overlay.hide_combat_panel();
+        dungeon_shared.energy_panel.hide();
+        dungeon_shared.discard_panel.hide();
+        dungeon_shared.draw_panel.hide();
         end_turn_button.hide();
         // card_group_handler.on_ending_battle();
         Cursor::SetVisible(true);

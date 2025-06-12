@@ -20,8 +20,8 @@ namespace Dungeon{
     constexpr float CARD_PAD_Y=PAD+Card::Cards::IMG_HEIGHT*0.75F;
     constexpr float DEFAULT_SCROLL_BOUND=Setting::SCALE*50.0F;
  
-    Grid_card_screen::Grid_card_screen()
-        :Abstraction::Is_screen(Abstraction::ScreenType::grid_cards),
+    Grid_card_screen::Grid_card_screen(Abstraction::ScreenType screen_type)
+        :Abstraction::Is_screen(screen_type),
         hovered_card(nullptr),
         offset_y(0.0F),
         target_offset_y(0.0F),
@@ -33,7 +33,7 @@ namespace Dungeon{
         closing(false)
     {
         // 設定取消按鈕的文字
-        auto cancel_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::GridCardSelectScreen)[1];
+        auto &cancel_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::GridCardSelectScreen)[1];
         cancel.set_text(cancel_text);
     }
 
@@ -54,15 +54,16 @@ namespace Dungeon{
             //cards update first
             update_cards(dungeon_shared);
             //cancel update
-            this->cancel.update();
-            if(out_is_cancelled!=nullptr&&on_top){
-                if(this->cancel.is_logically_clicked()){
+            cancel.update();
+            if(on_top && cancel.is_logically_clicked()){
+                if(out_is_cancelled!=nullptr){
                     *out_is_cancelled=true;
-                    closing=true;
-                    cancel.hide();
                     dungeon_shared.manager.back_to_last_screen();
-                    return;
+                }else{
+                    dungeon_shared.manager.open<Abstraction::ScreenType::NONE>();
                 }
+                close();
+                return;
             }
             //scroll
             scroll.update();
@@ -71,9 +72,7 @@ namespace Dungeon{
                 hovered_card->Hover();
                 //check if clicked
                 if(hovered_card->HitboxClicked()){
-                    if(screen_action==nullptr){
-                        LOG_ERROR("screen_action is nullptr in Grid_card_screen.cpp");
-                    }else{
+                    if(screen_action!=nullptr){
                         is_confirming=true;
                         screen_action->SetCard(this->hovered_card);
                         this->cancel.hide(screen_action->have_cancel_button);
@@ -106,12 +105,15 @@ namespace Dungeon{
         if(hovered_card!=nullptr){
             //for ensure the hovered card is on top.
             for(const auto&it:display_group) 
-                if(it!=hovered_card)
+                if(it!=hovered_card && !it->is_fly())
                     it->render(r2);
-            hovered_card->render_hovered_shadow(r2);
-            hovered_card->render(r2);
+            if(!hovered_card->is_fly()){
+                hovered_card->render_hovered_shadow(r2);
+                hovered_card->render(r2);
+            }
         }else{
-            display_group.render(r2);
+            for(const auto&it:display_group) 
+                if(!it->is_fly()) it->render(r2);
         }
         this->cancel.render(r2);
         if(is_confirming){
@@ -138,11 +140,15 @@ namespace Dungeon{
         int now_y=0;
         int now_x=0;
         for(const auto&it:display_group){
-            it->SetX(DRAW_START_X+ static_cast<float>(now_x)*CARD_PAD_X);
-            it->SetY(draw_start_y+ offset_y - static_cast<float>(now_y)*CARD_PAD_Y);
-            it->update(dungeon_shared.top_effs);
-            if(it->HitboxHovered()) hovered_card=it;
-            else it->Unhover();
+            if(!it->is_fly()){
+                it->SetAngle(0.0F, true);
+                it->SetDrawScale(0.75F, true);
+                it->SetX(DRAW_START_X+ static_cast<float>(now_x)*CARD_PAD_X);
+                it->SetY(draw_start_y+ offset_y - static_cast<float>(now_y)*CARD_PAD_Y);
+                it->update(dungeon_shared.top_effs);
+                if(it->HitboxHovered()) hovered_card=it;
+                else it->Unhover();
+            }
             
             ++now_x;
             if(now_x>=N){
@@ -156,12 +162,10 @@ namespace Dungeon{
         int now_y=0;
         int now_x=0;
         for(const auto&it:display_group){
-            it->SetAngle(0.0F, true);
-            it->SetX(DRAW_START_X+ static_cast<float>(now_x)*CARD_PAD_X + RUtil::Random::GetRandomFloat(-100.0F, 100.0F)*Setting::SCALE, true);
-            it->SetY(draw_start_y+ offset_y - static_cast<float>(now_y)*CARD_PAD_Y - RUtil::Random::GetRandomFloat(100.0F, 200.0F)*Setting::SCALE, true);
-            it->SetDrawScale(0.75F, true);
-            if(it->HitboxHovered()) hovered_card=it;
-            
+            if(!it->is_fly()){
+                it->SetX(DRAW_START_X+ static_cast<float>(now_x)*CARD_PAD_X + RUtil::Random::GetRandomFloat(-100.0F, 100.0F)*Setting::SCALE, true);
+                it->SetY(draw_start_y+ offset_y - static_cast<float>(now_y)*CARD_PAD_Y - RUtil::Random::GetRandomFloat(100.0F, 200.0F)*Setting::SCALE, true);
+            }
             ++now_x;
             if(now_x>=N){
                 now_x=0;

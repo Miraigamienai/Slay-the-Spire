@@ -384,7 +384,7 @@ namespace Card{
         this->m_discard.clear();
         this->hand_cards.clear();
         this->exhaust_pile.clear();
-        this->draw_pile=this->master_deck;
+        this->draw_pile.CloneOther(this->master_deck);
         draw_pile.ShuffleWithRng(rng);
         hovered_card=nullptr;
         single_target=pass_hesitation_line=is_dragging_card=false;

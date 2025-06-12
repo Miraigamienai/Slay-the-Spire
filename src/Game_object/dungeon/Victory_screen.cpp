@@ -29,8 +29,5 @@ namespace Dungeon{
         return_button.render(r2);
         
     }
-
-    void Victory_screen::open(const std::shared_ptr<Character::Player> &player, const Monster::Monster_group &monsters){
-    }
     const std::shared_ptr<Draw::ReTexture>  &Victory_screen::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/victory/background.jpg");
 }

@@ -17,7 +17,7 @@ namespace Red{
                     )//pass the player to the damage action
                 )
             );
-            dungeon_shared.overlay.on_add_energy(dungeon_shared.effs);
+            dungeon_shared.energy_panel.on_add_energy(dungeon_shared.effs);
             dungeon_shared.player->AddEnergy(this->magic_num, dungeon_shared);
     }
 }

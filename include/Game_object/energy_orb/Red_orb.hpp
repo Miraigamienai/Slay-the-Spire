@@ -6,10 +6,10 @@ namespace EnergyOrb{
 class Red_orb final:public Energy_orb
 {
 public:
-    Red_orb(const int &energy_ref,const float &panel_x,const float &panel_y):Energy_orb(energy_ref,panel_x,panel_y){}
+    Red_orb():angle(){}
     ~Red_orb()override=default;
-    void update() override;
-    void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
+    void update(float energy) override;
+    void render(const std::shared_ptr<Draw::Draw_2D> &r2, float energy, float panel_x, float panel_y)const override;
 private:
     float angle[5]={0.0F};
     static constexpr float ANGLE_SLOW[]={72.0F,8.0F,-8.0F,5.0F,-5.0F};

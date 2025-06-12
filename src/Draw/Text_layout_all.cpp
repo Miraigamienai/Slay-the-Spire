@@ -180,7 +180,7 @@ namespace Draw
             }else if(it[0]=='[' && it.size()==3 && it[2]==']'){
                 //orb string
                 text_rows.back().row.emplace_back(text_item{false, true, RUtil::WHITE, GetOrb(it[1])});
-            }else if(it[0]=='#' && it.size()>=3){
+            }else if(it[0]=='#' && it.size()>=2){
                 //color string
                 TTF_SizeUTF8(font.get(), it.substr(2).c_str(), &img_w, &img_h);
                 text_rows.back().row.emplace_back(text_item{false, false, GetColor(it[1]), std::make_shared<Image_Region>(ori_text_img, now_x, now_y, img_w, img_h)});

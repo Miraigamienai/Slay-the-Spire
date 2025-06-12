@@ -22,14 +22,10 @@ class Card_group:public Template::Group_template<std::vector<std::shared_ptr<Car
 public:
     Card_group()=default;
     ~Card_group()override=default;
-    Card_group(const Card_group&) = default;
-    Card_group(Card_group&&) = default;
     
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const;
     void update(Effect::Effect_group &effs);
     void SortByRarity(const bool ascending);
-    void SortByType(const bool ascending);
-    void SortByCost(const bool ascending);
     void MoveAllCardTo(Card_group &group);
     std::shared_ptr<Cards> GetHoveredCard()const;
     int GetCardPos(const std::shared_ptr<Cards> &card)const;
@@ -42,7 +38,9 @@ public:
     }
 
     const std::shared_ptr<Cards>&operator[](size_t idx)const{return box[idx];}
-    Card_group& operator=(const Card_group&other);
-    Card_group& operator=(Card_group&&other)=default;
+    void CloneOther(const Card_group&other){
+        box.clear();
+        for(const auto&it:other) box.emplace_back(it->Clone());
+    }
 };
 }

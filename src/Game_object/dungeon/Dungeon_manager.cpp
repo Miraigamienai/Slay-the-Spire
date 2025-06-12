@@ -10,6 +10,8 @@ namespace Dungeon{
         death_screen=std::make_shared<Dungeon::Death_screen>();
         top_panel=std::make_shared<TopPanel::Top_panel>();
         victory_screen=std::make_shared<Dungeon::Victory_screen>();
+        discard_pile_screen=std::make_shared<Dungeon::Discard_pile_screen>();
+        draw_pile_screen=std::make_shared<Dungeon::Draw_pile_screen>();
     }
     void Dungeon_manager::update(Dungeon_shared &dungeon_shared){
         if(last_screen!=nullptr) last_screen->update(dungeon_shared);

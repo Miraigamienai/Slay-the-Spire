@@ -9,11 +9,12 @@ namespace Dungeon{
 }
 
 namespace Character{
-enum class PlayerType{
+enum class PlayerType:int{
     Ironclad,
     Silent,
     Defect,
-    Watcher
+    Watcher,
+    NONE
 };
 class Player final :public Characters
 {

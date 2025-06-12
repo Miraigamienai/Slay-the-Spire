@@ -34,7 +34,7 @@ namespace RUtil
                     desc_started=false;
                     ++idx1;
                     idx2=0;
-                }else{
+                }else if(idx2<2){
                     const auto l_pos=line.find('"');
                     const auto r_pos=line.rfind('"');
                     if(l_pos>=r_pos) LOG_ERROR("TEXT contain:'{}' WRONG in path:{}",line,path);

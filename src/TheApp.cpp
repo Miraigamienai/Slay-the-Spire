@@ -84,7 +84,6 @@ void TheApp::update(){
 void TheApp::prepare(){
     seed=RUtil::Random::GetRandomDefault();
     m_dungeon_shared.player=std::make_shared<Character::Player>();
-    m_dungeon_shared.overlay.set_player_to_energy_panel(m_dungeon_shared.player);
     Card::Card_soul::SetTrailColor(m_dungeon_shared.player->GetCardTrailColor());
     Card::Cards::SetRenderColor(m_dungeon_shared.player->GetCardRenderColor());
     m_dungeon_shared.manager.reset();

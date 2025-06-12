@@ -62,7 +62,7 @@ namespace Dungeon
                 //update
                 reward_items[i]->update();
                 //check click
-                if(reward_items[i]->HitboxClicked()){
+                if(reward_items[i]->HitboxClicked() && on_top){
                     now_reward_pos=i;
                     proceed_button.hide();
                     break;

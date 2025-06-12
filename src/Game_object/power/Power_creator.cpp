@@ -13,6 +13,7 @@
 #include "Game_object/power/Artifact_power.hpp"
 #include "Game_object/power/Sharp_hide_power.hpp"
 #include "Game_object/power/Mode_shift_power.hpp"
+#include "Game_object/power/Split_power.hpp"
 
 #include "Util/Logger.hpp"
 
@@ -32,6 +33,7 @@ namespace Power
             case RUtil::Powers_Text_ID::Artifact: return std::make_shared<Artifact_power>(owner_type);
             case RUtil::Powers_Text_ID::Sharp_Hide: return std::make_shared<Sharp_hide_power>(owner_type);
             case RUtil::Powers_Text_ID::Mode_Shift: return std::make_shared<Mode_shift_power>(owner_type);
+            case RUtil::Powers_Text_ID::Split: return std::make_shared<Split_power>(owner_type);
             default:
                 LOG_ERROR("The power id:{} has not been implemented yet.", static_cast<int>(power_id));
                 return std::make_shared<Weak_power>(owner_type);

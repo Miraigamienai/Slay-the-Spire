@@ -9,7 +9,7 @@ namespace Red{
 class Pommel_strike final:public Abstraction::CardPrototype<Pommel_strike>
 {
 public:
-    Pommel_strike():Abstraction::CardPrototype<Pommel_strike>(RUtil::AtlasRegionID::_red_attack_pommel_strike,RUtil::Cards_Text_ID::Pommel_Strike,Rarity::common,Type::attack,Color::red,Target::enemy,1,9,0,1){}
+    Pommel_strike():Abstraction::CardPrototype<Pommel_strike>(RUtil::AtlasRegionID::_red_attack_pommel_strike,RUtil::Cards_Text_ID::Pommel_Strike,Rarity::uncommon,Type::attack,Color::red,Target::enemy,1,9,0,1){}
 
     ~Pommel_strike()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;

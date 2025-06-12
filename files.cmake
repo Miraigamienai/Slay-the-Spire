@@ -46,6 +46,7 @@ set(SRC_FILES
 	Game_object/card/Card_soul.cpp
 	Game_object/card/red/Anger.cpp
 	Game_object/card/red/Barricade.cpp
+	Game_object/card/red/Bash.cpp
 	Game_object/card/red/Bloodletting.cpp
 	Game_object/card/red/Bludgeon.cpp
 	Game_object/card/red/Body_slam.cpp
@@ -53,7 +54,6 @@ set(SRC_FILES
 	Game_object/card/red/Clothesline.cpp
 	Game_object/card/red/Defend.cpp
 	Game_object/card/red/Entrench.cpp
-	Game_object/card/red/Flex.cpp
 	Game_object/card/red/Hemokinesis.cpp
 	Game_object/card/red/Inflame.cpp
 	Game_object/card/red/Iron_wave.cpp
@@ -62,7 +62,6 @@ set(SRC_FILES
 	Game_object/card/red/Shockwave.cpp
 	Game_object/card/red/Shrug_it_off.cpp
 	Game_object/card/red/Strike_red.cpp
-	Game_object/card/red/Thunderclap.cpp
 	Game_object/card/red/Twin_strike.cpp
 	Game_object/card/red/Uppercut.cpp
 	Game_object/card/red/Wild_strike.cpp
@@ -243,7 +242,7 @@ set(INCLUDE_FILES
 	Draw/ReTexture.hpp
 	Draw/Text_box.hpp
 	Draw/Text_layout.hpp
-	Draw/Text_layout_all.hpp
+	Draw/Text_layout_all.hpp 
 	Draw/Text_layout_color.hpp
 	Draw/Text_layout_normal.hpp
 	Game_object/Card_pos_setter.hpp
@@ -296,6 +295,7 @@ set(INCLUDE_FILES
 	Game_object/card/Card_soul.hpp
 	Game_object/card/red/Anger.hpp
 	Game_object/card/red/Barricade.hpp
+	Game_object/card/red/Bash.hpp
 	Game_object/card/red/Bloodletting.hpp
 	Game_object/card/red/Bludgeon.hpp
 	Game_object/card/red/Body_slam.hpp
@@ -303,7 +303,6 @@ set(INCLUDE_FILES
 	Game_object/card/red/Clothesline.hpp
 	Game_object/card/red/Defend.hpp
 	Game_object/card/red/Entrench.hpp
-	Game_object/card/red/Flex.hpp
 	Game_object/card/red/Hemokinesis.hpp
 	Game_object/card/red/Inflame.hpp
 	Game_object/card/red/Iron_wave.hpp
@@ -312,7 +311,6 @@ set(INCLUDE_FILES
 	Game_object/card/red/Shockwave.hpp
 	Game_object/card/red/Shrug_it_off.hpp
 	Game_object/card/red/Strike_red.hpp
-	Game_object/card/red/Thunderclap.hpp
 	Game_object/card/red/Twin_strike.hpp
 	Game_object/card/red/Uppercut.hpp
 	Game_object/card/red/Wild_strike.hpp

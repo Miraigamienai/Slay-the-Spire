@@ -609,7 +609,7 @@
   "GrowthPower": {
     "NAME": "萬物生長",
     "DESCRIPTIONS": [
-      "在其回合結束時，獲得 #b",
+      "在其回合結束時，獲得 $n#b",
       " 點 #y力量 "
     ]
   },
@@ -1273,7 +1273,7 @@
   "Weakened": {
     "NAME": "虛弱",
     "DESCRIPTIONS": [
-      "#y攻擊 造成的傷害減少 !D!#b% 。$n持續時間 !M! 回合"
+      "#y攻擊 造成的傷害減少 !D!#b% $n持續時間 !M! 回合"
     ]
   },
   "WireheadingPower": {

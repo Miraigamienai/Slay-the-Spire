@@ -18,7 +18,7 @@ namespace Red{
             );
             dungeon_shared.player->damage(
                 Damage_info{this->magic_num, dungeon_shared.player, AttackType::slash_diagonal},
-                dungeon_shared,true
+                dungeon_shared,false
             );
     }
 }

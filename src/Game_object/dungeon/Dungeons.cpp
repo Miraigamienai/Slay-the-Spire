@@ -77,9 +77,16 @@ namespace Dungeon{
         :dungeon_shared(dungeon_shared),
         state(state),
         random_seed(random_seed),
+        fade_timer(0.0F),
+        fade_color_a(0.0F),
+        next_node_is_making_circle(false),
+        is_fade_in(false),
+        is_fade_out(false),
         boss_room(std::make_shared<Room::Monster_room>(BOSS_PROBABILITY(dungeon_shared.random_package.map_rng))),
         fighting_boss(false),
-        boss_timer(0.0F)
+        boss_timer(0.0F),
+        black_screen_target_a(1.0F),
+        black_screen_a(black_screen_target_a)
     {
         scene=std::make_shared<Scene::Bottom_scene>();
         scene->next_room();
@@ -88,8 +95,6 @@ namespace Dungeon{
         dungeon_shared.manager.set_display_map(m_map, GetBossImage(boss_room->m_group_name, "boss"), GetBossImage(boss_room->m_group_name, "bossOutline"));
         dungeon_shared.manager.open<Abstraction::ScreenType::main_dungeon>();
         set_next_node_oscillate_and_edge(true);
-        is_fade_in=is_fade_out=false;
-        fade_color_a=0.0F;
     }
     void Dungeons::update(){
         //gen update
@@ -98,19 +103,29 @@ namespace Dungeon{
         dungeon_shared.effs.update();
         dungeon_shared.top_effs.update();
         dungeon_shared.back_effs.update();
-        //room update
-        if(fighting_boss&&boss_timer==0.0F){
-            boss_room->update(dungeon_shared);
-        }else if(dungeon_shared.current_node!=nullptr){
-            dungeon_shared.current_node->GetRoom()->update(dungeon_shared);
+        //panels update
+        dungeon_shared.energy_panel.update(dungeon_shared);
+        dungeon_shared.discard_panel.update(dungeon_shared);
+        dungeon_shared.draw_panel.update(dungeon_shared);
+        if(!dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::discard_pile)){
+            //room update
+            if(fighting_boss){
+                boss_room->update(dungeon_shared);
+                if(boss_room->get_phase() == Room::Room_phase::just_complete) dungeon_shared.manager.open<Abstraction::ScreenType::victory>();
+            }else if(dungeon_shared.current_node!=nullptr){
+                dungeon_shared.current_node->GetRoom()->update(dungeon_shared);
+            }
         }
         //card update
         dungeon_shared.card_group_handler.update_hand_cards(dungeon_shared.top_effs,dungeon_shared);
         dungeon_shared.card_group_handler.update_flying_cards(dungeon_shared.top_effs);//for test
-        //overlay update
-        dungeon_shared.overlay.update();
         //manager update
         dungeon_shared.manager.update(dungeon_shared);
+        //black screen alpha update
+        if(dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::NONE)) black_screen_target_a=0.0F;
+        else black_screen_target_a=0.75F;
+        update_black_screen_a();
+        //if gameover
         if(dungeon_shared.manager.DeathBackToInitScreen() || dungeon_shared.manager.VictoryBackToInitScreen()){
             state=State::GameOver;
             dungeon_shared.effs.clear();
@@ -121,7 +136,10 @@ namespace Dungeon{
             dungeon_shared.card_group_handler.clear<Card::GroupType::master_deck>();
             dungeon_shared.card_group_handler.clear<Card::GroupType::force_render_cards>();
             dungeon_shared.card_group_handler.clear<Card::GroupType::force_update_cards>();
-            dungeon_shared.overlay.hide_combat_panel();
+            dungeon_shared.player=nullptr;
+            dungeon_shared.energy_panel.hide();
+            dungeon_shared.discard_panel.hide();
+            dungeon_shared.draw_panel.hide();
             dungeon_shared.manager.reset();//reset manager
             dungeon_shared.room_monsters.clear();
             return;
@@ -154,16 +172,27 @@ namespace Dungeon{
         //TODO:black screen control
         scene->render_bg(r2);
         dungeon_shared.back_effs.render(r2);
-        dungeon_shared.player->render(r2);//temporary here
+        if(dungeon_shared.player != nullptr)dungeon_shared.player->render(r2);//temporary here
         dungeon_shared.room_monsters.render(r2);//temporary here
         scene->render_fg(r2);
-        if(dungeon_shared.current_node!=nullptr)dungeon_shared.current_node->GetRoom()->render(r2);
-        dungeon_shared.overlay.render(r2);
+        if(fighting_boss) boss_room->render(r2);
+        else if(dungeon_shared.current_node!=nullptr)dungeon_shared.current_node->GetRoom()->render(r2);
+        dungeon_shared.energy_panel.render(r2);
+        if(!dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::discard_pile))
+            dungeon_shared.discard_panel.render(r2);
+        if(!dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::draw_pile))
+            dungeon_shared.draw_panel.render(r2);
         dungeon_shared.card_group_handler.render_hand(r2);//flying card also render inside it.
         dungeon_shared.card_group_handler.render_force_cards(r2);
         dungeon_shared.effs.render(r2);
-        if(dungeon_shared.current_node!=nullptr)dungeon_shared.current_node->GetRoom()->render_higher(r2);
+        if(fighting_boss) boss_room->render_higher(r2);
+        else if(dungeon_shared.current_node!=nullptr)dungeon_shared.current_node->GetRoom()->render_higher(r2);
+        render_black_screen(r2);
         dungeon_shared.manager.render(r2);
+        if(dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::discard_pile))
+            dungeon_shared.discard_panel.render(r2);
+        if(dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::draw_pile))
+            dungeon_shared.draw_panel.render(r2);
         dungeon_shared.top_effs.render(r2);
         r2->SetColor(fade_color,fade_color_a);
         r2->draw(Effect::Fade_wide::white_square, 0.0F, 0.0F, Setting::WINDOW_WIDTH, Setting::WINDOW_HEIGHT);
@@ -190,16 +219,17 @@ namespace Dungeon{
                     return true;
                 }
         }else if(dungeon_shared.current_node->y==14){
-            if(dungeon_shared.manager.boss_click()){
-                if(boss_timer==0.0F && !fighting_boss){
-                    boss_timer=0.75F;
+            if(dungeon_shared.manager.boss_click() && boss_timer==0.0F && !fighting_boss){
+                boss_timer=0.75F;
+            }
+            
+            if(boss_timer>0.0F){
+                boss_timer-=RUtil::Game_Input::delta_time();
+                if(boss_timer<0.0F){
+                    boss_timer=0.0F;
                     fighting_boss=true;
-                    return true;
-                }else if(boss_timer>0.0F){
-                    boss_timer-=RUtil::Game_Input::delta_time();
-                    if(boss_timer<0.0F) boss_timer=0.0F;
-                    return true;
                 }
+                return true;
             }
         }else{
             if(dungeon_shared.current_node->HasEdge(Map::Direction::right) && m_map[dungeon_shared.current_node->y+1][dungeon_shared.current_node->x+1]->IsMakingCircle()){
@@ -228,18 +258,20 @@ namespace Dungeon{
     void Dungeons::update_fading(){
         fade_timer-=RUtil::Game_Input::delta_time();
         if(is_fade_in){
-            fade_color_a = RUtil::Math::interpolation_fade(0.0F,1.0F,fade_timer/0.8F);
             if(fade_timer<0.0F){
                 fade_timer=0.0F;
                 fade_color_a=0.0F;
                 is_fade_in=false;
+            }else{
+                fade_color_a = RUtil::Math::interpolation_fade(0.0F,1.0F,fade_timer/0.8F);
             }
         }else if(is_fade_out){
-            fade_color_a = RUtil::Math::interpolation_fade(1.0F,0.0F,fade_timer/0.8F);
             if(fade_timer<0.0F){
                 fade_timer=0.0F;
                 fade_color_a=1.0F;
                 is_fade_out=false;
+            }else{
+                fade_color_a = RUtil::Math::interpolation_fade(1.0F,0.0F,fade_timer/0.8F);
             }
         }else LOG_ERROR("Not fading but the update_fading() be called.");
     }
@@ -272,7 +304,25 @@ namespace Dungeon{
         dungeon_shared.manager.hide_dungeon_screen_instantly();
         dungeon_shared.card_group_handler.prepare_for_battle(dungeon_shared.random_package.card_shuffle_rng);
         dungeon_shared.action_group_handler.prepare_for_battle();
-        dungeon_shared.current_node->GetRoom()->init_room(dungeon_shared, fade_color);
+        if(fighting_boss) boss_room->init_room(dungeon_shared, fade_color);
+        else dungeon_shared.current_node->GetRoom()->init_room(dungeon_shared, fade_color);
         scene->next_room();
+    }
+
+    void Dungeons::render_black_screen(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+        r2->SetColor(RUtil::BLACK, black_screen_a);
+        r2->draw(Effect::Fade_wide::white_square, 0.0F, 0.0F, static_cast<float>(Setting::WINDOW_WIDTH), static_cast<float>(Setting::WINDOW_HEIGHT));
+    }
+
+    void Dungeons::update_black_screen_a(){
+        if(black_screen_target_a != black_screen_a){
+            if(this->black_screen_target_a > this->black_screen_a){
+                black_screen_a+=2.0F*RUtil::Game_Input::delta_time();
+                if(black_screen_a>black_screen_target_a) black_screen_a=black_screen_target_a;
+            }else{
+                black_screen_a-=2.0F*RUtil::Game_Input::delta_time();
+                if(black_screen_a<black_screen_target_a) black_screen_a=black_screen_target_a;
+            }
+        }
     }
 }

@@ -321,9 +321,14 @@ namespace Card{
             m_dark_timer=0.3F;
         }
     };
-    void Cards::Lighten(){
+    void Cards::Lighten(bool immediate){
         darken=false;
-        m_dark_timer=0.3F;
+        if(immediate){
+            m_tint_a=0.0F;
+            m_dark_timer=0.0F;
+        }else{
+            m_dark_timer=0.3F;
+        }
     }
     void Cards::Unhover(){
         m_target_draw_scale=0.75F;

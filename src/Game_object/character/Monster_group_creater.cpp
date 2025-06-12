@@ -74,7 +74,7 @@ namespace Monster{
     void Monster_group_creater::CreateGroup(Dungeon::Dungeon_shared& dungeon_shared, GroupName group_name){
         Wrapper w{dungeon_shared};
         auto &monster_rng=dungeon_shared.random_package.monster_rng;
-
+        
         switch(group_name){
             case GroupName::Cultist:
                 w.AT<Cultist>(0.0F, -10.0F);

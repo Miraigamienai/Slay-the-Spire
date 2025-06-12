@@ -5,15 +5,12 @@
 #include "Draw/Draw_2D.hpp"
 
 namespace EnergyOrb{
-    void Red_orb::update(){
-        if(energy==0)
-            for(int i=0;i<5;i++)
-                angle[i]+=RUtil::Game_Input::delta_time()*ANGLE_SLOW[i];
-        else
-            for(int i=0;i<5;i++)
-                angle[i]+=RUtil::Game_Input::delta_time()*ANGLE_QUICK[i];
+
+    void Red_orb::update(float energy){
+        if(energy==0) for(int i=0;i<5;i++) angle[i]+=RUtil::Game_Input::delta_time()*ANGLE_SLOW[i];
+        else for(int i=0;i<5;i++) angle[i]+=RUtil::Game_Input::delta_time()*ANGLE_QUICK[i];
     }
-    void Red_orb::render(const std::shared_ptr<Draw::Draw_2D> &r2)const{
+    void Red_orb::render(const std::shared_ptr<Draw::Draw_2D> &r2, float energy, float panel_x, float panel_y)const{
         r2->SetColor(-1);
         if(energy==0){
             r2->draw(slow1, panel_x-64.0F, panel_y-64.0F, 128.0F, 128.0F, angle[0], 64.0F, 64.0F, ORB_SCALE, ORB_SCALE);

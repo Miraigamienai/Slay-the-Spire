@@ -50,7 +50,7 @@ namespace Draw
         text_rows.emplace_back(text_row{now_y,0,{}});
         for(const auto&it:text_vec){
             if(it.empty()) continue;
-            if(it[0]=='#'&&it.size()>3){
+            if(it[0]=='#'&&it.size()>=2){
                 TTF_SizeUTF8(font.get(), it.substr(2).c_str(), &img_w, &img_h);
                 text_rows.back().row.emplace_back(text_img{now_x, GetColor(it[1]), std::make_shared<Image_Region>(ori_text_img, now_x, now_y, img_w, img_h)});
                 now_x+=img_w;

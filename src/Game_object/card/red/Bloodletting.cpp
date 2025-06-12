@@ -12,7 +12,7 @@ namespace Red{
             dungeon_shared.player->damage(
                 Damage_info{this->damage, dungeon_shared.player, AttackType::slash_diagonal},
                 dungeon_shared, false);
-            dungeon_shared.overlay.on_add_energy(dungeon_shared.effs);
+            dungeon_shared.energy_panel.on_add_energy(dungeon_shared.effs);
             dungeon_shared.player->AddEnergy(this->magic_num, dungeon_shared);
     }
 }

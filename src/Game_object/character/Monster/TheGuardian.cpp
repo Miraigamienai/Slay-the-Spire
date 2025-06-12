@@ -15,7 +15,7 @@
 
 namespace Monster{
     TheGuardian::TheGuardian()
-        :Abstraction::Monster_move_tracker<0, TheGuardianAction>(-50.0F, -100.0F, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, ATK_IMG),
+        :Abstraction::Monster_move_tracker<0, TheGuardianAction>(-50.0F, 10.0F, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, ATK_IMG),
         in_defensive_mode(false),
         move_cnt(1),
         damage_threshold(DAMAGE_THRESHOLD_START),
@@ -101,7 +101,6 @@ namespace Monster{
         switch(call_type){
             case CallType::Defensive:
                 {
-                    resize_hb(HB_OFFSET_X, HB_OFFSET_Y, WIDTH, 250.0F*Setting::SCALE);
                     set_img(DEF_IMG);
                     damage_threshold += DAMAGE_THRESHOLD_ADD;
                     std::shared_ptr<Power::Powers> temp = nullptr; 
@@ -109,13 +108,14 @@ namespace Monster{
                     if(temp!=nullptr) dungeon_shared.action_group_handler.AddActionTop(std::make_shared<Action::Remove_power_action>(temp, shared_from_this()));
                     dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_block_action>(shared_from_this(), 20));
                     set_move(TheGuardianAction::DefensiveMode, nullptr, Intent::buff, dungeon_shared.player->get_powers());
+                    move_cnt=0;
                 }
                 break;
             case CallType::Offensive:
-                resize_hb(HB_OFFSET_X, HB_OFFSET_Y, WIDTH, HEIGHT);
                 set_img(ATK_IMG);
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Mode_Shift, damage_threshold, shared_from_this(), shared_from_this(), true));
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Call_action<TheGuardian, CallType, decltype(dungeon_shared)>>(std::static_pointer_cast<TheGuardian>(shared_from_this()), CallType::Reset, dungeon_shared));
+                move_cnt=0;
                 break;
             case CallType::Reset:
                 damage_taken=0;

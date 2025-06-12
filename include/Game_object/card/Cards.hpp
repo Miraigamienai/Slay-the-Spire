@@ -85,7 +85,7 @@ public:
     void MoveTargetAngle(const float value);
     
     void Darken(bool immediate);
-    void Lighten();
+    void Lighten(bool immediate=false);
     void Unhover();
     void draw();
     //check hover status at specific scale.
@@ -133,7 +133,7 @@ public:
     void SetDrawScale(const float value,const bool immediate=false)noexcept{m_target_draw_scale=value;if(immediate)m_draw_scale=value;}
     void SetColorAlpha(const float value,const bool immediate=false)noexcept{m_target_color_a=value;if(immediate)m_color_a=value;}
     bool IsSingleTarget()const noexcept{return target==Target::enemy||target==Target::self_and_enemy;}
-    void StopGlowing()const{for(const auto&it:glowgroup)it->QuickDisappear(5.0F);}
+    void StopGlowing(){for(const auto&it:glowgroup)it->QuickDisappear(5.0F);can_use=false;}
     void RefreshDisplay(const Power::Power_group &player_powers){RefreshBlock(player_powers);RefreshDamage(player_powers);}
     void RefreshDisplay(const Power::Power_group &player_powers, const Power::Power_group &monster_powers){
         RefreshBlock(player_powers);
@@ -228,10 +228,4 @@ public:
                             IMG_WIDTH_S = 300.0F * Setting::SCALE * 0.7F,
                             IMG_HEIGHT_S = 420.0F * Setting::SCALE * 0.7F;
 };
-inline bool operator<(Rarity lhs, Rarity rhs) {
-    return static_cast<int>(lhs) < static_cast<int>(rhs);
-}
-inline bool operator<(Type lhs, Type rhs) {
-    return static_cast<int>(lhs) < static_cast<int>(rhs);
-}
 }

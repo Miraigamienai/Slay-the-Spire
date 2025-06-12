@@ -44,7 +44,7 @@ private:
     std::shared_ptr<Room::Monster_room> boss_room;
     bool fighting_boss;
     float boss_timer;
-
+    float black_screen_target_a, black_screen_a;
     void set_next_node_oscillate_and_edge(const bool value)const;
     bool check_and_set_next_node_making_circle();
     void change_current_node_to_next();
@@ -52,6 +52,8 @@ private:
     void fade_out();
     void update_fading();
     void entering_next_room();
+    void render_black_screen(const std::shared_ptr<Draw::Draw_2D> &r2)const;
+    void update_black_screen_a();
 };
 }
 #endif

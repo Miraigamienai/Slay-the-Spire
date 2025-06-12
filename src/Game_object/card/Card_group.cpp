@@ -21,18 +21,24 @@ namespace Card{
         this->box.clear();
     }
     
+    static constexpr auto RarityWeight=[]()constexpr{
+        std::array<int, 6> temp{};
+        temp[static_cast<int>(Rarity::basic)]   = 0;
+        temp[static_cast<int>(Rarity::common)]  = 1;
+        temp[static_cast<int>(Rarity::uncommon)]= 2;
+        temp[static_cast<int>(Rarity::rare)]    = 3;
+        temp[static_cast<int>(Rarity::special)] = 4;
+        temp[static_cast<int>(Rarity::curse)]   = 5;
+        return temp;
+    }();
     void Card_group::SortByRarity(const bool ascending){
-        if(ascending)std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return aa->rarity<bb->rarity;});
-        else std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return bb->rarity<aa->rarity;});
+        //sort by text id to make sure the same card will together
+        std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return static_cast<int>(aa->card_text_id) < static_cast<int>(bb->card_text_id);});
+        //sort by rarity
+        if(ascending)std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return RarityWeight[static_cast<int>(aa->rarity)] < RarityWeight[static_cast<int>(bb->rarity)];});
+        else std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return RarityWeight[static_cast<int>(aa->rarity)] > RarityWeight[static_cast<int>(bb->rarity)];});
     }
-    void Card_group::SortByType(const bool ascending){
-        if(ascending)std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return aa->type<bb->type;});
-        else std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return bb->type<aa->type;});
-    }
-    void Card_group::SortByCost(const bool ascending){
-        if(ascending)std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return aa->GetCost()<bb->GetCost();});
-        else std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return bb->GetCost()<aa->GetCost();});
-    }
+
     std::shared_ptr<Cards> Card_group::GetHoveredCard()const{
         for(const auto&it:box){
             if(it->IsHoveredInHand(0.7F)){
@@ -45,10 +51,5 @@ namespace Card{
         const int len=static_cast<int>(box.size());
         for(int i=0;i<len;i++) if(box[i]==card) return i;
         return -1;
-    }
-    Card_group& Card_group::operator=(const Card_group&other){
-        box.clear();
-        for(const auto&it:other) box.emplace_back(it->Clone());
-        return *this;
     }
 }

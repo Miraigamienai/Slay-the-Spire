@@ -23,10 +23,10 @@ namespace Card{
 namespace Dungeon{
 //need cards,buttons,???
 //smith: cancel and confirm button and upgraded card? //need to do in other class?
-class Grid_card_screen final:public Abstraction::Is_screen
+class Grid_card_screen :public Abstraction::Is_screen
 {
 public:
-    Grid_card_screen();
+    Grid_card_screen():Grid_card_screen(Abstraction::ScreenType::grid_cards){}
     ~Grid_card_screen()override=default;
     void update(Dungeon::Dungeon_shared &dungeon_shared)override;
     void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
@@ -36,12 +36,7 @@ public:
 
     template <typename T>
     CardGroupOnlyVoid<T> open(T&&display_group, const std::shared_ptr<GridScreenAction::Grid_screen_action> &screen_action){
-        if constexpr(std::is_rvalue_reference_v<T&&>){
-            this->display_group=std::move(display_group);
-        }else{
-            for(const auto&it:display_group)
-                this->display_group.AddTop(it);
-        }
+        this->display_group=std::forward<T>(display_group);
         this->screen_action=screen_action;
         common_open_setting();
     }
@@ -53,7 +48,12 @@ public:
         this->out_is_done=&is_done;
         this->out_is_cancelled=&is_cancelled;
     }
-
+protected:
+    Grid_card_screen(Abstraction::ScreenType screen_type);
+    void close()noexcept(noexcept(cancel.hide())){
+        closing=true;
+        cancel.hide();
+    }
 private:
     Card::Card_group display_group;
     std::shared_ptr<Card::Cards> hovered_card;

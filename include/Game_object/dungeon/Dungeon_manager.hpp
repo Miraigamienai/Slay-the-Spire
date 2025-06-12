@@ -8,6 +8,8 @@
 #include "Game_object/dungeon/Grid_card_screen.hpp"
 #include "Game_object/dungeon/Shop_screen.hpp"
 #include "Game_object/dungeon/Death_screen.hpp"
+#include "Game_object/dungeon/Discard_pile_screen.hpp"
+#include "Game_object/dungeon/Draw_pile_screen.hpp"
 #include "Game_object/map/Map_node.hpp"
 #include "Game_object/top_panel/Top_panel.hpp"
 #include "Game_object/dungeon/Victory_screen.hpp"
@@ -57,6 +59,8 @@ namespace Dungeon{
         std::shared_ptr<Dungeon::Death_screen> death_screen;
         std::shared_ptr<TopPanel::Top_panel> top_panel;
         std::shared_ptr<Dungeon::Victory_screen> victory_screen;
+        std::shared_ptr<Dungeon::Discard_pile_screen> discard_pile_screen;
+        std::shared_ptr<Dungeon::Draw_pile_screen> draw_pile_screen;
         
         template <Abstraction::ScreenType ST>
         const auto &GetScreen()const{
@@ -66,6 +70,8 @@ namespace Dungeon{
             else if constexpr(ST==Abstraction::ScreenType::shop) return shop_screen;
             else if constexpr(ST==Abstraction::ScreenType::death) return death_screen;
             else if constexpr(ST==Abstraction::ScreenType::victory) return victory_screen;
+            else if constexpr(ST==Abstraction::ScreenType::discard_pile) return discard_pile_screen;
+            else if constexpr(ST==Abstraction::ScreenType::draw_pile) return draw_pile_screen;
         }
     };
 }

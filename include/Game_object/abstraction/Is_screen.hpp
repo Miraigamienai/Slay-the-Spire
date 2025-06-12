@@ -18,6 +18,8 @@ enum class ScreenType{
     shop,
     death,
     victory,
+    discard_pile,
+    draw_pile,
     NONE
 };
 

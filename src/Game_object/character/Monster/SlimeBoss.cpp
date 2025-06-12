@@ -12,13 +12,17 @@
 #include "Game_object/action/Spawn_monster_action.hpp"
 #include "Game_object/effect_gen/Weighty_impact_gen.hpp"
 #include "Game_object/card/status/Slimed.hpp"
+#include "Game_object/power/Split_power.hpp"
 #include "RUtil/Image_book.hpp"
 #include "RUtil/Random.hpp"
 
 namespace Monster{
     SlimeBoss::SlimeBoss()
         :Abstraction::Monster_move_tracker<0, SlimeBossAction>(0.0F, 28.0F, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG),
-        move_cnt(0){}
+        move_cnt(0)
+    {
+        add_power(std::make_shared<Power::Split_power>(type));
+    }
     
     void SlimeBoss::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (move_cnt == SPLIT_CNT ? SlimeBossAction::Split : pattern[move_cnt]){

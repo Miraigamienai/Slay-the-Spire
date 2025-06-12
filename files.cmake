@@ -98,11 +98,12 @@ set(SRC_FILES
 	Game_object/character/Monster/WizardGremlin.cpp
 	Game_object/dungeon/Combat_reward_screen.cpp
 	Game_object/dungeon/Death_screen.cpp
+	Game_object/dungeon/Discard_pile_screen.cpp
+	Game_object/dungeon/Draw_pile_screen.cpp
 	Game_object/dungeon/Dungeons.cpp
 	Game_object/dungeon/Dungeon_manager.cpp
 	Game_object/dungeon/Dungeon_screen.cpp
 	Game_object/dungeon/Grid_card_screen.cpp
-	Game_object/dungeon/Overlay.cpp
 	Game_object/dungeon/Shop_screen.cpp
 	Game_object/dungeon/Victory_screen.cpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_action.cpp
@@ -124,6 +125,8 @@ set(SRC_FILES
 	Game_object/effect/Cleave_eff.cpp
 	Game_object/effect/Damage_impact_curvy_eff.cpp
 	Game_object/effect/Debuff_particle_eff.cpp
+	Game_object/effect/Discard_glow_eff.cpp
+	Game_object/effect/Draw_pile_glow_eff.cpp
 	Game_object/effect/Effects.cpp
 	Game_object/effect/Effect_group.cpp
 	Game_object/effect/End_turn_button_glow.cpp
@@ -173,6 +176,8 @@ set(SRC_FILES
 	Game_object/map/Map_edge.cpp
 	Game_object/map/Map_generator.cpp
 	Game_object/map/Map_node.cpp
+	Game_object/panel/Discard_pile_panel.cpp
+	Game_object/panel/Draw_pile_panel.cpp
 	Game_object/panel/Energy_panel.cpp
 	Game_object/panel/Panels.cpp
 	Game_object/power/Powers.cpp
@@ -346,12 +351,13 @@ set(INCLUDE_FILES
 	Game_object/character/Monster/WizardGremlin.hpp
 	Game_object/dungeon/Combat_reward_screen.hpp
 	Game_object/dungeon/Death_screen.hpp
+	Game_object/dungeon/Discard_pile_screen.hpp
+	Game_object/dungeon/Draw_pile_screen.hpp
 	Game_object/dungeon/Dungeons.hpp
 	Game_object/dungeon/Dungeon_manager.hpp
 	Game_object/dungeon/Dungeon_screen.hpp
 	Game_object/dungeon/Dungeon_shared.hpp
 	Game_object/dungeon/Grid_card_screen.hpp
-	Game_object/dungeon/Overlay.hpp
 	Game_object/dungeon/Shop_screen.hpp
 	Game_object/dungeon/Victory_screen.hpp
 	Game_object/dungeon/Grid_screen_action/Grid_screen_action.hpp
@@ -373,6 +379,8 @@ set(INCLUDE_FILES
 	Game_object/effect/Cleave_eff.hpp
 	Game_object/effect/Damage_impact_curvy_eff.hpp
 	Game_object/effect/Debuff_particle_eff.hpp
+	Game_object/effect/Discard_glow_eff.hpp
+	Game_object/effect/Draw_pile_glow_eff.hpp
 	Game_object/effect/Effects.hpp
 	Game_object/effect/Effect_group.hpp
 	Game_object/effect/Effect_pool.hpp
@@ -442,6 +450,8 @@ set(INCLUDE_FILES
 	Game_object/map/Map_edge.hpp
 	Game_object/map/Map_generator.hpp
 	Game_object/map/Map_node.hpp
+	Game_object/panel/Discard_pile_panel.hpp
+	Game_object/panel/Draw_pile_panel.hpp
 	Game_object/panel/Energy_panel.hpp
 	Game_object/panel/Panels.hpp
 	Game_object/power/Anger_power.hpp
@@ -456,6 +466,7 @@ set(INCLUDE_FILES
 	Game_object/power/Power_group.hpp
 	Game_object/power/Ritual_power.hpp
 	Game_object/power/Sharp_hide_power.hpp
+	Game_object/power/Split_power.hpp
 	Game_object/power/Strength_power.hpp
 	Game_object/power/Vulnerable_power.hpp
 	Game_object/power/Weak_power.hpp

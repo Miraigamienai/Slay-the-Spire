@@ -74,7 +74,5 @@ namespace Dungeon{
         m_font.render_center(r2, std::to_string(card_amount[4]), Setting::WINDOW_WIDTH/2.0F+150*Setting::SCALE , Setting::WINDOW_HEIGHT/2.0F-200*Setting::SCALE,Setting::SCALE);
 
     }
-
-    void Victory_screen::open(const std::shared_ptr<Character::Player> &player, const Monster::Monster_group &monsters){}
     const std::shared_ptr<Draw::ReTexture>  &Victory_screen::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/victory/background.jpg");
 }

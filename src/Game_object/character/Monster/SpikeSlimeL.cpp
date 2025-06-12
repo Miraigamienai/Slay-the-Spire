@@ -9,13 +9,17 @@
 #include "Game_object/action/Suicide_action.hpp"
 #include "Game_object/action/Spawn_monster_action.hpp"
 #include "Game_object/card/status/Slimed.hpp"
+#include "Game_object/power/Split_power.hpp"
 #include "RUtil/Random.hpp"
 #include "RUtil/Image_book.hpp"
 #include "Draw/ReTexture.hpp"
 
 namespace Monster{
     SpikeSlimeL::SpikeSlimeL(float offset_x, float offset_y, RUtil::Random& rng)
-        :SpikeSlimeL(offset_x, offset_y, rng.NextInt(MIN_HP, MAX_HP+1)){};
+        :SpikeSlimeL(offset_x, offset_y, rng.NextInt(MIN_HP, MAX_HP+1))
+    {        
+        add_power(std::make_shared<Power::Split_power>(type));
+    };
     
     SpikeSlimeL::SpikeSlimeL(float offset_x, float offset_y, int HP)
         :Abstraction::Monster_move_tracker<2, SpikeSlimeLAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG),

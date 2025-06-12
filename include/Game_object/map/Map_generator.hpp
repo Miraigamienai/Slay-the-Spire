@@ -32,7 +32,8 @@ public:
             for(size_t j=0;j<map[i].size();j++){
                 if(map[i][j]==nullptr) continue;
                 if(i==0){
-                    map[i][j]->SetRoom(std::make_shared<Room::Monster_room>(wp(rng)));
+                    // map[i][j]->SetRoom(std::make_shared<Room::Monster_room>(wp(rng)));
+                    map[i][j]->SetRoom(std::make_shared<Room::Monster_room>(static_cast<Monster::GroupName>(19)));
                 }else if(i==8){
                     map[i][j]->SetRoom(std::make_shared<Room::Treasure_room>());
                 }else if(i==14){

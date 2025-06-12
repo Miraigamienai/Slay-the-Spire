@@ -36,9 +36,9 @@ private:
     int damage_threshold;
     int damage_taken;
     static constexpr float WIDTH=440.0F*Setting::SCALE,
-                           HEIGHT=350.0F*Setting::SCALE,
+                           HEIGHT=440.0F*Setting::SCALE,
                            HB_OFFSET_X=0.0F,
-                           HB_OFFSET_Y=95.0F*Setting::SCALE;
+                           HB_OFFSET_Y=-10.0F*Setting::SCALE;
     static constexpr int HP=240,
                          CHARGING_UP_BLOCK=9,
                          FIERCE_BASH_DAMAGE=32,

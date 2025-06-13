@@ -12,6 +12,7 @@
 #include "Game_object/effect/Enemy_turn_eff.hpp"//apply when enemy turn start
 #include "Game_object/effect/Player_turn_eff.hpp"//apply when player turn start
 #include "Game_object/dungeon/Dungeon_shared.hpp"//for update function
+#include "Game_object/action/Damage_action.hpp"//for damage
 #include "Game_object/character/Monster_group_creater.hpp"//create monsters & group_name
 #include "Game_object/character/Monster/Monsters.hpp"//render tip
 #include "RUtil/Image_book.hpp"//for Retexture loading
@@ -91,6 +92,9 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Dexterity, 99, dungeon_shared.player, dungeon_shared.player));
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_energy_action>(dungeon_shared.player->GetMaxEnergy()));
             dungeon_shared.player->heal(100, dungeon_shared);
+        }
+        if(Util::Input::IsKeyUp(Util::Keycode::END)){
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{999, dungeon_shared.player, AttackType::NONE}, dungeon_shared.player, false));
         }
 
         if(dungeon_shared.discard_panel.is_logically_clicked() && !dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::discard_pile)){

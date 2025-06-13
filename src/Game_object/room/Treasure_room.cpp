@@ -3,6 +3,7 @@
 #include "Game_object/room/Treasure_item.hpp"
 #include "RUtil/Image_book.hpp"
 #include "Draw/ReTexture.hpp"
+#include "RUtil/Text_Vector_Reader.hpp"
 #include "Game_object/room/Treasure_type/Large_chest.hpp"
 #include "Game_object/room/Treasure_type/Medium_chest.hpp"
 #include "Game_object/room/Treasure_type/Small_chest.hpp"
@@ -61,6 +62,9 @@ namespace Room
         default:
             break;
         }
+        // 設定前進按鈕的文字
+        auto proceed_text = RUtil::Text_Vector_Reader::GetTextVector(RUtil::Text_ID::AbstractDungeon)[0];
+        proceed.set_text(proceed_text);
     }
     std::discrete_distribution<int> Treasure_room::dist{Probability,Probability+3};
     const std::shared_ptr<Draw::ReTexture> &Treasure_room::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/map/chest.png"),

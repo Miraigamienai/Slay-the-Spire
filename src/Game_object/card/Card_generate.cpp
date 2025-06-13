@@ -27,9 +27,11 @@
 
 
 #include "Util/Logger.hpp"
+#include "RUtil/Probability_selector.hpp"
 
 namespace Card
 {
+
     enum class RedCardBasic{
         Bash, Defend, Strike_red, SIZE
     };
@@ -44,54 +46,6 @@ namespace Card
         Barricade, Bludgeon, SIZE
     };
 
-    enum class RedCardName{
-        Anger, Clash, Defend, Strike_red, Body_slam, Iron_wave, Twin_strike, Inflame, Bludgeon, Shrug_it_off, Pommel_strike, 
-        Entrench, Wild_strike,
-        Bloodletting, Hemokinesis, Power_through, Uppercut , SIZE
-    };
-
-    static inline std::shared_ptr<Card::Cards> MakeRedCardFactory(RedCardName name) {
-        using namespace Red;
-        switch (name) {
-            case RedCardName::Anger:
-                return std::make_shared<Anger>();
-            case RedCardName::Clash:
-                return std::make_shared<Clash>();
-            case RedCardName::Defend:
-                return std::make_shared<Defend>();
-            case RedCardName::Strike_red:
-                return std::make_shared<Strike_red>();
-            case RedCardName::Body_slam:
-                return std::make_shared<Body_slam>();
-            case RedCardName::Iron_wave:
-                return std::make_shared<Iron_wave>();
-            case RedCardName::Twin_strike:
-                return std::make_shared<Twin_strike>();
-            case RedCardName::Inflame:
-                return std::make_shared<Inflame>();
-            case RedCardName::Bludgeon:
-                return std::make_shared<Bludgeon>();
-            case RedCardName::Shrug_it_off:
-                return std::make_shared<Shrug_it_off>();
-            case RedCardName::Pommel_strike:
-                return std::make_shared<Pommel_strike>();
-            case RedCardName::Entrench:
-                return std::make_shared<Entrench>();
-            case RedCardName::Wild_strike:
-                return std::make_shared<Wild_strike>();
-            case RedCardName::Bloodletting:
-                return std::make_shared<Bloodletting>();
-            case RedCardName::Hemokinesis:
-                return std::make_shared<Hemokinesis>();
-            case RedCardName::Power_through:
-                return std::make_shared<Power_through>();
-            case RedCardName::Uppercut:
-                return std::make_shared<Uppercut>();
-            default:
-                LOG_ERROR("Unknown RedCardName");
-                return std::make_shared<Strike_red>();
-        }
-    }
     static inline std::shared_ptr<Card::Cards> MakeRedCommonCardFactory(RedCommonCard name) {
         using namespace Red;
         switch (name) {
@@ -152,9 +106,29 @@ namespace Card
                 return nullptr;
         }
     }
-
+    static constexpr auto CARDS_PROBABILITY = RUtil::make_probability_selector(
+        std::array{
+            std::pair{Rarity::common, 6.0F},
+            std::pair{Rarity::uncommon, 3.0F},
+            std::pair{Rarity::rare, 1.0F}
+        }
+    );
 
     std::shared_ptr<Card::Cards> Card_generate::GetRandomRedCard(RUtil::Random &rng){
-        return MakeRedCardFactory(static_cast<RedCardName>(rng.NextInt(static_cast<int>(RedCardName::SIZE))));
+    switch (CARDS_PROBABILITY(rng)) {
+        case Rarity::common: {
+            return MakeRedCommonCardFactory(static_cast<RedCommonCard>(rng.NextInt(static_cast<int>(RedCommonCard::SIZE))));
+        }
+        case Rarity::uncommon: {
+            return MakeRedUncommonCardFactory(static_cast<RedUncommonCard>(rng.NextInt(static_cast<int>(RedUncommonCard::SIZE))));
+        }
+        case Rarity::rare: {
+            return MakeRedRareCardFactory(static_cast<RedRareCard>(rng.NextInt(static_cast<int>(RedRareCard::SIZE))));
+        }
+        default:
+            LOG_ERROR("Unknown rarity selected");
+            return MakeRedCommonCardFactory(static_cast<RedCommonCard>(rng.NextInt(static_cast<int>(RedCommonCard::SIZE))));
+    }
+        // return MakeRedCardFactory(static_cast<RedCardName>(rng.NextInt(static_cast<int>(RedCardName::SIZE))));
     }
 } // namespace Card

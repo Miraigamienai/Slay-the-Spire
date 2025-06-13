@@ -606,7 +606,7 @@
   "GrowthPower": {
     "NAME": "萬物生長",
     "DESCRIPTIONS": [
-      "在其回合結束時，獲得 #b",
+      "在其回合結束時，獲得 $n#b",
       " 點 #y力量 "
     ]
   },
@@ -784,8 +784,8 @@
   "Metallicize": {
     "NAME": "金屬化",
     "DESCRIPTIONS": [
-      "在你的回合結束時獲得 !M! 點 #y格擋"
-      "在其回合結束時獲得 !M! 點 #y格擋"
+      "在你的回合結束時獲得 $n!M! 點 #y格擋",
+      "在其回合結束時獲得 $n!M! 點 #y格擋"
     ]
   },
   "Minion": {
@@ -1249,7 +1249,7 @@
   "Vulnerable": {
     "NAME": "易傷",
     "DESCRIPTIONS": [
-      "從 #y攻擊 受到的傷害增加 !D!#b% 。$n持續時間 !M! 回合"
+      "從 #y攻擊 受到的傷害增加 $n!D!#b% 。$n持續時間 !M! 回合"
     ]
   },
   "WaveOfTheHandPower": {
@@ -1269,7 +1269,7 @@
   "Weakened": {
     "NAME": "虛弱",
     "DESCRIPTIONS": [
-      "#y攻擊 造成的傷害減少 !D!#b% 。$n持續時間 !M! 回合"
+      "#y攻擊 造成的傷害減少 !D!#b% $n持續時間 !M! 回合"
     ]
   },
   "WireheadingPower": {

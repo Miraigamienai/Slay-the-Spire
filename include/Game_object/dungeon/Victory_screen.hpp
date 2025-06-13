@@ -23,6 +23,12 @@ private:
     Button::Return_to_start_button return_button;
     Monster::Monster_group monsters;
     std::shared_ptr<Character::Player> player;
+    Draw::NumberDrawer m_font;
+
+    int current_gold=0,current_HP=0,current_floor=0;
+    int card_amount[6]{};
+    
+
     static const std::shared_ptr<Draw::ReTexture> &IMG;
 };
 }

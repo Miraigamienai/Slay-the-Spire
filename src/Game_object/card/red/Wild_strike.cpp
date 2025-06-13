@@ -10,15 +10,8 @@
 namespace Card{
 namespace Red{
     void Wild_strike::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster){
-           //damage the monster
-            dungeon_shared.action_group_handler.AddActionBot(
-                std::make_shared<Action::Damage_action>
-                (
-                    Damage_info{this->damage, dungeon_shared.player, AttackType::slash_diagonal},
-                    target_monster
-                )
-            );
-            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Show_card_to_draw_pile_action>(std::make_shared<Card::Status::Wound>(), 1));
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{this->damage, dungeon_shared.player, AttackType::slash_heavy}, target_monster));
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Show_card_to_draw_pile_action>(std::make_shared<Card::Status::Wound>(), 1));
     }
 }
 }

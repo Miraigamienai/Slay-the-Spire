@@ -58,6 +58,12 @@ void Card_soul::shuffle(bool shuffle_invisible){
     this->is_clockwise=true;
     this->start_wait_timer=RUtil::Random::GetRandomFloat(0.0F,0.12F);
 }
+void Card_soul::to_draw_pile(){
+    this->end_x=DRAW_PILE_X;
+    this->end_y=DRAW_PILE_Y;
+    prepare_to_fly();
+    this->is_clockwise=true;
+}
 void Card_soul::prepare_to_fly(){
     this->rotate_rate=ROTATION_RATE*RUtil::Random::GetRandomFloat(1.0F,2.0F);
     this->current_speed=START_VELOCITY*RUtil::Random::GetRandomFloat(0.2F,1.0F);

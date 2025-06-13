@@ -19,16 +19,18 @@ namespace EffectGen{
         if(this->duration==ACTION_DUR_XLONG){//first in
             dungeon_shared.gen_group.AddTop(std::make_shared<Card_paticle_gen>(card->GetTargetX(), card->GetTargetY()));
             //add to draw_pile at first update
-            dungeon_shared.card_group_handler.AddBot<Card::GroupType::draw_pile>(this->card);
+            dungeon_shared.card_group_handler.draw_pile_add_at(
+                dungeon_shared.random_package.card_shuffle_rng.NextInt(dungeon_shared.card_group_handler.size<Card::GroupType::draw_pile>()+1),
+                card
+            );
             //force render
             dungeon_shared.card_group_handler.AddBot<Card::GroupType::force_render_cards>(card);
         }
         TimeGo();
         this->card->update(dungeon_shared.top_effs);
         if(this->is_done){
-            dungeon_shared.card_group_handler.discard(card,true);
-            dungeon_shared.card_group_handler.shuffle(false);//visual only
             dungeon_shared.card_group_handler.erase<Card::GroupType::force_render_cards>(card);//remove from force render
+            dungeon_shared.card_group_handler.to_draw_pile(card);
         }
     }
 

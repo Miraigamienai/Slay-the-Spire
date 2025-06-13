@@ -18,18 +18,10 @@ namespace EffectGen{
     void Show_card_to_hand::update(Dungeon::Dungeon_shared &dungeon_shared){
         if(this->duration==ACTION_DUR_XLONG){//first in
             dungeon_shared.gen_group.AddTop(std::make_shared<Card_paticle_gen>(card->GetTargetX(), card->GetTargetY()));
-            //add to draw_pile at first update
-            dungeon_shared.card_group_handler.AddBot<Card::GroupType::hand_cards>(this->card);
-            //force render
-            // dungeon_shared.card_group_handler.AddBot<Card::GroupType::force_render_cards>(card);
+            if(dungeon_shared.card_group_handler.size<Card::GroupType::hand_cards>()<10)
+                dungeon_shared.card_group_handler.AddBot<Card::GroupType::hand_cards>(this->card);
         }
         TimeGo();
-        this->card->update(dungeon_shared.top_effs);
-        if(this->is_done){
-            // dungeon_shared.card_group_handler.discard(card,true);
-            // dungeon_shared.card_group_handler.shuffle(false);//visual only
-            // dungeon_shared.card_group_handler.erase<Card::GroupType::force_render_cards>(card);//remove from force render
-        }
     }
 
     int Show_card_to_hand::s_cnt=0;

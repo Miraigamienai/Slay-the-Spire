@@ -1860,7 +1860,7 @@
   },
   "Wound": {
     "NAME": "傷口",
-    "DESCRIPTION": " 無法打出 "
+    "DESCRIPTION": "#y無法打出"
   },
   "Wraith_Form_v2": {
     "NAME": "幽魂形態",

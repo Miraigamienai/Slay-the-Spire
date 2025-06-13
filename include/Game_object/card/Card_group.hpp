@@ -36,7 +36,9 @@ public:
         for(const auto&it:box) if(!it->IsUpgraded()) return true;
         return false;
     }
-
+    void AddCardAt(size_t idx, const std::shared_ptr<Cards>&card){
+        box.insert(box.begin() + idx, card);
+    }
     const std::shared_ptr<Cards>&operator[](size_t idx)const{return box[idx];}
     void CloneOther(const Card_group&other){
         box.clear();

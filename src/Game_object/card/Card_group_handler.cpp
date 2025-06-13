@@ -79,6 +79,14 @@ namespace Card{
             this->m_discard.AddTop(card);
     }
 
+    void Card_group_handler::to_draw_pile(const std::shared_ptr<Cards> &card){
+        card->Shrink(false);
+        card->Lighten(true);
+        card->StopGlowing();
+        card->to_draw_pile();
+        flying_cards.emplace_back(card);
+    }
+    
     void Card_group_handler::obtain(const std::shared_ptr<Cards> &card){
         card->Shrink(false);
         card->obtain();

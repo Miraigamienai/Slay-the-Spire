@@ -16,16 +16,16 @@
 
 namespace Monster{
     SpikeSlimeL::SpikeSlimeL(float offset_x, float offset_y, RUtil::Random& rng)
-        :SpikeSlimeL(offset_x, offset_y, rng.NextInt(MIN_HP, MAX_HP+1))
-    {        
-        add_power(std::make_shared<Power::Split_power>(type));
-    };
+        :SpikeSlimeL(offset_x, offset_y, rng.NextInt(MIN_HP, MAX_HP+1)){}
     
     SpikeSlimeL::SpikeSlimeL(float offset_x, float offset_y, int HP)
         :Abstraction::Monster_move_tracker<2, SpikeSlimeLAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG),
         offset_x(offset_x),
         offset_y(offset_y),
-        current_max_hp(HP){}
+        current_max_hp(HP)
+    {
+        add_power(std::make_shared<Power::Split_power>(type));
+    }
     
     void SpikeSlimeL::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){

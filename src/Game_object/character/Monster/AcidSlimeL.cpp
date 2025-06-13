@@ -16,16 +16,16 @@
 
 namespace Monster{
     AcidSlimeL::AcidSlimeL(float offset_x, float offset_y, RUtil::Random& rng)
-        :AcidSlimeL(offset_x, offset_y, rng.NextInt(MIN_HP, MAX_HP+1))
-    {
-        add_power(std::make_shared<Power::Split_power>(type));
-    }
+        :AcidSlimeL(offset_x, offset_y, rng.NextInt(MIN_HP, MAX_HP+1)){}
     
     AcidSlimeL::AcidSlimeL(float offset_x, float offset_y, int HP)
         :Abstraction::Monster_move_tracker<2, AcidSlimeLAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, HP, IMG),
         offset_x(offset_x),
         offset_y(offset_y),
-        current_max_hp(HP){}
+        current_max_hp(HP)
+    {
+        add_power(std::make_shared<Power::Split_power>(type));
+    }
 
     void AcidSlimeL::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){

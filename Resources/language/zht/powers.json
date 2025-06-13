@@ -562,7 +562,7 @@
   "Frail": {
     "NAME": "脆弱",
     "DESCRIPTIONS": [
-      "在 !M! 個回合內，從卡牌中獲得的 #y格擋 減少 #b25% "
+      "在 !M! 個回合內，從卡牌中$n獲得的 #y格擋 減少 #b25% "
     ]
   },
   "FreeAttackPower": {

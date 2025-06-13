@@ -89,7 +89,7 @@
       "NAMES": [
         "脆弱"
       ],
-      "DESCRIPTION": "處於脆弱狀態時，從卡牌中獲得的 #y格擋 減少 #b25%"
+      "DESCRIPTION": "處於脆弱狀態時，從卡牌中$n獲得的 #y格擋 減少 #b25%"
     },
     "FROST": {
       "NAMES": [

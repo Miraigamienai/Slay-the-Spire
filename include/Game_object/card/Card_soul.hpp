@@ -23,6 +23,7 @@ public:
     void obtain();
     void empower(float target_center_x, float target_center_y);
     void shuffle(bool shuffle_invisible);
+    void to_draw_pile();
     bool is_fly()const{return is_flying;}
     //static function
     static void SetTrailColor(Uint32 c)noexcept{s_trail_color=c;}

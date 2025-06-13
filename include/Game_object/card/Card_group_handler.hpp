@@ -51,6 +51,8 @@ public:
 
     void discard_all();
     void discard(const std::shared_ptr<Cards> &card, bool visual_only=false);
+    //NOTE: this drawpile will not added when this function call.
+    void to_draw_pile(const std::shared_ptr<Cards> &card);
     void draw(const Power::Power_group &player_powers);
     void update(Dungeon::Dungeon_shared &dungeon_shared);
     void refresh_hand_layout()const;
@@ -144,6 +146,10 @@ public:
         else if constexpr(GT==GroupType::exhaust_pile) return exhaust_pile;
         else if constexpr(GT==GroupType::force_render_cards) return force_render_cards;
         else if constexpr(GT==GroupType::force_update_cards) return force_update_cards;
+    }
+
+    void draw_pile_add_at(size_t idx, const std::shared_ptr<Card::Cards> &card){
+        draw_pile.AddCardAt(idx, card);
     }
 private:
     static const int &input_x,&input_y;

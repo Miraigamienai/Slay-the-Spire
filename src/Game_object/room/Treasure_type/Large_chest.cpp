@@ -1,5 +1,5 @@
 #include "Game_object/room/Treasure_item.hpp"
-#include "Game_object/room/rooms.hpp"
+#include "Game_object/room/Rooms"
 #include "RUtil/Image_book.hpp"
 #include "Game_object/room/Treasure_type/Large_chest.hpp"
 #include "Game_object/reward_item/Card_reward_item.hpp"

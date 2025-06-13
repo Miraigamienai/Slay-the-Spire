@@ -2,7 +2,7 @@
 #include "Game_object/dungeon/Dungeon_shared.hpp"
 #include "Game_object/effect_gen/Purge_card_eff_gen.hpp"
 #include "Game_object/card/Cards.hpp"
-#include "Rutil/Text_Vector_Reader.hpp"
+#include "RUtil/Text_Vector_Reader.hpp"
 
 namespace Dungeon{
 namespace GridScreenAction{

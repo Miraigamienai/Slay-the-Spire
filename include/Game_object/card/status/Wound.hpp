@@ -11,7 +11,7 @@ class Wound final:public Abstraction::CardPrototype<Wound>
 public:
     Wound():Abstraction::CardPrototype<Wound>(RUtil::AtlasRegionID::_status_wound, RUtil::Cards_Text_ID::Wound, Rarity::common, Type::status, Color::colorless, Target::self, -1, 0, 0, 0){}
     ~Wound()override=default;
-    bool CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const override{return false;}
+    bool CanUse(const Dungeon::Dungeon_shared & /*dungeon_shared */)const override{return false;}
     void Use(Dungeon::Dungeon_shared & /* dungeon_shared */, const std::shared_ptr<Monster::Monsters> & /* target_monster */)override{}
     void Upgrade(bool /* for_preview */)override{}
 };   

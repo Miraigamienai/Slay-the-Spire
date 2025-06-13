@@ -7,7 +7,7 @@
 
 namespace Card{
 namespace Red{
-    void Inflame::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster){
+    void Inflame::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters>  & /*target_monster */){
         dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, this->magic_num, dungeon_shared.player, dungeon_shared.player));
         
     

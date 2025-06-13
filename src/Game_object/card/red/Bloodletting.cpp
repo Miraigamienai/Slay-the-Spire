@@ -7,7 +7,7 @@
 
 namespace Card{
 namespace Red{
-    void Bloodletting::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster){
+    void Bloodletting::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters>  & /*target_monster */){
         
             dungeon_shared.player->damage(
                 Damage_info{this->damage, dungeon_shared.player, AttackType::slash_diagonal},

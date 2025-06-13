@@ -23,15 +23,9 @@ public:
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, this->amount, target, target));
         }   
     }
+    
     void desc_update()override{
-        auto &arr=RUtil::Powers_Text_Reader::GetDescriptions(power_id);
-        if(owner_type==Character::CharacterType::MONSTER){
-            tip_box.change_body(arr[0]);
-            tip_box.get_body()->set_num_info(Draw::number_info{amount, 0, 0, Draw::NumStatus::blue});
-        }else{
-            tip_box.change_body(arr[1]);
-            tip_box.get_body()->set_num_info(Draw::number_info{-amount, 0, 0, Draw::NumStatus::blue});
-        }
+        tip_box.change_body(RUtil::Powers_Text_Reader::GetDescriptions(power_id)[owner_type==Character::CharacterType::MONSTER ? 0 : 1]);
     }
 };   
 }

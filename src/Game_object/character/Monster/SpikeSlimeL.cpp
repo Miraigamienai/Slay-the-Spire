@@ -78,8 +78,8 @@ namespace Monster{
         }
     }
 
-    void SpikeSlimeL::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
-        Monsters::damage(damage_info, dungeon_shared);
+    void SpikeSlimeL::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block){
+        Monsters::damage(damage_info, dungeon_shared, deduct_block);
         if(current_HP<=current_max_hp/2 && !is_current_move(SpikeSlimeLAction::Split)){
             set_move(SpikeSlimeLAction::Split, nullptr, Intent::unknown, dungeon_shared.player->get_powers());
             //TODO: interrupted text

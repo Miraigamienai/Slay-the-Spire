@@ -32,7 +32,7 @@ public:
     virtual ~Monsters()=default;
     virtual void Action(Dungeon::Dungeon_shared &dungeon_shared)=0;
     virtual void next_move(Dungeon::Dungeon_shared &dungeon_shared)=0;
-    virtual void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
+    virtual void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block)override;
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2)const override;
     virtual void update()override;
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const override{

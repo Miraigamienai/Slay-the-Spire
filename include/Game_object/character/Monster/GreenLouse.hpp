@@ -16,8 +16,10 @@ public:
     ~GreenLouse()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
+    void at_combat_start(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
     const int bite_damage;
+    const int curl_up_block;
     static constexpr float WIDTH=180.0F*Setting::SCALE,
                            HEIGHT=140.0F*Setting::SCALE,
                            HB_OFFSET_X=0.0F,

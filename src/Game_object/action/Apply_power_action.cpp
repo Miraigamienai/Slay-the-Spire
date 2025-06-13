@@ -65,7 +65,6 @@ namespace Action
                 target->add_power(power);
             }
             power->add_amount(this->amount);
-            power->desc_update();
             dungeon_shared.gen_group.AddTop(std::make_shared<EffectGen::Power_buff_debuff_gen>(target->GetFixedOriginX(), target->GetFixedOriginY()+target->GetHeight()/2.0F, power_id, amount, power->power_type, already_have));
             power->flash();
             dungeon_shared.effs.AddTop(std::make_shared<Effect::Flash_power_eff>(target->GetcX(), target->GetcY(), power->region_128_id));

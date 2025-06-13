@@ -16,7 +16,8 @@ namespace Monster{
     void RedSlaver::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch(current_move()){
             case RedSlaverAction::Entangle:
-                //TODO: Applies 1  Entangled(You may not play any Attacks this turn.).
+                //TODO: entangle eff
+                dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Entangled, 1, shared_from_this(), dungeon_shared.player));
                 break;
             case RedSlaverAction::Stab:
                 dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));

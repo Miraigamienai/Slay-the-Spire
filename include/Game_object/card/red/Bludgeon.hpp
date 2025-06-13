@@ -16,8 +16,6 @@ public:
     void Upgrade(bool for_preview)override{
         SetDamage(42, for_preview);
     }
-private:
-
 };   
 }
 } // namespace Card

@@ -31,12 +31,14 @@ namespace Card{
         temp[static_cast<int>(Rarity::curse)]   = 5;
         return temp;
     }();
+
+    static inline bool RarityCompare(const std::shared_ptr<Card::Cards> &card1, const std::shared_ptr<Card::Cards> &card2){
+        return RarityWeight[static_cast<int>(card1->rarity)] == RarityWeight[static_cast<int>(card2->rarity)] ? static_cast<int>(card1->card_text_id) < static_cast<int>(card2->card_text_id) : RarityWeight[static_cast<int>(card1->rarity)] < RarityWeight[static_cast<int>(card2->rarity)];
+    }
+
     void Card_group::SortByRarity(const bool ascending){
-        //sort by text id to make sure the same card will together
-        std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return static_cast<int>(aa->card_text_id) < static_cast<int>(bb->card_text_id);});
-        //sort by rarity
-        if(ascending)std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return RarityWeight[static_cast<int>(aa->rarity)] < RarityWeight[static_cast<int>(bb->rarity)];});
-        else std::sort(box.begin(),box.end(),[](const auto&aa,const auto&bb){return RarityWeight[static_cast<int>(aa->rarity)] > RarityWeight[static_cast<int>(bb->rarity)];});
+        std::sort(box.begin(),box.end(), RarityCompare);
+        if(!ascending) std::reverse(box.begin(), box.end());
     }
 
     std::shared_ptr<Cards> Card_group::GetHoveredCard()const{

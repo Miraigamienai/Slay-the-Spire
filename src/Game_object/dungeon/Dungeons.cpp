@@ -107,7 +107,7 @@ namespace Dungeon{
         dungeon_shared.energy_panel.update(dungeon_shared);
         dungeon_shared.discard_panel.update(dungeon_shared);
         dungeon_shared.draw_panel.update(dungeon_shared);
-        if(!dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::discard_pile)){
+        if(!dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::discard_pile) && !dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::draw_pile)){
             //room update
             if(fighting_boss){
                 boss_room->update(dungeon_shared);

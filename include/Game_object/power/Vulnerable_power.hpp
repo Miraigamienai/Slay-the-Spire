@@ -14,9 +14,9 @@ public:
     float calculate_damage_receive(float damage)const override{
         return damage*1.5F;
     }
-    void desc_update()override{
-        tip_box.change_body(get_amount_based_desc());
-        tip_box.get_body()->set_num_info(Draw::number_info{50, 0, this->amount, Draw::NumStatus::blue});
+    
+    void desc_nums_set()const override{
+        tip_box.get_body()->set_num_info(Draw::number_info{50, 0, amount, Draw::NumStatus::blue});
     }
 };   
 }

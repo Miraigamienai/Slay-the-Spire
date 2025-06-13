@@ -73,9 +73,9 @@ namespace Monster{
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Reduce_power_action>(_p, shared_from_this(), METALLICIZE_BLOCK));
     }
 
-    void Lagavulin::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
+    void Lagavulin::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block){
         int temp=current_HP;
-        Monsters::damage(damage_info, dungeon_shared);
+        Monsters::damage(damage_info, dungeon_shared, deduct_block);
         if(!is_awake && temp!=current_HP){
             is_awake=true;
             move_cnt=-1;

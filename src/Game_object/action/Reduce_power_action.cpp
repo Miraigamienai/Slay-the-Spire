@@ -13,7 +13,6 @@ namespace Action{
                 return;
             }else{
                 power->reduce_amount(amount);
-                power->desc_update();
                 dungeon_shared.refresh_display();
             }
         }

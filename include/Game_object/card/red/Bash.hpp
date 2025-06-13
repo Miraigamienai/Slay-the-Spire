@@ -9,9 +9,7 @@ namespace Red{
 class Bash final:public Abstraction::CardPrototype<Bash>
 {
 public:
-    Bash():Abstraction::CardPrototype<Bash>(RUtil::AtlasRegionID::_red_attack_bash,RUtil::Cards_Text_ID::Bash,Rarity::basic,Type::attack,Color::red,Target::enemy,2,8,0,2){
-        this->exhaust=true;
-    }
+    Bash():Abstraction::CardPrototype<Bash>(RUtil::AtlasRegionID::_red_attack_bash,RUtil::Cards_Text_ID::Bash,Rarity::basic,Type::attack,Color::red,Target::enemy,2,8,0,2){}
     ~Bash()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade(bool for_preview)override{

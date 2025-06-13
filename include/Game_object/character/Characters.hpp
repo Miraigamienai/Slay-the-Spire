@@ -39,7 +39,7 @@ class Characters : public std::enable_shared_from_this<Characters>
 public:
     Characters(CharacterType type, float x, float y, float width, float height, float hb_offset_x, float hb_offset_y, int HP);
     virtual ~Characters()=default;
-    virtual void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)=0;
+    virtual void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block)=0;
     virtual void heal(int num, Dungeon::Dungeon_shared &dungeon_shared)/* =0 */{current_HP+=num;if(current_HP>max_HP)current_HP=max_HP;(void)dungeon_shared;health_update_event();}
     virtual void render(const std::shared_ptr<Draw::Draw_2D> &r2) const =0;
     virtual void update()=0;
@@ -97,6 +97,7 @@ public:
     void erase_power(const T&item){powers.erase(item);}
     void clear_power()noexcept(noexcept(powers.clear())){powers.clear();}
     void at_round_end(Dungeon::Dungeon_shared &dungeon_shared){powers.at_round_end(dungeon_shared, shared_from_this());}
+    void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared){powers.at_turn_end(dungeon_shared, shared_from_this());}
     void at_turn_start(Dungeon::Dungeon_shared &dungeon_shared){if(!powers.no_lose_block()) this->ReduceBlock(current_Block, dungeon_shared);}
     void render_tip(const std::shared_ptr<Draw::Draw_2D> &r2)const{
         const float temp_pos=boss_hitbox.CenterX() + boss_hitbox.Width() / 2.0F;

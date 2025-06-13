@@ -183,7 +183,6 @@ set(SRC_FILES
 	Game_object/power/Powers.cpp
 	Game_object/power/Power_creator.cpp
 	Game_object/power/Power_group.cpp
-	Game_object/power/Weak_power.cpp
 	Game_object/reward_item/Card_reward.cpp
 	Game_object/reward_item/Card_reward_item.cpp
 	Game_object/reward_item/Gold_reward_item.cpp
@@ -242,7 +241,7 @@ set(INCLUDE_FILES
 	Draw/ReTexture.hpp
 	Draw/Text_box.hpp
 	Draw/Text_layout.hpp
-	Draw/Text_layout_all.hpp 
+	Draw/Text_layout_all.hpp
 	Draw/Text_layout_color.hpp
 	Draw/Text_layout_normal.hpp
 	Game_object/Card_pos_setter.hpp
@@ -455,9 +454,12 @@ set(INCLUDE_FILES
 	Game_object/panel/Energy_panel.hpp
 	Game_object/panel/Panels.hpp
 	Game_object/power/Anger_power.hpp
+	Game_object/power/Angry_power.hpp
 	Game_object/power/Artifact_power.hpp
 	Game_object/power/Barricade_power.hpp
+	Game_object/power/Curl_up_power.hpp
 	Game_object/power/Dexterity_power.hpp
+	Game_object/power/Entangled_power.hpp
 	Game_object/power/Frail_power.hpp
 	Game_object/power/Metallicize_power.hpp
 	Game_object/power/Mode_shift_power.hpp

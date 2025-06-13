@@ -17,7 +17,7 @@ public:
     ~SlimeBoss()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
-    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
+    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block)override;
 private:
     int move_cnt;
     static constexpr std::array<SlimeBossAction, 3> pattern=std::array{SlimeBossAction::GoopSpray, SlimeBossAction::Preparing, SlimeBossAction::Slam};

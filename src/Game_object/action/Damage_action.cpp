@@ -7,8 +7,8 @@
 #include "Game_object/Damage_info.hpp"
 
 namespace Action{
-    Damage_action::Damage_action(const Damage_info&damage_info,const std::shared_ptr<Character::Characters> &target)
-        :damage_info(damage_info),target(target)
+    Damage_action::Damage_action(const Damage_info&damage_info,const std::shared_ptr<Character::Characters> &target, bool deduct_block)
+        :damage_info(damage_info), target(target), deduct_block(deduct_block)
     {
         duration=ACTION_DUR_XFAST;
     }
@@ -23,7 +23,7 @@ namespace Action{
         TimeGo();
         if(is_done){
             //damage the target 
-            target->damage(this->damage_info, dungeon_shared);
+            target->damage(this->damage_info, dungeon_shared, deduct_block);
             dungeon_shared.action_group_handler.AddActionTop(std::make_shared<Action::Wait_action>(0.1F));
         }
     }

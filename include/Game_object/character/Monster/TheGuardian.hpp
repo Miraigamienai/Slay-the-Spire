@@ -28,7 +28,7 @@ public:
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
     void Call(CallType call_type, Dungeon::Dungeon_shared &dungeon_shared);
-    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
+    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block)override;
     void at_combat_start(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
     bool in_defensive_mode;

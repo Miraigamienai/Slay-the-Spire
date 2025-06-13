@@ -16,7 +16,6 @@ public:
         SetDamage(18, for_preview);
     }
     bool CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const override;
-private:
 };   
 }
 } // namespace Card

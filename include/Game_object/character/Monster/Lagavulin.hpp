@@ -26,7 +26,7 @@ public:
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
     void at_combat_start(Dungeon::Dungeon_shared &dungeon_shared) override;
     void Call(Dungeon::Dungeon_shared &dungeon_shared);
-    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
+    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block)override;
 private:
     int sleep_cnt;
     bool is_awake;

@@ -9,7 +9,7 @@ namespace Red{
 class Bloodletting final:public Abstraction::CardPrototype<Bloodletting>
 {
 public:
-    Bloodletting():Abstraction::CardPrototype<Bloodletting>(RUtil::AtlasRegionID::_red_skill_bloodletting,RUtil::Cards_Text_ID::Bloodletting,Rarity::uncommon,Type::skill,Color::red,Target::self,0,3,0,2){}
+    Bloodletting():Abstraction::CardPrototype<Bloodletting>(RUtil::AtlasRegionID::_red_skill_bloodletting,RUtil::Cards_Text_ID::Bloodletting,Rarity::uncommon,Type::skill,Color::red,Target::self,0,0,0,2){}
 
     ~Bloodletting()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
@@ -17,7 +17,7 @@ public:
         SetMagicNum(3, for_preview);
     }
 private:
-
+    static constexpr int HP_LOSS=3;
 };   
 }
 } // namespace Card

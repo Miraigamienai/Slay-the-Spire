@@ -9,13 +9,12 @@ namespace Red{
 class Shrug_it_off final:public Abstraction::CardPrototype<Shrug_it_off>
 {
 public:
-    Shrug_it_off():CardPrototype<Shrug_it_off>(RUtil::AtlasRegionID::_red_skill_shrug_it_off,RUtil::Cards_Text_ID::Shrug_It_Off,Rarity::common,Type::skill,Color::red,Target::self,1,0,8,1){}
+    Shrug_it_off():CardPrototype<Shrug_it_off>(RUtil::AtlasRegionID::_red_skill_shrug_it_off,RUtil::Cards_Text_ID::Shrug_It_Off,Rarity::common,Type::skill,Color::red,Target::self,1,0,8,0){}
     ~Shrug_it_off()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade(bool for_preview)override{
         SetBlock(11, for_preview);   
     }
-private:
 };   
 }
 } // namespace Card

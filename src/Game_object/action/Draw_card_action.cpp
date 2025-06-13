@@ -33,6 +33,7 @@ namespace Action
             amount--;
             duration+=ACTION_DUR_FASTER;
             dungeon_shared.card_group_handler.draw(dungeon_shared.player->get_powers());
+            dungeon_shared.refresh_display();
         }
         if(amount==0)
             is_done=true;

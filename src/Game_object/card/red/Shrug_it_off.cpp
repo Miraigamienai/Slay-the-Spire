@@ -7,7 +7,7 @@ namespace Card{
 namespace Red{
     void Shrug_it_off::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &/* target_monster */){
         dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_block_action>(dungeon_shared.player, this->block));
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(this->magic_num));
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Draw_card_action>(1));
     }
 }
 }

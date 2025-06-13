@@ -17,8 +17,6 @@ public:
         SetDamage(10, for_preview);
         SetMagicNum(2, for_preview);
     }
-private:
-
 };   
 }
 } // namespace Card

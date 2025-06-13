@@ -70,8 +70,8 @@ namespace Monster{
         }
     }
 
-    void SlimeBoss::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
-        Monsters::damage(damage_info, dungeon_shared);
+    void SlimeBoss::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block){
+        Monsters::damage(damage_info, dungeon_shared, deduct_block);
         if(current_HP<=HP/2 && move_cnt!=SPLIT_CNT){
             move_cnt=SPLIT_CNT;
             set_move(SlimeBossAction::Split, nullptr, Intent::unknown, dungeon_shared.player->get_powers());

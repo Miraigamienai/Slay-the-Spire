@@ -18,7 +18,7 @@ public:
     ~SpikeSlimeL()override=default;
     void Action(Dungeon::Dungeon_shared &dungeon_shared) override;
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override;
-    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override;
+    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block)override;
 private:
     const float offset_x, offset_y;
     const int current_max_hp;

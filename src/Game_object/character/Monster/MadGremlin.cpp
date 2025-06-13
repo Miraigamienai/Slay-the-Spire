@@ -1,6 +1,7 @@
 #include "Game_object/character/Monster/MadGremlin.hpp"
 #include "Game_object/action/Anim_set_action.hpp"
 #include "Game_object/action/Damage_action.hpp"
+#include "Game_object/action/Apply_power_action.hpp"
 #include "RUtil/Random.hpp"
 #include "RUtil/Image_book.hpp"
 #include "Draw/ReTexture.hpp"
@@ -12,6 +13,10 @@ namespace Monster{
     void MadGremlin::Action(Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Anim_set_action>(shared_from_this(), Character::Animation::ATTACK_SLOW));
         dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{current_damage(), shared_from_this(), AttackType::slash_diagonal}, dungeon_shared.player));
+    }
+    
+    void MadGremlin::at_combat_start(Dungeon::Dungeon_shared &dungeon_shared){
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Angry, 1, shared_from_this(), shared_from_this()));
     }
 
     const std::shared_ptr<Draw::ReTexture> &MadGremlin::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Gremlins/Mad-gremlin-pretty.png");

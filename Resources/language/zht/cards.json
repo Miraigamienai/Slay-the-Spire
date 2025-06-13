@@ -111,7 +111,7 @@
   },
   "Bash": {
     "NAME": "痛擊",
-    "DESCRIPTION": "造成 !D! 點傷害$n給予!M!層 #y易傷 "
+    "DESCRIPTION": "造成 !D! 點傷害$n給予 !M! 層 #y易傷 "
   },
   "BattleHymn": {
     "NAME": "戰歌",
@@ -203,8 +203,7 @@
   },
   "Body_Slam": {
     "NAME": "泰山壓頂",
-    "DESCRIPTION": "造成你當前 #y格擋 值$n的傷害",
-    "UPGRADE_DESCRIPTION": "$n（造成 !D! 點傷害）"
+    "DESCRIPTION": "造成你當前 #y格擋 值$n的傷害"
   },
   "BootSequence": {
     "NAME": "啟動流程",

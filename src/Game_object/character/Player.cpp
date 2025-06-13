@@ -21,11 +21,11 @@ namespace Character{
             render_HP_and_power(r2);
         }
     }
-    void Player::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared,bool Deduct_block){
+    void Player::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block){
         if(IsDie()) return;
 
         int dmg = damage_info.dmg;
-        if(Deduct_block){
+        if(deduct_block){
             const bool had_block = GetCurrentBlock() > 0;
             if(had_block){
                 if(damage_info.dmg > GetCurrentBlock()){
@@ -38,6 +38,9 @@ namespace Character{
                 }
             }
         }
+        
+        for(const auto&it:get_powers()) it->on_attacked(dungeon_shared, shared_from_this(), dmg);
+
         //TODO: effs
         if(dmg>0){
             if(damage_info.src.get()!=this) use_animation<Character::Animation::STAGGER>();

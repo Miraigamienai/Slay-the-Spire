@@ -20,7 +20,7 @@ namespace Power
     reduce_each_turn(reduce_each_turn),
     can_negative(can_negative),
     owner_type(owner_type),
-    tip_box(RUtil::Powers_Text_Reader::GetName(power_id)),
+    tip_box(RUtil::Powers_Text_Reader::GetName(power_id), RUtil::Powers_Text_Reader::GetDescriptions(power_id)[0]),
     amount(0),
     _skip_reduce_once(false),
     font_scale(Setting::SCALE),
@@ -46,6 +46,7 @@ namespace Power
     
     void Powers::render_tip(const std::shared_ptr<Draw::Draw_2D> &r2, float x, float y)const{
         using namespace RUtil;
+        if(tip_box.get_body()!=nullptr) desc_nums_set();
         tip_box.render(r2, x, y);
         r2->SetColor(RUtil::WHITE);
         auto&img=All_Image::GetAtlasRegion(region_48_id);

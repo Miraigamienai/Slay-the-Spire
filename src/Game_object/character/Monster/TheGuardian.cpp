@@ -124,9 +124,9 @@ namespace Monster{
         }
     }
 
-    void TheGuardian::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
+    void TheGuardian::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block){
         const int past_HP=GetCurrentHP();
-        Monsters::damage(damage_info, dungeon_shared);
+        Monsters::damage(damage_info, dungeon_shared, deduct_block);
         int diff_HP= past_HP - GetCurrentHP();
         if(!in_defensive_mode && GetCurrentHP()>0 && diff_HP>0){
             damage_taken+=diff_HP;

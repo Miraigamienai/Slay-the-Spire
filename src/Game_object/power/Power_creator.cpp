@@ -14,6 +14,9 @@
 #include "Game_object/power/Sharp_hide_power.hpp"
 #include "Game_object/power/Mode_shift_power.hpp"
 #include "Game_object/power/Split_power.hpp"
+#include "Game_object/power/Angry_power.hpp"
+#include "Game_object/power/Entangled_power.hpp"
+#include "Game_object/power/Curl_up_power.hpp"
 
 #include "Util/Logger.hpp"
 
@@ -34,6 +37,9 @@ namespace Power
             case RUtil::Powers_Text_ID::Sharp_Hide: return std::make_shared<Sharp_hide_power>(owner_type);
             case RUtil::Powers_Text_ID::Mode_Shift: return std::make_shared<Mode_shift_power>(owner_type);
             case RUtil::Powers_Text_ID::Split: return std::make_shared<Split_power>(owner_type);
+            case RUtil::Powers_Text_ID::Angry: return std::make_shared<Angry_power>(owner_type);
+            case RUtil::Powers_Text_ID::Entangled: return std::make_shared<Entangled_power>(owner_type);
+            case RUtil::Powers_Text_ID::Curl_Up: return std::make_shared<Curl_up_power>(owner_type);
             default:
                 LOG_ERROR("The power id:{} has not been implemented yet.", static_cast<int>(power_id));
                 return std::make_shared<Weak_power>(owner_type);

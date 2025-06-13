@@ -21,8 +21,7 @@ class Player final :public Characters
 public:
     Player();
     virtual ~Player()=default;
-    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared)override {damage(damage_info, dungeon_shared,false);}
-    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool Deduct_block);
+    void damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block);
     void render(const std::shared_ptr<Draw::Draw_2D> &r2) const override;
     void update()override{
         update_HP_and_power();

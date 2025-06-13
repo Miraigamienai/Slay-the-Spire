@@ -9,15 +9,13 @@ namespace Red{
 class Body_slam final:public Abstraction::CardPrototype<Body_slam>
 {
 public:
-    Body_slam():Abstraction::CardPrototype<Body_slam>(RUtil::AtlasRegionID::_red_attack_body_slam,RUtil::Cards_Text_ID::Body_Slam,Rarity::basic,Type::attack,Color::red,Target::enemy,1,6,0,0){}
+    Body_slam():Abstraction::CardPrototype<Body_slam>(RUtil::AtlasRegionID::_red_attack_body_slam,RUtil::Cards_Text_ID::Body_Slam,Rarity::common,Type::attack,Color::red,Target::enemy,1,0,0,0){}
 
     ~Body_slam()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade(bool for_preview)override{
         SetCost(0, for_preview);
     }
-private:
-
-};   
+};
 }
 } // namespace Card

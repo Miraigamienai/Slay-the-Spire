@@ -10,7 +10,8 @@
 namespace Monster{
     RedLouse::RedLouse(float offset_x, float offset_y, RUtil::Random& rng)
     :Abstraction::Monster_move_tracker<2, RedLouseAction>(offset_x, offset_y, WIDTH, HEIGHT, HB_OFFSET_X, HB_OFFSET_Y, rng.NextInt(MIN_HP, MAX_HP+1), IMG),
-    bite_damage(rng.NextInt(MIN_DAMAGE, MAX_DAMAGE+1)){}
+    bite_damage(rng.NextInt(MIN_DAMAGE, MAX_DAMAGE+1)),
+    curl_up_block(rng.NextInt(3, 8)){}
 
     void RedLouse::Action(Dungeon::Dungeon_shared &dungeon_shared){
         switch (current_move()){
@@ -51,6 +52,10 @@ namespace Monster{
             default:
                 break;
         }
+    }
+    
+    void RedLouse::at_combat_start(Dungeon::Dungeon_shared &dungeon_shared){
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Curl_Up, curl_up_block, shared_from_this(), shared_from_this()));
     }
 
     const std::shared_ptr<Draw::ReTexture> &RedLouse::IMG=RUtil::Image_book::GetTexture(RESOURCE_DIR"/Image/monster/Louses/Louse-red-pretty.png");

@@ -8,15 +8,9 @@
 namespace Card{
 namespace Red{
     void Body_slam::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster){
-           //damage the monster
-            dungeon_shared.action_group_handler.AddActionBot(
-                std::make_shared<Action::Damage_action>
-                (
-                    Damage_info{dungeon_shared.player->GetCurrentBlock(), dungeon_shared.player, AttackType::slash_diagonal},
-                    target_monster
-                )
-            );
-
+        base_damage = dungeon_shared.player->GetCurrentBlock();
+        RefreshDamage(dungeon_shared.player->get_powers(), target_monster->get_powers());
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{this->damage, dungeon_shared.player, AttackType::blunt_heavy}, target_monster));
     }
 }
 }

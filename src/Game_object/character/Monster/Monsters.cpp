@@ -153,22 +153,26 @@ namespace Monster
     }
     
 
-    void Monsters::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared){
+    void Monsters::damage(const Damage_info& damage_info, Dungeon::Dungeon_shared &dungeon_shared, bool deduct_block){
         if(current_HP<=0 || escaping) return;
 
         int dmg = damage_info.dmg;
         const bool had_block = GetCurrentBlock() > 0;
-        if(had_block){
-            if(damage_info.dmg > GetCurrentBlock()){
-                const auto temp=GetCurrentBlock();
-                ReduceBlock(temp, dungeon_shared);
-                dmg -= temp;
-            }else{
-                ReduceBlock(damage_info.dmg, dungeon_shared);
-                dmg = 0;
+        if(deduct_block){
+            if(had_block){
+                if(damage_info.dmg > GetCurrentBlock()){
+                    const auto temp=GetCurrentBlock();
+                    ReduceBlock(temp, dungeon_shared);
+                    dmg -= temp;
+                }else{
+                    ReduceBlock(damage_info.dmg, dungeon_shared);
+                    dmg = 0;
+                }
             }
         }
-        
+
+        for(const auto&it:get_powers()) it->on_attacked(dungeon_shared, shared_from_this(), dmg);
+
         //TODO: effs
         if(dmg>0){
             if(damage_info.src.get()!=this) use_animation<Character::Animation::STAGGER>();

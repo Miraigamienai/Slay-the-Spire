@@ -351,6 +351,7 @@ namespace Card{
     }
 
     bool Cards::CanUse(const Dungeon::Dungeon_shared &dungeon_shared)const{
+        for(const auto&it:dungeon_shared.player->get_powers()) if(!it->check_card_can_use(shared_from_this())) return false;
         return this->cost <= dungeon_shared.player->GetCurrEnergy();
     }
 

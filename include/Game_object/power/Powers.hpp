@@ -71,9 +71,12 @@ public:
     virtual float calculate_block_modify(float block)const{return block;}
     virtual float calculate_final_block_modify(float block)const{return block;}
     virtual void at_round_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target);
+    virtual void at_turn_end(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Character::Characters> &target){};
     virtual void on_use_card(Dungeon::Dungeon_shared &/* dungeon_shared */, const std::shared_ptr<Card::Cards> &/* use_card */, const std::shared_ptr<Character::Characters> &/* target */){};
     //return true if the applied_power has been cancelled. 
     virtual bool on_power_applied(Dungeon::Dungeon_shared &/* dungeon_shared */, const std::shared_ptr<Powers> &/* applied_power */, const std::shared_ptr<Character::Characters> &/* target */){return false;}
+    virtual void on_attacked(Dungeon::Dungeon_shared &/* dungeon_shared */, const std::shared_ptr<Character::Characters> &/* target */, int /* fixed_dmg */){}
+    virtual bool check_card_can_use(const std::shared_ptr<const Card::Cards> &/* card */)const{return true;}
 protected:
     Draw::Text_box tip_box;
     int amount;
@@ -83,6 +86,7 @@ protected:
         return amount!=1 && arr[1]!=nullptr ? arr[1] : arr[0];
     }
     static constexpr int NO_DISPLAY_AMOUNT = -1;
+    virtual void desc_nums_set()const{tip_box.get_body()->set_num_info(Draw::number_info{0, 0, this->amount, Draw::NumStatus::blue});}
 private:
     float font_scale;
     float color_a;

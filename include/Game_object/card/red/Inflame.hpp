@@ -16,8 +16,6 @@ public:
     void Upgrade(bool for_preview)override{
         SetMagicNum(3, for_preview);
     }
-private:
-
 };   
 }
 } // namespace Card

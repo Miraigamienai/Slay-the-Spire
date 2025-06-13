@@ -8,16 +8,9 @@
 namespace Card{
 namespace Red{
     void Uppercut::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster){
-        dungeon_shared.action_group_handler.AddActionBot(
-            std::make_shared<Action::Damage_action>
-            (
-                Damage_info{this->damage, dungeon_shared.player, AttackType::slash_diagonal},
-                target_monster
-            )
-        );
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{this->damage, dungeon_shared.player, AttackType::blunt_heavy}, target_monster));
         dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Weakened, this->magic_num, dungeon_shared.player, target_monster));
-        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Vulnerable, this->magic_num, dungeon_shared.player, target_monster));
-        
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Vulnerable, this->magic_num, dungeon_shared.player, target_monster));     
     }
 }
 }

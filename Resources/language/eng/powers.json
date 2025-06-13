@@ -51,9 +51,7 @@
   "Angry": {
     "NAME": "Angry",
     "DESCRIPTIONS": [
-      "",
-      "Upon receiving attack damage, gains #b",
-      " #yStrength."
+      "Upon receiving attack damage, gains !M! #yStrength."
     ]
   },
   "Artifact": {
@@ -265,8 +263,7 @@
   "Curl_Up": {
     "NAME": "Curl Up",
     "DESCRIPTIONS": [
-      "On receiving attack damage, rolls up and gains #b",
-      " #yBlock. (Once per combat)"
+      "On receiving attack damage, rolls up and gains !M! #yBlock. (Once per combat)"
     ]
   },
   "Dance_Puppet": {
@@ -1029,8 +1026,8 @@
   "Ritual": {
     "NAME": "Ritual",
     "DESCRIPTIONS": [
-      "At the end of its turn, gains !D! #yStrength.",
-      "At the end of your turn, gain !D! #yStrength."
+      "At the end of its turn, gains !M! #yStrength.",
+      "At the end of your turn, gain !M! #yStrength."
     ]
   },
   "Rupture": {
@@ -1141,8 +1138,8 @@
   "Strength": {
     "NAME": "Strength",
     "DESCRIPTIONS": [
-      "Increases attack damage by !D!.,
-      "Decreases attack damage by !D!."
+      "Increases attack damage by !M!.,
+      "Decreases attack damage by !M!."
     ]
   },
   "StrikeUp": {

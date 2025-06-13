@@ -22,6 +22,10 @@
 
 #include "Util/Logger.hpp"//LOG_ERROR
 
+//debug
+#include "Util/Input.hpp"
+#include "Game_object/action/Apply_power_action.hpp"
+
 namespace Room{
 Monster_room::Monster_room(Monster::GroupName group_name)
     :Monster_room(group_name, Room_type::Monster){}
@@ -81,6 +85,14 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.action_group_handler.update(dungeon_shared);
         dungeon_shared.card_group_handler.update(dungeon_shared);
         
+        //debug key check
+        if(Util::Input::IsKeyPressed(Util::Keycode::SPACE)){
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, 99, dungeon_shared.player, dungeon_shared.player));
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Dexterity, 99, dungeon_shared.player, dungeon_shared.player));
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_energy_action>(dungeon_shared.player->GetMaxEnergy()));
+            dungeon_shared.player->heal(100, dungeon_shared);
+        }
+
         if(dungeon_shared.discard_panel.is_logically_clicked() && !dungeon_shared.manager.current_screen_equals(Abstraction::ScreenType::discard_pile)){
             dungeon_shared.discard_panel.SetClickTimer();
             dungeon_shared.manager.open<Abstraction::ScreenType::discard_pile>(dungeon_shared);
@@ -95,6 +107,8 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
             //TODO:end logic need to be check.
             end_turn_button.disable();
             dungeon_shared.card_group_handler.on_end_of_turn(dungeon_shared);
+            dungeon_shared.player->at_turn_end(dungeon_shared);
+            for(const auto&it:dungeon_shared.room_monsters) it->at_turn_end(dungeon_shared);
         }else if(end_turn_button.is_disable() && dungeon_shared.action_group_handler.is_nothing_to_do()){
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Discard_all_action>());
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Effect_capsule_action>(std::make_shared<Effect::Enemy_turn_eff>(dungeon_fade_color), 1.2F, Action::Effect_capsule_action::Layer::top));

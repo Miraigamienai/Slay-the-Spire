@@ -9,13 +9,12 @@ namespace Red{
 class Entrench final:public Abstraction::CardPrototype<Entrench>
 {
 public:
-    Entrench():CardPrototype<Entrench>(RUtil::AtlasRegionID::_red_skill_entrench,RUtil::Cards_Text_ID::Entrench,Rarity::uncommon,Type::skill,Color::red,Target::self,2,0,2,0){}
+    Entrench():CardPrototype<Entrench>(RUtil::AtlasRegionID::_red_skill_entrench,RUtil::Cards_Text_ID::Entrench,Rarity::uncommon,Type::skill,Color::red,Target::self,2,0,0,0){}
     ~Entrench()override=default;
     void Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster)override;
     void Upgrade(bool for_preview)override{
         SetCost(1, for_preview);
     }
-private:
 };   
 }
 } // namespace Card

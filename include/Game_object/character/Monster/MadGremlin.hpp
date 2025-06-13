@@ -17,6 +17,7 @@ public:
     void next_move(Dungeon::Dungeon_shared &dungeon_shared) override{
         set_move(MadGremlinAction::Scratch, nullptr, Intent::attack, SCRATCH_DAMAGE, dungeon_shared.player->get_powers());
     }
+    void at_combat_start(Dungeon::Dungeon_shared &dungeon_shared) override;
 private:
     static constexpr float WIDTH=130.0F*Setting::SCALE,
                            HEIGHT=194.0F*Setting::SCALE,

@@ -17,8 +17,6 @@ public:
         SetDamage(7, for_preview);
         SetBlock(7, for_preview);
     }
-private:
-
-};   
+};
 }
 } // namespace Card

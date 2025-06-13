@@ -14,14 +14,10 @@ public:
         return block + amount;
     }
     void desc_update()override{
-        auto &arr=RUtil::Powers_Text_Reader::GetDescriptions(power_id);
-        if(amount>=0){
-            tip_box.change_body(arr[0]);
-            tip_box.get_body()->set_num_info(Draw::number_info{amount, 0, 0, Draw::NumStatus::blue});
-        }else{
-            tip_box.change_body(arr[1]);
-            tip_box.get_body()->set_num_info(Draw::number_info{-amount, 0, 0, Draw::NumStatus::blue});
-        }
+        tip_box.change_body(RUtil::Powers_Text_Reader::GetDescriptions(power_id)[amount>=0 ? 0 : 1]);
+    }
+    void desc_nums_set()const override{
+        tip_box.get_body()->set_num_info(Draw::number_info{0, 0, (amount>=0 ? amount : -amount), Draw::NumStatus::blue});
     }
 };   
 }

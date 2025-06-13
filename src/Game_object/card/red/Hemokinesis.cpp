@@ -8,18 +8,11 @@
 namespace Card{
 namespace Red{
     void Hemokinesis::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster){
-           //damage the monster
-            dungeon_shared.action_group_handler.AddActionBot(
-                std::make_shared<Action::Damage_action>
-                (
-                    Damage_info{this->damage, dungeon_shared.player, AttackType::slash_diagonal},
-                    target_monster
-                )
-            );
-            dungeon_shared.player->damage(
-                Damage_info{this->magic_num, dungeon_shared.player, AttackType::slash_diagonal},
-                dungeon_shared,true
-            );
+        //TODO:eff
+        //hp loss
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{this->magic_num, dungeon_shared.player, AttackType::NONE}, dungeon_shared.player, false));
+        //damage the monster
+        dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{this->damage, dungeon_shared.player, AttackType::blunt_heavy}, target_monster));
     }
 }
 }

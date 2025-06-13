@@ -8,21 +8,8 @@
 namespace Card{
 namespace Red{
     void Twin_strike::Use(Dungeon::Dungeon_shared &dungeon_shared, const std::shared_ptr<Monster::Monsters> &target_monster){
-           //damage the monster
-            dungeon_shared.action_group_handler.AddActionBot(
-                std::make_shared<Action::Damage_action>
-                (
-                    Damage_info{this->damage, dungeon_shared.player, AttackType::slash_diagonal},
-                    target_monster
-                )
-            );
-            dungeon_shared.action_group_handler.AddActionBot(
-                std::make_shared<Action::Damage_action>
-                (
-                    Damage_info{this->damage, dungeon_shared.player, AttackType::slash_diagonal},
-                    target_monster
-                )
-            );
+        for(int i=0;i<2;++i)
+            dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Damage_action>(Damage_info{this->damage, dungeon_shared.player, AttackType::slash_horizontal}, target_monster));
     }
 }
 }

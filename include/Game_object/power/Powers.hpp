@@ -20,7 +20,7 @@ namespace Character{
     enum class CharacterType:int;
 }
 namespace Dungeon{
-    class Dungeon_shared;
+    struct dungeon_shared;
 }
 namespace Card{
     class Cards;

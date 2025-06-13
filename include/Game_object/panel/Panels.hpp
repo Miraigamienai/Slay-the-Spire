@@ -7,7 +7,7 @@ namespace Draw{
     class Draw_2D;
 }
 namespace Dungeon{
-    class Dungeon_shared;
+    struct dungeon_shared;
 }
 
 namespace Panel{

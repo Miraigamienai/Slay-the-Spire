@@ -3,7 +3,6 @@
 #include "Draw/Draw_2D.hpp"
 #include "Cursor.hpp"
 #include "Util/Input.hpp"
-#include "draw_test.hpp"
 #include "Game_object/effect/Auto_release_pool_manager.hpp"
 
 int main(int, char**) {

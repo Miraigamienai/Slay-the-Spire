@@ -40,7 +40,7 @@ namespace Draw {
         NowProgram->Bind();//test if not bind
         CombineMatrixPos=glGetUniformLocation(NowProgram->GetId(),"u_projTrans");//Note:Here should be wrapped, if have time.
         Sampler2DPos=glGetUniformLocation(NowProgram->GetId(),"u_texture");
-        vertices.reserve(max_len);
+        vertices.resize(max_len);
         //set idx
         std::vector<GLushort> Indices(len);
         GLushort j=0;

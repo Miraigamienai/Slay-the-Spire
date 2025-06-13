@@ -1,6 +1,6 @@
 #pragma once 
 #include "Game_object/room/Treasure_item.hpp"
-#include "Game_object/room/rooms.hpp"
+#include "Game_object/room/Rooms.hpp"
 #include <memory>
 namespace Room{
 class Medium_chest : public Treasure_item

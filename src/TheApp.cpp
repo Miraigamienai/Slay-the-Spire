@@ -4,30 +4,6 @@
 #include "Game_object/card/red/Defend.hpp"
 #include "Game_object/card/red/Strike_red.hpp"
 
-
-//for test
-#include "Game_object/card/red/Anger.hpp"
-#include "Game_object/card/red/Body_slam.hpp"
-#include "Game_object/card/red/Clash.hpp"
-#include "Game_object/card/red/Clothesline.hpp"
-#include "Game_object/card/red/Iron_wave.hpp"
-#include "Game_object/card/red/Pommel_strike.hpp"
-#include "Game_object/card/red/Shrug_it_off.hpp"
-#include "Game_object/card/red/Twin_strike.hpp"
-#include "Game_object/card/red/Wild_strike.hpp"
-
-#include "Game_object/card/red/Bloodletting.hpp"
-#include "Game_object/card/red/Entrench.hpp"
-#include "Game_object/card/red/Hemokinesis.hpp"
-#include "Game_object/card/red/Inflame.hpp"
-#include "Game_object/card/red/Power_through.hpp"
-#include "Game_object/card/red/Shockwave.hpp"
-#include "Game_object/card/red/Uppercut.hpp"
-
-#include "Game_object/card/red/Barricade.hpp"
-#include "Game_object/card/red/Bludgeon.hpp"
-
-
 #include "Game_object/effect/Fade_wide.hpp"
 #include "RUtil/Random.hpp"
 
@@ -104,26 +80,6 @@ void TheApp::prepare(){
     m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Strike_red>());
 
 
-    //for test
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Anger>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Body_slam>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Clash>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Clothesline>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Iron_wave>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Pommel_strike>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Shrug_it_off>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Twin_strike>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Wild_strike>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Bloodletting>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Entrench>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Hemokinesis>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Inflame>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Power_through>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Shockwave>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Uppercut>());
-
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Barricade>());
-    m_dungeon_shared.card_group_handler.AddTop<Card::GroupType::master_deck>(std::make_shared<Card::Red::Bludgeon>());
 
     
     fade();

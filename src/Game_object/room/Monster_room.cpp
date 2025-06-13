@@ -86,7 +86,7 @@ void Monster_room::update(Dungeon::Dungeon_shared &dungeon_shared){
         dungeon_shared.card_group_handler.update(dungeon_shared);
         
         //debug key check
-        if(Util::Input::IsKeyPressed(Util::Keycode::SPACE)){
+        if(Util::Input::IsKeyUp(Util::Keycode::SPACE)){
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Strength, 99, dungeon_shared.player, dungeon_shared.player));
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Apply_power_action>(RUtil::Powers_Text_ID::Dexterity, 99, dungeon_shared.player, dungeon_shared.player));
             dungeon_shared.action_group_handler.AddActionBot(std::make_shared<Action::Gain_energy_action>(dungeon_shared.player->GetMaxEnergy()));

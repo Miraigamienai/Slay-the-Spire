@@ -72,7 +72,7 @@ namespace Action
 
     void Action_group_handler::prepare_for_battle(){
         if(!action_box.empty()){
-            LOG_ERROR("There are some remain action in box.");
+            // LOG_ERROR("There are some remain action in box.");
             action_box.clear();
         }
         action_box.AddTop(std::make_shared<Action::Wait_action>(1.0F));

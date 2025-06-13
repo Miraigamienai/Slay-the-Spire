@@ -5,7 +5,7 @@
 #include "Game_object/Card_pos_setter.hpp"
 #include "RUtil/Random.hpp"
 #include "WindowSize.hpp"
-#include <iostream>
+
 namespace EffectGen{
     Show_card_to_hand::Show_card_to_hand(const std::shared_ptr<Card::Cards> &card):card(card){
         this->duration=ACTION_DUR_XLONG;

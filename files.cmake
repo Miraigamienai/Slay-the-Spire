@@ -1,6 +1,5 @@
 set(SRC_FILES
 	Cursor.cpp
-	draw_test.cpp
 	InitScreen.cpp
 	InitScreenBackground.cpp
 	main.cpp
@@ -20,7 +19,7 @@ set(SRC_FILES
 	Draw/Text_layout_normal.cpp
 	Game_object/action/Actions.cpp
 	Game_object/action/Action_group_handler.cpp
-	Game_object/action/Anim_set_action.cpp
+	Game_object/action/Anim_set_action.cpp 
 	Game_object/action/Apply_power_action.cpp
 	Game_object/action/Card_use_end_action.cpp
 	Game_object/action/Card_use_start_action.cpp
@@ -226,7 +225,6 @@ set(SRC_FILES
 
 set(INCLUDE_FILES
 	Cursor.hpp
-	draw_test.hpp
 	InitScreen.hpp
 	InitScreenBackground.hpp
 	Programs.hpp

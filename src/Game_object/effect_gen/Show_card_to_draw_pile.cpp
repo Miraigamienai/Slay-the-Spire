@@ -5,7 +5,7 @@
 #include "Game_object/Card_pos_setter.hpp"
 #include "RUtil/Random.hpp"
 #include "WindowSize.hpp"
-#include <iostream>
+
 namespace EffectGen{
     Show_card_to_draw_pile::Show_card_to_draw_pile(const std::shared_ptr<Card::Cards> &card):card(card){
         this->duration=ACTION_DUR_XLONG;

@@ -4,7 +4,7 @@
 
 //fwd decl 
 namespace Dungeon{
-    struct dungeon_shared;
+    struct Dungeon_shared;
 }
 
 namespace Monster{

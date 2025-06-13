@@ -7,12 +7,13 @@
 #include "RUtil/ColorValuesOnly.hpp"
 
 #include "Core/Program.hpp"
+#include "WindowSize.hpp"
 #include "config.hpp"
 
 namespace Draw {
     Draw_2D::Draw_2D(const int size,const std::shared_ptr<Core::Program> &program)
         :LastTexture(nullptr),
-        m_Projection(glm::ortho<float>(0.0F, (float)WINDOW_WIDTH, 0.0F, (float)WINDOW_HEIGHT)),
+        m_Projection(glm::ortho<float>(0.0F, (float)Setting::WINDOW_WIDTH, 0.0F, (float)Setting::WINDOW_HEIGHT)),
         m_Transform(1.0F),
         u_Combine(1.0F),
         idx(0),

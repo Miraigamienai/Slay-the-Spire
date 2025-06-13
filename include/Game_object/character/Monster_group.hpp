@@ -11,7 +11,7 @@ namespace Draw{
     class Draw_2D;
 }
 namespace Dungeon{
-    struct dungeon_shared;
+    struct Dungeon_shared;
 }
 
 namespace Monster{
